@@ -1,0 +1,41 @@
+# Dependências
+node_modules/
+.pnp
+.pnp.js
+
+# Ambientes e Segredos
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Builds
+dist/
+dist-ssr/
+build/
+.vercel/
+
+# Logs e diagnósticos
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testes e relatórios temporários
+playwright-report/
+blob-report/
+test-results/
+coverage/
+
+# Snapshots brutos pesados / caches locais de crawl (se aplicável)
+# migration/snapshot/
+
+# IDE e OS
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
