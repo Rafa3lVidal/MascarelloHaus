@@ -5,6 +5,7 @@ import { ChevronRight, ChevronLeft, ArrowRight, Quote } from 'lucide-react';
 
 export const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   const heroSlides = [
     {
@@ -106,58 +107,88 @@ export const Home: React.FC = () => {
         description="Sociedade de Advogados focada em Direito Digital, LGPD, Compliance, Direito Empresarial, Civil, Trabalhista e Previdenciário."
       />
 
-      {/* SEÇÃO 1 & 2: HERO SLIDER COM EXATOS FUNDOS E TIPOGRAFIA */}
+      {/* SEÇÃO 1 & 2: HERO SLIDER COM TRANSIÇÕES SUAVES E DESIGN PREMIUM */}
       <section
         className="elementor-hero-slider"
-        style={{
-          backgroundImage: `url(${heroSlides[currentSlide].bgImage})`,
-          backgroundColor: '#0d3732'
-        }}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        aria-label="Destaques Mascârello Haus"
       >
-        <div className="hero-slide-overlay"></div>
-        <div className="container hero-container">
-          <div className="hero-slide-content">
-            <h1 className="hero-main-title">{heroSlides[currentSlide].title}</h1>
-            <div className="hero-btn-wrap">
-              {heroSlides[currentSlide].isAnchor ? (
-                <a href={heroSlides[currentSlide].btnLink} className="hero-gold-btn">
-                  {heroSlides[currentSlide].btnText}
-                </a>
-              ) : (
-                <Link to={heroSlides[currentSlide].btnLink} className="hero-gold-btn">
-                  {heroSlides[currentSlide].btnText}
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* Slides em Camadas com Crossfade */}
+        {heroSlides.map((slide, index) => {
+          const isActive = currentSlide === index;
+          return (
+            <div
+              key={slide.id}
+              className={`hero-slide-layer ${isActive ? 'active' : ''}`}
+              style={{ backgroundImage: `url(${slide.bgImage})` }}
+              aria-hidden={!isActive}
+            >
+              <div className="hero-slide-overlay"></div>
+              <div className="container hero-container">
+                <div className="hero-slide-content">
+                  <div className="hero-kicker-tag">
+                    <span className="kicker-gold-line"></span>
+                    <span className="kicker-text">MASCÂRELLO HAUS ADVOCACIA</span>
+                  </div>
 
-        {/* Controles de Navegação do Slider */}
+                  <h1 className="hero-main-title">{slide.title}</h1>
+
+                  <div className="hero-btn-wrap">
+                    {slide.isAnchor ? (
+                      <a href={slide.btnLink} className="hero-gold-btn">
+                        <span>{slide.btnText}</span>
+                        <ArrowRight size={18} className="btn-arrow-icon" />
+                      </a>
+                    ) : (
+                      <Link to={slide.btnLink} className="hero-gold-btn">
+                        <span>{slide.btnText}</span>
+                        <ArrowRight size={18} className="btn-arrow-icon" />
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Controles de Navegação Glassmorphic */}
         <button
           className="slider-nav-btn prev"
           onClick={() => setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
           aria-label="Slide anterior"
         >
-          <ChevronLeft size={28} />
+          <ChevronLeft size={24} />
         </button>
         <button
           className="slider-nav-btn next"
           onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
           aria-label="Próximo slide"
         >
-          <ChevronRight size={28} />
+          <ChevronRight size={24} />
         </button>
 
-        {/* Indicadores do Slider */}
-        <div className="slider-dots">
-          {heroSlides.map((_, idx) => (
-            <button
-              key={idx}
-              className={`dot ${currentSlide === idx ? 'active' : ''}`}
-              onClick={() => setCurrentSlide(idx)}
-              aria-label={`Slide ${idx + 1}`}
-            />
-          ))}
+        {/* Barra de Indicadores com Numeração e Progresso */}
+        <div className="hero-slider-footer">
+          <div className="hero-slide-counter">
+            <span className="counter-current">0{currentSlide + 1}</span>
+            <span className="counter-separator">/</span>
+            <span className="counter-total">0{heroSlides.length}</span>
+          </div>
+
+          <div className="slider-dots-track">
+            {heroSlides.map((_, idx) => (
+              <button
+                key={idx}
+                className={`dot-pill ${currentSlide === idx ? 'active' : ''}`}
+                onClick={() => setCurrentSlide(idx)}
+                aria-label={`Ir para slide ${idx + 1}`}
+              >
+                <span className="dot-fill"></span>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -440,104 +471,290 @@ export const Home: React.FC = () => {
           box-shadow: 0 4px 15px rgba(13, 55, 50, 0.2);
         }
 
-        /* 1 & 2: HERO SLIDER */
+        /* 1 & 2: HERO SLIDER PREMIUM */
         .elementor-hero-slider {
           position: relative;
-          min-height: 580px;
-          background-size: cover;
-          background-position: bottom center;
-          background-repeat: no-repeat;
+          min-height: 620px;
+          height: 76vh;
+          max-height: 780px;
+          background-color: #0d3732;
+          overflow: hidden;
           display: flex;
           align-items: center;
-          color: #ffffff;
-          transition: background-image 0.5s ease-in-out;
-          padding: 80px 0;
         }
+
+        .hero-slide-layer {
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center bottom;
+          background-repeat: no-repeat;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: scale(1.03);
+          display: flex;
+          align-items: center;
+          z-index: 1;
+        }
+
+        .hero-slide-layer.active {
+          opacity: 1;
+          visibility: visible;
+          transform: scale(1);
+          z-index: 2;
+        }
+
         .hero-slide-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(13, 55, 50, 0.65);
+          background: linear-gradient(
+            90deg,
+            rgba(13, 55, 50, 0.94) 0%,
+            rgba(13, 55, 50, 0.82) 42%,
+            rgba(13, 55, 50, 0.48) 75%,
+            rgba(13, 55, 50, 0.2) 100%
+          );
           z-index: 1;
         }
+
         .hero-container {
           position: relative;
-          z-index: 2;
+          z-index: 3;
+          width: 100%;
         }
+
         .hero-slide-content {
-          max-width: 800px;
+          max-width: 820px;
           text-align: left;
         }
+
+        .hero-kicker-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 22px;
+          opacity: 0;
+          transform: translateY(15px);
+        }
+
+        .hero-slide-layer.active .hero-kicker-tag {
+          animation: heroFadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.15s;
+        }
+
+        .kicker-gold-line {
+          width: 38px;
+          height: 3px;
+          background-color: var(--color-accent);
+          border-radius: 2px;
+          display: inline-block;
+        }
+
+        .kicker-text {
+          font-family: var(--font-sans);
+          font-size: 0.82rem;
+          font-weight: 700;
+          letter-spacing: 2.2px;
+          text-transform: uppercase;
+          color: var(--color-accent);
+        }
+
         .hero-main-title {
           font-family: var(--font-serif);
-          font-size: 3.2rem;
+          font-size: clamp(2.3rem, 4.4vw, 3.6rem);
           font-weight: 500;
           color: #ffffff;
-          line-height: 1.2;
-          margin-bottom: 30px;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          line-height: 1.18;
+          margin-bottom: 34px;
+          text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+          opacity: 0;
+          transform: translateY(20px);
         }
+
+        .hero-slide-layer.active .hero-main-title {
+          animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.28s;
+        }
+
+        .hero-btn-wrap {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        .hero-slide-layer.active .hero-btn-wrap {
+          animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.42s;
+        }
+
         .hero-gold-btn {
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
           border: 2px solid var(--color-accent);
           color: #ffffff;
-          background-color: transparent;
+          background-color: rgba(203, 171, 122, 0.12);
+          backdrop-filter: blur(6px);
           border-radius: 50px;
-          padding: 13px 38px;
+          padding: 15px 38px;
           font-family: var(--font-sans);
-          font-size: 0.9rem;
+          font-size: 0.92rem;
           font-weight: 600;
-          letter-spacing: 1px;
+          letter-spacing: 0.8px;
           text-transform: uppercase;
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+          position: relative;
+          overflow: hidden;
         }
+
+        .hero-gold-btn::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: var(--color-accent);
+          transform: translateX(-100%);
+          transition: transform 0.35s ease;
+          z-index: 0;
+        }
+
+        .hero-gold-btn:hover::before {
+          transform: translateX(0);
+        }
+
+        .hero-gold-btn span,
+        .hero-gold-btn .btn-arrow-icon {
+          position: relative;
+          z-index: 1;
+          transition: transform 0.3s ease;
+        }
+
         .hero-gold-btn:hover {
-          background-color: var(--color-accent);
           color: var(--color-primary);
+          box-shadow: 0 8px 25px rgba(203, 171, 122, 0.4);
+          border-color: var(--color-accent);
         }
+
+        .hero-gold-btn:hover .btn-arrow-icon {
+          transform: translateX(5px);
+        }
+
+        /* Controles de Navegação Glassmorphic */
         .slider-nav-btn {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          z-index: 5;
-          background: rgba(255, 255, 255, 0.15);
+          z-index: 10;
+          background: rgba(13, 55, 50, 0.5);
+          backdrop-filter: blur(12px);
           color: #ffffff;
-          border: none;
-          width: 50px;
-          height: 50px;
+          border: 1px solid rgba(203, 171, 122, 0.35);
+          width: 52px;
+          height: 52px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: background 0.3s ease;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
         }
+
         .slider-nav-btn:hover {
           background-color: var(--color-accent);
           color: var(--color-primary);
+          border-color: var(--color-accent);
+          transform: translateY(-50%) scale(1.08);
+          box-shadow: 0 6px 20px rgba(203, 171, 122, 0.4);
         }
-        .slider-nav-btn.prev { left: 25px; }
-        .slider-nav-btn.next { right: 25px; }
-        .slider-dots {
+
+        .slider-nav-btn.prev { left: 30px; }
+        .slider-nav-btn.next { right: 30px; }
+
+        /* Rodapé do Slider */
+        .hero-slider-footer {
           position: absolute;
-          bottom: 25px;
+          bottom: 30px;
           left: 50%;
           transform: translateX(-50%);
-          z-index: 5;
+          z-index: 10;
           display: flex;
-          gap: 10px;
+          align-items: center;
+          gap: 20px;
+          background: rgba(13, 55, 50, 0.6);
+          backdrop-filter: blur(14px);
+          padding: 8px 22px;
+          border-radius: 50px;
+          border: 1px solid rgba(203, 171, 122, 0.25);
         }
-        .slider-dots .dot {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.4);
+
+        .hero-slide-counter {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-family: var(--font-sans);
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 1px;
+        }
+
+        .counter-current {
+          color: var(--color-accent);
+        }
+
+        .counter-separator {
+          color: rgba(255, 255, 255, 0.3);
+        }
+
+        .counter-total {
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        .slider-dots-track {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .dot-pill {
+          width: 24px;
+          height: 6px;
+          border-radius: 3px;
+          background: rgba(255, 255, 255, 0.25);
           border: none;
           cursor: pointer;
-          transition: all 0.3s ease;
+          padding: 0;
+          transition: all 0.35s ease;
+          position: relative;
+          overflow: hidden;
         }
-        .slider-dots .dot.active {
+
+        .dot-pill.active {
+          width: 44px;
           background: var(--color-accent);
-          transform: scale(1.25);
+          box-shadow: 0 0 10px rgba(203, 171, 122, 0.5);
+        }
+
+        @keyframes heroFadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(22px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 900px) {
+          .elementor-hero-slider {
+            min-height: 520px;
+            height: auto;
+            padding: 90px 0 70px 0;
+          }
+          .slider-nav-btn {
+            display: none;
+          }
+          .hero-slider-footer {
+            bottom: 20px;
+          }
         }
 
         /* 3: SOBRE O ESCRITÓRIO */
