@@ -82,6 +82,9 @@ export const AppRoutes: React.FC = () => {
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/dashboard/" element={<AdminDashboard />} />
+      <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
+      <Route path="/dashboard/" element={<Navigate to="/admin/dashboard" replace />} />
 
       {/* Rota Dinâmica para Artigos ou Páginas por Slug */}
       <Route path="/:slug" element={<PostIndividual />} />

@@ -1,8 +1,6 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "cleanUrls": true,
-  "trailingSlash": true,
   "redirects": [
     {
       "source": "/novosite/artigos-e-publicacoes/:path*",
