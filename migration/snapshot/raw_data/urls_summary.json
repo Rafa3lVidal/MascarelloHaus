@@ -1,0 +1,324 @@
+{
+  "extractedAt": "2026-10-22T17:07:25.605Z",
+  "totals": {
+    "pages": 19,
+    "posts": 11,
+    "categories": 4,
+    "media": 237
+  },
+  "pages": [
+    {
+      "id": 3133,
+      "slug": "avaliacao-de-conformidade",
+      "link": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/",
+      "title": "Avaliação de Conformidade",
+      "status": "publish",
+      "date": "2024-09-12T13:50:04",
+      "modified": "2024-09-12T13:54:17",
+      "parent": 0
+    },
+    {
+      "id": 2855,
+      "slug": "questionario-de-conformidade",
+      "link": "https://mascarellohaus.adv.br/questionario-de-conformidade/",
+      "title": "Questionário de Conformidade",
+      "status": "publish",
+      "date": "2023-10-02T22:09:46",
+      "modified": "2023-10-03T20:38:14",
+      "parent": 0
+    },
+    {
+      "id": 2345,
+      "slug": "codigo-de-conduta",
+      "link": "https://mascarellohaus.adv.br/codigo-de-conduta/",
+      "title": "Código de Conduta",
+      "status": "publish",
+      "date": "2023-08-28T15:51:43",
+      "modified": "2023-09-25T22:25:12",
+      "parent": 0
+    },
+    {
+      "id": 2325,
+      "slug": "canal-de-denuncias",
+      "link": "https://mascarellohaus.adv.br/canal-de-denuncias/",
+      "title": "Canal de Denúncias",
+      "status": "publish",
+      "date": "2023-08-28T15:16:08",
+      "modified": "2023-09-30T21:14:34",
+      "parent": 0
+    },
+    {
+      "id": 2261,
+      "slug": "direito-civil-e-empresarial",
+      "link": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/",
+      "title": "Direito Civil e Empresarial",
+      "status": "publish",
+      "date": "2023-08-28T10:57:51",
+      "modified": "2023-10-04T22:51:45",
+      "parent": 0
+    },
+    {
+      "id": 2256,
+      "slug": "direito-previdenciario",
+      "link": "https://mascarellohaus.adv.br/direito-previdenciario/",
+      "title": "Direito Previdenciário",
+      "status": "publish",
+      "date": "2023-08-28T10:55:41",
+      "modified": "2023-10-04T22:49:41",
+      "parent": 0
+    },
+    {
+      "id": 2241,
+      "slug": "direito-do-trabalho",
+      "link": "https://mascarellohaus.adv.br/direito-do-trabalho/",
+      "title": "Direito do Trabalho",
+      "status": "publish",
+      "date": "2023-08-28T10:49:28",
+      "modified": "2023-10-15T19:30:12",
+      "parent": 0
+    },
+    {
+      "id": 2229,
+      "slug": "protecao-de-dados-lgpd",
+      "link": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/",
+      "title": "Proteção de Dados (LGPD)",
+      "status": "publish",
+      "date": "2023-08-28T10:42:35",
+      "modified": "2023-10-15T19:28:49",
+      "parent": 0
+    },
+    {
+      "id": 2205,
+      "slug": "direito-digital-e-tecnologia",
+      "link": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/",
+      "title": "Direito Digital e tecnologia",
+      "status": "publish",
+      "date": "2023-08-28T10:30:20",
+      "modified": "2023-10-04T22:56:58",
+      "parent": 0
+    },
+    {
+      "id": 2160,
+      "slug": "compliance",
+      "link": "https://mascarellohaus.adv.br/compliance/",
+      "title": "Compliance",
+      "status": "publish",
+      "date": "2023-08-26T17:25:04",
+      "modified": "2023-10-04T22:55:45",
+      "parent": 0
+    },
+    {
+      "id": 1901,
+      "slug": "themencode-pdf-viewer-sc",
+      "link": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/",
+      "title": "ThemeNcode PDF Viewer SC [Do not Delete]",
+      "status": "publish",
+      "date": "2023-08-12T20:33:20",
+      "modified": "2023-08-12T20:33:20",
+      "parent": 0
+    },
+    {
+      "id": 1900,
+      "slug": "themencode-pdf-viewer",
+      "link": "https://mascarellohaus.adv.br/themencode-pdf-viewer/",
+      "title": "ThemeNcode PDF Viewer [Do not Delete]",
+      "status": "publish",
+      "date": "2023-08-12T20:33:19",
+      "modified": "2023-08-12T20:33:19",
+      "parent": 0
+    },
+    {
+      "id": 1894,
+      "slug": "publicacoes",
+      "link": "https://mascarellohaus.adv.br/publicacoes/",
+      "title": "Publicações",
+      "status": "publish",
+      "date": "2023-08-12T20:28:31",
+      "modified": "2023-08-12T20:30:51",
+      "parent": 0
+    },
+    {
+      "id": 1739,
+      "slug": "central-de-protecao-de-dados",
+      "link": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/",
+      "title": "Central de Proteção de Dados",
+      "status": "publish",
+      "date": "2023-08-04T15:23:16",
+      "modified": "2023-10-05T09:56:29",
+      "parent": 0
+    },
+    {
+      "id": 1713,
+      "slug": "artigos-e-publicacoes",
+      "link": "https://mascarellohaus.adv.br/artigos-e-publicacoes/",
+      "title": "Artigos e Publicações",
+      "status": "publish",
+      "date": "2023-08-03T23:43:52",
+      "modified": "2025-01-24T13:32:24",
+      "parent": 0
+    },
+    {
+      "id": 1527,
+      "slug": "contato",
+      "link": "https://mascarellohaus.adv.br/contato/",
+      "title": "Contato",
+      "status": "publish",
+      "date": "2021-03-05T20:12:02",
+      "modified": "2023-10-06T10:18:42",
+      "parent": 0
+    },
+    {
+      "id": 1526,
+      "slug": "areas-de-atuacao",
+      "link": "https://mascarellohaus.adv.br/areas-de-atuacao/",
+      "title": "Áreas de Atuação",
+      "status": "publish",
+      "date": "2021-03-05T20:10:52",
+      "modified": "2025-01-24T13:25:11",
+      "parent": 0
+    },
+    {
+      "id": 1525,
+      "slug": "quem-somos",
+      "link": "https://mascarellohaus.adv.br/quem-somos/",
+      "title": "Quem somos",
+      "status": "publish",
+      "date": "2021-03-05T20:10:28",
+      "modified": "2025-01-28T10:01:59",
+      "parent": 0
+    },
+    {
+      "id": 7,
+      "slug": "mascarello-haus",
+      "link": "https://mascarellohaus.adv.br/",
+      "title": "Mascarello Haus",
+      "status": "publish",
+      "date": "2021-03-05T20:10:03",
+      "modified": "2025-01-28T09:57:58",
+      "parent": 0
+    }
+  ],
+  "posts": [
+    {
+      "id": 2685,
+      "slug": "cartilha-orientacoes-sobre-incidentes-de-seguranca",
+      "link": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/",
+      "title": "Cartilha Orientações  sobre  incidentes de  segurança",
+      "status": "publish",
+      "date": "2023-09-28T22:19:09",
+      "categories": [
+        1
+      ]
+    },
+    {
+      "id": 2684,
+      "slug": "cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd",
+      "link": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/",
+      "title": "Cartilha LGPD &#8211;  Introdução  à Proteção  dos Dados  Pessoais e  à LGPD",
+      "status": "publish",
+      "date": "2023-09-28T22:18:57",
+      "categories": [
+        1
+      ]
+    },
+    {
+      "id": 2661,
+      "slug": "cartilha-phishing-o-famoso-e-malicioso-clique-aqui",
+      "link": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/",
+      "title": "Cartilha PHISHING &#8211; O famoso e  malicioso  “clique  aqui&#8221;",
+      "status": "publish",
+      "date": "2023-09-28T21:42:24",
+      "categories": [
+        1
+      ]
+    },
+    {
+      "id": 2415,
+      "slug": "publicacoes-diario-catarinense",
+      "link": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/",
+      "title": "Publicações no jornal O Catarinense",
+      "status": "publish",
+      "date": "2023-09-12T20:49:50",
+      "categories": [
+        45
+      ]
+    },
+    {
+      "id": 2041,
+      "slug": "aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos",
+      "link": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/",
+      "title": "Aprovado ou inscrito em concurso público? Conheça seus direitos!",
+      "status": "publish",
+      "date": "2023-08-21T21:27:44",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 2039,
+      "slug": "dicas-sobre-o-plano-de-aposentadoria",
+      "link": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/",
+      "title": "Dicas sobre o plano de aposentadoria",
+      "status": "publish",
+      "date": "2023-08-21T21:27:08",
+      "categories": [
+        39
+      ]
+    },
+    {
+      "id": 2037,
+      "slug": "ebook-regras-de-funcionamento-portarias-223-e-244",
+      "link": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/",
+      "title": "eBook Regras de Funcionamento Portarias 223 e 244",
+      "status": "publish",
+      "date": "2023-08-21T21:26:51",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 2031,
+      "slug": "ebook-programa-emergencial-de-suporte-a-empregos-mp-944",
+      "link": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/",
+      "title": "eBook Programa Emergencial de Suporte a Empregos – MP 944",
+      "status": "publish",
+      "date": "2023-08-21T21:26:25",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 2032,
+      "slug": "ebook-medidas-trabalhistas-mp-927",
+      "link": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/",
+      "title": "eBook Medidas Trabalhistas – MP 927",
+      "status": "publish",
+      "date": "2023-08-21T21:26:17",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 2033,
+      "slug": "ebook-auxilio-emergencial-mp-936",
+      "link": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/",
+      "title": "eBook Auxílio Emergencial – MP 936",
+      "status": "publish",
+      "date": "2023-08-21T21:26:09",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 142,
+      "slug": "advocacia-3-0",
+      "link": "https://mascarellohaus.adv.br/advocacia-3-0/",
+      "title": "Advocacia 3.0",
+      "status": "publish",
+      "date": "2023-07-24T10:43:00",
+      "categories": [
+        39
+      ]
+    }
+  ]
+}

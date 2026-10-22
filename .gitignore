@@ -15,6 +15,7 @@ dist/
 dist-ssr/
 build/
 .vercel/
+*.tsbuildinfo
 
 # Logs e diagnósticos
 npm-debug.log*

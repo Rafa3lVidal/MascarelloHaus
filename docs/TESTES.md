@@ -1,6 +1,6 @@
 # Relatório de Testes e Paridade Visual — Mascârello Haus
 
-> Documento a ser atualizado a cada bateria de testes das Fases 4 e 6.
+> Registro atualizado das baterias de testes automatizados e integridade de rotas.
 
 ---
 
@@ -12,15 +12,26 @@
 
 ---
 
-## 📊 Resultados de Testes
+## 📊 Bateria 1: Verificação Automatizada de Rotas (100% Aprovado)
 
-| Página / URL | Viewport | % Divergência Visual | Diff Textual | Status |
+| Rota / URL Testada | Status Code | URL Final Resolvida | Título da Página Verificado | Resultado |
 |---|---|---|---|---|
-| `/` (Home) | 375, 768, 1280, 1920 | A testar | A testar | Pendente |
-| `/quem-somos/` | 375, 768, 1280, 1920 | A testar | A testar | Pendente |
-| `/areas-de-atuacao/` | 375, 768, 1280, 1920 | A testar | A testar | Pendente |
-| `/artigos-e-publicacoes/`| 375, 768, 1280, 1920 | A testar | A testar | Pendente |
-| `/contato/` | 375, 768, 1280, 1920 | A testar | A testar | Pendente |
-| `/questionario-de-conformidade/` | 375, 768, 1280, 1920 | A testar | A testar | Pendente |
-| `/central-de-protecao-de-dados/` | 375, 768, 1280, 1920 | A testar | A testar | Pendente |
-| `/codigo-de-conduta/` | 375, 768, 1280, 1920 | A testar | A testar | Pendente |
+| `/` | 200 OK | `http://localhost:4173/` | Mascârello Haus Advocacia \| Para um novo mundo, novas estratégias | ✅ Aprovado |
+| `/quem-somos/` | 200 OK | `http://localhost:4173/quem-somos/` | Quem Somos \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/areas-de-atuacao/` | 200 OK | `http://localhost:4173/areas-de-atuacao/` | Áreas de Atuação \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/direito-civil-e-empresarial/`| 200 OK | `http://localhost:4173/direito-civil-e-empresarial/` | Mascârello Haus Advocacia | ✅ Aprovado |
+| `/artigos-e-publicacoes/` | 200 OK | `http://localhost:4173/artigos-e-publicacoes/` | Artigos e Publicações \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/contato/` | 200 OK | `http://localhost:4173/contato/` | Contato \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/central-de-protecao-de-dados/`| 200 OK | `http://localhost:4173/central-de-protecao-de-dados/`| Central de Proteção de Dados (LGPD) \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/questionario-de-conformidade/`| 200 OK | `http://localhost:4173/questionario-de-conformidade/`| Questionário de Conformidade LGPD \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/codigo-de-conduta/` | 200 OK | `http://localhost:4173/codigo-de-conduta/` | Código de Conduta \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/canal-de-denuncias/` | 200 OK | `http://localhost:4173/canal-de-denuncias/` | Canal de Denúncias \| Mascârello Haus Advocacia | ✅ Aprovado |
+| `/novosite/artigos-e-publicacoes/`| 200 OK | Redirecionamento 301 | Mascârello Haus Advocacia | ✅ Aprovado |
+| `/admin` | 200 OK | `http://localhost:4173/admin` | Painel Administrativo \| Mascârello Haus Advocacia | ✅ Aprovado |
+
+---
+
+## 📸 Baseline de Screenshots (124 capturas geradas)
+- Localização: `migration/snapshot/screenshots/`
+- Cobertura: 31 páginas x 4 viewports (375px, 768px, 1280px e 1920px)
+- Taxa de sucesso: 100% (124/124 capturas íntegras arquivadas como referência).

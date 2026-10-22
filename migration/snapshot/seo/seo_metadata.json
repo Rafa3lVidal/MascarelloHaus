@@ -1,0 +1,3304 @@
+{
+  "home_home": {
+    "title": "Mascarello Haus - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/",
+    "description": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Mascarello Haus - Mascârello Haus",
+    "ogDescription": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+    "ogUrl": "https://mascarellohaus.adv.br/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "website",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Mascarello Haus - Mascârello Haus",
+    "twitterDescription": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/#webpage",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus - Mascârello Haus",
+            "description": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/#breadcrumblist"
+            },
+            "datePublished": "2021-03-05T20:10:03-03:00",
+            "dateModified": "2025-01-28T09:57:58-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://mascarellohaus.adv.br/?s={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_avaliacao-de-conformidade": {
+    "title": "Avaliação de Conformidade - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/",
+    "description": "Questionário de conformidade e proteção de dados para fornecedores",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Avaliação de Conformidade - Mascârello Haus",
+    "ogDescription": "Questionário de conformidade e proteção de dados para fornecedores",
+    "ogUrl": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Avaliação de Conformidade - Mascârello Haus",
+    "twitterDescription": "Questionário de conformidade e proteção de dados para fornecedores",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/#listItem",
+                "position": 2,
+                "name": "Avaliação de Conformidade",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/#webpage",
+            "url": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/",
+            "name": "Avaliação de Conformidade - Mascârello Haus",
+            "description": "Questionário de conformidade e proteção de dados para fornecedores",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/avaliacao-de-conformidade/#breadcrumblist"
+            },
+            "datePublished": "2024-09-12T13:50:04-03:00",
+            "dateModified": "2024-09-12T13:54:17-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_questionario-de-conformidade": {
+    "title": "Questionário de Conformidade - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/questionario-de-conformidade/",
+    "description": "Questionário de conformidade e proteção de dados para fornecedores",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Questionário de Conformidade - Mascârello Haus",
+    "ogDescription": "Questionário de conformidade e proteção de dados para fornecedores",
+    "ogUrl": "https://mascarellohaus.adv.br/questionario-de-conformidade/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Questionário de Conformidade - Mascârello Haus",
+    "twitterDescription": "Questionário de conformidade e proteção de dados para fornecedores",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/questionario-de-conformidade/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/questionario-de-conformidade/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/questionario-de-conformidade/#listItem",
+                "position": 2,
+                "name": "Questionário de Conformidade",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/questionario-de-conformidade/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/questionario-de-conformidade/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/questionario-de-conformidade/#webpage",
+            "url": "https://mascarellohaus.adv.br/questionario-de-conformidade/",
+            "name": "Questionário de Conformidade - Mascârello Haus",
+            "description": "Questionário de conformidade e proteção de dados para fornecedores",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/questionario-de-conformidade/#breadcrumblist"
+            },
+            "datePublished": "2023-10-02T22:09:46-03:00",
+            "dateModified": "2023-10-03T20:38:14-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_codigo-de-conduta": {
+    "title": "Código de Conduta - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/codigo-de-conduta/",
+    "description": "Código de Conduta O Código de Conduta é o documento que dispõe sobre os direitos e deveres de todos os membros do Mascarello Haus Advocacia e Consultoria Jurídica, colaboradores, parceiros e clientes. Bem como, qual é a postura empresarial em relação aos temas que compõem o desenvolvimento de nossas atividades, servindo",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Código de Conduta - Mascârello Haus",
+    "ogDescription": "Código de Conduta O Código de Conduta é o documento que dispõe sobre os direitos e deveres de todos os membros do Mascarello Haus Advocacia e Consultoria Jurídica, colaboradores, parceiros e clientes. Bem como, qual é a postura empresarial em relação aos temas que compõem o desenvolvimento de nossas atividades, servindo",
+    "ogUrl": "https://mascarellohaus.adv.br/codigo-de-conduta/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Código de Conduta - Mascârello Haus",
+    "twitterDescription": "Código de Conduta O Código de Conduta é o documento que dispõe sobre os direitos e deveres de todos os membros do Mascarello Haus Advocacia e Consultoria Jurídica, colaboradores, parceiros e clientes. Bem como, qual é a postura empresarial em relação aos temas que compõem o desenvolvimento de nossas atividades, servindo",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/codigo-de-conduta/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/codigo-de-conduta/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/codigo-de-conduta/#listItem",
+                "position": 2,
+                "name": "Código de Conduta",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/codigo-de-conduta/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/codigo-de-conduta/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/codigo-de-conduta/#webpage",
+            "url": "https://mascarellohaus.adv.br/codigo-de-conduta/",
+            "name": "Código de Conduta - Mascârello Haus",
+            "description": "Código de Conduta O Código de Conduta é o documento que dispõe sobre os direitos e deveres de todos os membros do Mascarello Haus Advocacia e Consultoria Jurídica, colaboradores, parceiros e clientes. Bem como, qual é a postura empresarial em relação aos temas que compõem o desenvolvimento de nossas atividades, servindo",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/codigo-de-conduta/#breadcrumblist"
+            },
+            "datePublished": "2023-08-28T15:51:43-03:00",
+            "dateModified": "2023-09-25T22:25:12-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_canal-de-denuncias": {
+    "title": "Canal de Denúncias - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/canal-de-denuncias/",
+    "description": "Canal de Denúncias Ocasionalmente nos deparamos com situações de desvio de conduta, mas nos sentimos impotentes ou intimidados e acabamos por não fazer nada. Por isso o escritório Mascarello Haus conta com uma ferramenta para colaboradores, clientes e parceiros de negócios relatarem suspeitas de fraudes, desvios, má conduta ou qualquer fato que seja contrário ao",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Canal de Denúncias - Mascârello Haus",
+    "ogDescription": "Canal de Denúncias Ocasionalmente nos deparamos com situações de desvio de conduta, mas nos sentimos impotentes ou intimidados e acabamos por não fazer nada. Por isso o escritório Mascarello Haus conta com uma ferramenta para colaboradores, clientes e parceiros de negócios relatarem suspeitas de fraudes, desvios, má conduta ou qualquer fato que seja contrário ao",
+    "ogUrl": "https://mascarellohaus.adv.br/canal-de-denuncias/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Canal de Denúncias - Mascârello Haus",
+    "twitterDescription": "Canal de Denúncias Ocasionalmente nos deparamos com situações de desvio de conduta, mas nos sentimos impotentes ou intimidados e acabamos por não fazer nada. Por isso o escritório Mascarello Haus conta com uma ferramenta para colaboradores, clientes e parceiros de negócios relatarem suspeitas de fraudes, desvios, má conduta ou qualquer fato que seja contrário ao",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/canal-de-denuncias/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/canal-de-denuncias/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/canal-de-denuncias/#listItem",
+                "position": 2,
+                "name": "Canal de Denúncias",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/canal-de-denuncias/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/canal-de-denuncias/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/canal-de-denuncias/#webpage",
+            "url": "https://mascarellohaus.adv.br/canal-de-denuncias/",
+            "name": "Canal de Denúncias - Mascârello Haus",
+            "description": "Canal de Denúncias Ocasionalmente nos deparamos com situações de desvio de conduta, mas nos sentimos impotentes ou intimidados e acabamos por não fazer nada. Por isso o escritório Mascarello Haus conta com uma ferramenta para colaboradores, clientes e parceiros de negócios relatarem suspeitas de fraudes, desvios, má conduta ou qualquer fato que seja contrário ao",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/canal-de-denuncias/#breadcrumblist"
+            },
+            "datePublished": "2023-08-28T15:16:08-03:00",
+            "dateModified": "2023-09-30T21:14:34-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_direito-civil-e-empresarial": {
+    "title": "Direito Civil e Empresarial - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/",
+    "description": "Direito Civil e Empresarial Prestamos serviços na proteção e defesa dos interesses das pessoas e organizações, em caráter preventivo e contencioso, nos ramos do Direito Civil e Empresarial. Nosso foco é apoiar as empresas em todas as rotinas relacionadas ao direito empresarial, e ao longo de todo o seu ciclo de vida, para reduzir sua",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Direito Civil e Empresarial - Mascârello Haus",
+    "ogDescription": "Direito Civil e Empresarial Prestamos serviços na proteção e defesa dos interesses das pessoas e organizações, em caráter preventivo e contencioso, nos ramos do Direito Civil e Empresarial. Nosso foco é apoiar as empresas em todas as rotinas relacionadas ao direito empresarial, e ao longo de todo o seu ciclo de vida, para reduzir sua",
+    "ogUrl": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Direito Civil e Empresarial - Mascârello Haus",
+    "twitterDescription": "Direito Civil e Empresarial Prestamos serviços na proteção e defesa dos interesses das pessoas e organizações, em caráter preventivo e contencioso, nos ramos do Direito Civil e Empresarial. Nosso foco é apoiar as empresas em todas as rotinas relacionadas ao direito empresarial, e ao longo de todo o seu ciclo de vida, para reduzir sua",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/#listItem",
+                "position": 2,
+                "name": "Direito Civil e Empresarial",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/#webpage",
+            "url": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/",
+            "name": "Direito Civil e Empresarial - Mascârello Haus",
+            "description": "Direito Civil e Empresarial Prestamos serviços na proteção e defesa dos interesses das pessoas e organizações, em caráter preventivo e contencioso, nos ramos do Direito Civil e Empresarial. Nosso foco é apoiar as empresas em todas as rotinas relacionadas ao direito empresarial, e ao longo de todo o seu ciclo de vida, para reduzir sua",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/direito-civil-e-empresarial/#breadcrumblist"
+            },
+            "datePublished": "2023-08-28T10:57:51-03:00",
+            "dateModified": "2023-10-04T22:51:45-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_direito-previdenciario": {
+    "title": "Direito Previdenciário - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/direito-previdenciario/",
+    "description": "Direito Previdenciário Contamos com equipe e parceiros especializados no Planejamento e Assessoria de aposentadoria e benefícios junto ao INSS, com foco em informações cruciais para os segurados do INSS que almejam o melhor desfecho para os seus benefícios. Atividades associadas Com equipe profissional e especializada, estamos a disposição para atender todas as suas necessidades. Cuidamos",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Direito Previdenciário - Mascârello Haus",
+    "ogDescription": "Direito Previdenciário Contamos com equipe e parceiros especializados no Planejamento e Assessoria de aposentadoria e benefícios junto ao INSS, com foco em informações cruciais para os segurados do INSS que almejam o melhor desfecho para os seus benefícios. Atividades associadas Com equipe profissional e especializada, estamos a disposição para atender todas as suas necessidades. Cuidamos",
+    "ogUrl": "https://mascarellohaus.adv.br/direito-previdenciario/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Direito Previdenciário - Mascârello Haus",
+    "twitterDescription": "Direito Previdenciário Contamos com equipe e parceiros especializados no Planejamento e Assessoria de aposentadoria e benefícios junto ao INSS, com foco em informações cruciais para os segurados do INSS que almejam o melhor desfecho para os seus benefícios. Atividades associadas Com equipe profissional e especializada, estamos a disposição para atender todas as suas necessidades. Cuidamos",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/direito-previdenciario/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/direito-previdenciario/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/direito-previdenciario/#listItem",
+                "position": 2,
+                "name": "Direito Previdenciário",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/direito-previdenciario/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/direito-previdenciario/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/direito-previdenciario/#webpage",
+            "url": "https://mascarellohaus.adv.br/direito-previdenciario/",
+            "name": "Direito Previdenciário - Mascârello Haus",
+            "description": "Direito Previdenciário Contamos com equipe e parceiros especializados no Planejamento e Assessoria de aposentadoria e benefícios junto ao INSS, com foco em informações cruciais para os segurados do INSS que almejam o melhor desfecho para os seus benefícios. Atividades associadas Com equipe profissional e especializada, estamos a disposição para atender todas as suas necessidades. Cuidamos",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/direito-previdenciario/#breadcrumblist"
+            },
+            "datePublished": "2023-08-28T10:55:41-03:00",
+            "dateModified": "2023-10-04T22:49:41-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_direito-do-trabalho": {
+    "title": "Direito do Trabalho - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/direito-do-trabalho/",
+    "description": "Direito do Trabalho Atuamos na gestão preventiva para gerenciamento de riscos e passivos trabalhistas, pois possuimos expertise em contratos trabalhistas e liquidações de sentença e cálculos de liquidação trabalhista. Também atuamos em questões que afetam o cotidiano das empresas, tanto no âmbito individual como coletivo. Atividades associadas Compliance Trabalhista Consultoria jurídica Auditoria Trabalhista Plano de",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Direito do Trabalho - Mascârello Haus",
+    "ogDescription": "Direito do Trabalho Atuamos na gestão preventiva para gerenciamento de riscos e passivos trabalhistas, pois possuimos expertise em contratos trabalhistas e liquidações de sentença e cálculos de liquidação trabalhista. Também atuamos em questões que afetam o cotidiano das empresas, tanto no âmbito individual como coletivo. Atividades associadas Compliance Trabalhista Consultoria jurídica Auditoria Trabalhista Plano de",
+    "ogUrl": "https://mascarellohaus.adv.br/direito-do-trabalho/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Direito do Trabalho - Mascârello Haus",
+    "twitterDescription": "Direito do Trabalho Atuamos na gestão preventiva para gerenciamento de riscos e passivos trabalhistas, pois possuimos expertise em contratos trabalhistas e liquidações de sentença e cálculos de liquidação trabalhista. Também atuamos em questões que afetam o cotidiano das empresas, tanto no âmbito individual como coletivo. Atividades associadas Compliance Trabalhista Consultoria jurídica Auditoria Trabalhista Plano de",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/direito-do-trabalho/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/direito-do-trabalho/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/direito-do-trabalho/#listItem",
+                "position": 2,
+                "name": "Direito do Trabalho",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/direito-do-trabalho/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/direito-do-trabalho/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/direito-do-trabalho/#webpage",
+            "url": "https://mascarellohaus.adv.br/direito-do-trabalho/",
+            "name": "Direito do Trabalho - Mascârello Haus",
+            "description": "Direito do Trabalho Atuamos na gestão preventiva para gerenciamento de riscos e passivos trabalhistas, pois possuimos expertise em contratos trabalhistas e liquidações de sentença e cálculos de liquidação trabalhista. Também atuamos em questões que afetam o cotidiano das empresas, tanto no âmbito individual como coletivo. Atividades associadas Compliance Trabalhista Consultoria jurídica Auditoria Trabalhista Plano de",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/direito-do-trabalho/#breadcrumblist"
+            },
+            "datePublished": "2023-08-28T10:49:28-03:00",
+            "dateModified": "2023-10-15T19:30:12-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_protecao-de-dados-lgpd": {
+    "title": "Proteção de Dados (LGPD) - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/",
+    "description": "Proteção de Dados (LGPD) Nossa atuação se dá por meio dos modelos de mentoria, consultoria e assessoria na área de interesse do cliente, os quais facilitam a adequação personalizada, auxiliando empresas na proteção e conformidade com as normas legais relacionadas à proteção de dados e privacidade. Conheça as nossas soluções Capacitações in company Diagnósticos e",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Proteção de Dados (LGPD) - Mascârello Haus",
+    "ogDescription": "Proteção de Dados (LGPD) Nossa atuação se dá por meio dos modelos de mentoria, consultoria e assessoria na área de interesse do cliente, os quais facilitam a adequação personalizada, auxiliando empresas na proteção e conformidade com as normas legais relacionadas à proteção de dados e privacidade. Conheça as nossas soluções Capacitações in company Diagnósticos e",
+    "ogUrl": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Proteção de Dados (LGPD) - Mascârello Haus",
+    "twitterDescription": "Proteção de Dados (LGPD) Nossa atuação se dá por meio dos modelos de mentoria, consultoria e assessoria na área de interesse do cliente, os quais facilitam a adequação personalizada, auxiliando empresas na proteção e conformidade com as normas legais relacionadas à proteção de dados e privacidade. Conheça as nossas soluções Capacitações in company Diagnósticos e",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/#listItem",
+                "position": 2,
+                "name": "Proteção de Dados (LGPD)",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/#webpage",
+            "url": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/",
+            "name": "Proteção de Dados (LGPD) - Mascârello Haus",
+            "description": "Proteção de Dados (LGPD) Nossa atuação se dá por meio dos modelos de mentoria, consultoria e assessoria na área de interesse do cliente, os quais facilitam a adequação personalizada, auxiliando empresas na proteção e conformidade com as normas legais relacionadas à proteção de dados e privacidade. Conheça as nossas soluções Capacitações in company Diagnósticos e",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/protecao-de-dados-lgpd/#breadcrumblist"
+            },
+            "datePublished": "2023-08-28T10:42:35-03:00",
+            "dateModified": "2023-10-15T19:28:49-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_direito-digital-e-tecnologia": {
+    "title": "Direito Digital e tecnologia - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/",
+    "description": "Direito Digital e tecnologia Mascarello Haus contempla tanto a atuação contenciosa quanto consultiva, desta área cada vez mais demandada na era da informação, por meio de conjunto de normas, aplicações, conhecimentos e regulação das relações jurídicas realizadas no meio digital. Atividades associadas Análise, revisão e elaboração de contratos Políticas e termos de uso Crimes digitais",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Direito Digital e tecnologia - Mascârello Haus",
+    "ogDescription": "Direito Digital e tecnologia Mascarello Haus contempla tanto a atuação contenciosa quanto consultiva, desta área cada vez mais demandada na era da informação, por meio de conjunto de normas, aplicações, conhecimentos e regulação das relações jurídicas realizadas no meio digital. Atividades associadas Análise, revisão e elaboração de contratos Políticas e termos de uso Crimes digitais",
+    "ogUrl": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Direito Digital e tecnologia - Mascârello Haus",
+    "twitterDescription": "Direito Digital e tecnologia Mascarello Haus contempla tanto a atuação contenciosa quanto consultiva, desta área cada vez mais demandada na era da informação, por meio de conjunto de normas, aplicações, conhecimentos e regulação das relações jurídicas realizadas no meio digital. Atividades associadas Análise, revisão e elaboração de contratos Políticas e termos de uso Crimes digitais",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/#listItem",
+                "position": 2,
+                "name": "Direito Digital e tecnologia",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/#webpage",
+            "url": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/",
+            "name": "Direito Digital e tecnologia - Mascârello Haus",
+            "description": "Direito Digital e tecnologia Mascarello Haus contempla tanto a atuação contenciosa quanto consultiva, desta área cada vez mais demandada na era da informação, por meio de conjunto de normas, aplicações, conhecimentos e regulação das relações jurídicas realizadas no meio digital. Atividades associadas Análise, revisão e elaboração de contratos Políticas e termos de uso Crimes digitais",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/direito-digital-e-tecnologia/#breadcrumblist"
+            },
+            "datePublished": "2023-08-28T10:30:20-03:00",
+            "dateModified": "2023-10-04T22:56:58-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_compliance": {
+    "title": "Compliance - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/compliance/",
+    "description": "Compliance Compliance refere-se à conformidade e aderência de uma organização às leis, regulamentos e normas aplicáveis ​​ao seu setor, buscando a integridade operacional, ética nos negócios e prevenção de riscos legais e reputacionais. O que é, e como atuamos Compliance significa estar em conformidade com as normas aplicáveis ao negócio. Mascarello Haus promove a avaliação",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Compliance - Mascârello Haus",
+    "ogDescription": "Compliance Compliance refere-se à conformidade e aderência de uma organização às leis, regulamentos e normas aplicáveis ​​ao seu setor, buscando a integridade operacional, ética nos negócios e prevenção de riscos legais e reputacionais. O que é, e como atuamos Compliance significa estar em conformidade com as normas aplicáveis ao negócio. Mascarello Haus promove a avaliação",
+    "ogUrl": "https://mascarellohaus.adv.br/compliance/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Compliance - Mascârello Haus",
+    "twitterDescription": "Compliance Compliance refere-se à conformidade e aderência de uma organização às leis, regulamentos e normas aplicáveis ​​ao seu setor, buscando a integridade operacional, ética nos negócios e prevenção de riscos legais e reputacionais. O que é, e como atuamos Compliance significa estar em conformidade com as normas aplicáveis ao negócio. Mascarello Haus promove a avaliação",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/compliance/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/compliance/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/compliance/#listItem",
+                "position": 2,
+                "name": "Compliance",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/compliance/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/compliance/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/compliance/#webpage",
+            "url": "https://mascarellohaus.adv.br/compliance/",
+            "name": "Compliance - Mascârello Haus",
+            "description": "Compliance Compliance refere-se à conformidade e aderência de uma organização às leis, regulamentos e normas aplicáveis ​​ao seu setor, buscando a integridade operacional, ética nos negócios e prevenção de riscos legais e reputacionais. O que é, e como atuamos Compliance significa estar em conformidade com as normas aplicáveis ao negócio. Mascarello Haus promove a avaliação",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/compliance/#breadcrumblist"
+            },
+            "datePublished": "2023-08-26T17:25:04-03:00",
+            "dateModified": "2023-10-04T22:55:45-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_themencode-pdf-viewer-sc": {
+    "title": "ThemeNcode PDF Viewer SC [Do not Delete] - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/",
+    "description": "This page is used for Viewing PDF.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "ThemeNcode PDF Viewer SC [Do not Delete] - Mascârello Haus",
+    "ogDescription": "This page is used for Viewing PDF.",
+    "ogUrl": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "ThemeNcode PDF Viewer SC [Do not Delete] - Mascârello Haus",
+    "twitterDescription": "This page is used for Viewing PDF.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/#listItem",
+                "position": 2,
+                "name": "ThemeNcode PDF Viewer SC [Do not Delete]",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/#webpage",
+            "url": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/",
+            "name": "ThemeNcode PDF Viewer SC [Do not Delete] - Mascârello Haus",
+            "description": "This page is used for Viewing PDF.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer-sc/#breadcrumblist"
+            },
+            "datePublished": "2023-08-12T20:33:20-03:00",
+            "dateModified": "2023-08-12T20:33:20-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_themencode-pdf-viewer": {
+    "title": "ThemeNcode PDF Viewer [Do not Delete] - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/themencode-pdf-viewer/",
+    "description": "This page is used for Viewing PDF.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "ThemeNcode PDF Viewer [Do not Delete] - Mascârello Haus",
+    "ogDescription": "This page is used for Viewing PDF.",
+    "ogUrl": "https://mascarellohaus.adv.br/themencode-pdf-viewer/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "ThemeNcode PDF Viewer [Do not Delete] - Mascârello Haus",
+    "twitterDescription": "This page is used for Viewing PDF.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/themencode-pdf-viewer/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer/#listItem",
+                "position": 2,
+                "name": "ThemeNcode PDF Viewer [Do not Delete]",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer/#webpage",
+            "url": "https://mascarellohaus.adv.br/themencode-pdf-viewer/",
+            "name": "ThemeNcode PDF Viewer [Do not Delete] - Mascârello Haus",
+            "description": "This page is used for Viewing PDF.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/themencode-pdf-viewer/#breadcrumblist"
+            },
+            "datePublished": "2023-08-12T20:33:19-03:00",
+            "dateModified": "2023-08-12T20:33:19-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_publicacoes": {
+    "title": "Publicações - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/publicacoes/",
+    "description": "Publicações Confira as nossas publicações sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascarello Haus. Publicações Collaboration is vital for a Successful Workplace Lorem ipsum dolor sit amet, consectetur adipiscing elit The journey to Victory is most important. Working everywhere. Any time. Any place. Being up-to-date is of importance",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Publicações - Mascârello Haus",
+    "ogDescription": "Publicações Confira as nossas publicações sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascarello Haus. Publicações Collaboration is vital for a Successful Workplace Lorem ipsum dolor sit amet, consectetur adipiscing elit The journey to Victory is most important. Working everywhere. Any time. Any place. Being up-to-date is of importance",
+    "ogUrl": "https://mascarellohaus.adv.br/publicacoes/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Publicações - Mascârello Haus",
+    "twitterDescription": "Publicações Confira as nossas publicações sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascarello Haus. Publicações Collaboration is vital for a Successful Workplace Lorem ipsum dolor sit amet, consectetur adipiscing elit The journey to Victory is most important. Working everywhere. Any time. Any place. Being up-to-date is of importance",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/publicacoes/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/publicacoes/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/publicacoes/#listItem",
+                "position": 2,
+                "name": "Publicações",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/publicacoes/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/publicacoes/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/publicacoes/#webpage",
+            "url": "https://mascarellohaus.adv.br/publicacoes/",
+            "name": "Publicações - Mascârello Haus",
+            "description": "Publicações Confira as nossas publicações sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascarello Haus. Publicações Collaboration is vital for a Successful Workplace Lorem ipsum dolor sit amet, consectetur adipiscing elit The journey to Victory is most important. Working everywhere. Any time. Any place. Being up-to-date is of importance",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/publicacoes/#breadcrumblist"
+            },
+            "datePublished": "2023-08-12T20:28:31-03:00",
+            "dateModified": "2023-08-12T20:30:51-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_central-de-protecao-de-dados": {
+    "title": "Central de Proteção de Dados - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/",
+    "description": "Central de Proteção de Dados Esta é nossa página de proteção de dados e privacidade. Nela você vai encontrar todas as políticas, termos e orientações. Informações Aviso de Privacidade Termos de Uso Requisição do titular de dados Informações Caso haja alguma dúvida ou queira exercer seus direitos enquanto titular de dados, previstos no art. 18 e demais",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Central de Proteção de Dados - Mascârello Haus",
+    "ogDescription": "Central de Proteção de Dados Esta é nossa página de proteção de dados e privacidade. Nela você vai encontrar todas as políticas, termos e orientações. Informações Aviso de Privacidade Termos de Uso Requisição do titular de dados Informações Caso haja alguma dúvida ou queira exercer seus direitos enquanto titular de dados, previstos no art. 18 e demais",
+    "ogUrl": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Central de Proteção de Dados - Mascârello Haus",
+    "twitterDescription": "Central de Proteção de Dados Esta é nossa página de proteção de dados e privacidade. Nela você vai encontrar todas as políticas, termos e orientações. Informações Aviso de Privacidade Termos de Uso Requisição do titular de dados Informações Caso haja alguma dúvida ou queira exercer seus direitos enquanto titular de dados, previstos no art. 18 e demais",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/#listItem",
+                "position": 2,
+                "name": "Central de Proteção de Dados",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/#webpage",
+            "url": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/",
+            "name": "Central de Proteção de Dados - Mascârello Haus",
+            "description": "Central de Proteção de Dados Esta é nossa página de proteção de dados e privacidade. Nela você vai encontrar todas as políticas, termos e orientações. Informações Aviso de Privacidade Termos de Uso Requisição do titular de dados Informações Caso haja alguma dúvida ou queira exercer seus direitos enquanto titular de dados, previstos no art. 18 e demais",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/central-de-protecao-de-dados/#breadcrumblist"
+            },
+            "datePublished": "2023-08-04T15:23:16-03:00",
+            "dateModified": "2023-10-05T09:56:29-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_artigos-e-publicacoes": {
+    "title": "Artigos e Publicações - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/artigos-e-publicacoes/",
+    "description": "Artigos, cartilhas, ebooks e publicações Confira os materiais sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascârello Haus. Todos11ArtigosCartilhaseBooksPublicações Cartilhas Cartilha Orientações sobre incidentes de segurança Cartilha com dicas de como agir em um incidente de segurança da informação. Cartilhas Cartilha LGPD – Introdução à Proteção dos Dados Pessoais",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Artigos e Publicações - Mascârello Haus",
+    "ogDescription": "Artigos, cartilhas, ebooks e publicações Confira os materiais sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascârello Haus. Todos11ArtigosCartilhaseBooksPublicações Cartilhas Cartilha Orientações sobre incidentes de segurança Cartilha com dicas de como agir em um incidente de segurança da informação. Cartilhas Cartilha LGPD – Introdução à Proteção dos Dados Pessoais",
+    "ogUrl": "https://mascarellohaus.adv.br/artigos-e-publicacoes/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Artigos e Publicações - Mascârello Haus",
+    "twitterDescription": "Artigos, cartilhas, ebooks e publicações Confira os materiais sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascârello Haus. Todos11ArtigosCartilhaseBooksPublicações Cartilhas Cartilha Orientações sobre incidentes de segurança Cartilha com dicas de como agir em um incidente de segurança da informação. Cartilhas Cartilha LGPD – Introdução à Proteção dos Dados Pessoais",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/artigos-e-publicacoes/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/artigos-e-publicacoes/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/artigos-e-publicacoes/#listItem",
+                "position": 2,
+                "name": "Artigos e Publicações",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/artigos-e-publicacoes/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/artigos-e-publicacoes/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/artigos-e-publicacoes/#webpage",
+            "url": "https://mascarellohaus.adv.br/artigos-e-publicacoes/",
+            "name": "Artigos e Publicações - Mascârello Haus",
+            "description": "Artigos, cartilhas, ebooks e publicações Confira os materiais sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascârello Haus. Todos11ArtigosCartilhaseBooksPublicações Cartilhas Cartilha Orientações sobre incidentes de segurança Cartilha com dicas de como agir em um incidente de segurança da informação. Cartilhas Cartilha LGPD – Introdução à Proteção dos Dados Pessoais",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/artigos-e-publicacoes/#breadcrumblist"
+            },
+            "datePublished": "2023-08-03T23:43:52-03:00",
+            "dateModified": "2025-01-24T13:32:24-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_contato": {
+    "title": "Contato - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/contato/",
+    "description": "Gostaríamos de ouvir você Para informações ou contato com nossos profissionais, utilize nosso formulário. Nossa equipe de atendimento retornará a sua mensagem o mais breve possível. Escritório Rua C. Alberto Schmidt, nº 10 Ed. Laura, 1º andar, SL 5 - Centro - Videira-SC Ligue (49) 98822-0982 WhatsApp E-mail contato@mascarellohaus.adv.br Converse com um advogado Mídias sociais",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Contato - Mascârello Haus",
+    "ogDescription": "Gostaríamos de ouvir você Para informações ou contato com nossos profissionais, utilize nosso formulário. Nossa equipe de atendimento retornará a sua mensagem o mais breve possível. Escritório Rua C. Alberto Schmidt, nº 10 Ed. Laura, 1º andar, SL 5 - Centro - Videira-SC Ligue (49) 98822-0982 WhatsApp E-mail contato@mascarellohaus.adv.br Converse com um advogado Mídias sociais",
+    "ogUrl": "https://mascarellohaus.adv.br/contato/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Contato - Mascârello Haus",
+    "twitterDescription": "Gostaríamos de ouvir você Para informações ou contato com nossos profissionais, utilize nosso formulário. Nossa equipe de atendimento retornará a sua mensagem o mais breve possível. Escritório Rua C. Alberto Schmidt, nº 10 Ed. Laura, 1º andar, SL 5 - Centro - Videira-SC Ligue (49) 98822-0982 WhatsApp E-mail contato@mascarellohaus.adv.br Converse com um advogado Mídias sociais",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/contato/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/contato/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/contato/#listItem",
+                "position": 2,
+                "name": "Contato",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/contato/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/contato/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/contato/#webpage",
+            "url": "https://mascarellohaus.adv.br/contato/",
+            "name": "Contato - Mascârello Haus",
+            "description": "Gostaríamos de ouvir você Para informações ou contato com nossos profissionais, utilize nosso formulário. Nossa equipe de atendimento retornará a sua mensagem o mais breve possível. Escritório Rua C. Alberto Schmidt, nº 10 Ed. Laura, 1º andar, SL 5 - Centro - Videira-SC Ligue (49) 98822-0982 WhatsApp E-mail contato@mascarellohaus.adv.br Converse com um advogado Mídias sociais",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/contato/#breadcrumblist"
+            },
+            "datePublished": "2021-03-05T20:12:02-03:00",
+            "dateModified": "2023-10-06T10:18:42-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_areas-de-atuacao": {
+    "title": "Áreas de Atuação - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/areas-de-atuacao/",
+    "description": "Nossas áreas de atuação Todas as áreas envolvem serviços de Advocacia, consultoria e assessoria jurídica. Conheça as nossas soluções personalizadas A Mascârello Haus oferece recursos especializados, por meio do exercício da advocacia sistêmica de seus profissionais. De maneira preventiva, atua na solução de problemas nas esferas pessoal e corporativa, a fim de mitigar riscos e",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Áreas de Atuação - Mascârello Haus",
+    "ogDescription": "Nossas áreas de atuação Todas as áreas envolvem serviços de Advocacia, consultoria e assessoria jurídica. Conheça as nossas soluções personalizadas A Mascârello Haus oferece recursos especializados, por meio do exercício da advocacia sistêmica de seus profissionais. De maneira preventiva, atua na solução de problemas nas esferas pessoal e corporativa, a fim de mitigar riscos e",
+    "ogUrl": "https://mascarellohaus.adv.br/areas-de-atuacao/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Áreas de Atuação - Mascârello Haus",
+    "twitterDescription": "Nossas áreas de atuação Todas as áreas envolvem serviços de Advocacia, consultoria e assessoria jurídica. Conheça as nossas soluções personalizadas A Mascârello Haus oferece recursos especializados, por meio do exercício da advocacia sistêmica de seus profissionais. De maneira preventiva, atua na solução de problemas nas esferas pessoal e corporativa, a fim de mitigar riscos e",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/areas-de-atuacao/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/areas-de-atuacao/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/areas-de-atuacao/#listItem",
+                "position": 2,
+                "name": "Áreas de Atuação",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/areas-de-atuacao/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/areas-de-atuacao/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/areas-de-atuacao/#webpage",
+            "url": "https://mascarellohaus.adv.br/areas-de-atuacao/",
+            "name": "Áreas de Atuação - Mascârello Haus",
+            "description": "Nossas áreas de atuação Todas as áreas envolvem serviços de Advocacia, consultoria e assessoria jurídica. Conheça as nossas soluções personalizadas A Mascârello Haus oferece recursos especializados, por meio do exercício da advocacia sistêmica de seus profissionais. De maneira preventiva, atua na solução de problemas nas esferas pessoal e corporativa, a fim de mitigar riscos e",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/areas-de-atuacao/#breadcrumblist"
+            },
+            "datePublished": "2021-03-05T20:10:52-03:00",
+            "dateModified": "2025-01-24T13:25:11-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_quem-somos": {
+    "title": "Quem somos - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/quem-somos/",
+    "description": "O escritório Mascârello Haus A Mascârello Haus Advocacia e Consultoria Jurídica, desde de 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário. Quem somos Atualmente, somos um escritório dedicado a entender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas a regulação do mercado,",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Quem somos - Mascârello Haus",
+    "ogDescription": "O escritório Mascârello Haus A Mascârello Haus Advocacia e Consultoria Jurídica, desde de 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário. Quem somos Atualmente, somos um escritório dedicado a entender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas a regulação do mercado,",
+    "ogUrl": "https://mascarellohaus.adv.br/quem-somos/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Quem somos - Mascârello Haus",
+    "twitterDescription": "O escritório Mascârello Haus A Mascârello Haus Advocacia e Consultoria Jurídica, desde de 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário. Quem somos Atualmente, somos um escritório dedicado a entender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas a regulação do mercado,",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/quem-somos/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/quem-somos/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/quem-somos/#listItem",
+                "position": 2,
+                "name": "Quem somos",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/quem-somos/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/quem-somos/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/quem-somos/#webpage",
+            "url": "https://mascarellohaus.adv.br/quem-somos/",
+            "name": "Quem somos - Mascârello Haus",
+            "description": "O escritório Mascârello Haus A Mascârello Haus Advocacia e Consultoria Jurídica, desde de 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário. Quem somos Atualmente, somos um escritório dedicado a entender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas a regulação do mercado,",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/quem-somos/#breadcrumblist"
+            },
+            "datePublished": "2021-03-05T20:10:28-03:00",
+            "dateModified": "2025-01-28T10:01:59-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "page_mascarello-haus": {
+    "title": "Mascarello Haus - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/",
+    "description": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Mascarello Haus - Mascârello Haus",
+    "ogDescription": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+    "ogUrl": "https://mascarellohaus.adv.br/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "website",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Mascarello Haus - Mascârello Haus",
+    "twitterDescription": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/#organizationLogo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/#webpage",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus - Mascârello Haus",
+            "description": "Para um novo mundo, novas estratégias. Conheça como podemos ajudar! Para uma nova realidade, novas soluções jurídicas. Conheça como podemos ajudar! Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios. Conheça como podemos ajudar! Conheça os nossos artigos, cartilhas e publicações. Acessar Sobre o escritório A Mascârello Haus Advocacia e Consultoria Jurídica, desde",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/#breadcrumblist"
+            },
+            "datePublished": "2021-03-05T20:10:03-03:00",
+            "dateModified": "2025-01-28T09:57:58-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://mascarellohaus.adv.br/?s={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_cartilha-orientacoes-sobre-incidentes-de-seguranca": {
+    "title": "Cartilha Orientações sobre incidentes de segurança - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/",
+    "description": "Cartilha com dicas de como agir em um incidente de segurança da informação.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Cartilha Orientações sobre incidentes de segurança - Mascârello Haus",
+    "ogDescription": "Cartilha com dicas de como agir em um incidente de segurança da informação.",
+    "ogUrl": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Cartilha Orientações sobre incidentes de segurança - Mascârello Haus",
+    "twitterDescription": "Cartilha com dicas de como agir em um incidente de segurança da informação.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#blogposting",
+            "name": "Cartilha Orientações sobre incidentes de segurança - Mascârello Haus",
+            "headline": "Cartilha Orientações  sobre  incidentes de  segurança",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-09-28T22:19:09-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#webpage"
+            },
+            "articleSection": "Cartilhas"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#listItem",
+                "position": 2,
+                "name": "Cartilha Orientações  sobre  incidentes de  segurança",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#webpage",
+            "url": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/",
+            "name": "Cartilha Orientações sobre incidentes de segurança - Mascârello Haus",
+            "description": "Cartilha com dicas de como agir em um incidente de segurança da informação.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes.png",
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/#mainImage"
+            },
+            "datePublished": "2023-09-28T22:19:09-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd": {
+    "title": "Cartilha LGPD – Introdução à Proteção dos Dados Pessoais e à LGPD - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/",
+    "description": "Cartilha sobre os aspectos gerais da lei geral de proteção de dados pessoais (LGPD):",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Cartilha LGPD – Introdução à Proteção dos Dados Pessoais e à LGPD - Mascârello Haus",
+    "ogDescription": "Cartilha sobre os aspectos gerais da lei geral de proteção de dados pessoais (LGPD):",
+    "ogUrl": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Cartilha LGPD – Introdução à Proteção dos Dados Pessoais e à LGPD - Mascârello Haus",
+    "twitterDescription": "Cartilha sobre os aspectos gerais da lei geral de proteção de dados pessoais (LGPD):",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#blogposting",
+            "name": "Cartilha LGPD – Introdução à Proteção dos Dados Pessoais e à LGPD - Mascârello Haus",
+            "headline": "Cartilha LGPD &#8211;  Introdução  à Proteção  dos Dados  Pessoais e  à LGPD",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-09-28T22:18:57-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#webpage"
+            },
+            "articleSection": "Cartilhas"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#listItem",
+                "position": 2,
+                "name": "Cartilha LGPD -  Introdução  à Proteção  dos Dados  Pessoais e  à LGPD",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#webpage",
+            "url": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/",
+            "name": "Cartilha LGPD – Introdução à Proteção dos Dados Pessoais e à LGPD - Mascârello Haus",
+            "description": "Cartilha sobre os aspectos gerais da lei geral de proteção de dados pessoais (LGPD):",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd.png",
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/#mainImage"
+            },
+            "datePublished": "2023-09-28T22:18:57-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_cartilha-phishing-o-famoso-e-malicioso-clique-aqui": {
+    "title": "Cartilha PHISHING – O famoso e malicioso “clique aqui” - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/",
+    "description": "O que é o phishing e como funciona. Orientações para não ser pego nesse tipo de golpe.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Cartilha PHISHING – O famoso e malicioso “clique aqui” - Mascârello Haus",
+    "ogDescription": "O que é o phishing e como funciona. Orientações para não ser pego nesse tipo de golpe.",
+    "ogUrl": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Cartilha PHISHING – O famoso e malicioso “clique aqui” - Mascârello Haus",
+    "twitterDescription": "O que é o phishing e como funciona. Orientações para não ser pego nesse tipo de golpe.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#blogposting",
+            "name": "Cartilha PHISHING – O famoso e malicioso “clique aqui” - Mascârello Haus",
+            "headline": "Cartilha PHISHING &#8211; O famoso e  malicioso  “clique  aqui&#8221;",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-09-28T21:42:24-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#webpage"
+            },
+            "articleSection": "Cartilhas"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#listItem",
+                "position": 2,
+                "name": "Cartilha PHISHING - O famoso e  malicioso  “clique  aqui\"",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#webpage",
+            "url": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/",
+            "name": "Cartilha PHISHING – O famoso e malicioso “clique aqui” - Mascârello Haus",
+            "description": "O que é o phishing e como funciona. Orientações para não ser pego nesse tipo de golpe.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2.png",
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/#mainImage"
+            },
+            "datePublished": "2023-09-28T21:42:24-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_publicacoes-diario-catarinense": {
+    "title": "Publicações no jornal O Catarinense - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/",
+    "description": "Todas as publicações do escritório Mascarello Haus no jornal O Catarinense.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Publicações no jornal O Catarinense - Mascârello Haus",
+    "ogDescription": "Todas as publicações do escritório Mascarello Haus no jornal O Catarinense.",
+    "ogUrl": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Publicações no jornal O Catarinense - Mascârello Haus",
+    "twitterDescription": "Todas as publicações do escritório Mascarello Haus no jornal O Catarinense.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#blogposting",
+            "name": "Publicações no jornal O Catarinense - Mascârello Haus",
+            "headline": "Publicações no jornal O Catarinense",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-09-12T20:49:50-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#webpage"
+            },
+            "articleSection": "Publicações"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#listItem",
+                "position": 2,
+                "name": "Publicações no jornal O Catarinense",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#webpage",
+            "url": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/",
+            "name": "Publicações no jornal O Catarinense - Mascârello Haus",
+            "description": "Todas as publicações do escritório Mascarello Haus no jornal O Catarinense.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1.png",
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/#mainImage"
+            },
+            "datePublished": "2023-09-12T20:49:50-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos": {
+    "title": "Aprovado ou inscrito em concurso público? Conheça seus direitos! - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/",
+    "description": "Conheça os seus direitos em um concurso público.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Aprovado ou inscrito em concurso público? Conheça seus direitos! - Mascârello Haus",
+    "ogDescription": "Conheça os seus direitos em um concurso público.",
+    "ogUrl": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Aprovado ou inscrito em concurso público? Conheça seus direitos! - Mascârello Haus",
+    "twitterDescription": "Conheça os seus direitos em um concurso público.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#blogposting",
+            "name": "Aprovado ou inscrito em concurso público? Conheça seus direitos! - Mascârello Haus",
+            "headline": "Aprovado ou inscrito em concurso público? Conheça seus direitos!",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-08-21T21:27:44-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#webpage"
+            },
+            "articleSection": "eBooks"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#listItem",
+                "position": 2,
+                "name": "Aprovado ou inscrito em concurso público? Conheça seus direitos!",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#webpage",
+            "url": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/",
+            "name": "Aprovado ou inscrito em concurso público? Conheça seus direitos! - Mascârello Haus",
+            "description": "Conheça os seus direitos em um concurso público.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso.png",
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/#mainImage"
+            },
+            "datePublished": "2023-08-21T21:27:44-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_dicas-sobre-o-plano-de-aposentadoria": {
+    "title": "Dicas sobre o plano de aposentadoria - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/",
+    "description": "Como sua carreira está adaptada ao mundo digital?",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Dicas sobre o plano de aposentadoria - Mascârello Haus",
+    "ogDescription": "Como sua carreira está adaptada ao mundo digital?",
+    "ogUrl": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Dicas sobre o plano de aposentadoria - Mascârello Haus",
+    "twitterDescription": "Como sua carreira está adaptada ao mundo digital?",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#blogposting",
+            "name": "Dicas sobre o plano de aposentadoria - Mascârello Haus",
+            "headline": "Dicas sobre o plano de aposentadoria",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-08-21T21:27:08-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#webpage"
+            },
+            "articleSection": "Artigos"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#listItem",
+                "position": 2,
+                "name": "Dicas sobre o plano de aposentadoria",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#webpage",
+            "url": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/",
+            "name": "Dicas sobre o plano de aposentadoria - Mascârello Haus",
+            "description": "Como sua carreira está adaptada ao mundo digital?",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria.png",
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/#mainImage"
+            },
+            "datePublished": "2023-08-21T21:27:08-03:00",
+            "dateModified": "2024-01-18T14:53:59-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_ebook-regras-de-funcionamento-portarias-223-e-244": {
+    "title": "eBook Regras de Funcionamento Portarias 223 e 244 - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/",
+    "description": "Medidas adotadas pelo Governo Estadual para retomada das atividades em diversos setores.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "eBook Regras de Funcionamento Portarias 223 e 244 - Mascârello Haus",
+    "ogDescription": "Medidas adotadas pelo Governo Estadual para retomada das atividades em diversos setores.",
+    "ogUrl": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "eBook Regras de Funcionamento Portarias 223 e 244 - Mascârello Haus",
+    "twitterDescription": "Medidas adotadas pelo Governo Estadual para retomada das atividades em diversos setores.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#blogposting",
+            "name": "eBook Regras de Funcionamento Portarias 223 e 244 - Mascârello Haus",
+            "headline": "eBook Regras de Funcionamento Portarias 223 e 244",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-08-21T21:26:51-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#webpage"
+            },
+            "articleSection": "eBooks"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#listItem",
+                "position": 2,
+                "name": "eBook Regras de Funcionamento Portarias 223 e 244",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#webpage",
+            "url": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/",
+            "name": "eBook Regras de Funcionamento Portarias 223 e 244 - Mascârello Haus",
+            "description": "Medidas adotadas pelo Governo Estadual para retomada das atividades em diversos setores.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/#mainImage"
+            },
+            "datePublished": "2023-08-21T21:26:51-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_ebook-programa-emergencial-de-suporte-a-empregos-mp-944": {
+    "title": "eBook Programa Emergencial de Suporte a Empregos – MP 944 - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/",
+    "description": "Novas medidas disponibilizadas pelo Governo Federal para empresas.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "eBook Programa Emergencial de Suporte a Empregos – MP 944 - Mascârello Haus",
+    "ogDescription": "Novas medidas disponibilizadas pelo Governo Federal para empresas.",
+    "ogUrl": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "eBook Programa Emergencial de Suporte a Empregos – MP 944 - Mascârello Haus",
+    "twitterDescription": "Novas medidas disponibilizadas pelo Governo Federal para empresas.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#blogposting",
+            "name": "eBook Programa Emergencial de Suporte a Empregos – MP 944 - Mascârello Haus",
+            "headline": "eBook Programa Emergencial de Suporte a Empregos – MP 944",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-08-21T21:26:25-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#webpage"
+            },
+            "articleSection": "eBooks"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#listItem",
+                "position": 2,
+                "name": "eBook Programa Emergencial de Suporte a Empregos – MP 944",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#webpage",
+            "url": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/",
+            "name": "eBook Programa Emergencial de Suporte a Empregos – MP 944 - Mascârello Haus",
+            "description": "Novas medidas disponibilizadas pelo Governo Federal para empresas.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/#mainImage"
+            },
+            "datePublished": "2023-08-21T21:26:25-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_ebook-medidas-trabalhistas-mp-927": {
+    "title": "eBook Medidas Trabalhistas – MP 927 - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/",
+    "description": "Medidas trabalhistas adotadas pelo Governo Federal para contornar a pandemia.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "eBook Medidas Trabalhistas – MP 927 - Mascârello Haus",
+    "ogDescription": "Medidas trabalhistas adotadas pelo Governo Federal para contornar a pandemia.",
+    "ogUrl": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "eBook Medidas Trabalhistas – MP 927 - Mascârello Haus",
+    "twitterDescription": "Medidas trabalhistas adotadas pelo Governo Federal para contornar a pandemia.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#blogposting",
+            "name": "eBook Medidas Trabalhistas – MP 927 - Mascârello Haus",
+            "headline": "eBook Medidas Trabalhistas – MP 927",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-08-21T21:26:17-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#webpage"
+            },
+            "articleSection": "eBooks"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#listItem",
+                "position": 2,
+                "name": "eBook Medidas Trabalhistas – MP 927",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#webpage",
+            "url": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/",
+            "name": "eBook Medidas Trabalhistas – MP 927 - Mascârello Haus",
+            "description": "Medidas trabalhistas adotadas pelo Governo Federal para contornar a pandemia.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/#mainImage"
+            },
+            "datePublished": "2023-08-21T21:26:17-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_ebook-auxilio-emergencial-mp-936": {
+    "title": "eBook Auxílio Emergencial – MP 936 - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/",
+    "description": "Medidas trabalhistas adotadas pelo Governo Federal para concessão do Auxílio Emergencial.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "eBook Auxílio Emergencial – MP 936 - Mascârello Haus",
+    "ogDescription": "Medidas trabalhistas adotadas pelo Governo Federal para concessão do Auxílio Emergencial.",
+    "ogUrl": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "eBook Auxílio Emergencial – MP 936 - Mascârello Haus",
+    "twitterDescription": "Medidas trabalhistas adotadas pelo Governo Federal para concessão do Auxílio Emergencial.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#blogposting",
+            "name": "eBook Auxílio Emergencial – MP 936 - Mascârello Haus",
+            "headline": "eBook Auxílio Emergencial – MP 936",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-08-21T21:26:09-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#webpage"
+            },
+            "articleSection": "eBooks"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#listItem",
+                "position": 2,
+                "name": "eBook Auxílio Emergencial – MP 936",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#webpage",
+            "url": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/",
+            "name": "eBook Auxílio Emergencial – MP 936 - Mascârello Haus",
+            "description": "Medidas trabalhistas adotadas pelo Governo Federal para concessão do Auxílio Emergencial.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio.png",
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/#mainImage"
+            },
+            "datePublished": "2023-08-21T21:26:09-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "post_advocacia-3-0": {
+    "title": "Advocacia 3.0 - Mascârello Haus",
+    "canonical": "https://mascarellohaus.adv.br/advocacia-3-0/",
+    "description": "Entenda como a prática jurídica evoluiu na era digital.",
+    "robots": "max-image-preview:large",
+    "ogTitle": "Advocacia 3.0 - Mascârello Haus",
+    "ogDescription": "Entenda como a prática jurídica evoluiu na era digital.",
+    "ogUrl": "https://mascarellohaus.adv.br/advocacia-3-0/",
+    "ogSiteName": "Mascârello Haus -",
+    "ogImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "ogType": "article",
+    "twitterCard": "summary_large_image",
+    "twitterTitle": "Advocacia 3.0 - Mascârello Haus",
+    "twitterDescription": "Entenda como a prática jurídica evoluiu na era digital.",
+    "twitterImage": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+    "schemaOrg": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#blogposting",
+            "name": "Advocacia 3.0 - Mascârello Haus",
+            "headline": "Advocacia 3.0",
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0.png",
+              "width": 922,
+              "height": 981
+            },
+            "datePublished": "2023-07-24T10:43:00-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00",
+            "inLanguage": "pt-BR",
+            "mainEntityOfPage": {
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#webpage"
+            },
+            "articleSection": "Artigos"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/#listItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://mascarellohaus.adv.br/",
+                "nextItem": "https://mascarellohaus.adv.br/advocacia-3-0/#listItem"
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#listItem",
+                "position": 2,
+                "name": "Advocacia 3.0",
+                "previousItem": "https://mascarellohaus.adv.br/#listItem"
+              }
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://mascarellohaus.adv.br/#organization",
+            "name": "Mascarello Haus",
+            "url": "https://mascarellohaus.adv.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2025/01/logo2025.png",
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#organizationLogo",
+              "width": 793,
+              "height": 460
+            },
+            "image": {
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#organizationLogo"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mascarellohaus.adv.br/author/mirataira/#author",
+            "url": "https://mascarellohaus.adv.br/author/mirataira/",
+            "name": "Mirataira Mascarello Haus",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#authorImage",
+              "url": "https://secure.gravatar.com/avatar/6632a9ca4c87c54c89ed392428d1347c98fb4b58cccf9088f09ba3ea8c104e89?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Mirataira Mascarello Haus"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#webpage",
+            "url": "https://mascarellohaus.adv.br/advocacia-3-0/",
+            "name": "Advocacia 3.0 - Mascârello Haus",
+            "description": "Entenda como a prática jurídica evoluiu na era digital.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://mascarellohaus.adv.br/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#breadcrumblist"
+            },
+            "author": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "creator": {
+              "@id": "https://mascarellohaus.adv.br/author/mirataira/#author"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0.png",
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#mainImage",
+              "width": 922,
+              "height": 981
+            },
+            "primaryImageOfPage": {
+              "@id": "https://mascarellohaus.adv.br/advocacia-3-0/#mainImage"
+            },
+            "datePublished": "2023-07-24T10:43:00-03:00",
+            "dateModified": "2024-01-18T14:54:00-03:00"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mascarellohaus.adv.br/#website",
+            "url": "https://mascarellohaus.adv.br/",
+            "name": "Mascarello Haus",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://mascarellohaus.adv.br/#organization"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "id": 39,
+    "count": 2,
+    "description": "",
+    "link": "https://mascarellohaus.adv.br/category/artigos/",
+    "name": "Artigos",
+    "slug": "artigos",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories/39",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts?categories=39"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 1,
+    "count": 3,
+    "description": "",
+    "link": "https://mascarellohaus.adv.br/category/cartilhas/",
+    "name": "Cartilhas",
+    "slug": "cartilhas",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories/1",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts?categories=1"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 48,
+    "count": 5,
+    "description": "",
+    "link": "https://mascarellohaus.adv.br/category/ebooks/",
+    "name": "eBooks",
+    "slug": "ebooks",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories/48",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts?categories=48"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 45,
+    "count": 1,
+    "description": "",
+    "link": "https://mascarellohaus.adv.br/category/publicacoes/",
+    "name": "Publicações",
+    "slug": "publicacoes",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories/45",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts?categories=45"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,3236 @@
+[
+  {
+    "id": 2685,
+    "date": "2023-09-28T22:19:09",
+    "date_gmt": "2023-09-29T01:19:09",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2685"
+    },
+    "modified": "2024-01-18T14:53:59",
+    "modified_gmt": "2024-01-18T17:53:59",
+    "slug": "cartilha-orientacoes-sobre-incidentes-de-seguranca",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/cartilha-orientacoes-sobre-incidentes-de-seguranca/",
+    "title": {
+      "rendered": "Cartilha Orientações  sobre  incidentes de  segurança"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2685\" class=\"elementor elementor-2685\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/09\\/cartilha-incidente-seguranca-1.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                <a href=\"https://mascarellohaus.adv.br/wp-content/uploads/2023/09/cartilha-incidente-seguranca-1.pdf\" class=\"ha-btn\" download title=\"\">Download</a>                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Cartilha com dicas de como agir em um incidente de segurança da informação.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2691,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      1
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2685",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-cartilhas"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/incidentes-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Cartilha com dicas de como agir em um incidente de segurança da informação.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2685",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2685"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 11,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2685/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2874,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2685/revisions/2874"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2691"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2685"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2685"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2685"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2684,
+    "date": "2023-09-28T22:18:57",
+    "date_gmt": "2023-09-29T01:18:57",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2684"
+    },
+    "modified": "2024-01-18T14:53:59",
+    "modified_gmt": "2024-01-18T17:53:59",
+    "slug": "cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/cartilha-lgpd-introducao-a-protecao-dos-dados-pessoais-e-a-lgpd/",
+    "title": {
+      "rendered": "Cartilha LGPD &#8211;  Introdução  à Proteção  dos Dados  Pessoais e  à LGPD"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2684\" class=\"elementor elementor-2684\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/09\\/cartilha-introducao-a-protecao-de-dados-1.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                <a href=\"https://mascarellohaus.adv.br/wp-content/uploads/2023/09/cartilha-introducao-a-protecao-de-dados-1.pdf\" class=\"ha-btn\" download title=\"\">Download</a>                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p> Cartilha sobre os aspectos gerais da lei geral de proteção de dados<br />\npessoais (LGPD):</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2688,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      1
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2684",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-cartilhas"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/lgpd-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Cartilha sobre os aspectos gerais da lei geral de proteção de dados pessoais (LGPD):",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2684",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2684"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 11,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2684/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2871,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2684/revisions/2871"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2688"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2684"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2684"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2684"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2661,
+    "date": "2023-09-28T21:42:24",
+    "date_gmt": "2023-09-29T00:42:24",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2661"
+    },
+    "modified": "2024-01-18T14:53:59",
+    "modified_gmt": "2024-01-18T17:53:59",
+    "slug": "cartilha-phishing-o-famoso-e-malicioso-clique-aqui",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/cartilha-phishing-o-famoso-e-malicioso-clique-aqui/",
+    "title": {
+      "rendered": "Cartilha PHISHING &#8211; O famoso e  malicioso  “clique  aqui&#8221;"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2661\" class=\"elementor elementor-2661\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/09\\/cartilha-phishing-1.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                <a href=\"https://mascarellohaus.adv.br/wp-content/uploads/2023/09/cartilha-phishing-1.pdf\" class=\"ha-btn\" download title=\"\">Download</a>                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>O que é o phishing e como funciona. Orientações para não ser pego nesse tipo de golpe.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2682,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      1
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2661",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-cartilhas"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/phishing-2-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "O que é o phishing e como funciona. Orientações para não ser pego nesse tipo de golpe.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2661",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2661"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 13,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2661/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2868,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2661/revisions/2868"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2682"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2661"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2661"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2661"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2415,
+    "date": "2023-09-12T20:49:50",
+    "date_gmt": "2023-09-12T23:49:50",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2415"
+    },
+    "modified": "2024-01-18T14:53:59",
+    "modified_gmt": "2024-01-18T17:53:59",
+    "slug": "publicacoes-diario-catarinense",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/publicacoes-diario-catarinense/",
+    "title": {
+      "rendered": "Publicações no jornal O Catarinense"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2415\" class=\"elementor elementor-2415\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/09\\/Editorial-Jornal-O-catarinenense.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t<h2 class=\"ha-pdf-title\">O jornal O Catarinense é um dos veículos impressos mais tradicionais do Meio-Oeste catarinense, e aqui reunimos todas as publicações de autoria do escritório Mascarello Haus.</h2>\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Todas as publicações do escritório Mascarello Haus no jornal O Catarinense.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2717,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      45
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2415",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-publicacoes"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/09/jornal-1-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Todas as publicações do escritório Mascarello Haus no jornal O Catarinense.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2415",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2415"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 12,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2415/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2832,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2415/revisions/2832"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2717"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2415"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2415"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2415"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2041,
+    "date": "2023-08-21T21:27:44",
+    "date_gmt": "2023-08-22T00:27:44",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2041"
+    },
+    "modified": "2024-01-18T14:53:59",
+    "modified_gmt": "2024-01-18T17:53:59",
+    "slug": "aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/aprovado-ou-inscrito-em-concurso-publico-conheca-seus-direitos/",
+    "title": {
+      "rendered": "Aprovado ou inscrito em concurso público? Conheça seus direitos!"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2041\" class=\"elementor elementor-2041\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/08\\/aprovados-ou-inscrito-em-concurso-publico-conheca-seus-direitos-1.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Conheça os seus direitos em um concurso público.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2703,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      48
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2041",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-ebooks"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/concurso-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Conheça os seus direitos em um concurso público.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2041",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2041"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2041/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2835,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2041/revisions/2835"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2703"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2041"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2041"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2041"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2039,
+    "date": "2023-08-21T21:27:08",
+    "date_gmt": "2023-08-22T00:27:08",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2039"
+    },
+    "modified": "2024-01-18T14:53:59",
+    "modified_gmt": "2024-01-18T17:53:59",
+    "slug": "dicas-sobre-o-plano-de-aposentadoria",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/dicas-sobre-o-plano-de-aposentadoria/",
+    "title": {
+      "rendered": "Dicas sobre o plano de aposentadoria"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2039\" class=\"elementor elementor-2039\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/08\\/plano-de-aposentadoria-1.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Como sua carreira está adaptada ao mundo digital?</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2701,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      39
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2039",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-artigos"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/aposentadoria-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Como sua carreira está adaptada ao mundo digital?",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2039",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2039"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2039/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2838,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2039/revisions/2838"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2701"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2039"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2039"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2039"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2037,
+    "date": "2023-08-21T21:26:51",
+    "date_gmt": "2023-08-22T00:26:51",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2037"
+    },
+    "modified": "2024-01-18T14:54:00",
+    "modified_gmt": "2024-01-18T17:54:00",
+    "slug": "ebook-regras-de-funcionamento-portarias-223-e-244",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/ebook-regras-de-funcionamento-portarias-223-e-244/",
+    "title": {
+      "rendered": "eBook Regras de Funcionamento Portarias 223 e 244"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2037\" class=\"elementor elementor-2037\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/08\\/e-Book-Regras-de-Funcionamento-Portarias-223-e-244.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Medidas adotadas pelo Governo Estadual para retomada das atividades em diversos setores.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2699,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      48
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2037",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-ebooks"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/223-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Medidas adotadas pelo Governo Estadual para retomada das atividades em diversos setores.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2037",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2037"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2037/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2841,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2037/revisions/2841"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2699"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2037"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2037"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2037"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2031,
+    "date": "2023-08-21T21:26:25",
+    "date_gmt": "2023-08-22T00:26:25",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2031"
+    },
+    "modified": "2024-01-18T14:54:00",
+    "modified_gmt": "2024-01-18T17:54:00",
+    "slug": "ebook-programa-emergencial-de-suporte-a-empregos-mp-944",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/ebook-programa-emergencial-de-suporte-a-empregos-mp-944/",
+    "title": {
+      "rendered": "eBook Programa Emergencial de Suporte a Empregos – MP 944"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2031\" class=\"elementor elementor-2031\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/08\\/e-Book-Programa-Emergencial-de-Suporte-a-Empregos-MP-944.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Novas medidas disponibilizadas pelo Governo Federal para empresas.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2706,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      48
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2031",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-ebooks"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp944-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Novas medidas disponibilizadas pelo Governo Federal para empresas.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2031",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2031"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2031/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2844,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2031/revisions/2844"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2706"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2031"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2031"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2031"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2032,
+    "date": "2023-08-21T21:26:17",
+    "date_gmt": "2023-08-22T00:26:17",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2032"
+    },
+    "modified": "2024-01-18T14:54:00",
+    "modified_gmt": "2024-01-18T17:54:00",
+    "slug": "ebook-medidas-trabalhistas-mp-927",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/ebook-medidas-trabalhistas-mp-927/",
+    "title": {
+      "rendered": "eBook Medidas Trabalhistas – MP 927"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2032\" class=\"elementor elementor-2032\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/08\\/e-Book-Medidas-Trabalhistas-MP-927.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Medidas trabalhistas adotadas pelo Governo Federal para contornar a pandemia.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2707,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      48
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2032",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-ebooks"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/mp977-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Medidas trabalhistas adotadas pelo Governo Federal para contornar a pandemia.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2032",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2032"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2032/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2847,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2032/revisions/2847"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2707"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2032"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2032"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2032"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2033,
+    "date": "2023-08-21T21:26:09",
+    "date_gmt": "2023-08-22T00:26:09",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=2033"
+    },
+    "modified": "2024-01-18T14:54:00",
+    "modified_gmt": "2024-01-18T17:54:00",
+    "slug": "ebook-auxilio-emergencial-mp-936",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/ebook-auxilio-emergencial-mp-936/",
+    "title": {
+      "rendered": "eBook Auxílio Emergencial – MP 936"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"2033\" class=\"elementor elementor-2033\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/08\\/e-Book-Auxilio-Emergencial-MP-936-branco.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Medidas trabalhistas adotadas pelo Governo Federal para concessão do Auxílio Emergencial.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2702,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      48
+    ],
+    "tags": [],
+    "class_list": [
+      "post-2033",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-ebooks"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/auxilio-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Medidas trabalhistas adotadas pelo Governo Federal para concessão do Auxílio Emergencial.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2033",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=2033"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2033/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2850,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/2033/revisions/2850"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2702"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=2033"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=2033"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=2033"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 142,
+    "date": "2023-07-24T10:43:00",
+    "date_gmt": "2023-07-24T13:43:00",
+    "guid": {
+      "rendered": "https://mascarellohaus.adv.br/novosite/?p=142"
+    },
+    "modified": "2024-01-18T14:54:00",
+    "modified_gmt": "2024-01-18T17:54:00",
+    "slug": "advocacia-3-0",
+    "status": "publish",
+    "type": "post",
+    "link": "https://mascarellohaus.adv.br/advocacia-3-0/",
+    "title": {
+      "rendered": "Advocacia 3.0"
+    },
+    "content": {
+      "rendered": "\t\t<div data-elementor-type=\"wp-post\" data-elementor-id=\"142\" class=\"elementor elementor-142\" data-elementor-post-type=\"post\">\n\t\t\t\t\t\t<section class=\"elementor-section elementor-top-section elementor-element elementor-element-16f2e56 elementor-section-boxed elementor-section-height-default elementor-section-height-default\" data-id=\"16f2e56\" data-element_type=\"section\" data-settings=\"{&quot;_ha_eqh_enable&quot;:false}\">\n\t\t\t\t\t\t<div class=\"elementor-container elementor-column-gap-default\">\n\t\t\t\t\t<div class=\"elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5a73d7c\" data-id=\"5a73d7c\" data-element_type=\"column\">\n\t\t\t<div class=\"elementor-widget-wrap elementor-element-populated\">\n\t\t\t\t\t\t<div class=\"elementor-element elementor-element-983f461 elementor-widget elementor-widget-ha-pdf-view happy-addon ha-pdf-view\" data-id=\"983f461\" data-element_type=\"widget\" data-widget_type=\"ha-pdf-view.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t        <div class=\"pdf_viewer_container\">\n            <div class=\"pdf_viewer_options viewer-983f461\" data-pdf-settings=\"{&quot;unique_id&quot;:&quot;viewer-983f461&quot;,&quot;pdf_url&quot;:&quot;https:\\/\\/mascarellohaus.adv.br\\/wp-content\\/uploads\\/2023\\/07\\/advocacia-3-0.pdf&quot;,&quot;file_type&quot;:&quot;upload_file&quot;,&quot;page_number&quot;:&quot;1&quot;,&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;600px&quot;}\">\n\t\t\t\t<span class=\"ha-title-flex\">\n\t\t\t\t\t<span class=\"pdf-icon\">\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t                <div class=\"pdf-button\">\n                                </div>\n            </div>\n\n\t\t\t<div>\n\t\t\t\t<div id=\"viewer-983f461\"></div>\n\t\t\t</div>\n\n        </div>\n        \t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t</section>\n\t\t\t\t</div>\n\t\t",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Entenda como a prática jurídica evoluiu na era digital.</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "featured_media": 2700,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_uag_custom_page_level_css": "",
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "disabled",
+      "footer-sml-layout": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "footnotes": ""
+    },
+    "categories": [
+      39
+    ],
+    "tags": [],
+    "class_list": [
+      "post-142",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-artigos"
+    ],
+    "aioseo_notices": [],
+    "uagb_featured_image_src": {
+      "full": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0.png",
+        922,
+        981,
+        false
+      ],
+      "thumbnail": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0-150x150.png",
+        150,
+        150,
+        true
+      ],
+      "medium": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0-282x300.png",
+        282,
+        300,
+        true
+      ],
+      "medium_large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0-768x817.png",
+        768,
+        817,
+        true
+      ],
+      "large": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0.png",
+        922,
+        981,
+        false
+      ],
+      "1536x1536": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0.png",
+        922,
+        981,
+        false
+      ],
+      "2048x2048": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0.png",
+        922,
+        981,
+        false
+      ],
+      "tp-image-grid": [
+        "https://mascarellohaus.adv.br/wp-content/uploads/2023/07/advocacia3.0-700x700.png",
+        700,
+        700,
+        true
+      ]
+    },
+    "uagb_author_info": {
+      "display_name": "Mirataira Mascarello Haus",
+      "author_link": "https://mascarellohaus.adv.br/author/mirataira/"
+    },
+    "uagb_comment_info": 0,
+    "uagb_excerpt": "Entenda como a prática jurídica evoluiu na era digital.",
+    "_links": {
+      "self": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/142",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/users/2"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/comments?post=142"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/142/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 2853,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/posts/142/revisions/2853"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media/2700"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/media?parent=142"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/categories?post=142"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://mascarellohaus.adv.br/wp-json/wp/v2/tags?post=142"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]
