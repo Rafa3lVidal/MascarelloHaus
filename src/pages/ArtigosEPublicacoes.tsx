@@ -1,42 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { supabase } from '../lib/supabase';
-import { BookOpen, Calendar, ArrowRight, Tag } from 'lucide-react';
+import { POSTS_DATA, Post } from '../data/postsData';
+import { CATEGORIES_DATA } from '../data/categoriesData';
+import { BookOpen, Calendar, ArrowRight, Tag, Download } from 'lucide-react';
 
 export const ArtigosEPublicacoes: React.FC = () => {
-  const [posts, setPosts] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadData() {
-      setLoading(true);
-      try {
-        const [postsRes, catsRes] = await Promise.all([
-          supabase
-            .from('posts')
-            .select('*, categories(name, slug)')
-            .eq('status', 'published')
-            .order('published_at', { ascending: false }),
-          supabase.from('categories').select('*').order('name')
-        ]);
-
-        if (postsRes.data) setPosts(postsRes.data);
-        if (catsRes.data) setCategories(catsRes.data);
-      } catch (err) {
-        console.error('Erro ao carregar publicações:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadData();
-  }, []);
+  const posts: Post[] = POSTS_DATA;
+  const categories = CATEGORIES_DATA;
 
   const filteredPosts = selectedCategory
-    ? posts.filter((p) => p.categories?.slug === selectedCategory)
+    ? posts.filter((p) => p.category.slug === selectedCategory)
     : posts;
 
   return (
@@ -51,7 +26,7 @@ export const ArtigosEPublicacoes: React.FC = () => {
         <div className="container">
           <div className="gold-divider center"></div>
           <h1 className="banner-title text-center">Artigos, cartilhas, ebooks e publicações</h1>
-          <p className="banner-desc text-center" style={{ margin: '0 auto' }}>
+          <p className="banner-desc text-center" style={{ margin: '0 auto', maxWidth: '800px' }}>
             Confira os materiais sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascârello Haus.
           </p>
         </div>
@@ -68,7 +43,7 @@ export const ArtigosEPublicacoes: React.FC = () => {
               Todos ({posts.length})
             </button>
             {categories.map((cat) => {
-              const count = posts.filter((p) => p.categories?.slug === cat.slug).length;
+              const count = posts.filter((p) => p.category.slug === cat.slug).length;
               return (
                 <button
                   key={cat.id}
@@ -81,11 +56,7 @@ export const ArtigosEPublicacoes: React.FC = () => {
             })}
           </div>
 
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: '60px 0' }}>
-              <p>Carregando publicações...</p>
-            </div>
-          ) : filteredPosts.length === 0 ? (
+          {filteredPosts.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 0' }}>
               <p>Nenhuma publicação encontrada nesta categoria.</p>
             </div>
@@ -94,9 +65,11 @@ export const ArtigosEPublicacoes: React.FC = () => {
               {filteredPosts.map((post) => (
                 <article key={post.id} className="post-card">
                   {post.featured_image_url ? (
-                    <div className="post-thumbnail">
-                      <img src={post.featured_image_url} alt={post.title} />
-                    </div>
+                    <Link to={`/${post.slug}/`} className="post-thumbnail-link">
+                      <div className="post-thumbnail">
+                        <img src={post.featured_image_url} alt={post.title} loading="lazy" />
+                      </div>
+                    </Link>
                   ) : (
                     <div className="post-thumbnail-placeholder">
                       <BookOpen size={40} />
@@ -104,25 +77,25 @@ export const ArtigosEPublicacoes: React.FC = () => {
                   )}
 
                   <div className="post-body">
-                    {post.categories && (
+                    {post.category && (
                       <span className="post-category-tag">
-                        <Tag size={12} /> {post.categories.name}
+                        <Tag size={12} /> {post.category.name}
                       </span>
                     )}
                     <h2 className="post-card-title">
                       <Link to={`/${post.slug}/`}>{post.title}</Link>
                     </h2>
                     <p className="post-card-excerpt">
-                      {post.excerpt || 'Clique no link para ler a publicação completa.'}
+                      {post.excerpt || 'Clique no link para acessar a íntegra da publicação e o download do material.'}
                     </p>
 
                     <div className="post-footer">
                       <span className="post-date">
                         <Calendar size={13} />{' '}
-                        {new Date(post.published_at || post.created_at).toLocaleDateString('pt-BR')}
+                        {new Date(post.published_at).toLocaleDateString('pt-BR')}
                       </span>
                       <Link to={`/${post.slug}/`} className="read-more-link">
-                        Acessar <ArrowRight size={14} />
+                        Acessar Material {post.pdf_url ? <Download size={14} /> : <ArrowRight size={14} />}
                       </Link>
                     </div>
                   </div>
@@ -195,10 +168,14 @@ export const ArtigosEPublicacoes: React.FC = () => {
           transform: translateY(-5px);
           box-shadow: 0 12px 30px rgba(13, 55, 50, 0.08);
         }
+        .post-thumbnail-link {
+          display: block;
+        }
         .post-thumbnail {
           width: 100%;
           height: 200px;
           overflow: hidden;
+          background: #f8fafc;
         }
         .post-thumbnail img {
           width: 100%;
@@ -242,6 +219,11 @@ export const ArtigosEPublicacoes: React.FC = () => {
           margin-bottom: 12px;
           color: var(--color-primary);
         }
+        .post-card-title a {
+          color: var(--color-primary);
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
         .post-card-title a:hover {
           color: var(--color-accent);
         }
@@ -276,6 +258,7 @@ export const ArtigosEPublicacoes: React.FC = () => {
           display: inline-flex;
           align-items: center;
           gap: 4px;
+          text-decoration: none;
         }
         .read-more-link:hover {
           color: var(--color-primary);

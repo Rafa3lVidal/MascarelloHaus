@@ -42,3 +42,6 @@ coverage/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Scratch scripts
+scratch/

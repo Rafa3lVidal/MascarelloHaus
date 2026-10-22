@@ -24,6 +24,8 @@ export const AppRoutes: React.FC = () => {
 
       <Route path="/areas-de-atuacao" element={<AreasDeAtuacao />} />
       <Route path="/areas-de-atuacao/" element={<AreasDeAtuacao />} />
+      <Route path="/areas-de-atuacao/:slug" element={<AreaIndividual />} />
+      <Route path="/areas-de-atuacao/:slug/" element={<AreaIndividual />} />
 
       {/* Áreas de Atuação Individuais */}
       <Route path="/direito-civil-e-empresarial" element={<AreaIndividual />} />
@@ -42,6 +44,8 @@ export const AppRoutes: React.FC = () => {
       {/* Artigos e Publicações */}
       <Route path="/artigos-e-publicacoes" element={<ArtigosEPublicacoes />} />
       <Route path="/artigos-e-publicacoes/" element={<ArtigosEPublicacoes />} />
+      <Route path="/artigos-e-publicacoes/:slug" element={<PostIndividual />} />
+      <Route path="/artigos-e-publicacoes/:slug/" element={<PostIndividual />} />
       <Route path="/publicacoes" element={<Navigate to="/artigos-e-publicacoes/" replace />} />
       <Route path="/publicacoes/" element={<Navigate to="/artigos-e-publicacoes/" replace />} />
 
