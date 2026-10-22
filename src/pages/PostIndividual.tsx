@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchPostBySlug } from '../lib/postsService';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { POSTS_DATA, Post } from '../data/postsData';
@@ -12,7 +13,13 @@ export const PostIndividual: React.FC = () => {
   const rawPath = paramSlug || location.pathname.replace(/^\/|\/$/g, '').split('/').pop() || '';
   const currentSlug = rawPath.toLowerCase();
 
-  const post: Post | undefined = POSTS_DATA.find((p) => p.slug === currentSlug);
+  const [post, setPost] = useState<Post | undefined>(() => POSTS_DATA.find((p) => p.slug === currentSlug));
+
+  useEffect(() => {
+    fetchPostBySlug(currentSlug).then((livePost) => {
+      if (livePost) setPost(livePost);
+    });
+  }, [currentSlug]);
 
   if (!post) {
     return (

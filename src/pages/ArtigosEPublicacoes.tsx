@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchPublishedPosts } from '../lib/postsService';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { POSTS_DATA, Post } from '../data/postsData';
@@ -7,7 +8,13 @@ import { BookOpen, Calendar, ArrowRight, Tag, Download } from 'lucide-react';
 
 export const ArtigosEPublicacoes: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const posts: Post[] = POSTS_DATA;
+  const [posts, setPosts] = useState<Post[]>(POSTS_DATA);
+
+  useEffect(() => {
+    fetchPublishedPosts().then((livePosts) => {
+      if (livePosts && livePosts.length > 0) setPosts(livePosts);
+    });
+  }, []);
   const categories = CATEGORIES_DATA;
 
   const filteredPosts = selectedCategory
