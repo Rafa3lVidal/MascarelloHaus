@@ -1,189 +1,406 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { CheckCircle2, ArrowRight, Shield, Award, Users, AlertCircle, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, AlertCircle, ShieldCheck } from 'lucide-react';
 
 export const QuemSomos: React.FC = () => {
   return (
-    <div className="about-page">
+    <div className="quem-somos-page">
       <SEO
         title="Quem Somos | Mascârello Haus Advocacia"
         description="A Mascârello Haus Advocacia e Consultoria Jurídica, desde 2016, presta serviços consultivos e de assessoramento estratégico em Direito Civil, Empresarial, LGPD, Compliance e Previdenciário."
         canonical="https://mascarellohaus.adv.br/quem-somos/"
       />
 
-      {/* Header Banner */}
-      <div className="page-header-banner">
+      {/* 1. TOPO / BANNER DA PÁGINA */}
+      <section className="qs-header-banner">
         <div className="container">
-          <span className="banner-badge">Institucional</span>
-          <h1 className="banner-title">O Escritório Mascârello Haus</h1>
-          <p className="banner-desc">
-            Apoiamos pessoas nas decisões conscientes e entregamos soluções jurídicas que transformam negócios.
-          </p>
+          <div className="gold-divider center"></div>
+          <h1 className="qs-page-title">O escritório Mascârello Haus</h1>
         </div>
-      </div>
+      </section>
 
-      {/* Seção Principal */}
-      <section className="section-padding">
+      {/* 2. QUEM SOMOS COM FOTO OFICIAL */}
+      <section className="qs-section-intro">
         <div className="container">
-          <div className="about-main-grid">
-            <div className="about-text-content">
-              <span className="sub-heading">Trajetória e Propósito</span>
-              <h2>Quem Somos</h2>
-              <p>
-                A <strong>Mascârello Haus Advocacia e Consultoria Jurídica</strong>, desde 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário.
-              </p>
-              <p>
-                Atualmente, somos um escritório dedicado a entender as necessidades e riscos de nossos clientes, em fomento da conformidade e boas práticas relacionadas à regulação do mercado, direcionado ao <strong>Compliance</strong> nas mais diversas áreas, em especial à <strong>Proteção de Dados</strong>.
-              </p>
-              <p>
-                Por meio de equipe multidisciplinar, orienta e desenvolve estratégias que atendam aspectos regulamentares, de governança corporativa e de segurança da informação, em respeito à metodologia aplicável a cada segmento.
-              </p>
-              <p>
-                De maneira proativa, também atua nas organizações da sociedade civil em projetos sociais e na <strong>Advocacia Pro Bono</strong>.
-              </p>
-              <p>
-                O foco da Mascârello Haus está na expectativa de resultado do cliente e na busca contínua pela excelência na prestação dos serviços, promovendo a facilitação dos processos de adequação às normas vigentes em prol da integridade e proteção, pois são fatores determinantes no crescimento sustentável dos negócios.
-              </p>
-              <div style={{ marginTop: '25px' }}>
-                <Link to="/contato/" className="btn btn-primary">
-                  Entrar em Contato <ArrowRight size={16} />
-                </Link>
+          <div className="qs-intro-grid">
+            <div className="qs-intro-text">
+              <div className="gold-divider"></div>
+              <h2 className="qs-section-title">Quem somos</h2>
+              <div className="qs-paragraphs">
+                <p>
+                  A Mascârello Haus Advocacia e Consultoria Jurídica, desde 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário.
+                </p>
+                <p>
+                  Atualmente, é um escritório dedicado a entender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas a regulação do mercado, direcionado ao Compliance nas mais diversas áreas, em especial à Proteção de Dados. Por meio de equipe multidisciplinar, orienta e desenvolve estratégias que atendam aspectos regulamentares, de governança corporativa e de segurança da informação, em respeito à metodologia aplicável a cada segmento.
+                </p>
+                <p>
+                  De maneira proativa também atua nas organizações da sociedade civil em projetos sociais e Advocacia Pro Bono.
+                </p>
+                <p>
+                  O foco da Mascârello Haus está na expectativa de resultado do cliente. E, na busca contínua pela excelência na prestação dos serviços, promovendo a facilitação dos processos de adequação às normas vigentes em prol da integridade e proteção, pois são fatores que contribuem na melhoria e crescimento dos negócios.
+                </p>
               </div>
             </div>
 
-            {/* Caixa de Diferenciais */}
-            <div className="differential-box">
-              <span className="sub-heading">Por que nos escolher</span>
-              <h3>Nosso Diferencial</h3>
-              <p>
-                É o nosso método de trabalho que compõe o atendimento personalizado, integração das partes interessadas e apresentação dos resultados em atenção às tendências do mercado e de novos modelos de negócios.
-              </p>
-              <p>
-                Acompanhamos as evoluções no mundo do direito, da tecnologia e os projetos criativos de nossos clientes. Desenvolvemos o olhar estratégico tanto para dentro quanto para fora, com o objetivo de criar e implementar soluções integradas que impactam toda a cadeia de valor e auxiliam na tomada de decisões com segurança.
-              </p>
-
-              <div className="triad-list">
-                <div className="triad-item">
-                  <strong>Propósito:</strong> Desenvolver estratégias para a conformidade e proteção jurídica, auxiliando pessoas na tomada de decisões.
-                </div>
-                <div className="triad-item">
-                  <strong>Visão de Futuro:</strong> Ser referência no segmento, reconhecidos pela confiança, inovação e eficiência.
-                </div>
-                <div className="triad-item">
-                  <strong>Valores:</strong> Excelência, Transparência, Integridade e Compromisso inabalável com as partes.
-                </div>
+            <div className="qs-intro-photo">
+              <div className="photo-shadow-box">
+                <img
+                  src="/assets/0765_0289-1-scaled.jpg"
+                  alt="Mascârello Haus Advocacia"
+                  className="qs-photo"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Seção Código de Conduta e Canal de Denúncias */}
-      <section className="section-padding bg-light">
+      {/* 3. PROPÓSITO, VISÃO DE FUTURO, VALORES */}
+      <section className="qs-section-triad">
         <div className="container">
-          <div className="compliance-row">
-            <div className="compliance-card">
-              <div className="compliance-icon">
-                <BookOpen size={30} />
+          <div className="triad-cards-row">
+            {/* Propósito */}
+            <div className="triad-card">
+              <div className="triad-icon-wrap">
+                <img src="/assets/goal-svgrepo-com.png" alt="Propósito" className="triad-icon-img" />
               </div>
-              <h3>Código de Conduta</h3>
-              <p>
-                O Código de Conduta é o documento que dispõe sobre os direitos e deveres de todos os membros do Mascârello Haus Advocacia e Consultoria Jurídica. Serve como guia que, juntamente aos exemplos da alta administração, norteia as práticas éticas e legais nas relações cotidianas.
+              <h3 className="triad-card-title">Propósito</h3>
+              <p className="triad-card-desc">
+                Apoiar pessoas nas decisões conscientes e entregar soluções que transformam negócios.
               </p>
-              <Link to="/codigo-de-conduta/" className="btn btn-primary" style={{ marginTop: '15px' }}>
-                Ler Código de Conduta <ArrowRight size={16} />
-              </Link>
             </div>
 
-            <div className="compliance-card">
-              <div className="compliance-icon">
-                <AlertCircle size={30} />
+            {/* Visão de Futuro */}
+            <div className="triad-card">
+              <div className="triad-icon-wrap">
+                <img src="/assets/vision-svgrepo-com.png" alt="Visão de Futuro" className="triad-icon-img" />
               </div>
-              <h3>Canal de Denúncias</h3>
-              <p>
-                Disponibilizamos às partes interessadas uma ferramenta segura e independente para reportar potenciais vulnerabilidades, infrações éticas, descumprimento de procedimentos ou condutas em desacordo com nossas políticas, com garantia total de anonimato.
+              <h3 className="triad-card-title">Visão de Futuro</h3>
+              <p className="triad-card-desc">
+                Estar entre os principais escritórios e ser referência na prestação de serviços jurídicos e de conformidade no Brasil.
               </p>
-              <Link to="/canal-de-denuncias/" className="btn btn-primary" style={{ marginTop: '15px' }}>
-                Acessar Canal de Denúncias <ArrowRight size={16} />
-              </Link>
+            </div>
+
+            {/* Valores */}
+            <div className="triad-card">
+              <div className="triad-icon-wrap">
+                <img src="/assets/hands-holding-heart-svgrepo-com.png" alt="Valores" className="triad-icon-img" />
+              </div>
+              <h3 className="triad-card-title">Valores</h3>
+              <p className="triad-card-desc">
+                Ética, responsabilidade, integridade, transparência e respeito nas relações humanas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. NOSSO DIFERENCIAL COM INFOGRÁFICO 3BOLAS.PNG */}
+      <section className="qs-section-diferencial">
+        <div className="container">
+          <div className="diferencial-grid">
+            <div className="diferencial-text">
+              <div className="gold-divider"></div>
+              <h2 className="qs-section-title">Nosso Diferencial</h2>
+              <div className="qs-paragraphs">
+                <p>
+                  É o nosso método de trabalho que compõe o atendimento personalizado, integração das partes interessadas e apresentação dos resultados em atenção às tendências do mercado e de novos modelos de negócios.
+                </p>
+                <p>
+                  Acompanhamos as evoluções no mundo do direito, da tecnologia e os projetos criativos de nossos clientes. Desenvolvemos o olhar estratégico tanto para dentro quanto para fora, com o objetivo de criar e implementar soluções integradas que impactam toda a cadeia de valor e auxiliam na tomada de decisões com segurança.
+                </p>
+              </div>
+            </div>
+
+            <div className="diferencial-img-col">
+              <img
+                src="/assets/3bolas.png"
+                alt="Nosso Diferencial"
+                className="diferencial-img"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. CÓDIGO DE CONDUTA COM IMAGEM ORIGINAL */}
+      <section className="qs-section-conduta">
+        <div className="container">
+          <div className="conduta-grid">
+            <div className="conduta-img-col">
+              <img
+                src="/assets/codigo-conduta-1.png"
+                alt="Código de Conduta"
+                className="conduta-img"
+              />
+            </div>
+
+            <div className="conduta-text-col">
+              <span className="conduta-badge">Conheça o nosso</span>
+              <h2 className="qs-section-title">Código de Conduta</h2>
+              <div className="conduta-pillars">
+                <div className="conduta-pillar-box">
+                  <h4>O QUE É?</h4>
+                  <p>
+                    O Código de Conduta é o documento que dispõe sobre os direitos e deveres de todos os membros do Mascârello Haus Advocacia e Consultoria Jurídica.
+                  </p>
+                </div>
+                <div className="conduta-pillar-box">
+                  <h4>O QUE REGE?</h4>
+                  <p>
+                    Serve como guia que, juntamente aos exemplos da alta administração, norteia as práticas éticas e legais nas relações cotidianas da nossa equipe e parceiros.
+                  </p>
+                </div>
+                <div className="conduta-pillar-box highlight">
+                  <h4>CANAL DE DENÚNCIAS</h4>
+                  <p>
+                    Disponibilizamos um canal independente e sigiloso para relato de quaisquer desvios, com garantia de integridade e não retaliação.
+                  </p>
+                </div>
+              </div>
+              <div className="conduta-actions">
+                <Link to="/codigo-de-conduta/" className="btn-gold-solid">
+                  Ver Código Completo
+                </Link>
+                <Link to="/canal-de-denuncias/" className="btn-outline-dark">
+                  Canal de Denúncias <ArrowRight size={16} />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <style>{`
-        .about-main-grid {
+        .gold-divider {
+          width: 80px;
+          height: 6px;
+          background-color: var(--color-accent);
+          margin-bottom: 22px;
+          border-radius: 2px;
+        }
+        .gold-divider.center {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .qs-page-title {
+          font-family: var(--font-serif);
+          font-size: 2.8rem;
+          color: var(--color-primary);
+          text-align: center;
+          margin-bottom: 0;
+        }
+        .qs-header-banner {
+          background-color: var(--color-bg-light);
+          padding: 60px 0 50px 0;
+          border-bottom: 1px solid #e2e8f0;
+        }
+        .qs-section-intro {
+          padding: 80px 0;
+          background-color: #ffffff;
+        }
+        .qs-intro-grid {
           display: grid;
-          grid-template-columns: 1.3fr 1fr;
-          gap: 60px;
-          align-items: flex-start;
+          grid-template-columns: 55% 45%;
+          gap: 50px;
+          align-items: center;
         }
-        .about-text-content p {
-          color: var(--color-text-muted);
-          font-size: 1.05rem;
-          line-height: 1.7;
-          margin-bottom: 18px;
-        }
-        .differential-box {
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-left: 4px solid var(--color-accent);
-          border-radius: 6px;
-          padding: 35px 30px;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-        .differential-box h3 {
-          font-size: 1.6rem;
-          margin-bottom: 15px;
-        }
-        .differential-box p {
-          color: var(--color-text-muted);
-          font-size: 0.98rem;
-          line-height: 1.6;
+        .qs-section-title {
+          font-family: var(--font-serif);
+          font-size: 2.2rem;
+          color: var(--color-primary);
           margin-bottom: 20px;
         }
-        .triad-list {
+        .qs-paragraphs {
+          font-family: var(--font-sans);
+          font-size: 0.95rem;
+          color: var(--color-text-main);
+          line-height: 1.75;
+          text-align: justify;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .photo-shadow-box {
+          display: flex;
+          justify-content: center;
+        }
+        .qs-photo {
+          width: 100%;
+          max-width: 440px;
+          height: auto;
+          border-radius: 6px;
+          box-shadow: 25px 25px 0px 0px var(--color-primary);
+        }
+        .qs-section-triad {
+          background-color: var(--color-primary);
+          padding: 85px 0;
+        }
+        .triad-cards-row {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 25px;
+        }
+        .triad-card {
+          background-color: var(--color-bg-light);
+          padding: 30px 22px;
+          border-radius: 12px;
+          text-align: center;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        .triad-icon-wrap {
+          width: 55px;
+          height: 55px;
+          margin: 0 auto 18px auto;
+        }
+        .triad-icon-img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        .triad-card-title {
+          font-family: var(--font-serif);
+          font-size: 1.35rem;
+          color: var(--color-primary);
+          margin-bottom: 12px;
+        }
+        .triad-card-desc {
+          font-family: var(--font-sans);
+          font-size: 0.9rem;
+          color: var(--color-text-main);
+          line-height: 1.6;
+        }
+        .qs-section-diferencial {
+          background-color: var(--color-bg-light);
+          padding: 85px 0;
+        }
+        .diferencial-grid {
+          display: grid;
+          grid-template-columns: 50% 50%;
+          gap: 40px;
+          align-items: center;
+        }
+        .diferencial-img-col {
+          text-align: center;
+        }
+        .diferencial-img {
+          width: 85%;
+          max-width: 440px;
+          height: auto;
+        }
+        .qs-section-conduta {
+          background-color: #ffffff;
+          padding: 85px 0;
+        }
+        .conduta-grid {
+          display: grid;
+          grid-template-columns: 42% 58%;
+          gap: 50px;
+          align-items: center;
+        }
+        .conduta-img-col {
+          text-align: center;
+        }
+        .conduta-img {
+          width: 85%;
+          max-width: 400px;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: 0 10px 30px rgba(13, 55, 50, 0.1);
+        }
+        .conduta-badge {
+          font-family: var(--font-sans);
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+          color: var(--color-accent);
+          font-weight: 600;
+          display: block;
+          margin-bottom: 6px;
+        }
+        .conduta-pillars {
           display: flex;
           flex-direction: column;
           gap: 15px;
-          border-top: 1px solid #edf2f7;
-          padding-top: 20px;
+          margin: 25px 0 30px 0;
         }
-        .triad-item {
-          font-size: 0.92rem;
+        .conduta-pillar-box {
+          background-color: var(--color-bg-light);
+          padding: 16px 20px;
+          border-radius: 6px;
+          border-left: 4px solid var(--color-primary);
+        }
+        .conduta-pillar-box.highlight {
+          border-left-color: var(--color-accent);
+        }
+        .conduta-pillar-box h4 {
+          font-family: var(--font-serif);
+          font-size: 1.05rem;
           color: var(--color-primary);
+          margin-bottom: 5px;
+        }
+        .conduta-pillar-box p {
+          font-family: var(--font-sans);
+          font-size: 0.88rem;
+          color: var(--color-text-main);
           line-height: 1.5;
+          margin-bottom: 0;
         }
-        .compliance-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 40px;
+        .conduta-actions {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
         }
-        .compliance-card {
-          background: #ffffff;
-          border-radius: 8px;
-          padding: 40px 35px;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-          border: 1px solid #e2e8f0;
+        .btn-gold-solid {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background-color: var(--color-accent);
+          color: #ffffff;
+          padding: 12px 30px;
+          border-radius: 50px;
+          font-family: var(--font-sans);
+          font-size: 0.9rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          transition: all 0.3s ease;
         }
-        .compliance-icon {
-          color: var(--color-accent);
-          margin-bottom: 18px;
+        .btn-gold-solid:hover {
+          background-color: var(--color-primary);
+          color: #ffffff;
         }
-        .compliance-card h3 {
-          font-size: 1.5rem;
-          margin-bottom: 12px;
+        .btn-outline-dark {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          border: 2px solid var(--color-primary);
+          background-color: transparent;
+          color: var(--color-primary);
+          padding: 12px 30px;
+          border-radius: 50px;
+          font-family: var(--font-sans);
+          font-size: 0.9rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          transition: all 0.3s ease;
         }
-        .compliance-card p {
-          color: var(--color-text-muted);
-          font-size: 0.98rem;
-          line-height: 1.6;
-          margin-bottom: 20px;
+        .btn-outline-dark:hover {
+          background-color: var(--color-primary);
+          color: #ffffff;
         }
-        @media (max-width: 900px) {
-          .about-main-grid, .compliance-row {
+
+        @media (max-width: 992px) {
+          .qs-intro-grid, .diferencial-grid, .conduta-grid {
             grid-template-columns: 1fr;
+          }
+          .triad-cards-row {
+            grid-template-columns: 1fr;
+          }
+          .qs-photo {
+            box-shadow: 15px 15px 0px 0px var(--color-primary);
           }
         }
       `}</style>

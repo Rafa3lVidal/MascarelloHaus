@@ -29,15 +29,15 @@ export const Header: React.FC = () => {
         <div className="container top-bar-content">
           <div className="top-contacts">
             <a href="mailto:contato@mascarellohaus.adv.br" className="top-link">
-              <Mail size={14} /> contato@mascarellohaus.adv.br
+              <Mail size={13} /> contato@mascarellohaus.adv.br
             </a>
-            <a href="https://wa.me/5549999281878" target="_blank" rel="noopener noreferrer" className="top-link">
-              <Phone size={14} /> +55 (49) 99928-1878
+            <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer" className="top-link">
+              <Phone size={13} /> +55 (49) 98822-0982
             </a>
           </div>
           <div className="top-lgpd-badge">
             <Link to="/central-de-protecao-de-dados/" className="top-link">
-              Privacidade & Proteção de Dados (LGPD)
+              Central de Proteção de Dados (LGPD)
             </Link>
           </div>
         </div>
@@ -112,15 +112,15 @@ export const Header: React.FC = () => {
           top: 0;
           z-index: 1000;
           background: #ffffff;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 2px 10px rgba(13, 55, 50, 0.06);
         }
         .top-bar {
           background-color: var(--color-primary);
-          color: rgba(255, 255, 255, 0.85);
-          font-size: 0.8rem;
-          padding: 8px 0;
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 0.78rem;
+          padding: 7px 0;
           font-family: var(--font-sans);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .top-bar-content {
           display: flex;
@@ -129,19 +129,20 @@ export const Header: React.FC = () => {
         }
         .top-contacts {
           display: flex;
-          gap: 20px;
+          gap: 22px;
         }
         .top-link {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          color: rgba(255, 255, 255, 0.85);
+          color: rgba(255, 255, 255, 0.9);
+          transition: color 0.2s ease;
         }
         .top-link:hover {
           color: var(--color-accent);
         }
         .main-nav-bar {
-          padding: 15px 0;
+          padding: 12px 0;
         }
         .nav-container {
           display: flex;
@@ -153,13 +154,14 @@ export const Header: React.FC = () => {
           align-items: center;
         }
         .logo-img {
-          height: 62px;
-          width: auto;
+          width: 120px;
+          height: auto;
+          max-height: 65px;
           object-fit: contain;
         }
         .desktop-nav {
           display: flex;
-          gap: 24px;
+          gap: 22px;
           align-items: center;
         }
         .nav-link {
@@ -170,6 +172,7 @@ export const Header: React.FC = () => {
           letter-spacing: 0.2px;
           position: relative;
           padding: 6px 0;
+          transition: color 0.2s ease;
         }
         .nav-link:hover, .nav-link.active {
           color: var(--color-accent);
@@ -203,17 +206,21 @@ export const Header: React.FC = () => {
         }
         .mobile-nav-link {
           font-family: var(--font-sans);
-          font-size: 1rem;
+          font-size: 0.95rem;
           font-weight: 500;
+          color: var(--color-primary);
           padding: 8px 0;
           border-bottom: 1px solid #f1f5f9;
+        }
+        .mobile-nav-link.active, .mobile-nav-link:hover {
+          color: var(--color-accent);
         }
         @media (max-width: 992px) {
           .top-bar { display: none; }
           .desktop-nav { display: none; }
           .mobile-toggle-btn { display: block; }
           .mobile-nav-drawer { display: block; }
-          .logo-img { height: 48px; }
+          .logo-img { width: 100px; }
         }
       `}</style>
     </header>

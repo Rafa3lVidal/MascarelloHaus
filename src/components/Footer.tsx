@@ -1,89 +1,106 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, ShieldCheck, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
     <footer className="site-footer">
-      <div className="container footer-grid">
-        {/* Coluna 1: Sobre e Logo */}
-        <div className="footer-col brand-col">
-          <img src="/assets/logo2025branca.png" alt="Mascârello Haus" className="footer-logo" />
-          <p className="footer-desc">
-            Sociedade de Advogados comprometida com a excelência técnica, ética inegociável e soluções jurídicas estratégicas para empresas e pessoas.
-          </p>
-          <div className="footer-social">
-            <a href="https://www.instagram.com/mascarellohaus.adv/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <i className="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/mascarello-haus-advocacia/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <i className="fa-brands fa-linkedin-in"></i>
-            </a>
-            <a href="https://wa.me/5549999281878" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-              <i className="fa-brands fa-whatsapp"></i>
-            </a>
+      <div className="container">
+        <div className="footer-main-grid">
+          {/* Coluna 1: Logo Branca & Info */}
+          <div className="footer-col col-brand">
+            <Link to="/">
+              <img
+                src="/assets/logo2025branca.png"
+                alt="Mascârello Haus Advocacia"
+                className="footer-logo"
+              />
+            </Link>
+            <p className="footer-tagline">
+              Mascârello Haus Advocacia e Consultoria Jurídica.<br />
+              Para um novo mundo, novas estratégias.
+            </p>
+            <div className="footer-contacts">
+              <p>Caçador / Videira — Santa Catarina</p>
+              <p>E-mail: <a href="mailto:contato@mascarellohaus.adv.br">contato@mascarellohaus.adv.br</a></p>
+              <p>WhatsApp: <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer">+55 (49) 98822-0982</a></p>
+            </div>
           </div>
-        </div>
 
-        {/* Coluna 2: Áreas de Atuação */}
-        <div className="footer-col">
-          <h4 className="footer-heading">Áreas de Atuação</h4>
-          <ul className="footer-links">
-            <li><Link to="/direito-civil-e-empresarial/">Direito Civil e Empresarial</Link></li>
-            <li><Link to="/protecao-de-dados-lgpd/">Proteção de Dados (LGPD)</Link></li>
-            <li><Link to="/direito-digital-e-tecnologia/">Direito Digital e Tecnologia</Link></li>
-            <li><Link to="/compliance/">Compliance Corporativo</Link></li>
-            <li><Link to="/direito-do-trabalho/">Direito do Trabalho</Link></li>
-            <li><Link to="/direito-previdenciario/">Direito Previdenciário</Link></li>
-          </ul>
-        </div>
+          {/* Coluna 2: Links Úteis */}
+          <div className="footer-col">
+            <h5 className="footer-col-title">Links úteis</h5>
+            <ul className="footer-nav-list">
+              <li>
+                <a href="https://personaldatasafe.com.br/" target="_blank" rel="noopener noreferrer">
+                  Personal Data Safe <ExternalLink size={12} />
+                </a>
+              </li>
+              <li>
+                <a href="https://www.gov.br/anpd/pt-br" target="_blank" rel="noopener noreferrer">
+                  ANPD <ExternalLink size={12} />
+                </a>
+              </li>
+              <li>
+                <a href="https://www.tjsc.jus.br/" target="_blank" rel="noopener noreferrer">
+                  TJSC <ExternalLink size={12} />
+                </a>
+              </li>
+              <li>
+                <a href="https://www.stj.jus.br/sites/portalp/Inicio" target="_blank" rel="noopener noreferrer">
+                  STJ <ExternalLink size={12} />
+                </a>
+              </li>
+              <li>
+                <a href="https://portal.stf.jus.br/" target="_blank" rel="noopener noreferrer">
+                  STF <ExternalLink size={12} />
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        {/* Coluna 3: Links Úteis & Compliance */}
-        <div className="footer-col">
-          <h4 className="footer-heading">Conformidade & LGPD</h4>
-          <ul className="footer-links">
-            <li><Link to="/central-de-protecao-de-dados/">Central de Proteção de Dados</Link></li>
-            <li><Link to="/questionario-de-conformidade/">Questionário de Conformidade</Link></li>
-            <li><Link to="/codigo-de-conduta/">Código de Conduta Ética</Link></li>
-            <li><Link to="/canal-de-denuncias/">Canal de Denúncias</Link></li>
-            <li><Link to="/artigos-e-publicacoes/">Cartilhas e Publicações</Link></li>
-          </ul>
-        </div>
+          {/* Coluna 3: Institucional & Redes Sociais */}
+          <div className="footer-col">
+            <h5 className="footer-col-title">Navegação & Redes</h5>
+            <ul className="footer-nav-list">
+              <li><Link to="/quem-somos/">O escritório</Link></li>
+              <li><Link to="/areas-de-atuacao/">Áreas de Atuação</Link></li>
+              <li><Link to="/artigos-e-publicacoes/">Artigos & Cartilhas</Link></li>
+              <li><Link to="/central-de-protecao-de-dados/">Central de Proteção de Dados (LGPD)</Link></li>
+              <li><Link to="/questionario-de-conformidade/">Quiz de Conformidade LGPD</Link></li>
+              <li><Link to="/codigo-de-conduta/">Código de Conduta</Link></li>
+              <li><Link to="/canal-de-denuncias/">Canal de Denúncias</Link></li>
+              <li><Link to="/contato/">Contato</Link></li>
+            </ul>
 
-        {/* Coluna 4: Contato */}
-        <div className="footer-col">
-          <h4 className="footer-heading">Atendimento</h4>
-          <ul className="footer-contact-list">
-            <li>
-              <Phone size={16} className="footer-icon" />
-              <span>+55 (49) 99928-1878</span>
-            </li>
-            <li>
-              <Mail size={16} className="footer-icon" />
-              <span>contato@mascarellohaus.adv.br</span>
-            </li>
-            <li>
-              <ShieldCheck size={16} className="footer-icon" />
-              <span>privacidade@mascarellohaus.adv.br</span>
-            </li>
-            <li>
-              <MapPin size={16} className="footer-icon" />
-              <span>Videira / Caçador — Santa Catarina</span>
-            </li>
-          </ul>
+            <div className="footer-social-bar">
+              <a href="https://www.instagram.com/mascarellohausadvocacia" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i className="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://www.youtube.com/@mascarellohausadvocacia" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i className="fa-brands fa-youtube"></i>
+              </a>
+              <a href="https://www.facebook.com/mascarellohausadvocacia/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <i className="fa-brands fa-facebook"></i>
+              </a>
+              <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <i className="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Faixa inferior de direitos e créditos */}
-      <div className="footer-bottom">
-        <div className="container bottom-content">
-          <p className="copyright">
-            © {new Date().getFullYear()} Mascârello Haus Advocacia. Todos os direitos reservados.
+      {/* Barra Inferior com Créditos ApexCode */}
+      <div className="site-below-footer">
+        <div className="container below-footer-flex">
+          <p className="copyright-text">
+            &copy; {new Date().getFullYear()} Mascârello Haus Advocacia — Todos os direitos reservados.
           </p>
-          <div className="credits">
+          <div className="apexcode-credits">
             <span>Desenvolvido e distribuído por </span>
-            <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer" className="apex-link">
-              ApexCode <ExternalLink size={12} />
+            <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer">
+              <strong>ApexCode</strong> (Rafael Vidal)
             </a>
           </div>
         </div>
@@ -91,126 +108,123 @@ export const Footer: React.FC = () => {
 
       <style>{`
         .site-footer {
-          background-color: var(--color-primary-dark);
-          color: #a0aec0;
-          font-size: 0.92rem;
-          padding-top: 65px;
-          border-top: 3px solid var(--color-accent);
+          background-color: var(--color-primary);
+          color: #ffffff;
+          padding-top: 70px;
+          border-top: 4px solid var(--color-accent);
+          font-family: var(--font-sans);
         }
-        .footer-grid {
+        .footer-main-grid {
           display: grid;
-          grid-template-columns: 2fr 1.5fr 1.5fr 1.8fr;
-          gap: 40px;
-          padding-bottom: 50px;
+          grid-template-columns: 1.5fr 1fr 1.2fr;
+          gap: 50px;
+          padding-bottom: 60px;
         }
         .footer-logo {
-          height: 52px;
-          width: auto;
+          width: 195px;
+          height: auto;
           margin-bottom: 20px;
+          object-fit: contain;
         }
-        .footer-desc {
+        .footer-tagline {
+          font-size: 0.95rem;
+          color: #e7decf;
           line-height: 1.6;
-          margin-bottom: 20px;
-          color: #cbd5e0;
+          margin-bottom: 18px;
         }
-        .footer-social {
+        .footer-contacts p {
+          font-size: 0.88rem;
+          color: rgba(255, 255, 255, 0.85);
+          margin-bottom: 6px;
+        }
+        .footer-contacts a {
+          color: var(--color-accent);
+        }
+        .footer-contacts a:hover {
+          text-decoration: underline;
+        }
+        .footer-col-title {
+          font-family: 'Poppins', sans-serif;
+          color: var(--color-accent);
+          font-size: 1.15rem;
+          font-weight: 600;
+          margin-bottom: 22px;
+          position: relative;
+        }
+        .footer-col-title::after {
+          content: '';
+          display: block;
+          width: 35px;
+          height: 2px;
+          background-color: var(--color-accent);
+          margin-top: 8px;
+        }
+        .footer-nav-list {
+          list-style: none;
           display: flex;
-          gap: 15px;
+          flex-direction: column;
+          gap: 10px;
         }
-        .footer-social a {
+        .footer-nav-list a {
+          color: #ffffff;
+          font-size: 0.9rem;
           display: inline-flex;
           align-items: center;
-          justify-content: center;
+          gap: 6px;
+          transition: all 0.2s ease;
+        }
+        .footer-nav-list a:hover {
+          color: var(--color-accent);
+          transform: translateX(4px);
+        }
+        .footer-social-bar {
+          display: flex;
+          gap: 14px;
+          margin-top: 25px;
+        }
+        .footer-social-bar a {
           width: 38px;
           height: 38px;
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.08);
+          background: rgba(255, 255, 255, 0.1);
           color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 1.1rem;
           transition: all 0.3s ease;
         }
-        .footer-social a:hover {
-          background: var(--color-accent);
-          color: #ffffff;
-          transform: translateY(-2px);
+        .footer-social-bar a:hover {
+          background-color: var(--color-accent);
+          color: var(--color-primary);
+          transform: translateY(-3px);
         }
-        .footer-heading {
-          color: #ffffff;
-          font-size: 1.15rem;
-          margin-bottom: 20px;
-          position: relative;
-          padding-bottom: 10px;
-        }
-        .footer-heading::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 32px;
-          height: 2px;
-          background: var(--color-accent);
-        }
-        .footer-links {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-        .footer-links a:hover {
-          color: var(--color-accent);
-          padding-left: 4px;
-        }
-        .footer-contact-list {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-        .footer-contact-list li {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
-          color: #cbd5e0;
-        }
-        .footer-icon {
-          color: var(--color-accent);
-          margin-top: 3px;
-          flex-shrink: 0;
-        }
-        .footer-bottom {
-          background: #060e17;
-          padding: 20px 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.06);
+        .site-below-footer {
+          background-color: var(--color-primary-dark);
+          padding: 22px 0;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
           font-size: 0.82rem;
-          color: #718096;
+          color: rgba(255, 255, 255, 0.7);
         }
-        .bottom-content {
+        .below-footer-flex {
           display: flex;
           justify-content: space-between;
           align-items: center;
           flex-wrap: wrap;
-          gap: 10px;
+          gap: 12px;
         }
-        .apex-link {
+        .apexcode-credits a {
           color: var(--color-accent);
-          font-weight: 600;
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
         }
-        .apex-link:hover {
+        .apexcode-credits a:hover {
           text-decoration: underline;
         }
-        @media (max-width: 992px) {
-          .footer-grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
-        @media (max-width: 600px) {
-          .footer-grid {
+        @media (max-width: 900px) {
+          .footer-main-grid {
             grid-template-columns: 1fr;
+            gap: 35px;
           }
-          .bottom-content {
+          .below-footer-flex {
             flex-direction: column;
             text-align: center;
           }

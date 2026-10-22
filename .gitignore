@@ -16,6 +16,8 @@ dist-ssr/
 build/
 .vercel/
 *.tsbuildinfo
+vite.config.js
+vite.config.d.ts
 
 # Logs e diagnósticos
 npm-debug.log*

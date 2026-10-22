@@ -223,7 +223,7 @@
 .form-control:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15);
+  box-shadow: 0 0 0 3px rgba(203, 171, 122, 0.2);
 }
 
 textarea.form-control {
