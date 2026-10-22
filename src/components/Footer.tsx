@@ -71,6 +71,7 @@ export const Footer: React.FC = () => {
               <li><Link to="/codigo-de-conduta/">Código de Conduta</Link></li>
               <li><Link to="/canal-de-denuncias/">Canal de Denúncias</Link></li>
               <li><Link to="/contato/">Contato</Link></li>
+              <li><button type="button" onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-preferences'))} className="footer-cookie-btn">Preferências de Cookies 🍪</button></li>
             </ul>
 
             <div className="footer-social-bar">
@@ -95,18 +96,57 @@ export const Footer: React.FC = () => {
       <div className="site-below-footer">
         <div className="container below-footer-flex">
           <p className="copyright-text">
-            &copy; {new Date().getFullYear()} Mascârello Haus Advocacia — Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} Mascârello Haus Advocacia — CNPJ 38.282.320/0001-54 - Todos os direitos reservados.
           </p>
           <div className="apexcode-credits">
-            <span>Desenvolvido e distribuído por </span>
-            <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer">
-              <strong>ApexCode</strong> (Rafael Vidal)
+            <span>Desenvolvido por </span>
+            <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer" className="apex-link">
+              <strong>ApexCode</strong>
+            </a>
+            <span className="credits-sep">|</span>
+            <a href="mailto:contato@apexcode.dev.br" title="Suporte & LGPD ApexCode">Suporte & Privacidade</a>
+            <span className="credits-sep">|</span>
+            <a href="https://wa.me/5549999281878" target="_blank" rel="noopener noreferrer" title="WhatsApp ApexCode">
+              +55 (49) 99928-1878
             </a>
           </div>
         </div>
       </div>
 
       <style>{`
+        
+        .footer-cookie-btn {
+          background: none;
+          border: none;
+          padding: 0;
+          color: rgba(255, 255, 255, 0.7);
+          font-family: inherit;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: color 0.2s;
+          text-align: left;
+        }
+        .footer-cookie-btn:hover {
+          color: var(--color-accent);
+          text-decoration: underline;
+        }
+        .credits-sep {
+          margin: 0 8px;
+          color: rgba(255, 255, 255, 0.4);
+        }
+        .apex-link {
+          color: #ffffff !important;
+        }
+        .apexcode-credits a {
+          color: #e7decf;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .apexcode-credits a:hover {
+          color: #ffffff;
+          text-decoration: underline;
+        }
+
         .site-footer {
           background-color: var(--color-primary);
           color: #ffffff;

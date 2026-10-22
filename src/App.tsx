@@ -3,7 +3,7 @@ import { BrowserRouter, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
-import { CookieBanner } from './components/CookieBanner';
+import { CookieManager } from './components/CookieManager';
 import { AppRoutes } from './router';
 
 const AppContent: React.FC = () => {
@@ -18,7 +18,7 @@ const AppContent: React.FC = () => {
       </main>
       {!isAdmin && <Footer />}
       {!isAdmin && <WhatsAppButton />}
-      {!isAdmin && <CookieBanner />}
+      {!isAdmin && <CookieManager />}
     </div>
   );
 };
