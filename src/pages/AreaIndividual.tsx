@@ -72,7 +72,7 @@ export const AreaIndividual: React.FC = () => {
 
       setStatusMessage({
         type: 'success',
-        text: 'Obrigado pelo contato! Retornaremos com orientações sobre esta área em breve.'
+        text: 'Obrigado pelo contato! Retornaremos a sua mensagem o mais breve possível.'
       });
       setFormData({
         nome: '',
@@ -139,9 +139,9 @@ export const AreaIndividual: React.FC = () => {
           {/* Formulário Lateral de Contato */}
           <div className="sidebar-col">
             <div className="wpforms-container sticky-card">
-              <h3>Fale com um Especialista</h3>
+              <h3>Converse com um advogado</h3>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginBottom: '18px' }}>
-                Solicite uma avaliação jurídica para o seu caso ou empresa nesta área.
+                Preencha o formulário ao lado e receba nosso contato personalizado.
               </p>
 
               {statusMessage && (
@@ -205,14 +205,16 @@ export const AreaIndividual: React.FC = () => {
                       checked={formData.privacyConsent}
                       onChange={(e) => setFormData({ ...formData, privacyConsent: e.target.checked })}
                     />
-                    <span>Concordo com o aviso de privacidade em conformidade com a LGPD. *</span>
+                    <span>
+                      O escritório Mascarello Haus coleta somente os dados necessários ao atendimento da sua solicitação e respeita a sua privacidade, em conformidade com a Lei Geral de Proteção de Dados Pessoais 13.709/2018. Ao continuar, você confirma que leu e aceitou os termos de uso e a aviso de privacidade. *
+                    </span>
                   </label>
                 </div>
 
                 <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={isSubmitting}>
                   {isSubmitting ? 'Enviando...' : (
                     <>
-                      Solicitar Atendimento <Send size={16} />
+                      Enviar mensagem <Send size={16} />
                     </>
                   )}
                 </button>

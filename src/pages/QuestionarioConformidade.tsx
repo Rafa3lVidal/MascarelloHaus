@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SEO } from '../components/SEO';
-import { CheckCircle2, AlertCircle, Send, ArrowRight, HelpCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Send, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 export const QuestionarioConformidade: React.FC = () => {
@@ -20,31 +20,31 @@ export const QuestionarioConformidade: React.FC = () => {
   const questions = [
     {
       id: 1,
-      text: 'Sua empresa possui contrato formal com este controlador (contratante) e qual o período de vigência?'
+      text: '1 – Sua empresa possui contrato formal com este controlador (contratante) e qual o período de vigência?'
     },
     {
       id: 2,
-      text: 'Sua empresa possui política de privacidade e retenção de dados documentada?'
+      text: '2 – Sua empresa possui política de privacidade e retenção de dados documentada?'
     },
     {
       id: 3,
-      text: 'Sua empresa realiza treinamentos regulares sobre proteção de dados com seus funcionários ou terceiros prestadores?'
+      text: '3 – Sua empresa realiza treinamentos regulares sobre proteção de dados com seus funcionários ou terceiros prestadores?'
     },
     {
       id: 4,
-      text: 'A empresa possui Encarregado de Dados (DPO) formalmente nomeado?'
+      text: '4 – A empresa possui Encarregado de Dados (DPO) formalmente nomeado?'
     },
     {
       id: 5,
-      text: 'Sua empresa realiza mapeamento de dados (Data Mapping) ou registro das operações de tratamento (ROPA)?'
+      text: '5 – Sua empresa realiza mapeamento de dados (Data Mapping) ou registro das operações de tratamento (ROPA)?'
     },
     {
       id: 6,
-      text: 'A empresa utiliza medidas técnicas como criptografia, pseudoanonimização e backups seguros nas bases de dados?'
+      text: '6 – A empresa utiliza medidas técnicas como criptografia, pseudoanonimização e backups seguros nas bases de dados?'
     },
     {
       id: 7,
-      text: 'Sua empresa possui política e procedimentos formais de gestão e resposta a incidentes de segurança da informação?'
+      text: '7 – Sua empresa possui política e procedimentos formais de gestão e resposta a incidentes de segurança da informação?'
     }
   ];
 
@@ -70,29 +70,23 @@ export const QuestionarioConformidade: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Simular cálculo de pontuação
-      const totalAnswers = Object.keys(formData.respostas).length;
-      const simCount = Object.values(formData.respostas).filter((v) => v === 'Sim').length;
-      const score = totalAnswers > 0 ? (simCount / questions.length) * 100 : 0;
-
       const { error } = await supabase.from('quiz_submissions').insert({
         quiz_id: 1,
         company_name: formData.nomeEmpresa,
-        cnpj: formData.cnpj,
-        contact_name: formData.responsavel,
-        contact_email: formData.contatoEmail,
-        answers_json: formData.respostas,
-        final_score: score
+        respondent_name: formData.responsavel,
+        respondent_email: formData.contatoEmail,
+        answers: {
+          cnpj: formData.cnpj,
+          endereco: formData.endereco,
+          respostas: formData.respostas
+        },
+        score: 100
       });
 
-      if (error) {
-        // Se a tabela quiz_id precisar de quiz pai, gravar sem quebrar
-        console.warn('Registro no banco:', error.message);
-      }
-
+      if (error) throw error;
       setSubmitted(true);
     } catch {
-      setErrorMsg('Falha ao processar respostas. Tente novamente.');
+      setErrorMsg('Erro ao enviar o questionário. Por favor, tente novamente.');
     } finally {
       setIsSubmitting(false);
     }
@@ -101,49 +95,49 @@ export const QuestionarioConformidade: React.FC = () => {
   return (
     <div className="quiz-page">
       <SEO
-        title="Questionário de Conformidade LGPD | Mascârello Haus Advocacia"
-        description="Avaliação de conformidade e governança em privacidade de dados para empresas e parceiros comerciais."
+        title="Questionário de conformidade e proteção de dados para fornecedores | Mascârello Haus Advocacia"
+        description="Questionário de conformidade e proteção de dados para fornecedores. Avaliação de conformidade com a LGPD e governança corporativa."
         canonical="https://mascarellohaus.adv.br/questionario-de-conformidade/"
       />
 
       <div className="page-header-banner">
         <div className="container">
-          <span className="banner-badge">Auditoria & Diagnóstico</span>
-          <h1 className="banner-title">Questionário de Conformidade</h1>
-          <p className="banner-desc">
-            Instrumento de avaliação das práticas de privacidade, segurança da informação e governança corporativa.
-          </p>
+          <div className="gold-divider center"></div>
+          <h1 className="banner-title text-center">
+            Questionário de conformidade e proteção <br />de dados para fornecedores
+          </h1>
         </div>
       </div>
 
-      <section className="section-padding">
-        <div className="container" style={{ maxWidth: '820px' }}>
+      <section className="section-padding bg-light">
+        <div className="container" style={{ maxWidth: '850px' }}>
           <div className="wpforms-container">
             {submitted ? (
-              <div className="protocol-success-card">
-                <CheckCircle2 size={45} style={{ color: '#38a169', marginBottom: '15px' }} />
-                <h2>Questionário Enviado com Sucesso!</h2>
-                <p style={{ marginTop: '10px', color: 'var(--color-text-muted)' }}>
-                  Agradecemos o preenchimento. Nossos especialistas em Compliance e LGPD analisarão as informações encaminhadas e entrarão em contato pelo e-mail <strong>{formData.contatoEmail}</strong> com o relatório preliminar.
+              <div style={{ textAlign: 'center', padding: '30px 10px' }}>
+                <CheckCircle2 size={45} style={{ color: '#0d3732', marginBottom: '15px' }} />
+                <h3 style={{ marginBottom: '10px' }}>Questionário Enviado com Sucesso!</h3>
+                <p style={{ color: 'var(--color-text-main)', lineHeight: '1.6' }}>
+                  Agradecemos o preenchimento. Nossos especialistas em Compliance e LGPD analisarão as informações encaminhadas e entrarão em contato pelo e-mail <strong>{formData.contatoEmail}</strong> com o diagnóstico.
                 </p>
                 <button
                   className="btn btn-primary"
                   onClick={() => setSubmitted(false)}
-                  style={{ marginTop: '25px' }}
+                  style={{ marginTop: '20px' }}
                 >
-                  Novo Preenchimento
+                  Preencher Novamente
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-                <h3 style={{ marginBottom: '8px' }}>1. Identificação da Organização</h3>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginBottom: '22px' }}>
-                  Preencha os dados institucionais da empresa respondente.
+                <h3 style={{ marginBottom: '8px' }}>Dados da Empresa Fornecedora</h3>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.88rem', marginBottom: '25px' }}>
+                  Preencha as informações para registro da conformidade com as diretrizes da LGPD.
                 </p>
 
                 {errorMsg && (
                   <div className="form-error-banner">
-                    <AlertCircle size={18} /> <span>{errorMsg}</span>
+                    <AlertCircle size={18} />
+                    <span>{errorMsg}</span>
                   </div>
                 )}
 
@@ -153,14 +147,14 @@ export const QuestionarioConformidade: React.FC = () => {
                     type="text"
                     className="form-control"
                     required
-                    placeholder="00.000.000/0001-00"
+                    placeholder="00.000.000/0000-00"
                     value={formData.cnpj}
                     onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Nome da Empresa (Razão Social) *</label>
+                  <label className="form-label">Nome da Empresa *</label>
                   <input
                     type="text"
                     className="form-control"
@@ -171,63 +165,73 @@ export const QuestionarioConformidade: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Responsável ou Encarregado de Dados (DPO) *</label>
+                  <label className="form-label">Endereço *</label>
                   <input
                     type="text"
                     className="form-control"
                     required
-                    value={formData.responsavel}
-                    onChange={(e) => setFormData({ ...formData, responsavel: e.target.value })}
+                    value={formData.endereco}
+                    onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
                   />
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">E-mail para Retorno *</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    required
-                    value={formData.contatoEmail}
-                    onChange={(e) => setFormData({ ...formData, contatoEmail: e.target.value })}
-                  />
-                </div>
-
-                <hr style={{ margin: '35px 0', borderColor: '#e2e8f0' }} />
-
-                <h3 style={{ marginBottom: '8px' }}>2. Perguntas de Diagnóstico</h3>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginBottom: '25px' }}>
-                  Selecione a situação atual da organização para cada um dos itens abaixo:
-                </p>
-
-                {questions.map((q) => (
-                  <div key={q.id} className="quiz-question-block">
-                    <p className="question-title">
-                      <strong>{q.id}.</strong> {q.text}
-                    </p>
-                    <div className="radio-options">
-                      <label className="radio-label">
-                        <input
-                          type="radio"
-                          name={`q_${q.id}`}
-                          value="Sim"
-                          checked={formData.respostas[q.id] === 'Sim'}
-                          onChange={() => handleOptionChange(q.id, 'Sim')}
-                        />
-                        <span>Sim</span>
-                      </label>
-                      <label className="radio-label">
-                        <input
-                          type="radio"
-                          name={`q_${q.id}`}
-                          value="Não"
-                          checked={formData.respostas[q.id] === 'Não'}
-                          onChange={() => handleOptionChange(q.id, 'Não')}
-                        />
-                        <span>Não</span>
-                      </label>
-                    </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                  <div className="form-group">
+                    <label className="form-label">Responsável ou Encarregado de Dados *</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      required
+                      value={formData.responsavel}
+                      onChange={(e) => setFormData({ ...formData, responsavel: e.target.value })}
+                    />
                   </div>
-                ))}
+
+                  <div className="form-group">
+                    <label className="form-label">E-mail de Contato *</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      required
+                      value={formData.contatoEmail}
+                      onChange={(e) => setFormData({ ...formData, contatoEmail: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <hr style={{ margin: '30px 0', borderColor: '#e2e8f0' }} />
+
+                <h3 style={{ marginBottom: '20px' }}>Perguntas de Conformidade</h3>
+
+                <div className="quiz-questions-list">
+                  {questions.map((q) => (
+                    <div key={q.id} className="quiz-q-item">
+                      <p className="q-text">{q.text} *</p>
+                      <div className="q-options">
+                        <label className="form-checkbox-label">
+                          <input
+                            type="radio"
+                            name={`q_${q.id}`}
+                            required
+                            checked={formData.respostas[q.id] === 'Sim'}
+                            onChange={() => handleOptionChange(q.id, 'Sim')}
+                          />
+                          <span>Sim</span>
+                        </label>
+                        <label className="form-checkbox-label">
+                          <input
+                            type="radio"
+                            name={`q_${q.id}`}
+                            required
+                            checked={formData.respostas[q.id] === 'Não'}
+                            onChange={() => handleOptionChange(q.id, 'Não')}
+                          />
+                          <span>Não</span>
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
                 <button
                   type="submit"
@@ -235,9 +239,9 @@ export const QuestionarioConformidade: React.FC = () => {
                   style={{ width: '100%', marginTop: '30px' }}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Enviando Diagnóstico...' : (
+                  {isSubmitting ? 'Enviando...' : (
                     <>
-                      Enviar Questionário de Conformidade <Send size={16} />
+                      Enviar Questionário <Send size={16} />
                     </>
                   )}
                 </button>
@@ -248,31 +252,41 @@ export const QuestionarioConformidade: React.FC = () => {
       </section>
 
       <style>{`
-        .quiz-question-block {
-          background: #f8fafc;
-          border: 1px solid #edf2f7;
-          border-radius: 6px;
-          padding: 20px;
-          margin-bottom: 18px;
+        .gold-divider {
+          width: 80px;
+          height: 6px;
+          background-color: var(--color-accent);
+          margin-bottom: 22px;
+          border-radius: 2px;
         }
-        .question-title {
+        .gold-divider.center {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .text-center {
+          text-align: center;
+        }
+        .quiz-questions-list {
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+        .quiz-q-item {
+          background: var(--color-bg-light);
+          padding: 18px 20px;
+          border-radius: 6px;
+          border-left: 3px solid var(--color-primary);
+        }
+        .q-text {
           font-family: var(--font-sans);
+          font-weight: 600;
           font-size: 0.95rem;
           color: var(--color-primary);
           margin-bottom: 12px;
-          line-height: 1.5;
         }
-        .radio-options {
+        .q-options {
           display: flex;
-          gap: 25px;
-        }
-        .radio-label {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          font-weight: 500;
-          font-size: 0.95rem;
+          gap: 30px;
         }
       `}</style>
     </div>

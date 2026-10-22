@@ -44,7 +44,7 @@ export const Contato: React.FC = () => {
 
       setStatusMessage({
         type: 'success',
-        text: 'Obrigado por entrar em contato! Sua mensagem foi enviada com sucesso e retornaremos em breve.'
+        text: 'Obrigado por entrar em contato! Sua mensagem foi enviada com sucesso e retornaremos o mais breve possível.'
       });
       setFormData({
         nome: '',
@@ -53,7 +53,7 @@ export const Contato: React.FC = () => {
         mensagem: '',
         privacyConsent: false
       });
-    } catch (err: any) {
+    } catch {
       setStatusMessage({
         type: 'error',
         text: 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente ou nos chame no WhatsApp.'
@@ -66,39 +66,52 @@ export const Contato: React.FC = () => {
   return (
     <div className="contact-page">
       <SEO
-        title="Contato | Mascârello Haus Advocacia"
-        description="Entre em contato com a equipe da Mascârello Haus Advocacia. Atendimento em Videira, Caçador e consultoria em todo o Brasil."
+        title="Gostaríamos de ouvir você | Mascârello Haus Advocacia"
+        description="Para informações ou contato com nossos profissionais, utilize nosso formulário. Nossa equipe de atendimento retornará a sua mensagem o mais breve possível."
         canonical="https://mascarellohaus.adv.br/contato/"
       />
 
       {/* Banner da Página */}
       <div className="page-header-banner">
         <div className="container">
-          <span className="banner-badge">Fale Conosco</span>
-          <h1 className="banner-title">Contato</h1>
-          <p className="banner-desc">Estamos à disposição para atender suas demandas jurídicas e esclarecer dúvidas.</p>
+          <div className="gold-divider center"></div>
+          <h1 className="banner-title text-center">Gostaríamos de ouvir você</h1>
+          <p className="banner-desc text-center" style={{ margin: '0 auto' }}>
+            Para informações ou contato com nossos profissionais, utilize nosso formulário. Nossa equipe de atendimento retornará a sua mensagem o mais breve possível.
+          </p>
         </div>
       </div>
 
-      <section className="section-padding">
+      <section className="section-padding bg-light">
         <div className="container contact-grid">
-          {/* Informações de Contato */}
+          {/* Informações de Contato Originais */}
           <div className="contact-info-col">
-            <h2 className="info-title">Canais de Atendimento</h2>
-            <p className="info-desc">
-              Entre em contato diretamente através de nossos canais institucionais ou preencha o formulário ao lado.
-            </p>
-
+            <h2 className="info-title">Escritório</h2>
             <div className="contact-card-list">
+              <div className="contact-info-item">
+                <div className="icon-wrapper">
+                  <MapPin size={22} />
+                </div>
+                <div>
+                  <h4>Endereço</h4>
+                  <p>Rua C. Alberto Schmidt, nº 10 Ed. Laura, 1º andar, SL 5 - Centro - Videira-SC</p>
+                </div>
+              </div>
+
               <div className="contact-info-item">
                 <div className="icon-wrapper">
                   <Phone size={22} />
                 </div>
                 <div>
-                  <h4>Telefone & WhatsApp</h4>
-                  <p>+55 (49) 99928-1878</p>
-                  <a href="https://wa.me/5549999281878" target="_blank" rel="noopener noreferrer" className="link-action">
-                    Conversar via WhatsApp →
+                  <h4>Ligue / WhatsApp</h4>
+                  <p>(49) 98822-0982</p>
+                  <a
+                    href="https://api.whatsapp.com/send?phone=554988220982"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-action"
+                  >
+                    Conversar via WhatsApp &rarr;
                   </a>
                 </div>
               </div>
@@ -108,37 +121,32 @@ export const Contato: React.FC = () => {
                   <Mail size={22} />
                 </div>
                 <div>
-                  <h4>E-mail Geral</h4>
+                  <h4>E-mail</h4>
                   <p>contato@mascarellohaus.adv.br</p>
                 </div>
               </div>
+            </div>
 
-              <div className="contact-info-item">
-                <div className="icon-wrapper">
-                  <Mail size={22} />
-                </div>
-                <div>
-                  <h4>Encarregado de Dados (DPO)</h4>
-                  <p>privacidade@mascarellohaus.adv.br</p>
-                </div>
-              </div>
-
-              <div className="contact-info-item">
-                <div className="icon-wrapper">
-                  <MapPin size={22} />
-                </div>
-                <div>
-                  <h4>Localização</h4>
-                  <p>Videira / Caçador — Santa Catarina</p>
-                </div>
+            <div className="social-links-box">
+              <h4>Mídias sociais</h4>
+              <div className="social-icons">
+                <a href="https://www.facebook.com/mascarellohausadvocacia/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <i className="fa-brands fa-facebook"></i> Facebook
+                </a>
+                <a href="https://www.instagram.com/mascarellohausadvocacia" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <i className="fa-brands fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.linkedin.com/company/mascarello-haus-advocacia/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                  <i className="fa-brands fa-linkedin"></i> Linkedin
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Formulário de Contato */}
+          {/* Formulário: Converse com um advogado */}
           <div className="contact-form-col">
             <div className="wpforms-container">
-              <h3 style={{ marginBottom: '20px' }}>Envie uma mensagem</h3>
+              <h3>Converse com um advogado</h3>
 
               {statusMessage && (
                 <div className={statusMessage.type === 'success' ? 'form-success-banner' : 'form-error-banner'}>
@@ -151,44 +159,35 @@ export const Contato: React.FC = () => {
 
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label className="form-label">
-                    Nome <span className="required">*</span>
-                  </label>
+                  <label className="form-label">Nome *</label>
                   <input
                     type="text"
                     className="form-control"
                     required
                     value={formData.nome}
                     onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                    placeholder="Seu nome completo"
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">
-                    E-mail <span className="required">*</span>
-                  </label>
+                  <label className="form-label">E-mail *</label>
                   <input
                     type="email"
                     className="form-control"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="seu.email@exemplo.com"
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">
-                    Telefone <span className="required">*</span>
-                  </label>
+                  <label className="form-label">Telefone *</label>
                   <input
                     type="tel"
                     className="form-control"
                     required
                     value={formData.telefone}
                     onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                    placeholder="(49) 99999-9999"
                   />
                 </div>
 
@@ -196,9 +195,9 @@ export const Contato: React.FC = () => {
                   <label className="form-label">Mensagem</label>
                   <textarea
                     className="form-control"
+                    rows={4}
                     value={formData.mensagem}
                     onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
-                    placeholder="Como podemos lhe ajudar?"
                   />
                 </div>
 
@@ -211,15 +210,15 @@ export const Contato: React.FC = () => {
                       onChange={(e) => setFormData({ ...formData, privacyConsent: e.target.checked })}
                     />
                     <span>
-                      O escritório Mascarello Haus coleta somente os dados necessários ao atendimento da sua solicitação e respeita a sua privacidade, em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei 13.709/2018). Ao continuar, você confirma que leu e aceitou os termos de privacidade. <span className="required">*</span>
+                      O escritório Mascarello Haus coleta somente os dados necessários ao atendimento da sua solicitação e respeita a sua privacidade, em conformidade com a Lei Geral de Proteção de Dados Pessoais 13.709/2018. Ao continuar, você confirma que leu e aceitou os termos de uso e a aviso de privacidade. *
                     </span>
                   </label>
                 </div>
 
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }} disabled={isSubmitting}>
+                <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={isSubmitting}>
                   {isSubmitting ? 'Enviando...' : (
                     <>
-                      Enviar Mensagem <Send size={16} />
+                      Enviar mensagem <Send size={16} />
                     </>
                   )}
                 </button>
@@ -230,83 +229,98 @@ export const Contato: React.FC = () => {
       </section>
 
       <style>{`
-        .page-header-banner {
-          background-color: var(--color-primary-dark);
-          color: #ffffff;
-          padding: 60px 0;
-          border-bottom: 2px solid var(--color-accent);
+        .gold-divider {
+          width: 80px;
+          height: 6px;
+          background-color: var(--color-accent);
+          margin-bottom: 22px;
+          border-radius: 2px;
         }
-        .banner-badge {
-          display: inline-block;
-          font-family: var(--font-sans);
-          font-size: 0.8rem;
-          font-weight: 700;
-          color: var(--color-accent);
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          margin-bottom: 8px;
+        .gold-divider.center {
+          margin-left: auto;
+          margin-right: auto;
         }
-        .banner-title {
-          color: #ffffff;
-          font-size: 2.8rem;
-          margin-bottom: 10px;
-        }
-        .banner-desc {
-          color: #cbd5e0;
-          font-size: 1.1rem;
-          max-width: 600px;
+        .text-center {
+          text-align: center;
         }
         .contact-grid {
           display: grid;
-          grid-template-columns: 1fr 1.2fr;
-          gap: 60px;
+          grid-template-columns: 1fr 1.3fr;
+          gap: 50px;
+          align-items: flex-start;
         }
         .info-title {
+          font-family: var(--font-serif);
           font-size: 1.8rem;
-          margin-bottom: 12px;
-        }
-        .info-desc {
-          color: var(--color-text-muted);
-          margin-bottom: 30px;
-          line-height: 1.6;
+          color: var(--color-primary);
+          margin-bottom: 25px;
         }
         .contact-card-list {
           display: flex;
           flex-direction: column;
-          gap: 24px;
+          gap: 20px;
+          margin-bottom: 35px;
         }
         .contact-info-item {
           display: flex;
-          gap: 16px;
           align-items: flex-start;
+          gap: 15px;
+          background: #ffffff;
+          padding: 20px;
+          border-radius: 8px;
+          border-left: 4px solid var(--color-accent);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
         .icon-wrapper {
-          width: 48px;
-          height: 48px;
-          background: rgba(197, 155, 39, 0.12);
           color: var(--color-accent);
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           flex-shrink: 0;
+          margin-top: 2px;
         }
         .contact-info-item h4 {
-          font-size: 1.05rem;
+          font-family: var(--font-serif);
+          font-size: 1.1rem;
           margin-bottom: 4px;
+          color: var(--color-primary);
         }
         .contact-info-item p {
-          color: var(--color-text-muted);
-          font-size: 0.95rem;
+          color: var(--color-text-main);
+          font-size: 0.92rem;
+          line-height: 1.5;
         }
         .link-action {
-          color: var(--color-accent);
-          font-size: 0.9rem;
-          font-weight: 600;
           display: inline-block;
+          font-size: 0.85rem;
+          color: var(--color-accent);
+          font-weight: 600;
           margin-top: 4px;
         }
-        @media (max-width: 850px) {
+        .link-action:hover {
+          color: var(--color-primary);
+        }
+        .social-links-box h4 {
+          font-family: var(--font-serif);
+          font-size: 1.1rem;
+          margin-bottom: 12px;
+          color: var(--color-primary);
+        }
+        .social-icons {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .social-icons a {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-family: var(--font-sans);
+          font-size: 0.9rem;
+          color: var(--color-primary);
+          transition: color 0.2s ease;
+        }
+        .social-icons a:hover {
+          color: var(--color-accent);
+        }
+        @media (max-width: 900px) {
           .contact-grid {
             grid-template-columns: 1fr;
           }

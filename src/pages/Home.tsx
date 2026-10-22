@@ -10,9 +10,8 @@ export const Home: React.FC = () => {
     {
       id: 1,
       bgImage: '/assets/fundos-slides-1.png',
-      title: 'Para um novo mundo, novas estratégias.',
-      subtitle: 'Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios.',
-      btnText: 'CONHEÇA O ESCRITÓRIO',
+      title: 'Para um novo mundo,  novas estratégias.',
+      btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
       isAnchor: true
     },
@@ -20,17 +19,23 @@ export const Home: React.FC = () => {
       id: 2,
       bgImage: '/assets/fundos-slides-3.png',
       title: 'Para uma nova realidade, novas soluções jurídicas.',
-      subtitle: 'Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios.',
-      btnText: 'CONHEÇA O ESCRITÓRIO',
+      btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
       isAnchor: true
     },
     {
       id: 3,
+      bgImage: '/assets/fundos-slides-1.png',
+      title: 'Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios.',
+      btnText: 'Conheça como podemos ajudar!',
+      btnLink: '#sobre',
+      isAnchor: true
+    },
+    {
+      id: 4,
       bgImage: '/assets/banner-ebooks-3.png',
       title: 'Conheça os nossos artigos, cartilhas e publicações.',
-      subtitle: '',
-      btnText: 'ACESSAR',
+      btnText: 'Acessar',
       btnLink: '/artigos-e-publicacoes/',
       isAnchor: false
     }
@@ -43,7 +48,7 @@ export const Home: React.FC = () => {
       desc: 'Compliance significa estar em conformidade com as normas aplicáveis ao negócio. Mascârello Haus promove a avaliação e o diagnóstico do ambiente de negócios.'
     },
     {
-      title: 'Direito Digital e Tecnologia',
+      title: 'Direito Digital e tecnologia',
       slug: 'direito-digital-e-tecnologia',
       desc: 'Mascârello Haus contempla tanto a atuação contenciosa quanto consultiva, por meio de conjunto de normas, aplicações, conhecimentos e regulação das relações jurídicas realizadas no meio digital.'
     },
@@ -72,14 +77,17 @@ export const Home: React.FC = () => {
   const testimonials = [
     {
       name: 'Flávia',
+      role: 'Gerente Corporativa',
       text: 'É admirável a maneira como o escritório de advocacia se destaca por sua ética profissional e competência, oferecendo orientações legais precisas e estratégias inovadoras.'
     },
     {
       name: 'Maria Helena',
+      role: 'Sócia-administradora',
       text: 'É notável o compromisso do escritório de advocacia em defender os interesses de seus clientes com paixão e integridade.'
     },
     {
       name: 'Marcelo',
+      role: 'Sócio-administrador',
       text: 'Sua equipe de advogados altamente qualificados demonstra uma profunda expertise e dedicação aos clientes, garantindo soluções jurídicas eficientes e personalizadas.'
     }
   ];
@@ -110,9 +118,6 @@ export const Home: React.FC = () => {
         <div className="container hero-container">
           <div className="hero-slide-content">
             <h1 className="hero-main-title">{heroSlides[currentSlide].title}</h1>
-            {heroSlides[currentSlide].subtitle && (
-              <p className="hero-main-subtitle">{heroSlides[currentSlide].subtitle}</p>
-            )}
             <div className="hero-btn-wrap">
               {heroSlides[currentSlide].isAnchor ? (
                 <a href={heroSlides[currentSlide].btnLink} className="hero-gold-btn">
@@ -178,8 +183,8 @@ export const Home: React.FC = () => {
                 </p>
               </div>
               <div className="sobre-btn-wrap">
-                <Link to="/quem-somos/" className="btn-gold-solid">
-                  Saiba mais
+                <Link to="/contato/" className="btn-gold-solid">
+                  Converse com um advogado
                 </Link>
               </div>
             </div>
@@ -238,7 +243,7 @@ export const Home: React.FC = () => {
               </div>
               <div className="mira-cta-wrap">
                 <Link to="/contato/" className="btn-gold-solid">
-                  Fale com a Dra. Mirâtaira
+                  Converse com um advogado
                 </Link>
               </div>
             </div>
@@ -246,13 +251,16 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* SEÇÃO 5: ÁREAS DE ATUAÇÃO COM IMAGEM ORIGINAL E 6 CARDS */}
+      {/* SEÇÃO 5: ÁREAS DE ATUAÇÃO COM TEXTO EXATO E 6 CARDS */}
       <section className="section-areas">
         <div className="container">
           <div className="areas-grid">
             <div className="areas-left-col">
               <div className="gold-divider"></div>
               <h2 className="section-title">Áreas de Atuação</h2>
+              <p className="areas-intro-text">
+                Mascârello Haus oferece recursos especializados, por meio do exercício da advocacia sistêmica de seus profissionais. De maneira preventiva, atua na solução de problemas nas esferas pessoal e corporativa, a fim de mitigar riscos e possibilitar a solução humanizada de conflitos judiciais e extrajudiciais.
+              </p>
               <div className="areas-banner-img">
                 <img
                   src="/assets/areas-de-atuacao-1.png"
@@ -269,7 +277,7 @@ export const Home: React.FC = () => {
                     <h3 className="area-item-title">{area.title}</h3>
                     <p className="area-item-desc">{area.desc}</p>
                     <Link to={`/${area.slug}/`} className="area-item-link">
-                      Saiba mais <ChevronRight size={14} />
+                      Ver mais <ChevronRight size={14} />
                     </Link>
                   </div>
                 ))}
@@ -279,7 +287,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* SEÇÃO 6: PROPÓSITO, VISÃO DE FUTURO, VALORES COM POST-5.PNG */}
+      {/* SEÇÃO 6: PROPÓSITO, VISÃO DE FUTURO, VALORES COM TEXTOS EXATOS */}
       <section className="section-triad-parallax">
         <div className="triad-bg-overlay"></div>
         <div className="container triad-container">
@@ -291,7 +299,7 @@ export const Home: React.FC = () => {
               </div>
               <h3 className="triad-card-title">Propósito</h3>
               <p className="triad-card-desc">
-                Apoiar pessoas nas decisões conscientes e entregar soluções que transformam negócios.
+                Desenvolver estratégias para a conformidade e proteção jurídica, auxiliando pessoas na tomada de decisões.
               </p>
             </div>
 
@@ -302,7 +310,7 @@ export const Home: React.FC = () => {
               </div>
               <h3 className="triad-card-title">Visão de Futuro</h3>
               <p className="triad-card-desc">
-                Estar entre os principais escritórios e ser referência na prestação de serviços jurídicos e de conformidade no Brasil.
+                Ser referência no segmento, reconhecidos pela confiança, inovação e eficiência.
               </p>
             </div>
 
@@ -312,9 +320,12 @@ export const Home: React.FC = () => {
                 <img src="/assets/hands-holding-heart-svgrepo-com.png" alt="Valores" className="triad-icon-img" />
               </div>
               <h3 className="triad-card-title">Valores</h3>
-              <p className="triad-card-desc">
-                Ética, responsabilidade, integridade, transparência e respeito nas relações humanas.
-              </p>
+              <div className="triad-card-desc triad-values-list">
+                <span>Excelência</span>
+                <span>Transparência</span>
+                <span>Integridade</span>
+                <span>Compromisso com as partes.</span>
+              </div>
             </div>
           </div>
         </div>
@@ -334,7 +345,7 @@ export const Home: React.FC = () => {
               </p>
               <div className="assessoria-btn-wrap">
                 <Link to="/contato/" className="btn-gold-solid">
-                  Fale com um Especialista <ArrowRight size={16} />
+                  Converse com um advogado <ArrowRight size={16} />
                 </Link>
               </div>
             </div>
@@ -352,7 +363,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* SEÇÃO 8: O QUE FALAM SOBRE NÓS (DEPOIMENTOS) */}
+      {/* SEÇÃO 8: O QUE FALAM SOBRE NÓS (DEPOIMENTOS COM CARGOS EXATOS) */}
       <section className="section-testimonials">
         <div className="container">
           <div className="testimonials-header">
@@ -371,6 +382,7 @@ export const Home: React.FC = () => {
                 </blockquote>
                 <div className="testimonial-author">
                   <h4>{item.name}</h4>
+                  <span className="testimonial-role">{item.role}</span>
                 </div>
               </div>
             ))}
@@ -461,16 +473,8 @@ export const Home: React.FC = () => {
           font-weight: 500;
           color: #ffffff;
           line-height: 1.2;
-          margin-bottom: 20px;
+          margin-bottom: 30px;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        .hero-main-subtitle {
-          font-family: var(--font-sans);
-          font-size: 1.15rem;
-          line-height: 1.6;
-          color: rgba(255, 255, 255, 0.95);
-          margin-bottom: 35px;
-          max-width: 650px;
         }
         .hero-gold-btn {
           display: inline-block;
@@ -651,6 +655,14 @@ export const Home: React.FC = () => {
           gap: 40px;
           align-items: start;
         }
+        .areas-intro-text {
+          font-family: var(--font-sans);
+          font-size: 0.95rem;
+          color: var(--color-text-main);
+          line-height: 1.7;
+          text-align: justify;
+          margin-bottom: 20px;
+        }
         .areas-main-img {
           width: 100%;
           height: auto;
@@ -766,6 +778,12 @@ export const Home: React.FC = () => {
           color: var(--color-text-main);
           line-height: 1.6;
         }
+        .triad-values-list {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          font-weight: 500;
+        }
 
         /* 7: ASSESSORIA EMPRESARIAL */
         .section-assessoria {
@@ -846,7 +864,12 @@ export const Home: React.FC = () => {
           font-size: 1.15rem;
           color: var(--color-primary);
           font-weight: 600;
-          margin-bottom: 0;
+          margin-bottom: 2px;
+        }
+        .testimonial-role {
+          font-family: var(--font-sans);
+          font-size: 0.82rem;
+          color: var(--color-text-muted);
         }
 
         /* RESPONSIVIDADE */

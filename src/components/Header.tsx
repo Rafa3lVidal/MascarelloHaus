@@ -7,13 +7,11 @@ export const Header: React.FC = () => {
   const location = useLocation();
 
   const navLinks = [
-    { label: 'Início', path: '/' },
-    { label: 'Quem Somos', path: '/quem-somos/' },
-    { label: 'Áreas de Atuação', path: '/areas-de-atuacao/' },
-    { label: 'Artigos e Publicações', path: '/artigos-e-publicacoes/' },
-    { label: 'Quiz LGPD', path: '/questionario-de-conformidade/' },
-    { label: 'Central LGPD', path: '/central-de-protecao-de-dados/' },
-    { label: 'Contato', path: '/contato/' },
+    { label: 'O escritório', path: '/quem-somos/' },
+    { label: 'Áreas de atuação', path: '/areas-de-atuacao/' },
+    { label: 'Artigos', path: '/artigos-e-publicacoes/' },
+    { label: 'Quiz de Conformidade', path: '/questionario-de-conformidade/' },
+    { label: 'Fale conosco', path: '/contato/' },
   ];
 
   const isActive = (path: string) => {
@@ -31,13 +29,13 @@ export const Header: React.FC = () => {
             <a href="mailto:contato@mascarellohaus.adv.br" className="top-link">
               <Mail size={13} /> contato@mascarellohaus.adv.br
             </a>
-            <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer" className="top-link">
-              <Phone size={13} /> +55 (49) 98822-0982
+            <a href="https://api.whatsapp.com/send?phone=554988220982" target="_blank" rel="noopener noreferrer" className="top-link">
+              <Phone size={13} /> WhatsApp 49 98822-0982
             </a>
           </div>
           <div className="top-lgpd-badge">
             <Link to="/central-de-protecao-de-dados/" className="top-link">
-              Central de Proteção de Dados (LGPD)
+              Central de Proteção de Dados
             </Link>
           </div>
         </div>
@@ -61,6 +59,14 @@ export const Header: React.FC = () => {
                 {link.label}
               </Link>
             ))}
+            <a
+              href="https://api.whatsapp.com/send?phone=554988220982"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-btn-wpp"
+            >
+              <i className="fa-brands fa-whatsapp"></i> WhatsApp 49 98822-0982
+            </a>
           </nav>
 
           {/* Botão Mobile */}
@@ -89,6 +95,13 @@ export const Header: React.FC = () => {
               </Link>
             ))}
             <Link
+              to="/central-de-protecao-de-dados/"
+              className="mobile-nav-link"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Central de Proteção de Dados
+            </Link>
+            <Link
               to="/codigo-de-conduta/"
               className="mobile-nav-link"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -102,6 +115,15 @@ export const Header: React.FC = () => {
             >
               Canal de Denúncias
             </Link>
+            <a
+              href="https://api.whatsapp.com/send?phone=554988220982"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-nav-link wpp"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <i className="fa-brands fa-whatsapp"></i> WhatsApp 49 98822-0982
+            </a>
           </nav>
         </div>
       )}
@@ -186,6 +208,23 @@ export const Header: React.FC = () => {
           height: 2px;
           background-color: var(--color-accent);
         }
+        .nav-btn-wpp {
+          font-family: var(--font-sans);
+          font-size: 0.85rem;
+          font-weight: 500;
+          color: var(--color-accent);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 14px;
+          border: 1px solid var(--color-accent);
+          border-radius: 50px;
+          transition: all 0.2s ease;
+        }
+        .nav-btn-wpp:hover {
+          background-color: var(--color-accent);
+          color: #ffffff;
+        }
         .mobile-toggle-btn {
           display: none;
           background: none;
@@ -214,6 +253,10 @@ export const Header: React.FC = () => {
         }
         .mobile-nav-link.active, .mobile-nav-link:hover {
           color: var(--color-accent);
+        }
+        .mobile-nav-link.wpp {
+          color: var(--color-accent);
+          font-weight: 600;
         }
         @media (max-width: 992px) {
           .top-bar { display: none; }
