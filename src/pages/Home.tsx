@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { ChevronRight, ChevronLeft, ArrowRight, Quote } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ArrowRight, Quote, Users, Compass, MessageSquare, Target, CheckCircle2 } from 'lucide-react';
 
 export const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -74,6 +74,43 @@ export const Home: React.FC = () => {
       desc: 'Prestamos serviços na proteção e defesa dos interesses das pessoas e organizações, em caráter preventivo e contencioso, nos ramos do Direito Civil e Empresarial.'
     }
   ];
+
+
+  const [activeStep, setActiveStep] = useState<number>(0);
+
+  const assessoriaSteps = [
+    {
+      step: '01',
+      title: 'Alinhamento',
+      desc: 'Reunião para alinhamento de expectativas e contrato.',
+      icon: Users
+    },
+    {
+      step: '02',
+      title: 'Definição de estratégia',
+      desc: 'Delimitação das estratégias desenvolvidas durante a assessoria.',
+      icon: Compass
+    },
+    {
+      step: '03',
+      title: 'Comunicação',
+      desc: 'Canal de comunicação para resolução das dúvidas e coleta de dados.',
+      icon: MessageSquare
+    },
+    {
+      step: '04',
+      title: 'Resultados',
+      desc: 'Apresentação de pareceres e apoio na tomada de decisões e saneamento de dúvidas.',
+      icon: Target
+    }
+  ];
+
+  useEffect(() => {
+    const stepInterval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % 4);
+    }, 4500);
+    return () => clearInterval(stepInterval);
+  }, []);
 
   const testimonials = [
     {
@@ -362,18 +399,35 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* SEÇÃO 7: COMO FUNCIONA A ASSESSORIA EMPRESARIAL? (FLUXO-1.PNG) */}
+      {/* SEÇÃO 7: COMO FUNCIONA A ASSESSORIA EMPRESARIAL? (FLUXO INTERATIVO ANIMADO) */}
       <section className="section-assessoria">
         <div className="container">
           <div className="assessoria-grid">
             <div className="assessoria-text-col">
               <div className="gold-divider"></div>
+              <span className="assessoria-badge-kicker">METODOLOGIA ESTRATÉGICA</span>
               <h2 className="section-title">
                 Como funciona a <br />assessoria empresarial?
               </h2>
               <p className="assessoria-description">
                 Nosso foco é apoiar as empresas em todas as rotinas relacionadas ao direito empresarial, e ao longo de todo o seu ciclo de vida, para reduzir sua exposição a riscos, garantir sua conformidade e impulsionar negócios.
               </p>
+
+              <div className="assessoria-highlights">
+                <div className="highlight-pill">
+                  <CheckCircle2 size={16} className="highlight-icon" />
+                  <span>Atendimento preventivo e proativo</span>
+                </div>
+                <div className="highlight-pill">
+                  <CheckCircle2 size={16} className="highlight-icon" />
+                  <span>Visão multidisciplinar e personalizada</span>
+                </div>
+                <div className="highlight-pill">
+                  <CheckCircle2 size={16} className="highlight-icon" />
+                  <span>Segurança jurídica para tomada de decisões</span>
+                </div>
+              </div>
+
               <div className="assessoria-btn-wrap">
                 <Link to="/contato/" className="btn-gold-solid">
                   Converse com um advogado <ArrowRight size={16} />
@@ -382,12 +436,51 @@ export const Home: React.FC = () => {
             </div>
 
             <div className="assessoria-flow-col">
-              <div className="flow-img-wrapper">
-                <img
-                  src="/assets/fluxo-1.png"
-                  alt="Fluxo da Assessoria Empresarial"
-                  className="flow-img"
-                />
+              <div className="interactive-flow-timeline">
+                <div className="timeline-connector-line"></div>
+                {assessoriaSteps.map((item, idx) => {
+                  const IconComp = item.icon;
+                  const isActive = activeStep === idx;
+                  return (
+                    <div
+                      key={item.step}
+                      className={`flow-step-card ${isActive ? 'active' : ''}`}
+                      onMouseEnter={() => setActiveStep(idx)}
+                      onClick={() => setActiveStep(idx)}
+                    >
+                      <div className="step-num-col">
+                        <span className="step-number">{item.step}</span>
+                      </div>
+
+                      <div className="step-content-col">
+                        <div className="step-header">
+                          <h3 className="step-title">{item.title}</h3>
+                        </div>
+                        <p className="step-desc">{item.desc}</p>
+                      </div>
+
+                      <div className="step-emblem-col">
+                        <div className="step-emblem-wrapper">
+                          <svg className="orbital-svg" viewBox="0 0 74 74">
+                            <circle
+                              cx="37"
+                              cy="37"
+                              r="34"
+                              fill="none"
+                              stroke="#0d3732"
+                              strokeWidth="2.5"
+                              strokeDasharray="4 6"
+                              className="orbital-circle"
+                            />
+                          </svg>
+                          <div className="emblem-core-circle">
+                            <IconComp size={24} className="emblem-icon" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -1002,37 +1095,246 @@ export const Home: React.FC = () => {
           font-weight: 500;
         }
 
-        /* 7: ASSESSORIA EMPRESARIAL */
+        /* 7: ASSESSORIA EMPRESARIAL INTERATIVA & ANIMADA */
         .section-assessoria {
           background-color: #ffffff;
-          padding: 90px 0;
+          padding: 100px 0;
+          position: relative;
+          overflow: hidden;
         }
         .assessoria-grid {
           display: grid;
-          grid-template-columns: 45% 55%;
-          gap: 50px;
+          grid-template-columns: 42% 58%;
+          gap: 60px;
           align-items: center;
+        }
+        .assessoria-badge-kicker {
+          display: inline-block;
+          font-family: var(--font-sans);
+          font-size: 0.8rem;
+          font-weight: 700;
+          letter-spacing: 2px;
+          color: var(--color-accent);
+          text-transform: uppercase;
+          margin-bottom: 12px;
         }
         .assessoria-description {
           font-family: var(--font-sans);
           font-size: 1.05rem;
           color: var(--color-text-main);
-          line-height: 1.7;
-          text-align: justify;
+          line-height: 1.75;
+          margin-bottom: 24px;
+        }
+        .assessoria-highlights {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
           margin-bottom: 30px;
         }
+        .highlight-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-family: var(--font-sans);
+          font-size: 0.92rem;
+          font-weight: 500;
+          color: var(--color-primary);
+        }
+        .highlight-icon {
+          color: var(--color-accent);
+          flex-shrink: 0;
+        }
         .assessoria-btn-wrap {
-          margin-top: 25px;
+          margin-top: 10px;
         }
-        .flow-img-wrapper {
-          text-align: center;
+
+        /* TIMELINE FLOW ANIMADA */
+        .interactive-flow-timeline {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          padding-left: 10px;
         }
-        .flow-img {
-          width: 85%;
-          max-width: 500px;
-          height: auto;
-          border-radius: 8px;
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        .timeline-connector-line {
+          position: absolute;
+          left: 45px;
+          top: 30px;
+          bottom: 30px;
+          width: 3px;
+          background: linear-gradient(
+            180deg,
+            var(--color-accent) 0%,
+            var(--color-primary) 50%,
+            var(--color-accent) 100%
+          );
+          opacity: 0.25;
+          z-index: 1;
+        }
+        .flow-step-card {
+          position: relative;
+          z-index: 2;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 22px 24px;
+          display: grid;
+          grid-template-columns: 55px 1fr 80px;
+          align-items: center;
+          gap: 20px;
+          cursor: pointer;
+          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+        }
+        .flow-step-card:hover,
+        .flow-step-card.active {
+          border-color: var(--color-accent);
+          background: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%);
+          transform: translateY(-4px) translateX(6px);
+          box-shadow: 0 12px 30px rgba(13, 55, 50, 0.08), 0 0 15px rgba(203, 171, 122, 0.15);
+        }
+        .step-num-col {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .step-number {
+          font-family: var(--font-serif);
+          font-size: 2.8rem;
+          font-weight: 700;
+          line-height: 1;
+          color: #d1d5db;
+          transition: color 0.35s ease, transform 0.35s ease;
+        }
+        .flow-step-card:hover .step-number,
+        .flow-step-card.active .step-number {
+          color: var(--color-accent);
+          transform: scale(1.08);
+        }
+        .step-content-col {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .step-title {
+          font-family: var(--font-sans);
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: var(--color-primary);
+          margin: 0;
+          transition: color 0.3s ease;
+        }
+        .flow-step-card.active .step-title {
+          color: var(--color-primary-dark);
+        }
+        .step-desc {
+          font-family: var(--font-sans);
+          font-size: 0.92rem;
+          color: #4a5568;
+          line-height: 1.55;
+          margin: 0;
+        }
+        .step-emblem-col {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .step-emblem-wrapper {
+          position: relative;
+          width: 70px;
+          height: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .orbital-svg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          animation: orbitRotate 16s linear infinite;
+        }
+        .flow-step-card:hover .orbital-svg,
+        .flow-step-card.active .orbital-svg {
+          animation-duration: 6s;
+        }
+        .orbital-circle {
+          transition: stroke 0.3s ease;
+        }
+        .flow-step-card.active .orbital-circle {
+          stroke: var(--color-accent);
+        }
+        .emblem-core-circle {
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          background-color: var(--color-primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(13, 55, 50, 0.25);
+          z-index: 2;
+        }
+        .flow-step-card.active .emblem-core-circle {
+          background-color: var(--color-primary-dark);
+          color: var(--color-accent);
+          transform: scale(1.06);
+          box-shadow: 0 6px 18px rgba(203, 171, 122, 0.45);
+        }
+        .emblem-icon {
+          transition: transform 0.3s ease;
+        }
+        .flow-step-card:hover .emblem-icon,
+        .flow-step-card.active .emblem-icon {
+          transform: scale(1.12);
+        }
+
+        @keyframes orbitRotate {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @media (max-width: 992px) {
+          .assessoria-grid {
+            grid-template-columns: 1fr;
+            gap: 50px;
+          }
+          .flow-step-card {
+            grid-template-columns: 50px 1fr 70px;
+            padding: 18px 20px;
+          }
+          .step-number {
+            font-size: 2.2rem;
+          }
+        }
+
+        @media (max-width: 580px) {
+          .flow-step-card {
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto auto;
+            gap: 12px;
+          }
+          .step-num-col {
+            grid-column: 1 / 2;
+            justify-content: flex-start;
+          }
+          .step-emblem-col {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+          }
+          .step-content-col {
+            grid-column: 1 / 3;
+            grid-row: 2 / 3;
+          }
+          .timeline-connector-line {
+            display: none;
+          }
         }
 
         /* 8: O QUE FALAM SOBRE NÓS */
