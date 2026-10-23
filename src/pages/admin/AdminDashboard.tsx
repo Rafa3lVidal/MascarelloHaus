@@ -30,7 +30,9 @@ import {
 } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'posts' | 'pages' | 'content' | 'lgpd' | 'messages' | 'audit'>('posts');
+  const [activeTab, setActiveTab] = useState<'posts' | 'pages' | 'content' | 'lgpd' | 'messages' | 'denuncias' | 'quizzes' | 'audit'>('posts');
+  const [whistleblowers, setWhistleblowers] = useState<any[]>([]);
+  const [quizSubmissions, setQuizSubmissions] = useState<any[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
   const [pages, setPages] = useState<any[]>([]);
   const [messages, setMessages] = useState<any[]>([]);
@@ -503,6 +505,8 @@ export const AdminDashboard: React.FC = () => {
               {activeTab === 'content' && 'Personalização de Conteúdos e Textos do Site'}
               {activeTab === 'lgpd' && 'Fila de Requisições do Titular (Art. 18 LGPD)'}
               {activeTab === 'messages' && 'Caixa de Entrada de Mensagens'}
+              {activeTab === 'denuncias' && 'Relatos do Canal de Denúncias'}
+              {activeTab === 'quizzes' && 'Avaliações de Conformidade de Fornecedores'}
               {activeTab === 'audit' && 'Logs de Auditoria Imutáveis'}
             </h2>
             <p style={{ margin: '4px 0 0 0', color: '#718096', fontSize: '0.9rem' }}>
@@ -906,6 +910,145 @@ export const AdminDashboard: React.FC = () => {
                           <td>{m.phone}</td>
                           <td style={{ maxWidth: '350px' }}>{m.message || '-'}</td>
                           <td>{new Date(m.created_at).toLocaleDateString('pt-BR')}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
+
+            {/* TAB: DENUNCIAS */}
+            {activeTab === 'denuncias' && (
+              <div className="table-responsive">
+                {whistleblowers.length === 0 ? (
+                  <p style={{ padding: '40px', textAlign: 'center', color: '#718096' }}>
+                    Nenhum relato no Canal de Denúncias registrado até o momento.
+                  </p>
+                ) : (
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Protocolo</th>
+                        <th>Denunciante</th>
+                        <th>Pessoas Envolvidas</th>
+                        <th>Fatos Relatados</th>
+                        <th>Descrição</th>
+                        <th>Anexos</th>
+                        <th>Data / Hora</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {whistleblowers.map((d) => (
+                        <tr key={d.id}>
+                          <td>
+                            <code>{d.protocol}</code>
+                          </td>
+                          <td>
+                            {d.is_anonymous ? (
+                              <span className="status-pill draft" style={{ color: '#b45309', background: '#fef3c7' }}>ANÔNIMO</span>
+                            ) : (
+                              <strong>{d.reporter_name}</strong>
+                            )}
+                          </td>
+                          <td><strong>{d.involved_persons}</strong></td>
+                          <td style={{ maxWidth: '240px' }}>
+                            {Array.isArray(d.concern_types) ? d.concern_types.join('; ') : '-'}
+                          </td>
+                          <td style={{ maxWidth: '300px', fontSize: '13px' }}>{d.description}</td>
+                          <td>
+                            {d.attachments_json && d.attachments_json.length > 0 ? (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                {d.attachments_json.map((att: any, aIdx: number) => (
+                                  <a
+                                    key={aIdx}
+                                    href={att.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#2563eb', fontSize: '12px', textDecoration: 'underline' }}
+                                  >
+                                    📎 {att.name || 'Evidência'}
+                                  </a>
+                                ))}
+                              </div>
+                            ) : (
+                              <span style={{ color: '#9ca3af', fontSize: '12px' }}>-</span>
+                            )}
+                          </td>
+                          <td>{new Date(d.created_at).toLocaleDateString('pt-BR')}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
+
+            {/* TAB: QUIZZES */}
+            {activeTab === 'quizzes' && (
+              <div className="table-responsive">
+                {quizSubmissions.length === 0 ? (
+                  <p style={{ padding: '40px', textAlign: 'center', color: '#718096' }}>
+                    Nenhum questionário de conformidade enviado por fornecedores ainda.
+                  </p>
+                ) : (
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Protocolo</th>
+                        <th>Empresa / CNPJ</th>
+                        <th>Responsável / E-mail</th>
+                        <th>Índice LGPD</th>
+                        <th>Evidências / Documentos</th>
+                        <th>Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {quizSubmissions.map((q) => (
+                        <tr key={q.id}>
+                          <td>
+                            <code>{q.protocol || '-'}</code>
+                          </td>
+                          <td>
+                            <strong>{q.company_name}</strong>
+                            <div style={{ fontSize: '12px', color: '#64748b' }}>{q.cnpj}</div>
+                          </td>
+                          <td>
+                            <div>{q.contact_name}</div>
+                            <small style={{ color: '#64748b' }}>{q.contact_email}</small>
+                          </td>
+                          <td>
+                            <span
+                              className="status-pill published"
+                              style={{
+                                background: q.final_score >= 80 ? '#dcfce7' : q.final_score >= 50 ? '#fef9c3' : '#fee2e2',
+                                color: q.final_score >= 80 ? '#15803d' : q.final_score >= 50 ? '#854d0e' : '#b91c1c',
+                                fontWeight: 700
+                              }}
+                            >
+                              {q.final_score !== null ? `${q.final_score}%` : '-'}
+                            </span>
+                          </td>
+                          <td>
+                            {q.attachments_json && q.attachments_json.length > 0 ? (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                {q.attachments_json.map((att: any, aIdx: number) => (
+                                  <a
+                                    key={aIdx}
+                                    href={att.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#2563eb', fontSize: '12px', textDecoration: 'underline' }}
+                                  >
+                                    📎 {att.name || 'Evidência'}
+                                  </a>
+                                ))}
+                              </div>
+                            ) : (
+                              <span style={{ color: '#9ca3af', fontSize: '12px' }}>-</span>
+                            )}
+                          </td>
+                          <td>{new Date(q.created_at).toLocaleDateString('pt-BR')}</td>
                         </tr>
                       ))}
                     </tbody>

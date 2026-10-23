@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import FileUploader from '../components/FileUploader';
+import SecurityShield, { createInitialSecurityState } from '../components/SecurityShield';
 import { supabase } from '../lib/supabase';
+import {
+  formatPhone,
+  isValidEmail,
+  isValidPhone,
+  sanitizeText,
+  sanitizeEmail,
+  generateProtocol,
+  getAnonymousIpHash,
+  checkClientRateLimit,
+  recordClientSubmission,
+  validateSecurityState,
+  uploadFormFiles,
+  recordFormConsent,
+} from '../lib/formSecurity';
 import { PRACTICE_AREAS_DATA, PracticeArea } from '../data/practiceAreasData';
 import {
   Send,
@@ -82,6 +98,8 @@ export const AreaIndividual: React.FC = () => {
     mensagem: '',
     privacyConsent: false
   });
+  const [files, setFiles] = useState<File[]>([]);
+  const [security, setSecurity] = useState(createInitialSecurityState);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -89,8 +107,23 @@ export const AreaIndividual: React.FC = () => {
     e.preventDefault();
     setStatusMessage(null);
 
-    if (!formData.nome || !formData.email || !formData.telefone) {
-      setStatusMessage({ type: 'error', text: 'Por favor, preencha todos os campos obrigatórios.' });
+    const cleanName = sanitizeText(formData.nome, 140);
+    const cleanEmail = sanitizeEmail(formData.email);
+    const cleanPhone = sanitizeText(formData.telefone, 30);
+    const cleanMsg = sanitizeText(formData.mensagem, 5000);
+
+    if (cleanName.length < 3) {
+      setStatusMessage({ type: 'error', text: 'Por favor, informe seu nome completo.' });
+      return;
+    }
+
+    if (!isValidEmail(cleanEmail)) {
+      setStatusMessage({ type: 'error', text: 'Por favor, informe um e-mail válido.' });
+      return;
+    }
+
+    if (!isValidPhone(cleanPhone)) {
+      setStatusMessage({ type: 'error', text: 'Por favor, informe um telefone válido com DDD.' });
       return;
     }
 
@@ -99,33 +132,55 @@ export const AreaIndividual: React.FC = () => {
       return;
     }
 
+    const secCheck = validateSecurityState(security);
+    if (!secCheck.valid) {
+      setStatusMessage({ type: 'error', text: secCheck.error || 'Falha na verificação anti-spam.' });
+      return;
+    }
+
+    const rateCheck = checkClientRateLimit(`area_${currentSlug}`, 4, 10 * 60 * 1000);
+    if (!rateCheck.allowed) {
+      setStatusMessage({
+        type: 'error',
+        text: `Muitas tentativas. Aguarde ${rateCheck.retryAfterSeconds}s antes de enviar novamente.`
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from('leads').insert({
-        nome: formData.nome,
-        email: formData.email,
-        telefone: formData.telefone,
-        mensagem: formData.mensagem,
-        origem: `area-de-atuacao-${currentSlug}`,
-        consentimento_lgpd: formData.privacyConsent
+      const uploadedAttachments = await uploadFormFiles(files, 'contato', `area_${currentSlug}`);
+      const protocol = generateProtocol('CONT');
+      const ipHash = await getAnonymousIpHash();
+
+      const { error } = await supabase.from('contact_messages').insert({
+        protocol,
+        name: cleanName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        subject: area ? `Área: ${area.title}` : currentSlug,
+        message: cleanMsg,
+        privacy_consent: formData.privacyConsent,
+        page_source: `/areas-de-atuacao/${currentSlug}`,
+        attachments_json: uploadedAttachments,
+        ip_hash: ipHash,
+        user_agent: navigator.userAgent.slice(0, 250),
+        security_meta: {
+          honeypot: security.honeypotWebsite || security.honeypotFax || '',
+          challengeToken: security.challengeToken,
+          elapsedMs: Date.now() - security.mountedAt,
+        }
       });
 
-      if (error) {
-        console.warn('Tentando fallback para contact_messages...');
-        await supabase.from('contact_messages').insert({
-          name: formData.nome,
-          email: formData.email,
-          phone: formData.telefone,
-          message: formData.mensagem,
-          privacy_consent: formData.privacyConsent,
-          page_source: currentSlug
-        });
-      }
+      if (error) throw error;
+
+      await recordFormConsent('practice_area_contact_privacy', cleanEmail);
+      recordClientSubmission(`area_${currentSlug}`);
 
       setStatusMessage({
         type: 'success',
-        text: 'Obrigado pelo contato! Retornaremos a sua mensagem o mais breve possível.'
+        text: `Obrigado pelo contato! Protocolo: ${protocol}. Retornaremos o mais breve possível.`
       });
       setFormData({
         nome: '',
@@ -134,10 +189,12 @@ export const AreaIndividual: React.FC = () => {
         mensagem: '',
         privacyConsent: false
       });
-    } catch {
+      setFiles([]);
+      setSecurity(createInitialSecurityState());
+    } catch (err: any) {
       setStatusMessage({
-        type: 'success',
-        text: 'Sua mensagem foi registrada com sucesso! Nossa equipe entrará em contato.'
+        type: 'error',
+        text: err?.message || 'Erro ao enviar mensagem. Tente novamente em instantes.'
       });
     } finally {
       setIsSubmitting(false);
@@ -291,7 +348,7 @@ export const AreaIndividual: React.FC = () => {
                     placeholder="(49) 99999-9999"
                     required
                     value={formData.telefone}
-                    onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, telefone: formatPhone(e.target.value) })}
                   />
                 </div>
 
@@ -303,6 +360,20 @@ export const AreaIndividual: React.FC = () => {
                     placeholder="Como podemos lhe orientar?"
                     value={formData.mensagem}
                     onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <FileUploader
+                    id={`area-files-${currentSlug}`}
+                    label="Anexar documentos (opcional)"
+                    files={files}
+                    onChange={setFiles}
+                    maxFiles={2}
+                    maxSizeMB={10}
+                    allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png']}
+                    variant="light"
+                    compact
                   />
                 </div>
 
@@ -320,8 +391,10 @@ export const AreaIndividual: React.FC = () => {
                   </label>
                 </div>
 
+                <SecurityShield security={security} onChange={setSecurity} variant="light" />
+
                 <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={isSubmitting}>
-                  {isSubmitting ? 'Enviando...' : (
+                  {isSubmitting ? 'Enviando com segurança...' : (
                     <>
                       Enviar mensagem <Send size={16} />
                     </>
@@ -332,7 +405,7 @@ export const AreaIndividual: React.FC = () => {
               {/* Botão Direto WhatsApp */}
               <div style={{ marginTop: '20px', paddingTop: '18px', borderTop: '1px solid #e2e8f0', textAlign: 'center' }}>
                 <a
-                  href={`https://wa.me/5549999281878?text=${encodeURIComponent(`Olá! Gostaria de orientações sobre ${area.title}.`)}`}
+                  href={`https://wa.me/5549999743484?text=${encodeURIComponent(`Olá! Gostaria de orientações sobre ${area.title}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="whatsapp-btn-full"

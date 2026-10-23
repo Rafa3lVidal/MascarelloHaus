@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import { SEO } from '../components/SEO';
-import { AlertTriangle, Send, CheckCircle2, Shield, Lock } from 'lucide-react';
+import { AlertTriangle, Send, CheckCircle2, Shield, Lock, Copy, Check, FileCheck, Info } from 'lucide-react';
+import FileUploader from '../components/FileUploader';
+import SecurityShield, { createInitialSecurityState } from '../components/SecurityShield';
 import { supabase } from '../lib/supabase';
+import {
+  sanitizeText,
+  generateProtocol,
+  getAnonymousIpHash,
+  checkClientRateLimit,
+  recordClientSubmission,
+  validateSecurityState,
+  uploadFormFiles,
+  recordFormConsent,
+} from '../lib/formSecurity';
 
 export const CanalDenuncias: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -15,11 +27,14 @@ export const CanalDenuncias: React.FC = () => {
     localizacao: '',
     descricao: '',
     concordaTermos: false,
-    naoQuerDivulgarDados: true
+    naoQuerDivulgarDados: true,
   });
+  const [files, setFiles] = useState<File[]>([]);
+  const [security, setSecurity] = useState(createInitialSecurityState);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [protocol, setProtocol] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const fatosOpcoes = [
     'Corrupção por parte de colaboradores da Mascarello Haus',
@@ -37,45 +52,98 @@ export const CanalDenuncias: React.FC = () => {
     }
   };
 
+  const handleCopyProtocol = () => {
+    if (!protocol) return;
+    navigator.clipboard.writeText(protocol);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.pessoaEnvolvida || !formData.descricao) {
-      alert('Por favor, preencha a(s) pessoa(s) envolvida(s) e a descrição do evento.');
+    setErrorMessage(null);
+
+    const cleanPessoa = sanitizeText(formData.pessoaEnvolvida, 200);
+    const cleanDesc = sanitizeText(formData.descricao, 15000);
+    const cleanDenunciante = sanitizeText(formData.denuncianteNome, 150);
+    const cleanLoc = sanitizeText(formData.localizacao, 250);
+
+    if (formData.fatos.length === 0) {
+      setErrorMessage('Por favor, selecione ao menos uma opção sobre quais fatos se referem a sua preocupação.');
       return;
     }
+
+    if (!cleanPessoa) {
+      setErrorMessage('Por favor, informe a(s) pessoa(s) envolvida(s) no incidente.');
+      return;
+    }
+
+    if (cleanDesc.length < 15) {
+      setErrorMessage('Por favor, descreva o evento com mais detalhes (mínimo de 15 caracteres).');
+      return;
+    }
+
     if (!formData.concordaTermos) {
-      alert('É necessário concordar com os Termos de Uso.');
+      setErrorMessage('É necessário declarar concordância com os Termos e a veracidade das informações.');
+      return;
+    }
+
+    const secCheck = validateSecurityState(security);
+    if (!secCheck.valid) {
+      setErrorMessage(secCheck.error || 'Falha na verificação de segurança anti-spam.');
+      return;
+    }
+
+    const rateCheck = checkClientRateLimit('denuncias', 4, 10 * 60 * 1000);
+    if (!rateCheck.allowed) {
+      setErrorMessage(`Limite de envios temporário atingido. Aguarde ${rateCheck.retryAfterSeconds} segundos.`);
       return;
     }
 
     setIsSubmitting(true);
-    try {
-      const datePart = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      const randomPart = Math.floor(1000 + Math.random() * 9000);
-      const prot = `DENUNCIA-${datePart}-${randomPart}`;
 
-      await supabase.from('audit_log').insert({
-        action: 'DENUNCIA_SUBMETIDA',
-        table_name: 'denuncias_compliance',
-        record_id: prot,
-        new_data: {
-          protocol: prot,
-          fatos: formData.fatos,
-          trabalhaEscritorio: formData.trabalhaEscritorio,
-          queixaCompliance: formData.queixaCompliance,
-          denunciante: formData.naoQuerDivulgarDados ? 'ANÔNIMO' : formData.denuncianteNome,
-          pessoaEnvolvida: formData.pessoaEnvolvida,
-          dataIncidente: formData.dataIncidente,
-          horaIncidente: formData.horaIncidente,
-          localizacao: formData.localizacao,
-          descricao: formData.descricao
+    try {
+      const uploadedAttachments = await uploadFormFiles(
+        files,
+        'denuncias',
+        'evidencias_denuncia'
+      );
+      const generatedProtocol = generateProtocol('DEN');
+      const ipHash = await getAnonymousIpHash();
+
+      const { error } = await supabase.from('whistleblower_reports').insert({
+        protocol: generatedProtocol,
+        concern_types: formData.fatos,
+        works_at_firm: formData.trabalhaEscritorio,
+        has_compliance_complaint: formData.queixaCompliance,
+        reporter_name: formData.naoQuerDivulgarDados ? 'ANÔNIMO' : (cleanDenunciante || 'NÃO INFORMADO'),
+        involved_persons: cleanPessoa,
+        incident_date: formData.dataIncidente || null,
+        incident_time: formData.horaIncidente || null,
+        incident_location: cleanLoc || null,
+        description: cleanDesc,
+        is_anonymous: formData.naoQuerDivulgarDados,
+        attachments_json: uploadedAttachments,
+        status: 'new',
+        ip_hash: ipHash,
+        security_meta: {
+          honeypot: security.honeypotWebsite || security.honeypotFax || '',
+          challengeToken: security.challengeToken,
+          elapsedMs: Date.now() - security.mountedAt,
         }
       });
 
-      setProtocol(prot);
-      setSubmitted(true);
-    } catch {
-      alert('Erro ao enviar o relato. Tente novamente.');
+      if (error) throw error;
+
+      await recordFormConsent('whistleblower_report', formData.naoQuerDivulgarDados ? 'anon' : cleanDenunciante);
+      recordClientSubmission('denuncias');
+
+      setProtocol(generatedProtocol);
+      setFiles([]);
+      setSecurity(createInitialSecurityState());
+    } catch (err: any) {
+      console.error('Erro ao enviar denúncia:', err);
+      setErrorMessage(err?.message || 'Erro ao registrar denúncia. Por favor, tente novamente mais tarde.');
     } finally {
       setIsSubmitting(false);
     }
@@ -85,7 +153,7 @@ export const CanalDenuncias: React.FC = () => {
     <div className="denuncias-page">
       <SEO
         title="Canal de Denúncias | Mascârello Haus Advocacia"
-        description="Ocasionalmente nos deparamos com situações de desvio de conduta, mas nos sentimos impotentes ou intimidados e acabamos por não fazer nada. Por isso o escritório Mascarello Haus conta com uma ferramenta para colaboradores, clientes e parceiros de negócios relatarem suspeitas de fraudes, desvios, má conduta ou qualquer fato que seja contrário ao nosso código de conduta."
+        description="Canal confidencial e seguro para colaboradores, clientes e parceiros relatarem suspeitas de desvios, violações éticas ou condutas contrárias aos padrões de conformidade."
         canonical="https://mascarellohaus.adv.br/canal-de-denuncias/"
       />
 
@@ -94,259 +162,408 @@ export const CanalDenuncias: React.FC = () => {
           <div className="gold-divider center"></div>
           <h1 className="banner-title text-center">Canal de Denúncias</h1>
           <p className="banner-desc text-center" style={{ margin: '0 auto', maxWidth: '850px' }}>
-            Ocasionalmente nos deparamos com situações de desvio de conduta, mas nos sentimos impotentes ou intimidados e acabamos por não fazer nada. Por isso o escritório Mascarello Haus conta com uma ferramenta para colaboradores, clientes e parceiros de negócios relatarem suspeitas de fraudes, desvios, má conduta ou qualquer fato que seja contrário ao nosso código de conduta.
+            Ocasionalmente nos deparamos com situações de desvio de conduta, mas nos sentimos intimidados e acabamos por não fazer nada. Por isso, a Mascârello Haus disponibiliza este canal independente, seguro e confidencial para relatar fraudes, desvios ou violações éticas.
           </p>
         </div>
       </div>
 
       <section className="section-padding bg-light">
-        <div className="container" style={{ maxWidth: '850px' }}>
-          {/* Caixa de Informações */}
-          <div className="info-orientacoes-box">
-            <h3>Informações</h3>
-            <p>Para nós, é muito importante que sua denúncia seja realizada com a maior riqueza de detalhes possíveis, como:</p>
-            <ul>
-              <li>• Data da ocorrência.</li>
-              <li>• Onde e como aconteceu ou está acontecendo.</li>
-              <li>• Quem são as pessoas envolvidas.</li>
-            </ul>
-            <p style={{ marginTop: '14px' }}>
-              Se for possível nos encaminhar evidências como fotos, documentos e/ou outras informações relevantes, poderá contribuir ainda mais com a investigação.
-            </p>
-            <p>
-              <strong>Mas fique tranquilo(a)!!</strong><br />
-              Caso não tenha todas essas informações, sua denúncia pode ser registrada da mesma maneira.
-            </p>
-          </div>
+        <div className="container" style={{ maxWidth: '820px' }}>
+          {protocol ? (
+            <div className="denuncia-success-card">
+              <CheckCircle2 size={54} className="success-icon" />
+              <h2>Relato Registrado com Sucesso</h2>
+              <p>
+                Agradecemos sua colaboração na manutenção dos mais altos padrões éticos e de conformidade. Seu relato foi recebido de forma segura e confidencial pelo Comitê de Ética.
+              </p>
 
-          <div className="wpforms-container" style={{ marginTop: '35px' }}>
-            {submitted ? (
-              <div style={{ textAlign: 'center', padding: '30px 10px' }}>
-                <CheckCircle2 size={45} style={{ color: '#0d3732', marginBottom: '15px' }} />
-                <h3 style={{ marginBottom: '10px' }}>Denúncia Registrada com Sucesso</h3>
-                <p style={{ color: 'var(--color-text-main)', marginBottom: '18px' }}>
-                  Seu relato foi recebido em nosso ambiente de compliance sigiloso e independente.
-                </p>
-                <div style={{ background: '#f5f7f8', padding: '15px', borderRadius: '6px', display: 'inline-block' }}>
-                  <strong>Protocolo:</strong> <code style={{ fontSize: '1.1rem', color: 'var(--color-primary)' }}>{protocol}</code>
+              <div className="protocol-box">
+                <span className="protocol-label">Número de Protocolo Confidencial</span>
+                <span className="protocol-value">{protocol}</span>
+                <button type="button" onClick={handleCopyProtocol} className="copy-btn">
+                  {copied ? <Check size={16} /> : <Copy size={16} />}
+                  {copied ? 'Copiado!' : 'Copiar Protocolo'}
+                </button>
+              </div>
+
+              <div className="info-banner" style={{ marginTop: '20px' }}>
+                <Lock size={18} />
+                <span>
+                  Guarde este número com cuidado. Ele é seu comprovante único para acompanhar qualquer desdobramento sem violar seu anonimato.
+                </span>
+              </div>
+
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ marginTop: '24px' }}
+                onClick={() => {
+                  setProtocol(null);
+                  setFormData({
+                    fatos: [],
+                    trabalhaEscritorio: 'Não',
+                    queixaCompliance: 'Não',
+                    denuncianteNome: '',
+                    pessoaEnvolvida: '',
+                    dataIncidente: '',
+                    horaIncidente: '',
+                    localizacao: '',
+                    descricao: '',
+                    concordaTermos: false,
+                    naoQuerDivulgarDados: true,
+                  });
+                }}
+              >
+                Fazer outro relato
+              </button>
+            </div>
+          ) : (
+            <div className="wpforms-container">
+              <div className="denuncia-intro-box">
+                <Shield size={24} className="intro-icon" />
+                <div>
+                  <h4>Garantia de Confidencialidade e Não Retaliação</h4>
+                  <p>
+                    Este canal garante o anonimato total caso você opte por não se identificar. Nenhuma informação de IP ou rastreamento pessoal identificável é vinculada a relatos anônimos.
+                  </p>
                 </div>
               </div>
-            ) : (
-              <div>
-                <h3 style={{ marginBottom: '10px' }}>Formulário de Denúncia</h3>
-                <p style={{ color: 'var(--color-text-main)', fontSize: '0.92rem', marginBottom: '25px', lineHeight: '1.6' }}>
-                  Prezado(a) Denunciante, este canal de comunicação entre você e a Mascarello Haus, foi criado como um canal legítimo para o recebimento de sua denúncia. Abaixo segue formulário para ser preenchido, garantimos o total sigilo de suas informações caso se sinta a vontade para se identificar.
-                </p>
 
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label className="form-label">A sua preocupação é sobre quais fatos? *</label>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-                      {fatosOpcoes.map((op, idx) => (
-                        <label key={idx} className="form-checkbox-label">
-                          <input
-                            type="checkbox"
-                            checked={formData.fatos.includes(op)}
-                            onChange={() => handleCheckboxChange(op)}
-                          />
-                          <span>{op}</span>
-                        </label>
-                      ))}
-                    </div>
+              {errorMessage && (
+                <div className="form-error-banner" style={{ marginBottom: '20px' }}>
+                  <AlertTriangle size={20} />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} noValidate>
+                {/* 1. Fatos */}
+                <div className="form-group">
+                  <label className="form-label">
+                    A sua preocupação é sobre quais fatos? <span className="required">*</span>
+                  </label>
+                  <div className="checkbox-list">
+                    {fatosOpcoes.map((fato, idx) => (
+                      <label key={idx} className="checkbox-item">
+                        <input
+                          type="checkbox"
+                          checked={formData.fatos.includes(fato)}
+                          onChange={() => handleCheckboxChange(fato)}
+                        />
+                        <span>{fato}</span>
+                      </label>
+                    ))}
                   </div>
+                </div>
 
-                  <div className="form-group" style={{ marginTop: '20px' }}>
-                    <label className="form-label">Você trabalha na Mascarello Haus ou presta serviços ao escritório?</label>
-                    <div style={{ display: 'flex', gap: '20px', marginTop: '6px' }}>
-                      <label className="form-checkbox-label">
+                {/* 2. Trabalha no escritório? */}
+                <div className="form-group">
+                  <label className="form-label">
+                    Você trabalha na Mascarello Haus ou presta serviços ao escritório?
+                  </label>
+                  <div className="radio-group">
+                    {['Sim', 'Não'].map((opt) => (
+                      <label key={opt} className="radio-item">
                         <input
                           type="radio"
-                          name="trabalha"
-                          checked={formData.trabalhaEscritorio === 'Sim'}
-                          onChange={() => setFormData({ ...formData, trabalhaEscritorio: 'Sim' })}
+                          name="trabalhaEscritorio"
+                          value={opt}
+                          checked={formData.trabalhaEscritorio === opt}
+                          onChange={(e) => setFormData({ ...formData, trabalhaEscritorio: e.target.value })}
                         />
-                        <span>Sim</span>
+                        <span>{opt}</span>
                       </label>
-                      <label className="form-checkbox-label">
-                        <input
-                          type="radio"
-                          name="trabalha"
-                          checked={formData.trabalhaEscritorio === 'Não'}
-                          onChange={() => setFormData({ ...formData, trabalhaEscritorio: 'Não' })}
-                        />
-                        <span>Não</span>
-                      </label>
-                    </div>
+                    ))}
                   </div>
+                </div>
 
-                  <div className="form-group" style={{ marginTop: '20px' }}>
-                    <label className="form-label">Você atualmente tem alguma queixa a nível de Compliance do Mascarello Haus?</label>
-                    <div style={{ display: 'flex', gap: '20px', marginTop: '6px' }}>
-                      <label className="form-checkbox-label">
+                {/* 3. Queixa Compliance? */}
+                <div className="form-group">
+                  <label className="form-label">
+                    Você atualmente tem alguma queixa a nível de Compliance do Mascarello Haus?
+                  </label>
+                  <div className="radio-group">
+                    {['Sim', 'Não'].map((opt) => (
+                      <label key={opt} className="radio-item">
                         <input
                           type="radio"
-                          name="queixa"
-                          checked={formData.queixaCompliance === 'Sim'}
-                          onChange={() => setFormData({ ...formData, queixaCompliance: 'Sim' })}
+                          name="queixaCompliance"
+                          value={opt}
+                          checked={formData.queixaCompliance === opt}
+                          onChange={(e) => setFormData({ ...formData, queixaCompliance: e.target.value })}
                         />
-                        <span>Sim</span>
+                        <span>{opt}</span>
                       </label>
-                      <label className="form-checkbox-label">
-                        <input
-                          type="radio"
-                          name="queixa"
-                          checked={formData.queixaCompliance === 'Não'}
-                          onChange={() => setFormData({ ...formData, queixaCompliance: 'Não' })}
-                        />
-                        <span>Não</span>
-                      </label>
-                    </div>
+                    ))}
                   </div>
+                </div>
 
-                  <div className="form-group" style={{ marginTop: '20px' }}>
-                    <label className="form-label">Denunciante – Pessoa que relatou o incidente</label>
-                    <span style={{ display: 'block', fontSize: '0.82rem', color: 'var(--color-text-muted)', marginBottom: '6px' }}>
-                      Testemunha que está relatando o fato – Não obrigatório, você não precisa se identificar
+                {/* 4. Opção de Anonimato e Identificação */}
+                <div className="form-group anon-toggle-box">
+                  <label className="form-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={formData.naoQuerDivulgarDados}
+                      onChange={(e) => setFormData({ ...formData, naoQuerDivulgarDados: e.target.checked })}
+                    />
+                    <span>
+                      <strong>Desejo realizar esta denúncia de forma 100% anônima</strong> (não divulgar meu nome nem dados de contato).
                     </span>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Deixe em branco para relato 100% anônimo"
-                      value={formData.denuncianteNome}
-                      onChange={(e) => setFormData({ ...formData, denuncianteNome: e.target.value })}
-                    />
-                  </div>
+                  </label>
 
-                  <div className="form-group">
-                    <label className="form-label">Pessoa(s) envolvida no incidente *</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      required
-                      value={formData.pessoaEnvolvida}
-                      onChange={(e) => setFormData({ ...formData, pessoaEnvolvida: e.target.value })}
-                    />
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                    <div className="form-group">
-                      <label className="form-label">Data do incidente</label>
+                  {!formData.naoQuerDivulgarDados && (
+                    <div style={{ marginTop: '14px' }}>
+                      <label className="form-label">Seu Nome / Identificação (Opcional)</label>
                       <input
-                        type="date"
+                        type="text"
                         className="form-control"
-                        value={formData.dataIncidente}
-                        onChange={(e) => setFormData({ ...formData, dataIncidente: e.target.value })}
+                        placeholder="Informe seu nome ou cargo para contato confidencial"
+                        value={formData.denuncianteNome}
+                        onChange={(e) => setFormData({ ...formData, denuncianteNome: e.target.value })}
                       />
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Hora do incidente</label>
-                      <input
-                        type="time"
-                        className="form-control"
-                        value={formData.horaIncidente}
-                        onChange={(e) => setFormData({ ...formData, horaIncidente: e.target.value })}
-                      />
-                    </div>
-                  </div>
+                  )}
+                </div>
 
+                {/* 5. Pessoa Envolvida */}
+                <div className="form-group">
+                  <label className="form-label">
+                    Pessoa(s) envolvida(s) no incidente <span className="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Nome(s), área ou cargo das pessoas envolvidas"
+                    required
+                    value={formData.pessoaEnvolvida}
+                    onChange={(e) => setFormData({ ...formData, pessoaEnvolvida: e.target.value })}
+                  />
+                </div>
+
+                {/* 6. Data e Hora */}
+                <div className="grid-2">
                   <div className="form-group">
-                    <label className="form-label">Localização do incidente</label>
+                    <label className="form-label">Data do incidente</label>
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
-                      value={formData.localizacao}
-                      onChange={(e) => setFormData({ ...formData, localizacao: e.target.value })}
+                      value={formData.dataIncidente}
+                      onChange={(e) => setFormData({ ...formData, dataIncidente: e.target.value })}
                     />
                   </div>
-
                   <div className="form-group">
-                    <label className="form-label">Descreva o evento em detalhes. *</label>
-                    <textarea
+                    <label className="form-label">Hora aproximada</label>
+                    <input
+                      type="time"
                       className="form-control"
-                      rows={5}
+                      value={formData.horaIncidente}
+                      onChange={(e) => setFormData({ ...formData, horaIncidente: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                {/* 7. Localização */}
+                <div className="form-group">
+                  <label className="form-label">Localização do incidente</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Ex: Videira, Caçador, Reunião virtual, Sistema..."
+                    value={formData.localizacao}
+                    onChange={(e) => setFormData({ ...formData, localizacao: e.target.value })}
+                  />
+                </div>
+
+                {/* 8. Descrição */}
+                <div className="form-group">
+                  <label className="form-label">
+                    Descreva o evento em detalhes <span className="required">*</span>
+                  </label>
+                  <textarea
+                    className="form-control"
+                    rows={6}
+                    required
+                    placeholder="Descreva o que ocorreu, quando, quem estava presente e quais os impactos observados..."
+                    value={formData.descricao}
+                    onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+                  />
+                </div>
+
+                {/* 9. Upload de Evidências (Conforme original WPForms wpforms_2805_15) */}
+                <div className="form-group">
+                  <FileUploader
+                    id="wpforms_2805_15"
+                    label="Anexar documentos, fotos, vídeos, áudios ou evidências"
+                    description="Se você possui documentos, fotos, áudios ou relatórios que queira anexar, selecione-os abaixo (formatos: PDF, DOCX, JPG, PNG, MP3, WAV, MP4, ZIP — até 15MB cada)."
+                    files={files}
+                    onChange={setFiles}
+                    maxFiles={5}
+                    maxSizeMB={15}
+                    allowedExtensions={['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'mp3', 'wav', 'mp4', 'zip']}
+                    variant="light"
+                  />
+                </div>
+
+                {/* 10. Termos de Uso */}
+                <div className="form-group">
+                  <label className="form-checkbox-label">
+                    <input
+                      type="checkbox"
                       required
-                      value={formData.descricao}
-                      onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+                      checked={formData.concordaTermos}
+                      onChange={(e) => setFormData({ ...formData, concordaTermos: e.target.checked })}
                     />
-                  </div>
+                    <span>
+                      Declaro que as informações aqui relatadas são de boa-fé e verdadeiras segundo o meu conhecimento, e concordo com os Termos de Uso e Sigilo do Canal de Denúncias. <span className="required">*</span>
+                    </span>
+                  </label>
+                </div>
 
-                  <div className="form-group" style={{ marginTop: '20px' }}>
-                    <label className="form-checkbox-label">
-                      <input
-                        type="checkbox"
-                        required
-                        checked={formData.concordaTermos}
-                        onChange={(e) => setFormData({ ...formData, concordaTermos: e.target.checked })}
-                      />
-                      <span>Li e concordo com os Termos de Uso *</span>
-                    </label>
-                  </div>
+                <SecurityShield security={security} onChange={setSecurity} variant="light" />
 
-                  <div className="form-group">
-                    <label className="form-checkbox-label">
-                      <input
-                        type="checkbox"
-                        required
-                        checked={formData.naoQuerDivulgarDados}
-                        onChange={(e) => setFormData({ ...formData, naoQuerDivulgarDados: e.target.checked })}
-                      />
-                      <span>Não quero divulgar meus dados e concordo em não receber mais informações sobre o fato ocorrido. *</span>
-                    </label>
-                  </div>
-
-                  <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }} disabled={isSubmitting}>
-                    {isSubmitting ? 'Enviando...' : (
-                      <>
-                        Enviar Denúncia <Send size={16} />
-                      </>
-                    )}
-                  </button>
-                </form>
-              </div>
-            )}
-          </div>
+                <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={isSubmitting}>
+                  {isSubmitting ? 'Enviando relato com segurança...' : (
+                    <>
+                      Enviar Denúncia Segura <Send size={18} />
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </section>
 
       <style>{`
-        .gold-divider {
-          width: 80px;
-          height: 6px;
-          background-color: var(--color-accent);
-          margin-bottom: 22px;
-          border-radius: 2px;
-        }
-        .gold-divider.center {
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .text-center {
-          text-align: center;
-        }
-        .info-orientacoes-box {
-          background: #ffffff;
-          padding: 30px;
+        .denuncia-intro-box {
+          display: flex;
+          gap: 16px;
+          background: #f0fdf4;
+          border: 1px solid #bbf7d0;
+          padding: 20px;
           border-radius: 8px;
-          border-left: 4px solid var(--color-accent);
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-          font-family: var(--font-sans);
+          margin-bottom: 30px;
+        }
+        .intro-icon {
+          color: #16a34a;
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+        .denuncia-intro-box h4 {
+          color: #166534;
+          font-size: 1.05rem;
+          margin-bottom: 6px;
+        }
+        .denuncia-intro-box p {
+          color: #15803d;
+          font-size: 0.92rem;
+          line-height: 1.6;
+          margin: 0;
+        }
+        .checkbox-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 8px;
+        }
+        .checkbox-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
           font-size: 0.95rem;
           color: var(--color-text-main);
-          line-height: 1.65;
+          cursor: pointer;
         }
-        .info-orientacoes-box h3 {
-          font-family: var(--font-serif);
-          font-size: 1.4rem;
+        .radio-group {
+          display: flex;
+          gap: 30px;
+          margin-top: 8px;
+        }
+        .radio-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.95rem;
+          cursor: pointer;
+        }
+        .anon-toggle-box {
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          padding: 16px;
+          border-radius: 8px;
+        }
+        .grid-2 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+        .denuncia-success-card {
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 50px 40px;
+          text-align: center;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .success-icon {
+          color: #22c55e;
+          margin-bottom: 20px;
+        }
+        .protocol-box {
+          background: #f8fafc;
+          border: 2px dashed var(--color-accent);
+          border-radius: 8px;
+          padding: 24px;
+          margin: 30px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+        }
+        .protocol-label {
+          font-size: 0.85rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: var(--color-text-muted);
+          font-weight: 600;
+        }
+        .protocol-value {
+          font-family: monospace;
+          font-size: 1.8rem;
+          font-weight: 700;
           color: var(--color-primary);
-          margin-bottom: 12px;
         }
-        .info-orientacoes-box ul {
-          list-style: none;
-          padding-left: 10px;
-          margin: 10px 0;
+        .copy-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: var(--color-primary);
+          color: #ffffff;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 4px;
+          font-size: 0.88rem;
+          cursor: pointer;
+          transition: background 0.2s;
         }
-        .info-orientacoes-box li {
-          margin-bottom: 4px;
+        .copy-btn:hover {
+          background: var(--color-accent);
+        }
+        .info-banner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          color: var(--color-text-muted);
+          font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+          .grid-2 {
+            grid-template-columns: 1fr;
+          }
+          .denuncia-success-card {
+            padding: 30px 20px;
+          }
         }
       `}</style>
     </div>

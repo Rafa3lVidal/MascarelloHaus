@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Disallow private admin and API paths
+Disallow: /admin
+Disallow: /admin/
+Disallow: /wp-admin
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://mascarellohaus.adv.br/sitemap.xml
