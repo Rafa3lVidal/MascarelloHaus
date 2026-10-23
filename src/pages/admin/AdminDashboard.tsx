@@ -195,15 +195,20 @@ export const AdminDashboard: React.FC = () => {
     }
 
     try {
+      const generatedHtml = postForm.extra_text
+        ? `<div class="post-content-entry"><p>${postForm.extra_text.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>')}</p></div>`
+        : (editingPost?.content_html || '<p></p>');
+
       const payload: any = {
         title: postForm.title,
         slug: postForm.slug,
         category_id: Number(postForm.category_id),
         status: postForm.status,
-        excerpt: postForm.excerpt,
-        extra_text: postForm.extra_text,
-        featured_image_url: postForm.featured_image_url,
-        pdf_url: postForm.pdf_url,
+        excerpt: postForm.excerpt || '',
+        extra_text: postForm.extra_text || '',
+        content_html: generatedHtml,
+        featured_image_url: postForm.featured_image_url || '',
+        pdf_url: postForm.pdf_url || '',
         seo_title: postForm.seo_title || postForm.title,
         seo_description: postForm.seo_description || postForm.excerpt,
         published_at: postForm.published_at || new Date().toISOString(),
