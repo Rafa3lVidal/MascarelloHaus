@@ -284,7 +284,7 @@ export const CentralProtecaoDados: React.FC = () => {
                       <p><strong>Encarregada Oficial:</strong> Dra. Mirâtaira Mascârello Haus (OAB/SC)</p>
                       <p><strong>Canal Exclusivo de Privacidade:</strong> <a href="mailto:privacidade@mascarellohaus.adv.br">privacidade@mascarellohaus.adv.br</a></p>
                       <p><strong>Prazo Legal de Resposta:</strong> Em até 15 (quinze) dias úteis nos termos do Art. 19 da LGPD.</p>
-                      <p><strong>Suporte & Desenvolvimento Tecnológico:</strong> <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer">ApexCode</a> (contato@apexcode.dev.br | +55 49 99928-1878)</p>
+                      <p><strong>Desenvolvimento Tecnológico:</strong> <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer">ApexCode</a></p>
                     </div>
                   </div>
                 </div>

@@ -103,12 +103,6 @@ export const Footer: React.FC = () => {
             <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer" className="apex-link">
               <strong>ApexCode</strong>
             </a>
-            <span className="credits-sep">|</span>
-            <a href="mailto:contato@apexcode.dev.br" title="Suporte & LGPD ApexCode">Suporte & Privacidade</a>
-            <span className="credits-sep">|</span>
-            <a href="https://wa.me/5549999281878" target="_blank" rel="noopener noreferrer" title="WhatsApp ApexCode">
-              +55 (49) 99928-1878
-            </a>
           </div>
         </div>
       </div>
