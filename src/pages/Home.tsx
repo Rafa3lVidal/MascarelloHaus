@@ -105,29 +105,33 @@ export const Home: React.FC = () => {
     }
   ];
 
-  useEffect(() => {
-    const stepInterval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % 4);
-    }, 4500);
-    return () => clearInterval(stepInterval);
-  }, []);
+// Active step is user-controlled (hover/click)
 
   useEffect(() => {
+    const elements = document.querySelectorAll(
+      '.reveal-on-scroll, .reveal-left, .reveal-right'
+    );
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
     );
 
-    const elements = document.querySelectorAll(
-      '.reveal-on-scroll, .reveal-left, .reveal-right'
-    );
-    elements.forEach((el) => observer.observe(el));
+    elements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('revealed');
+      } else {
+        observer.observe(el);
+      }
+    });
 
     return () => observer.disconnect();
   }, []);
@@ -466,7 +470,7 @@ export const Home: React.FC = () => {
                   return (
                     <div
                       key={item.step}
-                      className={`flow-step-card reveal-on-scroll reveal-stagger-${idx + 1} ${isActive ? 'active' : ''}`}
+                      className={`flow-step-card ${isActive ? 'active' : ''}`}
                       onMouseEnter={() => setActiveStep(idx)}
                       onClick={() => setActiveStep(idx)}
                     >
@@ -541,12 +545,11 @@ export const Home: React.FC = () => {
       <style>{`
         /* Utilitários e Divisores */
         .gold-divider {
-          width: 80px;
-          height: 6px;
+          width: 70px;
+          height: 5px;
           background-color: var(--color-accent);
-          margin-bottom: 22px;
+          margin-bottom: 20px;
           border-radius: 2px;
-          transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .gold-divider.center {
           margin-left: auto;
@@ -572,27 +575,27 @@ export const Home: React.FC = () => {
           gap: 8px;
           background-color: var(--color-accent);
           color: #ffffff;
-          padding: 12px 32px;
+          padding: 12px 30px;
           border-radius: 50px;
           font-family: var(--font-sans);
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           font-weight: 500;
           text-transform: uppercase;
           letter-spacing: 0.8px;
-          transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
           box-shadow: 0 4px 14px rgba(203, 171, 122, 0.25);
         }
         .btn-gold-solid:hover {
           background-color: var(--color-primary);
           color: #ffffff;
-          transform: translateY(-3px);
-          box-shadow: 0 8px 22px rgba(13, 55, 50, 0.25);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(13, 55, 50, 0.2);
         }
         .btn-gold-solid:active {
-          transform: translateY(0) scale(0.96);
+          transform: translateY(0) scale(0.97);
         }
 
-        /* 1 & 2: HERO SLIDER PREMIUM COM KEN BURNS */
+        /* 1 & 2: HERO SLIDER PREMIUM SUTIL */
         .elementor-hero-slider {
           position: relative;
           min-height: 620px;
@@ -612,28 +615,23 @@ export const Home: React.FC = () => {
           background-repeat: no-repeat;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.9s ease;
-          transform: scale(1.05);
+          transition: opacity 0.85s ease-in-out, visibility 0.85s ease;
+          transform: scale(1.02);
           display: flex;
           align-items: center;
           z-index: 1;
-          will-change: transform, opacity;
         }
 
         .hero-slide-layer.active {
           opacity: 1;
           visibility: visible;
           z-index: 2;
-          animation: heroKenBurns 8.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: heroKenBurns 12s ease-out forwards;
         }
 
         @keyframes heroKenBurns {
-          0% {
-            transform: scale(1);
-          }
-          100% {
-            transform: scale(1.06);
-          }
+          0% { transform: scale(1); }
+          100% { transform: scale(1.025); }
         }
 
         .hero-slide-overlay {
@@ -666,15 +664,15 @@ export const Home: React.FC = () => {
           gap: 12px;
           margin-bottom: 22px;
           opacity: 0;
-          transform: translateY(16px);
+          transform: translateY(12px);
         }
 
         .hero-slide-layer.active .hero-kicker-tag {
-          animation: heroFadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.12s;
+          animation: heroFadeInUp 0.6s ease-out forwards 0.1s;
         }
 
         .kicker-gold-line {
-          width: 38px;
+          width: 36px;
           height: 3px;
           background-color: var(--color-accent);
           border-radius: 2px;
@@ -685,7 +683,7 @@ export const Home: React.FC = () => {
           font-family: var(--font-sans);
           font-size: 0.82rem;
           font-weight: 700;
-          letter-spacing: 2.2px;
+          letter-spacing: 2px;
           text-transform: uppercase;
           color: var(--color-accent);
         }
@@ -697,22 +695,22 @@ export const Home: React.FC = () => {
           color: #ffffff;
           line-height: 1.18;
           margin-bottom: 34px;
-          text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
           opacity: 0;
-          transform: translateY(22px);
+          transform: translateY(16px);
         }
 
         .hero-slide-layer.active .hero-main-title {
-          animation: heroFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.24s;
+          animation: heroFadeInUp 0.65s ease-out forwards 0.2s;
         }
 
         .hero-btn-wrap {
           opacity: 0;
-          transform: translateY(22px);
+          transform: translateY(16px);
         }
 
         .hero-slide-layer.active .hero-btn-wrap {
-          animation: heroFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.38s;
+          animation: heroFadeInUp 0.65s ease-out forwards 0.3s;
         }
 
         .hero-gold-btn {
@@ -724,133 +722,85 @@ export const Home: React.FC = () => {
           background-color: rgba(203, 171, 122, 0.12);
           backdrop-filter: blur(6px);
           border-radius: 50px;
-          padding: 15px 38px;
+          padding: 14px 36px;
           font-family: var(--font-sans);
-          font-size: 0.92rem;
+          font-size: 0.90rem;
           font-weight: 600;
           letter-spacing: 0.8px;
           text-transform: uppercase;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+          transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
           position: relative;
           overflow: hidden;
         }
 
-        .hero-gold-btn::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: var(--color-accent);
-          transform: translateX(-100%);
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-          z-index: 0;
-        }
-
-        .hero-gold-btn::after {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: linear-gradient(
-            60deg,
-            transparent 30%,
-            rgba(255, 255, 255, 0.22) 50%,
-            transparent 70%
-          );
-          transform: rotate(30deg) translateX(-100%);
-          animation: btnShineSweep 5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-          pointer-events: none;
-          z-index: 1;
-        }
-
-        @keyframes btnShineSweep {
-          0%, 35% { transform: rotate(30deg) translateX(-100%); }
-          55%, 100% { transform: rotate(30deg) translateX(100%); }
-        }
-
-        .hero-gold-btn:hover::before {
-          transform: translateX(0);
-        }
-
-        .hero-gold-btn span,
-        .hero-gold-btn .btn-arrow-icon {
-          position: relative;
-          z-index: 2;
-          transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
         .hero-gold-btn:hover {
+          background-color: var(--color-accent);
           color: var(--color-primary);
-          box-shadow: 0 10px 28px rgba(203, 171, 122, 0.45);
-          border-color: var(--color-accent);
+          box-shadow: 0 6px 20px rgba(203, 171, 122, 0.4);
           transform: translateY(-2px);
         }
 
-        .hero-gold-btn:hover .btn-arrow-icon {
-          transform: translateX(6px);
-        }
-
         .hero-gold-btn:active {
-          transform: translateY(0) scale(0.96);
+          transform: translateY(0) scale(0.97);
         }
 
-        /* Controles de Navegação Glassmorphic */
+        .hero-gold-btn .btn-arrow-icon {
+          transition: transform 0.2s ease;
+        }
+
+        .hero-gold-btn:hover .btn-arrow-icon {
+          transform: translateX(4px);
+        }
+
+        /* Controles de Navegação */
         .slider-nav-btn {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
           z-index: 10;
-          background: rgba(13, 55, 50, 0.55);
-          backdrop-filter: blur(14px);
+          background: rgba(13, 55, 50, 0.6);
+          backdrop-filter: blur(10px);
           color: #ffffff;
           border: 1px solid rgba(203, 171, 122, 0.35);
-          width: 52px;
-          height: 52px;
+          width: 48px;
+          height: 48px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: transform 0.24s cubic-bezier(0.34, 1.3, 0.64, 1),
-                      background-color 0.24s ease,
-                      box-shadow 0.24s ease,
-                      color 0.24s ease;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+          transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
 
         .slider-nav-btn:hover {
           background-color: var(--color-accent);
           color: var(--color-primary);
-          border-color: var(--color-accent);
-          transform: translateY(-50%) scale(1.1);
-          box-shadow: 0 6px 20px rgba(203, 171, 122, 0.45);
+          transform: translateY(-50%) scale(1.05);
         }
 
         .slider-nav-btn:active {
-          transform: translateY(-50%) scale(0.94);
+          transform: translateY(-50%) scale(0.95);
         }
 
-        .slider-nav-btn.prev { left: 30px; }
-        .slider-nav-btn.next { right: 30px; }
+        .slider-nav-btn.prev { left: 24px; }
+        .slider-nav-btn.next { right: 24px; }
 
         /* Rodapé do Slider */
         .hero-slider-footer {
           position: absolute;
-          bottom: 30px;
+          bottom: 26px;
           left: 50%;
           transform: translateX(-50%);
           z-index: 10;
           display: flex;
           align-items: center;
-          gap: 20px;
+          gap: 18px;
           background: rgba(13, 55, 50, 0.65);
-          backdrop-filter: blur(14px);
-          padding: 8px 22px;
+          backdrop-filter: blur(12px);
+          padding: 7px 20px;
           border-radius: 50px;
-          border: 1px solid rgba(203, 171, 122, 0.28);
-          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+          border: 1px solid rgba(203, 171, 122, 0.25);
         }
 
         .hero-slide-counter {
@@ -858,52 +808,41 @@ export const Home: React.FC = () => {
           align-items: center;
           gap: 4px;
           font-family: var(--font-sans);
-          font-size: 0.85rem;
+          font-size: 0.82rem;
           font-weight: 600;
           letter-spacing: 1px;
         }
 
-        .counter-current {
-          color: var(--color-accent);
-        }
-
-        .counter-separator {
-          color: rgba(255, 255, 255, 0.3);
-        }
-
-        .counter-total {
-          color: rgba(255, 255, 255, 0.6);
-        }
+        .counter-current { color: var(--color-accent); }
+        .counter-separator { color: rgba(255, 255, 255, 0.3); }
+        .counter-total { color: rgba(255, 255, 255, 0.6); }
 
         .slider-dots-track {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 6px;
         }
 
         .dot-pill {
-          width: 24px;
-          height: 6px;
+          width: 22px;
+          height: 5px;
           border-radius: 3px;
           background: rgba(255, 255, 255, 0.25);
           border: none;
           cursor: pointer;
           padding: 0;
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-          position: relative;
-          overflow: hidden;
+          transition: width 0.3s ease, background-color 0.3s ease;
         }
 
         .dot-pill.active {
-          width: 44px;
+          width: 38px;
           background: var(--color-accent);
-          box-shadow: 0 0 12px rgba(203, 171, 122, 0.6);
         }
 
         @keyframes heroFadeInUp {
           from {
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateY(16px);
           }
           to {
             opacity: 1;
@@ -914,7 +853,7 @@ export const Home: React.FC = () => {
         /* 3: SOBRE O ESCRITÓRIO */
         .section-sobre {
           background-color: var(--color-bg-light);
-          padding: 95px 0;
+          padding: 90px 0;
           overflow: hidden;
         }
         .sobre-grid {
@@ -945,20 +884,19 @@ export const Home: React.FC = () => {
           max-width: 100%;
           height: auto;
           border-radius: 8px;
-          box-shadow: 28px 28px 0px 0px var(--color-primary);
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                      box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 24px 24px 0px 0px var(--color-primary);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         .porta-image:hover {
-          transform: translateY(-6px);
-          box-shadow: 22px 22px 0px 0px var(--color-primary), 0 18px 35px rgba(13, 55, 50, 0.18);
+          transform: translateY(-3px);
+          box-shadow: 20px 20px 0px 0px var(--color-primary), 0 12px 25px rgba(13, 55, 50, 0.15);
         }
 
         /* 4: QUEM SOMOS (DRA. MIRÂTAIRA) */
         .section-quem-somos-dark {
           background-color: var(--color-primary);
           color: #ffffff;
-          padding: 95px 0;
+          padding: 90px 0;
           overflow: hidden;
         }
         .quem-somos-intro {
@@ -989,14 +927,13 @@ export const Home: React.FC = () => {
           width: 100%;
           height: auto;
           border-radius: 8px;
-          box-shadow: -28px 28px 0px 0px var(--color-accent);
+          box-shadow: -24px 24px 0px 0px var(--color-accent);
           object-fit: cover;
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                      box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         .mira-photo-img:hover {
-          transform: translateY(-6px);
-          box-shadow: -22px 22px 0px 0px var(--color-accent), 0 20px 40px rgba(0, 0, 0, 0.3);
+          transform: translateY(-3px);
+          box-shadow: -20px 20px 0px 0px var(--color-accent), 0 14px 28px rgba(0, 0, 0, 0.25);
         }
         .mira-name {
           font-family: var(--font-serif);
@@ -1028,7 +965,7 @@ export const Home: React.FC = () => {
         /* 5: ÁREAS DE ATUAÇÃO */
         .section-areas {
           background-color: var(--color-bg-light);
-          padding: 95px 0;
+          padding: 90px 0;
           overflow: hidden;
         }
         .areas-grid {
@@ -1050,40 +987,35 @@ export const Home: React.FC = () => {
           height: auto;
           border-radius: 8px;
           margin-top: 10px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+          transition: transform 0.25s ease;
         }
         .areas-main-img:hover {
-          transform: translateY(-4px);
+          transform: translateY(-2px);
         }
         .areas-cards-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 25px;
+          gap: 22px;
         }
         .area-item-card {
           background-color: #ffffff;
-          padding: 26px 22px;
-          border-radius: 10px;
+          padding: 24px 20px;
+          border-radius: 8px;
           border-left: 4px solid var(--color-accent);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-          transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-                      box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-                      border-left-width 0.22s ease,
-                      border-left-color 0.22s ease;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+          transition: transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          position: relative;
         }
         .area-item-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 16px 32px rgba(13, 55, 50, 0.09);
-          border-left-width: 7px;
-          border-left-color: var(--color-accent-hover);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(13, 55, 50, 0.06);
+          border-left-color: var(--color-primary);
         }
         .area-item-card:active {
-          transform: translateY(-2px) scale(0.98);
+          transform: translateY(-1px) scale(0.99);
         }
         .area-item-title {
           font-family: var(--font-serif);
@@ -1091,10 +1023,6 @@ export const Home: React.FC = () => {
           color: var(--color-primary);
           margin-bottom: 10px;
           font-weight: 600;
-          transition: color 0.25s ease;
-        }
-        .area-item-card:hover .area-item-title {
-          color: var(--color-primary-light);
         }
         .area-item-desc {
           font-family: var(--font-sans);
@@ -1113,16 +1041,16 @@ export const Home: React.FC = () => {
           align-items: center;
           gap: 4px;
           margin-top: auto;
-          transition: color 0.24s ease;
+          transition: color 0.2s ease;
         }
         .area-item-link .chevron-icon {
-          transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.2s ease;
         }
         .area-item-card:hover .area-item-link {
           color: var(--color-primary);
         }
         .area-item-card:hover .area-item-link .chevron-icon {
-          transform: translateX(5px);
+          transform: translateX(4px);
         }
 
         /* 6: TRÍADE (PROPÓSITO, VISÃO, VALORES) */
@@ -1132,7 +1060,7 @@ export const Home: React.FC = () => {
           background-size: cover;
           background-position: center;
           background-attachment: scroll;
-          padding: 105px 0;
+          padding: 95px 0;
           overflow: hidden;
         }
         .triad-bg-overlay {
@@ -1154,42 +1082,38 @@ export const Home: React.FC = () => {
         }
         .triad-card {
           background-color: var(--color-bg-light);
-          padding: 35px 24px;
-          border-radius: 14px;
+          padding: 32px 22px;
+          border-radius: 12px;
           text-align: center;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                      box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                      background-color 0.3s ease;
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         .triad-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28), 0 0 24px rgba(203, 171, 122, 0.2);
-          background-color: #ffffff;
+          transform: translateY(-4px);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         .triad-card:active {
-          transform: translateY(-3px) scale(0.98);
+          transform: translateY(-1px) scale(0.99);
         }
         .triad-icon-wrap {
-          width: 55px;
-          height: 55px;
-          margin: 0 auto 18px auto;
+          width: 52px;
+          height: 52px;
+          margin: 0 auto 16px auto;
         }
         .triad-icon-img {
           width: 100%;
           height: 100%;
           object-fit: contain;
-          transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+          transition: transform 0.25s ease;
         }
         .triad-card:hover .triad-icon-img {
-          transform: scale(1.16) rotate(4deg);
+          transform: scale(1.08);
         }
         .triad-card-title {
           font-family: var(--font-serif);
           font-size: 1.35rem;
           color: var(--color-primary);
-          margin-bottom: 14px;
+          margin-bottom: 12px;
           font-weight: 600;
         }
         .triad-card-desc {
@@ -1205,10 +1129,10 @@ export const Home: React.FC = () => {
           font-weight: 500;
         }
 
-        /* 7: ASSESSORIA EMPRESARIAL INTERATIVA & ANIMADA */
+        /* 7: ASSESSORIA EMPRESARIAL - DESIGN LIMPO, SUTIL E SEM BUGS */
         .section-assessoria {
           background-color: #ffffff;
-          padding: 105px 0;
+          padding: 95px 0;
           position: relative;
           overflow: hidden;
         }
@@ -1249,10 +1173,6 @@ export const Home: React.FC = () => {
           font-size: 0.92rem;
           font-weight: 500;
           color: var(--color-primary);
-          transition: transform 0.2s ease;
-        }
-        .highlight-pill:hover {
-          transform: translateX(4px);
         }
         .highlight-icon {
           color: var(--color-accent);
@@ -1262,12 +1182,12 @@ export const Home: React.FC = () => {
           margin-top: 10px;
         }
 
-        /* TIMELINE FLOW ANIMADA */
+        /* TIMELINE E CARDS DE ETAPAS (CALMO E SUAVE) */
         .interactive-flow-timeline {
           position: relative;
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 16px;
           padding-left: 10px;
         }
         .timeline-connector-line {
@@ -1275,46 +1195,36 @@ export const Home: React.FC = () => {
           left: 45px;
           top: 30px;
           bottom: 30px;
-          width: 3px;
-          background: linear-gradient(
-            180deg,
-            var(--color-accent) 0%,
-            var(--color-primary) 50%,
-            var(--color-accent) 100%
-          );
-          background-size: 100% 200%;
-          animation: timelineConnectorPulse 6s linear infinite;
-          opacity: 0.35;
+          width: 2px;
+          background: #e2e8f0;
           z-index: 1;
-        }
-        @keyframes timelineConnectorPulse {
-          0% { background-position: 0% 0%; }
-          100% { background-position: 0% 200%; }
         }
         .flow-step-card {
           position: relative;
           z-index: 2;
           background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 22px 24px;
+          border: 1px solid #e8ecf1;
+          border-left: 4px solid #e8ecf1;
+          border-radius: 10px;
+          padding: 18px 22px;
           display: grid;
-          grid-template-columns: 55px 1fr 80px;
+          grid-template-columns: 50px 1fr 75px;
           align-items: center;
-          gap: 20px;
+          gap: 18px;
           cursor: pointer;
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+          transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
         .flow-step-card:hover,
         .flow-step-card.active {
-          border-color: var(--color-accent);
-          background: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%);
-          transform: translateY(-4px) translateX(6px);
-          box-shadow: 0 14px 34px rgba(13, 55, 50, 0.08), 0 0 18px rgba(203, 171, 122, 0.2);
+          border-color: #cbd5e1;
+          border-left-color: var(--color-accent);
+          background: #fafbfc;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(13, 55, 50, 0.06);
         }
         .flow-step-card:active {
-          transform: translateY(-2px) translateX(4px) scale(0.98);
+          transform: translateY(0);
         }
         .step-num-col {
           display: flex;
@@ -1323,38 +1233,37 @@ export const Home: React.FC = () => {
         }
         .step-number {
           font-family: var(--font-serif);
-          font-size: 2.8rem;
+          font-size: 2.4rem;
           font-weight: 700;
           line-height: 1;
-          color: #d1d5db;
-          transition: color 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+          color: #cbd5e1;
+          transition: color 0.25s ease;
         }
         .flow-step-card:hover .step-number,
         .flow-step-card.active .step-number {
           color: var(--color-accent);
-          transform: scale(1.1);
         }
         .step-content-col {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 4px;
         }
         .step-title {
           font-family: var(--font-sans);
-          font-size: 1.25rem;
+          font-size: 1.15rem;
           font-weight: 700;
           color: var(--color-primary);
           margin: 0;
-          transition: color 0.3s ease;
+          transition: color 0.25s ease;
         }
         .flow-step-card.active .step-title {
           color: var(--color-primary-dark);
         }
         .step-desc {
           font-family: var(--font-sans);
-          font-size: 0.92rem;
+          font-size: 0.90rem;
           color: #4a5568;
-          line-height: 1.55;
+          line-height: 1.5;
           margin: 0;
         }
         .step-emblem-col {
@@ -1364,8 +1273,8 @@ export const Home: React.FC = () => {
         }
         .step-emblem-wrapper {
           position: relative;
-          width: 70px;
-          height: 70px;
+          width: 64px;
+          height: 64px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1375,67 +1284,52 @@ export const Home: React.FC = () => {
           inset: 0;
           width: 100%;
           height: 100%;
-          animation: orbitRotate 16s linear infinite;
-        }
-        .flow-step-card:hover .orbital-svg,
-        .flow-step-card.active .orbital-svg {
-          animation-duration: 5.5s;
+          animation: orbitRotate 30s linear infinite;
+          transform-origin: center;
+          pointer-events: none;
         }
         .orbital-circle {
-          transition: stroke 0.3s ease;
+          stroke: #cbd5e1;
+          transition: stroke 0.25s ease;
         }
+        .flow-step-card:hover .orbital-circle,
         .flow-step-card.active .orbital-circle {
           stroke: var(--color-accent);
         }
         .emblem-core-circle {
-          width: 52px;
-          height: 52px;
+          width: 48px;
+          height: 48px;
           border-radius: 50%;
           background-color: var(--color-primary);
           display: flex;
           align-items: center;
           justify-content: center;
           color: #ffffff;
-          transition: all 0.3s ease;
-          box-shadow: 0 4px 12px rgba(13, 55, 50, 0.25);
+          transition: color 0.25s ease, background-color 0.25s ease;
+          box-shadow: 0 3px 10px rgba(13, 55, 50, 0.15);
           z-index: 2;
         }
-        .flow-step-card.active .emblem-core-circle {
-          background-color: var(--color-primary-dark);
+        .flow-step-card.active .emblem-core-circle,
+        .flow-step-card:hover .emblem-core-circle {
           color: var(--color-accent);
-          transform: scale(1.08);
-          box-shadow: 0 6px 20px rgba(203, 171, 122, 0.5);
-          animation: emblemPulseAura 2.6s ease-in-out infinite alternate;
-        }
-        @keyframes emblemPulseAura {
-          0% {
-            box-shadow: 0 6px 18px rgba(203, 171, 122, 0.4);
-          }
-          100% {
-            box-shadow: 0 8px 26px rgba(203, 171, 122, 0.7);
-          }
         }
         .emblem-icon {
-          transition: transform 0.3s cubic-bezier(0.34, 1.3, 0.64, 1);
+          transition: transform 0.2s ease;
         }
         .flow-step-card:hover .emblem-icon,
         .flow-step-card.active .emblem-icon {
-          transform: scale(1.15);
+          transform: scale(1.05);
         }
 
         @keyframes orbitRotate {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
 
         /* 8: O QUE FALAM SOBRE NÓS */
         .section-testimonials {
           background-color: var(--color-bg-light);
-          padding: 95px 0;
+          padding: 90px 0;
           overflow: hidden;
         }
         .testimonials-header {
@@ -1448,36 +1342,33 @@ export const Home: React.FC = () => {
         .testimonials-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 30px;
+          gap: 28px;
         }
         .testimonial-card {
           background-color: #ffffff;
-          padding: 35px 28px;
-          border-radius: 14px;
-          box-shadow: 0px 20px 30px -10px rgba(0, 0, 0, 0.08);
+          padding: 32px 24px;
+          border-radius: 12px;
+          box-shadow: 0px 8px 20px -6px rgba(0, 0, 0, 0.05);
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           position: relative;
-          transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-                      box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         .testimonial-card:hover {
-          transform: translateY(-7px);
-          box-shadow: 0 25px 45px -8px rgba(13, 55, 50, 0.12);
+          transform: translateY(-3px);
+          box-shadow: 0 12px 25px -6px rgba(13, 55, 50, 0.08);
         }
         .testimonial-card:active {
-          transform: translateY(-2px) scale(0.98);
+          transform: translateY(0);
         }
         .quote-icon {
           color: var(--color-accent);
-          opacity: 0.7;
-          margin-bottom: 15px;
-          transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1),
-                      opacity 0.25s ease;
+          opacity: 0.75;
+          margin-bottom: 12px;
+          transition: opacity 0.2s ease;
         }
         .testimonial-card:hover .quote-icon {
-          transform: scale(1.18) rotate(-6deg);
           opacity: 1;
         }
         .testimonial-text {
@@ -1486,7 +1377,7 @@ export const Home: React.FC = () => {
           line-height: 1.7;
           color: var(--color-text-main);
           text-align: justify;
-          margin-bottom: 22px;
+          margin-bottom: 20px;
           font-style: italic;
         }
         .testimonial-author h4 {
@@ -1512,15 +1403,15 @@ export const Home: React.FC = () => {
           .triad-cards-row { grid-template-columns: 1fr; }
           .assessoria-grid { grid-template-columns: 1fr; }
           .testimonials-grid { grid-template-columns: 1fr; }
-          .porta-image { box-shadow: 15px 15px 0px 0px var(--color-primary); }
-          .mira-photo-img { box-shadow: -15px 15px 0px 0px var(--color-accent); }
+          .porta-image { box-shadow: 14px 14px 0px 0px var(--color-primary); }
+          .mira-photo-img { box-shadow: -14px 14px 0px 0px var(--color-accent); }
           .interactive-flow-timeline { padding-left: 0; }
           .flow-step-card {
-            grid-template-columns: 50px 1fr 70px;
-            padding: 18px 20px;
+            grid-template-columns: 45px 1fr 65px;
+            padding: 16px 18px;
           }
           .step-number {
-            font-size: 2.2rem;
+            font-size: 2rem;
           }
         }
 
@@ -1532,7 +1423,7 @@ export const Home: React.FC = () => {
           .flow-step-card {
             grid-template-columns: 1fr auto;
             grid-template-rows: auto auto;
-            gap: 12px;
+            gap: 10px;
           }
           .step-num-col {
             grid-column: 1 / 2;
