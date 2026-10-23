@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SEO } from '../../components/SEO';
 import { supabase } from '../../lib/supabase';
@@ -23,7 +23,10 @@ import {
   Globe,
   Sliders,
   Check,
-  RefreshCw
+  RefreshCw,
+  Upload,
+  FileUp,
+  Image as ImageIcon
 } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
@@ -175,6 +178,86 @@ export const AdminDashboard: React.FC = () => {
       seo_description: post.seo_description || post.excerpt || '',
       published_at: post.published_at || new Date().toISOString()
     });
+  };
+
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [isUploadingPdf, setIsUploadingPdf] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const pdfInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      showToast('error', 'Por favor, selecione um arquivo de imagem válido (PNG, JPG, WEBP, GIF).');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('error', 'A imagem deve ter no máximo 10MB.');
+      return;
+    }
+    setIsUploadingImage(true);
+    try {
+      const ext = file.name.split('.').pop() || 'png';
+      const cleanName = file.name
+        .replace(/\.[^/.]+$/, '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^\w-]/g, '-');
+      const filePath = `posts/${Date.now()}-${cleanName}.${ext}`;
+      const { data, error } = await supabase.storage.from('media').upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+      if (error) throw error;
+      const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(data.path);
+      setPostForm((prev) => ({ ...prev, featured_image_url: publicUrlData.publicUrl }));
+      showToast('success', 'Imagem enviada com sucesso!');
+    } catch (err: any) {
+      console.error('Erro no upload da imagem:', err);
+      showToast('error', err.message || 'Falha ao enviar imagem.');
+    } finally {
+      setIsUploadingImage(false);
+      if (imageInputRef.current) imageInputRef.current.value = '';
+    }
+  };
+
+  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.type !== 'application/pdf') {
+      showToast('error', 'Por favor, selecione um arquivo PDF.');
+      return;
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      showToast('error', 'O arquivo PDF deve ter no máximo 20MB.');
+      return;
+    }
+    setIsUploadingPdf(true);
+    try {
+      const cleanName = file.name
+        .replace(/\.[^/.]+$/, '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^\w-]/g, '-');
+      const filePath = `docs/${Date.now()}-${cleanName}.pdf`;
+      const { data, error } = await supabase.storage.from('media').upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+      if (error) throw error;
+      const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(data.path);
+      setPostForm((prev) => ({ ...prev, pdf_url: publicUrlData.publicUrl }));
+      showToast('success', 'Arquivo PDF enviado com sucesso!');
+    } catch (err: any) {
+      console.error('Erro no upload do PDF:', err);
+      showToast('error', err.message || 'Falha ao enviar PDF.');
+    } finally {
+      setIsUploadingPdf(false);
+      if (pdfInputRef.current) pdfInputRef.current.value = '';
+    }
   };
 
   const generateSlugFromTitle = (title: string) => {
@@ -953,25 +1036,73 @@ export const AdminDashboard: React.FC = () => {
 
               <div className="form-row">
                 <div className="form-group col-6">
-                  <label>URL da Imagem de Capa</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={postForm.featured_image_url}
-                    onChange={(e) => setPostForm({ ...postForm, featured_image_url: e.target.value })}
-                    placeholder="/wp-content/uploads/2023/09/incidentes.png"
-                  />
+                  <label>Imagem de Capa (Upload ou URL)</label>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={postForm.featured_image_url}
+                      onChange={(e) => setPostForm({ ...postForm, featured_image_url: e.target.value })}
+                      placeholder="/wp-content/... ou clique em Upload"
+                    />
+                    <input
+                      type="file"
+                      ref={imageInputRef}
+                      style={{ display: 'none' }}
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                    />
+                    <button
+                      type="button"
+                      className="btn-upload-action"
+                      disabled={isUploadingImage}
+                      onClick={() => imageInputRef.current?.click()}
+                      title="Fazer upload de imagem do seu computador"
+                    >
+                      <Upload size={14} />
+                      {isUploadingImage ? 'Enviando...' : 'Upload'}
+                    </button>
+                  </div>
+                  {postForm.featured_image_url && (
+                    <div className="image-preview-box">
+                      <img
+                        src={postForm.featured_image_url}
+                        alt="Prévia"
+                        onError={(e: any) => (e.target.style.display = 'none')}
+                      />
+                      <span>Prévia da imagem selecionada</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="form-group col-6">
                   <label>Link do PDF para Download (Opcional)</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={postForm.pdf_url}
-                    onChange={(e) => setPostForm({ ...postForm, pdf_url: e.target.value })}
-                    placeholder="/wp-content/uploads/2023/09/cartilha.pdf"
-                  />
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={postForm.pdf_url}
+                      onChange={(e) => setPostForm({ ...postForm, pdf_url: e.target.value })}
+                      placeholder="/wp-content/... ou faça upload de PDF"
+                    />
+                    <input
+                      type="file"
+                      ref={pdfInputRef}
+                      style={{ display: 'none' }}
+                      accept="application/pdf"
+                      onChange={handlePdfUpload}
+                    />
+                    <button
+                      type="button"
+                      className="btn-upload-action"
+                      disabled={isUploadingPdf}
+                      onClick={() => pdfInputRef.current?.click()}
+                      title="Fazer upload de arquivo PDF"
+                    >
+                      <FileUp size={14} />
+                      {isUploadingPdf ? 'Enviando...' : 'Upload PDF'}
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1496,6 +1627,52 @@ export const AdminDashboard: React.FC = () => {
         }
         .btn-save-main:hover {
           background: var(--color-primary-dark);
+        }
+
+        .btn-upload-action {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 0 14px;
+          background: #edf2f7;
+          border: 1px solid #cbd5e0;
+          border-radius: 6px;
+          color: var(--color-primary);
+          font-weight: 600;
+          font-size: 0.82rem;
+          cursor: pointer;
+          white-space: nowrap;
+          transition: all 0.2s;
+        }
+        .btn-upload-action:hover:not(:disabled) {
+          background: var(--color-accent);
+          color: #ffffff;
+          border-color: var(--color-accent);
+        }
+        .btn-upload-action:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        .image-preview-box {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 8px;
+          padding: 6px 10px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 6px;
+        }
+        .image-preview-box img {
+          width: 36px;
+          height: 36px;
+          border-radius: 4px;
+          object-fit: cover;
+          border: 1px solid #cbd5e0;
+        }
+        .image-preview-box span {
+          font-size: 0.78rem;
+          color: #718096;
         }
 
         /* Modais */
