@@ -9,58 +9,111 @@ export const WhatsAppButton: React.FC = () => {
       className="whatsapp-float-btn"
       aria-label="Atendimento via WhatsApp"
     >
-      <i className="fa-brands fa-whatsapp"></i>
+      <span className="wa-pulse-wave"></span>
+      <i className="fa-brands fa-whatsapp wa-icon"></i>
       <span className="whatsapp-tooltip">Atendimento WhatsApp</span>
 
       <style>{`
         .whatsapp-float-btn {
           position: fixed;
-          bottom: 25px;
-          right: 25px;
-          width: 58px;
-          height: 58px;
-          background-color: #25d366;
+          bottom: 26px;
+          right: 26px;
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, #2fe675 0%, #20ba5a 100%);
           color: #ffffff;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 30px;
-          box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+          box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
           z-index: 999;
-          transition: all 0.3s ease;
+          transition: transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1),
+                      box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                      background 0.28s ease;
           text-decoration: none;
         }
+
+        .wa-pulse-wave {
+          position: absolute;
+          inset: -4px;
+          border-radius: 50%;
+          border: 2px solid rgba(37, 211, 102, 0.6);
+          animation: waPulseRing 3.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+          pointer-events: none;
+          z-index: -1;
+        }
+
+        .wa-icon {
+          font-size: 32px;
+          transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+        }
+
         .whatsapp-float-btn:hover {
-          transform: scale(1.08);
-          background-color: #20ba5a;
-          box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+          transform: translateY(-3px) scale(1.08);
+          box-shadow: 0 10px 28px rgba(37, 211, 102, 0.6);
           color: #ffffff;
         }
+
+        .whatsapp-float-btn:hover .wa-icon {
+          transform: scale(1.08) rotate(-4deg);
+        }
+
+        .whatsapp-float-btn:active {
+          transform: translateY(0) scale(0.94);
+          box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+        }
+
         .whatsapp-tooltip {
           position: absolute;
-          right: 68px;
-          background: #333333;
+          right: 72px;
+          background: rgba(13, 55, 50, 0.95);
+          backdrop-filter: blur(8px);
           color: #ffffff;
           font-size: 13px;
           font-family: var(--font-sans);
-          padding: 6px 12px;
-          border-radius: 4px;
+          font-weight: 500;
+          padding: 7px 14px;
+          border-radius: 6px;
+          border: 1px solid rgba(203, 171, 122, 0.3);
           white-space: nowrap;
           opacity: 0;
+          transform: translateX(8px) scale(0.95);
           pointer-events: none;
-          transition: opacity 0.2s ease;
+          transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+
         .whatsapp-float-btn:hover .whatsapp-tooltip {
           opacity: 1;
+          transform: translateX(0) scale(1);
         }
+
+        @keyframes waPulseRing {
+          0% {
+            transform: scale(0.95);
+            opacity: 0.8;
+          }
+          50% {
+            transform: scale(1.35);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(1.35);
+            opacity: 0;
+          }
+        }
+
         @media (max-width: 600px) {
           .whatsapp-float-btn {
             bottom: 20px;
             right: 20px;
-            width: 52px;
-            height: 52px;
-            font-size: 26px;
+            width: 54px;
+            height: 54px;
+          }
+          .wa-icon {
+            font-size: 28px;
           }
           .whatsapp-tooltip {
             display: none;

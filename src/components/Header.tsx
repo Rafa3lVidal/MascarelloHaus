@@ -194,12 +194,9 @@ export const Header: React.FC = () => {
           letter-spacing: 0.2px;
           position: relative;
           padding: 6px 0;
-          transition: color 0.2s ease;
+          transition: color 0.24s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .nav-link:hover, .nav-link.active {
-          color: var(--color-accent);
-        }
-        .nav-link.active::after {
+        .nav-link::after {
           content: '';
           position: absolute;
           bottom: 0;
@@ -207,6 +204,20 @@ export const Header: React.FC = () => {
           width: 100%;
           height: 2px;
           background-color: var(--color-accent);
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-link:hover {
+          color: var(--color-accent);
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+        .nav-link.active {
+          color: var(--color-accent);
         }
         .nav-btn-wpp {
           font-family: var(--font-sans);
@@ -216,14 +227,19 @@ export const Header: React.FC = () => {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          padding: 6px 14px;
+          padding: 7px 16px;
           border: 1px solid var(--color-accent);
           border-radius: 50px;
-          transition: all 0.2s ease;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .nav-btn-wpp:hover {
           background-color: var(--color-accent);
           color: #ffffff;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(203, 171, 122, 0.3);
+        }
+        .nav-btn-wpp:active {
+          transform: translateY(0) scale(0.96);
         }
         .mobile-toggle-btn {
           display: none;
