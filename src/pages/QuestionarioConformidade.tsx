@@ -11,10 +11,10 @@ import {
   ShieldCheck,
   ChevronRight,
   ChevronLeft,
-  Sparkles,
-  HelpCircle,
   Save,
   Trash2,
+  Paperclip,
+  ExternalLink,
 } from 'lucide-react';
 import FileUploader from '../components/FileUploader';
 import SecurityShield, { createInitialSecurityState } from '../components/SecurityShield';
@@ -24,7 +24,6 @@ import {
   formatCEP,
   formatPhone,
   isValidEmail,
-  isValidCNPJ,
   sanitizeText,
   sanitizeEmail,
   generateProtocol,
@@ -32,10 +31,10 @@ import {
   checkClientRateLimit,
   recordClientSubmission,
   validateSecurityState,
-  uploadFormFiles,
   saveFormDraft,
   loadFormDraft,
   clearFormDraft,
+  UploadedAttachment,
 } from '../lib/formSecurity';
 
 interface FormDataState {
@@ -88,6 +87,9 @@ interface FormDataState {
   q23_site_web: string;
   q23_fluxo_web: string;
   comunicado_assinado_confirm: string;
+
+  // Mapa de Anexos Enviados (auto-upload imediato com persistência total)
+  attachmentsMap: Record<string, UploadedAttachment[]>;
 }
 
 const initialFormState: FormDataState = {
@@ -138,6 +140,19 @@ const initialFormState: FormDataState = {
   q23_site_web: 'Sim',
   q23_fluxo_web: '',
   comunicado_assinado_confirm: 'Sim',
+
+  attachmentsMap: {
+    comunicado_assinado: [],
+    q1_contrato: [],
+    q2_politica: [],
+    q5_mapping_ropa: [],
+    q9_seguranca_cripto: [],
+    q11_incidentes: [],
+    q18_terceiros: [],
+    q19_inventario_ripd: [],
+    q20_pentest: [],
+    comunicado_final_assinado: [],
+  },
 };
 
 const SECTIONS = [
@@ -151,46 +166,56 @@ const SECTIONS = [
 
 export const QuestionarioConformidade: React.FC = () => {
   const [formData, setFormData] = useState<FormDataState>(() => {
-    const saved = loadFormDraft<FormDataState>('questionario_conformidade');
-    return saved || initialFormState;
+    const saved = loadFormDraft<FormDataState>('questionario_conformidade_v2');
+    if (saved) {
+      return {
+        ...initialFormState,
+        ...saved,
+        attachmentsMap: {
+          ...initialFormState.attachmentsMap,
+          ...(saved.attachmentsMap || {}),
+        },
+      };
+    }
+    return initialFormState;
   });
 
   const [currentStep, setCurrentStep] = useState(1);
   const [viewMode, setViewMode] = useState<'wizard' | 'full'>('wizard');
-
-  // File attachments state per question
-  const [fileSignedDoc, setFileSignedDoc] = useState<File[]>([]);
-  const [fileContract, setFileContract] = useState<File[]>([]);
-  const [filePrivacyPolicy, setFilePrivacyPolicy] = useState<File[]>([]);
-  const [fileDataMapping, setFileDataMapping] = useState<File[]>([]);
-  const [fileCryptoSecurity, setFileCryptoSecurity] = useState<File[]>([]);
-  const [fileIncidentManagement, setFileIncidentManagement] = useState<File[]>([]);
-  const [fileThirdPartyManagement, setFileThirdPartyManagement] = useState<File[]>([]);
-  const [fileInventoryRipd, setFileInventoryRipd] = useState<File[]>([]);
-  const [filePentestSec, setFilePentestSec] = useState<File[]>([]);
 
   const [security, setSecurity] = useState(createInitialSecurityState);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [protocol, setProtocol] = useState<string | null>(null);
   const [score, setScore] = useState<number | null>(null);
+  const [submittedAttachments, setSubmittedAttachments] = useState<UploadedAttachment[]>([]);
   const [copied, setCopied] = useState(false);
   const [draftSavedAlert, setDraftSavedAlert] = useState(false);
 
   // Auto-save draft on changes
   useEffect(() => {
-    saveFormDraft('questionario_conformidade', formData);
+    saveFormDraft('questionario_conformidade_v2', formData);
   }, [formData]);
 
+  const handleUpdateAttachments = (fieldKey: string, nextList: UploadedAttachment[]) => {
+    setFormData((prev) => ({
+      ...prev,
+      attachmentsMap: {
+        ...prev.attachmentsMap,
+        [fieldKey]: nextList,
+      },
+    }));
+  };
+
   const handleManualSaveDraft = () => {
-    saveFormDraft('questionario_conformidade', formData);
+    saveFormDraft('questionario_conformidade_v2', formData);
     setDraftSavedAlert(true);
     setTimeout(() => setDraftSavedAlert(false), 2500);
   };
 
   const handleClearDraft = () => {
     if (window.confirm('Tem certeza que deseja limpar o rascunho salvo deste formulário?')) {
-      clearFormDraft('questionario_conformidade');
+      clearFormDraft('questionario_conformidade_v2');
       setFormData(initialFormState);
       setCurrentStep(1);
     }
@@ -198,7 +223,7 @@ export const QuestionarioConformidade: React.FC = () => {
 
   const calculatePreliminaryScore = (): number => {
     let positive = 0;
-    let totalScored = 13;
+    const totalScored = 13;
     if (formData.q1_contrato === 'Sim') positive++;
     if (formData.q2_politica === 'Sim') positive++;
     if (formData.q3_treinamentos === 'Sim') positive++;
@@ -211,7 +236,7 @@ export const QuestionarioConformidade: React.FC = () => {
     if (formData.q19_inventario_ripd === 'Sim') positive++;
     if (formData.q20_testes_pentest === 'Sim') positive++;
     if (formData.q21_seguro_cyber === 'Sim') positive++;
-    if (formData.comunicado_assinado_confirm === 'Sim') positive++;
+    if (formData.comunicado_assinado_confirm === 'Sim' || (formData.attachmentsMap.comunicado_final_assinado && formData.attachmentsMap.comunicado_final_assinado.length > 0)) positive++;
 
     return Math.round((positive / totalScored) * 100);
   };
@@ -256,6 +281,17 @@ export const QuestionarioConformidade: React.FC = () => {
       return;
     }
 
+    // Validação do comunicado assinado se respondeu 'Não' na pergunta final
+    if (
+      formData.comunicado_assinado_confirm === 'Não' &&
+      (!formData.attachmentsMap.comunicado_final_assinado || formData.attachmentsMap.comunicado_final_assinado.length === 0) &&
+      (!formData.attachmentsMap.comunicado_assinado || formData.attachmentsMap.comunicado_assinado.length === 0)
+    ) {
+      setErrorMsg('Como você indicou que ainda não enviou o Comunicado LGPD, é obrigatório baixar, assinar e anexar o arquivo na Pergunta 24 antes de transmitir.');
+      setCurrentStep(6);
+      return;
+    }
+
     const secCheck = validateSecurityState(security);
     if (!secCheck.valid) {
       setErrorMsg(secCheck.error || 'Falha na verificação anti-spam.');
@@ -271,81 +307,24 @@ export const QuestionarioConformidade: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Upload all collected evidence files
-      const uploadTasks: Promise<any>[] = [];
-      const uploadedMap: Record<string, any[]> = {};
+      // Coleta todos os anexos já enviados para a nuvem
+      const allAttachmentsList: UploadedAttachment[] = [];
+      Object.entries(formData.attachmentsMap).forEach(([fieldKey, list]) => {
+        if (Array.isArray(list)) {
+          list.forEach((att) => {
+            allAttachmentsList.push({
+              ...att,
+              fieldKey,
+            });
+          });
+        }
+      });
 
-      if (fileSignedDoc.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(fileSignedDoc, 'conformidade', 'comunicado_assinado').then((res) => {
-            uploadedMap.comunicado_assinado = res;
-          })
-        );
-      }
-      if (fileContract.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(fileContract, 'conformidade', 'q1_contrato').then((res) => {
-            uploadedMap.q1_contrato = res;
-          })
-        );
-      }
-      if (filePrivacyPolicy.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(filePrivacyPolicy, 'conformidade', 'q2_politica').then((res) => {
-            uploadedMap.q2_politica = res;
-          })
-        );
-      }
-      if (fileDataMapping.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(fileDataMapping, 'conformidade', 'q5_mapping_ropa').then((res) => {
-            uploadedMap.q5_mapping_ropa = res;
-          })
-        );
-      }
-      if (fileCryptoSecurity.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(fileCryptoSecurity, 'conformidade', 'q9_seguranca_cripto').then((res) => {
-            uploadedMap.q9_seguranca_cripto = res;
-          })
-        );
-      }
-      if (fileIncidentManagement.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(fileIncidentManagement, 'conformidade', 'q11_incidentes').then((res) => {
-            uploadedMap.q11_incidentes = res;
-          })
-        );
-      }
-      if (fileThirdPartyManagement.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(fileThirdPartyManagement, 'conformidade', 'q18_terceiros').then((res) => {
-            uploadedMap.q18_terceiros = res;
-          })
-        );
-      }
-      if (fileInventoryRipd.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(fileInventoryRipd, 'conformidade', 'q19_inventario_ripd').then((res) => {
-            uploadedMap.q19_inventario_ripd = res;
-          })
-        );
-      }
-      if (filePentestSec.length > 0) {
-        uploadTasks.push(
-          uploadFormFiles(filePentestSec, 'conformidade', 'q20_pentest').then((res) => {
-            uploadedMap.q20_pentest = res;
-          })
-        );
-      }
-
-      await Promise.all(uploadTasks);
-
-      const allUploadedList = Object.values(uploadedMap).flat();
       const generatedProtocol = generateProtocol('CONF');
       const ipHash = await getAnonymousIpHash();
       const finalScore = calculatePreliminaryScore();
 
+      // Inserção direta sem .select() para respeitar estritamente o RLS de anon
       const { error } = await supabase.from('quiz_submissions').insert({
         quiz_id: 1,
         company_name: cleanCompany,
@@ -364,9 +343,9 @@ export const QuestionarioConformidade: React.FC = () => {
         },
         answers_json: {
           ...formData,
-          evidence_uploads: uploadedMap,
+          evidence_uploads: formData.attachmentsMap,
         },
-        attachments_json: allUploadedList,
+        attachments_json: allAttachmentsList,
         ip_hash: ipHash,
         security_meta: {
           honeypot: security.honeypotWebsite || security.honeypotFax || '',
@@ -378,8 +357,9 @@ export const QuestionarioConformidade: React.FC = () => {
       if (error) throw error;
 
       recordClientSubmission('questionario_conformidade');
-      clearFormDraft('questionario_conformidade');
+      clearFormDraft('questionario_conformidade_v2');
 
+      setSubmittedAttachments(allAttachmentsList);
       setProtocol(generatedProtocol);
       setScore(finalScore);
       setSecurity(createInitialSecurityState());
@@ -389,6 +369,13 @@ export const QuestionarioConformidade: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const getAttachmentCount = (): number => {
+    return Object.values(formData.attachmentsMap).reduce(
+      (acc, list) => acc + (Array.isArray(list) ? list.length : 0),
+      0
+    );
   };
 
   return (
@@ -417,7 +404,7 @@ export const QuestionarioConformidade: React.FC = () => {
               <CheckCircle2 size={58} className="conf-success-icon" />
               <h2>Questionário de Conformidade Enviado com Sucesso!</h2>
               <p>
-                Os dados e evidências da sua empresa foram registrados e encaminhados ao nosso Encarregado pelo Tratamento de Dados Pessoais (DPO).
+                Os dados, declarações e arquivos anexados da sua empresa foram registrados e encaminhados ao nosso Encarregado pelo Tratamento de Dados Pessoais (DPO).
               </p>
 
               {score !== null && (
@@ -443,13 +430,34 @@ export const QuestionarioConformidade: React.FC = () => {
                 </button>
               </div>
 
-              <div style={{ marginTop: '24px' }}>
+              {submittedAttachments.length > 0 && (
+                <div style={{ marginTop: '24px', textAlign: 'left', background: '#f8fafc', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ fontSize: '1rem', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                    <Paperclip size={18} /> Documentos e Evidências Transmitidos ({submittedAttachments.length})
+                  </h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {submittedAttachments.map((att, idx) => (
+                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '10px 14px', borderRadius: '6px', border: '1px solid #cbd5e1' }}>
+                        <span style={{ fontSize: '13.5px', fontWeight: 500, color: '#1e293b' }}>
+                          📄 {att.name}
+                        </span>
+                        <a href={att.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '12.5px', color: '#2563eb', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'underline' }}>
+                          Visualizar <ExternalLink size={12} />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div style={{ marginTop: '30px' }}>
                 <button
                   type="button"
                   className="btn btn-primary"
                   onClick={() => {
                     setProtocol(null);
                     setScore(null);
+                    setSubmittedAttachments([]);
                     setFormData(initialFormState);
                     setCurrentStep(1);
                   }}
@@ -460,14 +468,14 @@ export const QuestionarioConformidade: React.FC = () => {
             </div>
           ) : (
             <div className="conf-main-wrapper">
-              {/* Comunicado Inicial Download Banner */}
+              {/* Comunicado Inicial Download Banner (Original WPForms Field 82) */}
               <div className="comunicado-download-banner">
                 <div className="banner-left">
                   <FileCheck size={28} className="icon-gold" />
                   <div>
-                    <h4>1. Comunicado e Informações Iniciais à Proteção de Dados</h4>
+                    <h4>Comunicado e Informações Iniciais à Proteção de Dados</h4>
                     <p>
-                      Antes de responder ao questionário, baixe o comunicado oficial, leia atentamente, assine digitalmente ou fisicamente e anexe o comprovante.
+                      Antes de responder o questionário, baixe o arquivo oficial a seguir, leia com atenção, assine e faça o upload do arquivo assinado (pode ser feita a assinatura digital ou física digitalizada).
                     </p>
                   </div>
                 </div>
@@ -486,6 +494,11 @@ export const QuestionarioConformidade: React.FC = () => {
                 <div className="mode-toggle-row">
                   <div className="step-progress-text">
                     Etapa {currentStep} de {SECTIONS.length}: <strong>{SECTIONS[currentStep - 1].title}</strong>
+                    {getAttachmentCount() > 0 && (
+                      <span className="badge-attachments">
+                        <Paperclip size={13} /> {getAttachmentCount()} arquivo(s) anexado(s)
+                      </span>
+                    )}
                   </div>
                   <div className="action-buttons">
                     <button
@@ -509,7 +522,7 @@ export const QuestionarioConformidade: React.FC = () => {
                       className="btn-ghost text-danger"
                       title="Limpar formulário"
                     >
-                      <Trash2 size={14} />
+                      <Trash2 size={14} /> Limpar
                     </button>
                   </div>
                 </div>
@@ -523,7 +536,7 @@ export const QuestionarioConformidade: React.FC = () => {
 
                 {draftSavedAlert && (
                   <div className="draft-alert-banner">
-                    <CheckCircle2 size={16} /> Rascunho salvo com sucesso no navegador!
+                    <CheckCircle2 size={16} /> Rascunho e arquivos anexados salvos com sucesso no navegador!
                   </div>
                 )}
               </div>
@@ -536,21 +549,24 @@ export const QuestionarioConformidade: React.FC = () => {
               )}
 
               <form onSubmit={handleSubmit} noValidate>
-                {/* ETAPA 1: Identificação */}
+                {/* ETAPA 1: Identificação da Empresa */}
                 {(viewMode === 'full' || currentStep === 1) && (
                   <div className="section-block">
                     <h3 className="section-title">
                       <Building size={20} /> Etapa 1 — Identificação da Empresa Fornecedora
                     </h3>
 
-                    {/* Upload do Comunicado Assinado Inicial */}
+                    {/* Original WPForms Field 83: Upload do Comunicado Assinado */}
                     <div className="card-sub-box">
                       <FileUploader
-                        id="comunicado-assinado-upload"
+                        id="wpforms_2854_83"
                         label="Faça aqui o upload do arquivo assinado (Comunicado LGPD)"
-                        description="Anexe o comunicado baixado acima devidamente assinado (aceita PDF ou DOCX de até 20MB)."
-                        files={fileSignedDoc}
-                        onChange={setFileSignedDoc}
+                        description="Anexe o comunicado assinado (pode ser assinatura digital). Formatos: PDF, DOCX (até 20 MB)."
+                        autoUpload={true}
+                        folder="conformidade"
+                        fieldKey="comunicado_assinado"
+                        attachments={formData.attachmentsMap.comunicado_assinado || []}
+                        onAttachmentsChange={(list) => handleUpdateAttachments('comunicado_assinado', list)}
                         maxFiles={1}
                         maxSizeMB={20}
                         allowedExtensions={['pdf', 'docx', 'doc']}
@@ -662,15 +678,26 @@ export const QuestionarioConformidade: React.FC = () => {
                         />
                       </div>
                     </div>
+
+                    <div className="form-group">
+                      <label className="form-label">Telefone / WhatsApp de Contato</label>
+                      <input
+                        type="tel"
+                        className="form-control"
+                        placeholder="(00) 00000-0000"
+                        value={formData.contatoTelefone}
+                        onChange={(e) => setFormData({ ...formData, contatoTelefone: formatPhone(e.target.value) })}
+                      />
+                    </div>
                   </div>
                 )}
 
-                {/* ETAPA 2: Governança & Contratos (Q1 a Q5) */}
+                {/* ETAPA 2: Governança, Contratos & Políticas (Q1 a Q5) */}
                 {(viewMode === 'full' || currentStep === 2) && (
                   <div className="section-block">
                     <h3 className="section-title">Etapa 2 — Governança, Contratos & Políticas</h3>
 
-                    {/* Q1 */}
+                    {/* Q1: Field 15, 6, 16 */}
                     <div className="question-box">
                       <label className="question-title">
                         1 – Sua empresa possui contrato formal com este controlador (contratante) e qual o período de vigência? (Se positivo, encaminhe a cópia) <span className="required">*</span>
@@ -689,28 +716,39 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="Comente sobre o contrato e vigência..."
-                        value={formData.q1_comentario}
-                        onChange={(e) => setFormData({ ...formData, q1_comentario: e.target.value })}
-                        style={{ marginTop: '10px' }}
-                      />
-                      <FileUploader
-                        id="q1-contrato-upload"
-                        label="Encaminhe a cópia do contrato"
-                        files={fileContract}
-                        onChange={setFileContract}
-                        maxFiles={1}
-                        maxSizeMB={10}
-                        allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'png']}
-                        variant="light"
-                        compact
-                      />
+
+                      {formData.q1_contrato === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Comente sobre o contrato</label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Comente sobre o contrato e período de vigência..."
+                            value={formData.q1_comentario}
+                            onChange={(e) => setFormData({ ...formData, q1_comentario: e.target.value })}
+                          />
+
+                          {/* Original Field 16 */}
+                          <FileUploader
+                            id="wpforms_2854_16"
+                            label="Encaminhe a cópia do contrato"
+                            description="Anexe a via contratual ou termo de adesão (PDF, DOC, DOCX, JPG, PNG — até 10 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="q1_contrato"
+                            attachments={formData.attachmentsMap.q1_contrato || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('q1_contrato', list)}
+                            maxFiles={1}
+                            maxSizeMB={10}
+                            allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'png']}
+                            variant="light"
+                            compact
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q2 */}
+                    {/* Q2: Field 18, 19, 20 */}
                     <div className="question-box">
                       <label className="question-title">
                         2 – Sua empresa possui política de privacidade e retenção de dados? <span className="required">*</span>
@@ -729,19 +767,27 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="Comente detalhes da política de privacidade..."
-                        value={formData.q2_comentario}
-                        onChange={(e) => setFormData({ ...formData, q2_comentario: e.target.value })}
-                        style={{ marginTop: '10px' }}
-                      />
+                      <div style={{ marginTop: '12px' }}>
+                        <label className="form-label">Comente <span className="required">*</span></label>
+                        <textarea
+                          className="form-control"
+                          rows={2}
+                          placeholder="Comente detalhes da política de privacidade e retenção de dados..."
+                          value={formData.q2_comentario}
+                          onChange={(e) => setFormData({ ...formData, q2_comentario: e.target.value })}
+                        />
+                      </div>
+
+                      {/* Original Field 20 */}
                       <FileUploader
-                        id="q2-politica-upload"
-                        label="Evidências da política de privacidade"
-                        files={filePrivacyPolicy}
-                        onChange={setFilePrivacyPolicy}
+                        id="wpforms_2854_20"
+                        label="Evidências"
+                        description="Encaminhe a política de privacidade ou documento comprobatório (PDF, DOCX, JPG, PNG — até 10 MB)."
+                        autoUpload={true}
+                        folder="conformidade"
+                        fieldKey="q2_politica"
+                        attachments={formData.attachmentsMap.q2_politica || []}
+                        onAttachmentsChange={(list) => handleUpdateAttachments('q2_politica', list)}
                         maxFiles={1}
                         maxSizeMB={10}
                         allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'png']}
@@ -750,7 +796,7 @@ export const QuestionarioConformidade: React.FC = () => {
                       />
                     </div>
 
-                    {/* Q3 */}
+                    {/* Q3: Field 22, 23 */}
                     <div className="question-box">
                       <label className="question-title">
                         3 – Sua empresa realiza treinamentos regulares sobre proteção de dados com seus funcionários ou terceiros prestadores? <span className="required">*</span>
@@ -769,17 +815,19 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="Descreva a frequência e formato dos treinamentos..."
-                        value={formData.q3_comentario}
-                        onChange={(e) => setFormData({ ...formData, q3_comentario: e.target.value })}
-                        style={{ marginTop: '10px' }}
-                      />
+                      <div style={{ marginTop: '12px' }}>
+                        <label className="form-label">Comente <span className="required">*</span></label>
+                        <textarea
+                          className="form-control"
+                          rows={2}
+                          placeholder="Descreva a frequência, temas abordados e formato dos treinamentos..."
+                          value={formData.q3_comentario}
+                          onChange={(e) => setFormData({ ...formData, q3_comentario: e.target.value })}
+                        />
+                      </div>
                     </div>
 
-                    {/* Q4 */}
+                    {/* Q4: Field 28 */}
                     <div className="question-box">
                       <label className="question-title">
                         4 – Quem é o Encarregado de Dados da empresa (DPO) e meio de contato? <span className="required">*</span>
@@ -793,7 +841,7 @@ export const QuestionarioConformidade: React.FC = () => {
                       />
                     </div>
 
-                    {/* Q5 */}
+                    {/* Q5: Field 30, 31 */}
                     <div className="question-box">
                       <label className="question-title">
                         5 – Sua empresa realiza mapeamento de dados (Data Mapping) ou registro das operações de tratamento (RAT/ROPA)? <span className="required">*</span>
@@ -812,27 +860,37 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <FileUploader
-                        id="q5-mapping-upload"
-                        label="Evidências do mapeamento / inventário"
-                        files={fileDataMapping}
-                        onChange={setFileDataMapping}
-                        maxFiles={1}
-                        maxSizeMB={10}
-                        allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'png']}
-                        variant="light"
-                        compact
-                      />
+
+                      {formData.q5_mapping_ropa === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          {/* Original Field 31 */}
+                          <FileUploader
+                            id="wpforms_2854_31"
+                            label="Evidências"
+                            description="Encaminhe extrato ou comprovação do mapeamento / inventário de dados (até 10 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="q5_mapping_ropa"
+                            attachments={formData.attachmentsMap.q5_mapping_ropa || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('q5_mapping_ropa', list)}
+                            maxFiles={1}
+                            maxSizeMB={10}
+                            allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'png']}
+                            variant="light"
+                            compact
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
 
-                {/* ETAPA 3: Tratamento de Dados (Q6 a Q8) */}
+                {/* ETAPA 3: Coleta, Finalidades e Logs (Q6 a Q8) */}
                 {(viewMode === 'full' || currentStep === 3) && (
                   <div className="section-block">
-                    <h3 className="section-title">Etapa 3 — Coleta, Finalidades e Registro de Logs</h3>
+                    <h3 className="section-title">Etapa 3 — Coleta de Dados, Finalidades e Logs</h3>
 
-                    {/* Q6 */}
+                    {/* Q6: Field 32, 34 */}
                     <div className="question-box">
                       <label className="question-title">
                         6 – Sua empresa coleta dados pessoais de colaboradores, fornecedores ou clientes do controlador (contratante)? <span className="required">*</span>
@@ -851,40 +909,46 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="Quais espécies de dados pessoais são coletadas?"
-                        value={formData.q6_quais_especies}
-                        onChange={(e) => setFormData({ ...formData, q6_quais_especies: e.target.value })}
-                        style={{ marginTop: '10px' }}
-                      />
+
+                      {formData.q6_coleta_dados === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Quais espécies? <span className="required">*</span></label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Quais espécies de dados pessoais são coletadas (ex: cadastrais, financeiros, profissionais...)"
+                            value={formData.q6_quais_especies}
+                            onChange={(e) => setFormData({ ...formData, q6_quais_especies: e.target.value })}
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q7 */}
+                    {/* Q7: Field 36 */}
                     <div className="question-box">
                       <label className="question-title">
-                        7 – Os tratamentos a serem realizados servem a quais finalidades específicas e detalhadas?
+                        7- Os tratamentos a serem realizados servem a quais finalidades específicas e detalhadas?
                       </label>
                       <textarea
                         className="form-control"
                         rows={3}
-                        placeholder="Descreva as bases legais e finalidades específicas do tratamento..."
+                        placeholder="Descreva as bases legais e finalidades específicas do tratamento para execução dos serviços..."
                         value={formData.q7_finalidades}
                         onChange={(e) => setFormData({ ...formData, q7_finalidades: e.target.value })}
                       />
                     </div>
 
-                    {/* Q8 */}
+                    {/* Q8: Field 42, 38, 39, 40 */}
                     <div className="question-box">
                       <label className="question-title">
-                        8 – No que tange às evidências técnicas de registro:
+                        8- No que tange às evidências:
                       </label>
-                      <div className="form-group" style={{ marginTop: '8px' }}>
+                      <div className="form-group" style={{ marginTop: '10px' }}>
                         <label className="form-label">a) Como se dá o armazenamento das opções dos usuários (registro de log)? <span className="required">*</span></label>
                         <textarea
                           className="form-control"
                           rows={2}
+                          placeholder="Mecanismo de log, período de guarda e rastreabilidade..."
                           value={formData.q8_log_armazenamento}
                           onChange={(e) => setFormData({ ...formData, q8_log_armazenamento: e.target.value })}
                         />
@@ -894,6 +958,7 @@ export const QuestionarioConformidade: React.FC = () => {
                         <textarea
                           className="form-control"
                           rows={2}
+                          placeholder="Mecanismo de opt-in, revogação e registro de prova do consentimento..."
                           value={formData.q8_gestao_consentimento}
                           onChange={(e) => setFormData({ ...formData, q8_gestao_consentimento: e.target.value })}
                         />
@@ -903,7 +968,7 @@ export const QuestionarioConformidade: React.FC = () => {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Ex: ERP interno, CRM, Servidor dedicado, etc."
+                          placeholder="Ex: ERP interno, CRM, Servidor em nuvem dedicado, etc."
                           value={formData.q8_sistemas_plataformas}
                           onChange={(e) => setFormData({ ...formData, q8_sistemas_plataformas: e.target.value })}
                         />
@@ -912,15 +977,15 @@ export const QuestionarioConformidade: React.FC = () => {
                   </div>
                 )}
 
-                {/* ETAPA 4: Segurança & Incidentes (Q9 a Q13) */}
+                {/* ETAPA 4: Segurança Técnica, Cloud & Incidentes (Q9 a Q13) */}
                 {(viewMode === 'full' || currentStep === 4) && (
                   <div className="section-block">
                     <h3 className="section-title">Etapa 4 — Segurança Técnica, Cloud & Incidentes</h3>
 
-                    {/* Q9 */}
+                    {/* Q9: Field 45, 46 */}
                     <div className="question-box">
                       <label className="question-title">
-                        9 – A empresa utiliza pseudoanonimização, anonimização e criptografia nas bases de dados ou possui aplicação com essa medida de segurança? <span className="required">*</span>
+                        9 – A empresa utiliza pseudoanonimização, anonimização e criptografia nas bases de dados envolvendo os tratamentos realizados acima ou possui aplicação interna que possibilite a utilização como medida de segurança? <span className="required">*</span>
                       </label>
                       <div className="radio-group">
                         {['Sim', 'Não'].map((opt) => (
@@ -936,47 +1001,57 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <FileUploader
-                        id="q9-cripto-upload"
-                        label="Encaminhe a evidência de segurança"
-                        files={fileCryptoSecurity}
-                        onChange={setFileCryptoSecurity}
-                        maxFiles={1}
-                        maxSizeMB={10}
-                        allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
-                        variant="light"
-                        compact
-                      />
+
+                      {formData.q9_seguranca_cripto === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          {/* Original Field 46 */}
+                          <FileUploader
+                            id="wpforms_2854_46"
+                            label="Encaminhe a evidência"
+                            description="Anexe relatório técnico, certificado SSL/TLS, comprovação de criptografia ou política de segurança (até 5 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="q9_seguranca_cripto"
+                            attachments={formData.attachmentsMap.q9_seguranca_cripto || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('q9_seguranca_cripto', list)}
+                            maxFiles={1}
+                            maxSizeMB={5}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            variant="light"
+                            compact
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q10 */}
+                    {/* Q10: Field 48, 49, 50 */}
                     <div className="question-box">
                       <label className="question-title">
-                        10 – Caso utilize armazenamento de dados em nuvem:
+                        10 – Caso utilizado armazenamento de dados em nuvem:
                       </label>
-                      <div className="form-group" style={{ marginTop: '8px' }}>
-                        <label className="form-label">a) Qual serviço ou provedor de nuvem utiliza? <span className="required">*</span></label>
+                      <div className="form-group" style={{ marginTop: '10px' }}>
+                        <label className="form-label">a) Qual serviço utiliza? <span className="required">*</span></label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Ex: AWS, Microsoft Azure, Google Cloud, Servidor Local..."
+                          placeholder="Ex: AWS, Microsoft Azure, Google Cloud, Servidor Dedicado..."
                           value={formData.q10_nuvem_servico}
                           onChange={(e) => setFormData({ ...formData, q10_nuvem_servico: e.target.value })}
                         />
                       </div>
                       <div className="form-group">
-                        <label className="form-label">b) Os dados são eventualmente armazenados em países estrangeiros? Se sim, quais?</label>
+                        <label className="form-label">b) Os dados são transmitidos de forma a respeitar a legislação e eventualmente armazenados em países estrangeiros? Se sim, quais países?</label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Ex: Brasil (São Paulo), EUA, União Europeia..."
+                          placeholder="Ex: Armazenamento em Data Center no Brasil (SP) ou país estrangeiro específico..."
                           value={formData.q10_nuvem_transferencia_internacional}
                           onChange={(e) => setFormData({ ...formData, q10_nuvem_transferencia_internacional: e.target.value })}
                         />
                       </div>
                     </div>
 
-                    {/* Q11 */}
+                    {/* Q11: Field 52, 53 */}
                     <div className="question-box">
                       <label className="question-title">
                         11 – Sua empresa possui gestão de incidentes de dados? <span className="required">*</span>
@@ -995,23 +1070,33 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <FileUploader
-                        id="q11-incidentes-upload"
-                        label="Encaminhe a evidência (Política de Incidentes)"
-                        files={fileIncidentManagement}
-                        onChange={setFileIncidentManagement}
-                        maxFiles={1}
-                        maxSizeMB={10}
-                        allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
-                        variant="light"
-                        compact
-                      />
+
+                      {formData.q11_gestao_incidentes === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          {/* Original Field 53 */}
+                          <FileUploader
+                            id="wpforms_2854_53"
+                            label="Encaminhe a evidência"
+                            description="Anexe política de resposta a incidentes ou fluxo de notificação à ANPD/Controlador (até 5 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="q11_incidentes"
+                            attachments={formData.attachmentsMap.q11_incidentes || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('q11_incidentes', list)}
+                            maxFiles={1}
+                            maxSizeMB={5}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            variant="light"
+                            compact
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q12 */}
+                    {/* Q12: Field 54, 56 */}
                     <div className="question-box">
                       <label className="question-title">
-                        12 – Sua empresa possui plano de resposta a incidentes e continuidade dos serviços contratados? <span className="required">*</span>
+                        12 – Sua empresa possui plano de resposta à incidentes e de continuidade dos serviços contratados? <span className="required">*</span>
                       </label>
                       <div className="radio-group">
                         {['Sim', 'Não'].map((opt) => (
@@ -1027,25 +1112,30 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="Qual é a contingência prevista para o serviço contratado?"
-                        value={formData.q12_contingencia}
-                        onChange={(e) => setFormData({ ...formData, q12_contingencia: e.target.value })}
-                        style={{ marginTop: '10px' }}
-                      />
+
+                      {formData.q12_plano_continuidade === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Qual é a contingência para o serviço contratado?</label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Descreva o plano de contingência e recuperação em desastres..."
+                            value={formData.q12_contingencia}
+                            onChange={(e) => setFormData({ ...formData, q12_contingencia: e.target.value })}
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q13 */}
+                    {/* Q13: Field 58 */}
                     <div className="question-box">
                       <label className="question-title">
-                        13 – Quais orientações a serem seguidas em caso de incidentes (vazamento, sequestro ou indisponibilidade)? Quem é o responsável pelo suporte? <span className="required">*</span>
+                        13 – Quais orientações a serem seguidas em caso de incidentes relacionados à prestação do serviço contratado (vazamento de dados pessoais, sequestro de dados e ou indisponibilidade dos serviços)? E, quem é o responsável por dar suporte nestes casos ao controlador (contratante)? <span className="required">*</span>
                       </label>
                       <textarea
                         className="form-control"
                         rows={3}
-                        placeholder="Descreva o canal de contato de emergência e prazos de notificação em caso de incidentes..."
+                        placeholder="Descreva canais de plantão, prazos de alerta e responsável pelo suporte em emergências..."
                         value={formData.q13_orientacoes_incidentes}
                         onChange={(e) => setFormData({ ...formData, q13_orientacoes_incidentes: e.target.value })}
                       />
@@ -1058,61 +1148,65 @@ export const QuestionarioConformidade: React.FC = () => {
                   <div className="section-block">
                     <h3 className="section-title">Etapa 5 — Dados Sensíveis & Gestão de Terceiros</h3>
 
-                    {/* Q14 & Q15 */}
-                    <div className="grid-2">
-                      <div className="question-box">
-                        <label className="question-title">
-                          14 – Sua empresa trata dados sensíveis? <span className="required">*</span>
-                        </label>
-                        <div className="radio-group">
-                          {['Sim', 'Não'].map((opt) => (
-                            <label key={opt} className="radio-item">
-                              <input
-                                type="radio"
-                                name="q14_dados_sensiveis"
-                                value={opt}
-                                checked={formData.q14_dados_sensiveis === opt}
-                                onChange={(e) => setFormData({ ...formData, q14_dados_sensiveis: e.target.value })}
-                              />
-                              <span>{opt}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="question-box">
-                        <label className="question-title">
-                          15 – Há procedimento específico para o tratamento de dados sensíveis? <span className="required">*</span>
-                        </label>
-                        <div className="radio-group">
-                          {['Sim', 'Não'].map((opt) => (
-                            <label key={opt} className="radio-item">
-                              <input
-                                type="radio"
-                                name="q15_procedimento_sensivel"
-                                value={opt}
-                                checked={formData.q15_procedimento_sensivel === opt}
-                                onChange={(e) => setFormData({ ...formData, q15_procedimento_sensivel: e.target.value })}
-                              />
-                              <span>{opt}</span>
-                            </label>
-                          ))}
-                        </div>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Qual procedimento?"
-                          value={formData.q15_qual_procedimento}
-                          onChange={(e) => setFormData({ ...formData, q15_qual_procedimento: e.target.value })}
-                          style={{ marginTop: '10px' }}
-                        />
+                    {/* Q14: Field 59 */}
+                    <div className="question-box">
+                      <label className="question-title">
+                        14 – Sua empresa trata dados sensíveis? <span className="required">*</span>
+                      </label>
+                      <div className="radio-group">
+                        {['Sim', 'Não'].map((opt) => (
+                          <label key={opt} className="radio-item">
+                            <input
+                              type="radio"
+                              name="q14_dados_sensiveis"
+                              value={opt}
+                              checked={formData.q14_dados_sensiveis === opt}
+                              onChange={(e) => setFormData({ ...formData, q14_dados_sensiveis: e.target.value })}
+                            />
+                            <span>{opt}</span>
+                          </label>
+                        ))}
                       </div>
                     </div>
 
-                    {/* Q16 */}
+                    {/* Q15: Field 60, 61 */}
                     <div className="question-box">
                       <label className="question-title">
-                        16 – Há compartilhamento de dados pessoais para outra empresa? <span className="required">*</span>
+                        15 – Há um procedimento específico para o tratamento de dados sensíveis? <span className="required">*</span>
+                      </label>
+                      <div className="radio-group">
+                        {['Sim', 'Não'].map((opt) => (
+                          <label key={opt} className="radio-item">
+                            <input
+                              type="radio"
+                              name="q15_procedimento_sensivel"
+                              value={opt}
+                              checked={formData.q15_procedimento_sensivel === opt}
+                              onChange={(e) => setFormData({ ...formData, q15_procedimento_sensivel: e.target.value })}
+                            />
+                            <span>{opt}</span>
+                          </label>
+                        ))}
+                      </div>
+
+                      {formData.q15_procedimento_sensivel === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Qual?</label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Descreva as salvaguardas adicionais para dados sensíveis..."
+                            value={formData.q15_qual_procedimento}
+                            onChange={(e) => setFormData({ ...formData, q15_qual_procedimento: e.target.value })}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Q16: Field 63, 64 */}
+                    <div className="question-box">
+                      <label className="question-title">
+                        16 – Caso sua empresa tenha acesso a dados pessoais de clientes ou colaboradores, há o compartilhamento desses dados para outra empresa? <span className="required">*</span>
                       </label>
                       <div className="radio-group">
                         {['Sim', 'Não'].map((opt) => (
@@ -1128,24 +1222,26 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="Para qual empresa e por qual motivo há a transferência?"
-                        value={formData.q16_para_qual_empresa}
-                        onChange={(e) => setFormData({ ...formData, q16_para_qual_empresa: e.target.value })}
-                        style={{ marginTop: '10px' }}
-                      />
+
+                      {formData.q16_compartilhamento_terceiros === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Para qual empresa e por qual motivo há a transferência? <span className="required">*</span></label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Nome da empresa destinatária e justificativa legal..."
+                            value={formData.q16_para_qual_empresa}
+                            onChange={(e) => setFormData({ ...formData, q16_para_qual_empresa: e.target.value })}
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q17 & Q18 */}
+                    {/* Q17 & Q18: Field 65, 66, 67 */}
                     <div className="question-box">
                       <label className="question-title">
-                        17 e 18 – Quarteirização e Gestão de Terceiros Fornecedores <span className="required">*</span>
+                        17 – Existem outras empresas que realizam o tratamento de dados pessoais do controlador (contratante) por sua ordem para cumprimento do contrato (quarteirização)? <span className="required">*</span>
                       </label>
-                      <p style={{ fontSize: '0.9rem', color: '#6b7280', margin: '4px 0 10px' }}>
-                        Existem outras empresas que realizam o tratamento por sua ordem (quarteirização)? Realiza gestão de terceiros com foco em LGPD?
-                      </p>
                       <div className="radio-group">
                         {['Sim', 'Não'].map((opt) => (
                           <label key={opt} className="radio-item">
@@ -1160,38 +1256,49 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="Como realiza a homologação e gestão de segurança dos seus fornecedores?"
-                        value={formData.q18_gestao_terceiros}
-                        onChange={(e) => setFormData({ ...formData, q18_gestao_terceiros: e.target.value })}
-                        style={{ marginTop: '10px' }}
-                      />
-                      <FileUploader
-                        id="q18-terceiros-upload"
-                        label="Encaminhe a evidência de gestão de terceiros"
-                        files={fileThirdPartyManagement}
-                        onChange={setFileThirdPartyManagement}
-                        maxFiles={1}
-                        maxSizeMB={10}
-                        allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
-                        variant="light"
-                        compact
-                      />
+
+                      {formData.q17_quarteirizacao === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Realiza a gestão de terceiros fornecedores com foco na proteção de dados?</label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Como homologa, avalia e fiscaliza a segurança dos subcontratados?"
+                            value={formData.q18_gestao_terceiros}
+                            onChange={(e) => setFormData({ ...formData, q18_gestao_terceiros: e.target.value })}
+                          />
+
+                          {/* Original Field 67 */}
+                          <FileUploader
+                            id="wpforms_2854_67"
+                            label="Encaminhe a evidência"
+                            description="Anexe termo de quarteirização, cláusulas contratuais de DPA ou política de fornecedores (até 5 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="q18_terceiros"
+                            attachments={formData.attachmentsMap.q18_terceiros || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('q18_terceiros', list)}
+                            maxFiles={1}
+                            maxSizeMB={5}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            variant="light"
+                            compact
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
 
-                {/* ETAPA 6: Auditorias & Envio Final (Q19 a Q23) */}
+                {/* ETAPA 6: Auditorias & Envio Final (Q19 a Q24) */}
                 {(viewMode === 'full' || currentStep === 6) && (
                   <div className="section-block">
-                    <h3 className="section-title">Etapa 6 — Auditorias, Seguro Cyber, Apps & Conclusão</h3>
+                    <h3 className="section-title">Etapa 6 — Auditorias, Riscos, Apps & Termo Assinado</h3>
 
-                    {/* Q19 */}
+                    {/* Q19: Field 69, 70 */}
                     <div className="question-box">
                       <label className="question-title">
-                        19 – A empresa prestadora de serviços já conta com Inventário de Dados (art. 37 LGPD) e RIPD (art. 38 LGPD)? <span className="required">*</span>
+                        19 – A empresa prestadora de serviços já conta com o Inventário de dados (art. 37 da LGPD), RIPD (art. 38 da LGPD) e outros documentos que entende necessários a fim de atestar a conformidade junto aos seus clientes? <span className="required">*</span>
                       </label>
                       <div className="radio-group">
                         {['Sim', 'Não'].map((opt) => (
@@ -1207,23 +1314,33 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <FileUploader
-                        id="q19-ripd-upload"
-                        label="Encaminhe a evidência"
-                        files={fileInventoryRipd}
-                        onChange={setFileInventoryRipd}
-                        maxFiles={1}
-                        maxSizeMB={10}
-                        allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
-                        variant="light"
-                        compact
-                      />
+
+                      {formData.q19_inventario_ripd === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          {/* Original Field 70 */}
+                          <FileUploader
+                            id="wpforms_2854_70"
+                            label="Encaminhe a evidência"
+                            description="Anexe comprovante do Inventário de Dados ou Relatório de Impacto (RIPD) (até 5 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="q19_inventario_ripd"
+                            attachments={formData.attachmentsMap.q19_inventario_ripd || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('q19_inventario_ripd', list)}
+                            maxFiles={1}
+                            maxSizeMB={5}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            variant="light"
+                            compact
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q20 */}
+                    {/* Q20: Field 71, 72 */}
                     <div className="question-box">
                       <label className="question-title">
-                        20 – Existem controles internos que testem regularmente a efetividade das medidas de segurança (vulnerabilidades e pentest)? <span className="required">*</span>
+                        20 – Existem controles internos que testem regularmente a efetividade das medidas de segurança adotadas (testes de vulnerabilidades e pentest)? <span className="required">*</span>
                       </label>
                       <div className="radio-group">
                         {['Sim', 'Não'].map((opt) => (
@@ -1239,20 +1356,30 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
-                      <FileUploader
-                        id="q20-pentest-upload"
-                        label="Encaminhe a evidência do pentest / scan"
-                        files={filePentestSec}
-                        onChange={setFilePentestSec}
-                        maxFiles={1}
-                        maxSizeMB={10}
-                        allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
-                        variant="light"
-                        compact
-                      />
+
+                      {formData.q20_testes_pentest === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          {/* Original Field 72 */}
+                          <FileUploader
+                            id="wpforms_2854_72"
+                            label="Encaminhe a evidência"
+                            description="Anexe sumário executivo de pentest, varredura de vulnerabilidades ou auditoria externa (até 5 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="q20_pentest"
+                            attachments={formData.attachmentsMap.q20_pentest || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('q20_pentest', list)}
+                            maxFiles={1}
+                            maxSizeMB={5}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            variant="light"
+                            compact
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Q21 */}
+                    {/* Q21: Field 74 */}
                     <div className="question-box">
                       <label className="question-title">
                         21 – Sua empresa transfere risco como medida de mitigação e possui seguro cyber ou responsabilidade civil contratado? <span className="required">*</span>
@@ -1273,69 +1400,78 @@ export const QuestionarioConformidade: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Q22 & Q23 */}
-                    <div className="grid-2">
-                      <div className="question-box">
-                        <label className="question-title">
-                          22 – A prestação de serviço envolve aplicativos mobile? <span className="required">*</span>
-                        </label>
-                        <div className="radio-group">
-                          {['Sim', 'Não'].map((opt) => (
-                            <label key={opt} className="radio-item">
-                              <input
-                                type="radio"
-                                name="q22_apps_mobile"
-                                value={opt}
-                                checked={formData.q22_apps_mobile === opt}
-                                onChange={(e) => setFormData({ ...formData, q22_apps_mobile: e.target.value })}
-                              />
-                              <span>{opt}</span>
-                            </label>
-                          ))}
-                        </div>
-                        <textarea
-                          className="form-control"
-                          rows={2}
-                          placeholder="Como se dá o fluxo de dados na aplicação?"
-                          value={formData.q22_fluxo_mobile}
-                          onChange={(e) => setFormData({ ...formData, q22_fluxo_mobile: e.target.value })}
-                          style={{ marginTop: '10px' }}
-                        />
+                    {/* Q22: Field 75, 76 */}
+                    <div className="question-box">
+                      <label className="question-title">
+                        22 – A prestação de serviço ou serviço contrato envolve aplicativos mobile? É disponibilizada política de privacidade em apartado? <span className="required">*</span>
+                      </label>
+                      <div className="radio-group">
+                        {['Sim', 'Não'].map((opt) => (
+                          <label key={opt} className="radio-item">
+                            <input
+                              type="radio"
+                              name="q22_apps_mobile"
+                              value={opt}
+                              checked={formData.q22_apps_mobile === opt}
+                              onChange={(e) => setFormData({ ...formData, q22_apps_mobile: e.target.value })}
+                            />
+                            <span>{opt}</span>
+                          </label>
+                        ))}
                       </div>
 
-                      <div className="question-box">
-                        <label className="question-title">
-                          23 – A prestação de serviço é disponibilizada por meio de site web? <span className="required">*</span>
-                        </label>
-                        <div className="radio-group">
-                          {['Sim', 'Não'].map((opt) => (
-                            <label key={opt} className="radio-item">
-                              <input
-                                type="radio"
-                                name="q23_site_web"
-                                value={opt}
-                                checked={formData.q23_site_web === opt}
-                                onChange={(e) => setFormData({ ...formData, q23_site_web: e.target.value })}
-                              />
-                              <span>{opt}</span>
-                            </label>
-                          ))}
+                      {formData.q22_apps_mobile === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Como se dá o fluxo de dados (da entrada ao descarte) dentro da aplicação?</label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Ciclo de vida do dado coletado pelo app..."
+                            value={formData.q22_fluxo_mobile}
+                            onChange={(e) => setFormData({ ...formData, q22_fluxo_mobile: e.target.value })}
+                          />
                         </div>
-                        <textarea
-                          className="form-control"
-                          rows={2}
-                          placeholder="Como se dá o fluxo de dados na aplicação web?"
-                          value={formData.q23_fluxo_web}
-                          onChange={(e) => setFormData({ ...formData, q23_fluxo_web: e.target.value })}
-                          style={{ marginTop: '10px' }}
-                        />
-                      </div>
+                      )}
                     </div>
 
-                    {/* Confirmação Final do Comunicado */}
+                    {/* Q23: Field 77, 78 */}
+                    <div className="question-box">
+                      <label className="question-title">
+                        23 – A prestação de serviço ou serviço contrato também é disponibilizado por meio do site da empresa contratante? <span className="required">*</span>
+                      </label>
+                      <div className="radio-group">
+                        {['Sim', 'Não'].map((opt) => (
+                          <label key={opt} className="radio-item">
+                            <input
+                              type="radio"
+                              name="q23_site_web"
+                              value={opt}
+                              checked={formData.q23_site_web === opt}
+                              onChange={(e) => setFormData({ ...formData, q23_site_web: e.target.value })}
+                            />
+                            <span>{opt}</span>
+                          </label>
+                        ))}
+                      </div>
+
+                      {formData.q23_site_web === 'Sim' && (
+                        <div className="conditional-fade" style={{ marginTop: '14px' }}>
+                          <label className="form-label">Como se dá o fluxo de dados pessoais (da entrada ao descarte) dentro da aplicação?</label>
+                          <textarea
+                            className="form-control"
+                            rows={2}
+                            placeholder="Ciclo de vida dos dados na plataforma web..."
+                            value={formData.q23_fluxo_web}
+                            onChange={(e) => setFormData({ ...formData, q23_fluxo_web: e.target.value })}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Q24 / Final: Field 88, 86, 87 (Exact WPForms behavior) */}
                     <div className="question-box" style={{ background: '#fefce8', borderColor: '#fef08a' }}>
-                      <label className="question-title" style={{ color: '#854d0e' }}>
-                        Já baixou e enviou o Comunicado e Informações decorrentes da LGPD assinado? <span className="required">*</span>
+                      <label className="question-title" style={{ color: '#854d0e', fontSize: '1.05rem' }}>
+                        Já baixou e enviou o Comunicado e Informações decorrentes da LGPD? <span className="required">*</span>
                       </label>
                       <div className="radio-group">
                         {['Sim', 'Não'].map((opt) => (
@@ -1351,6 +1487,60 @@ export const QuestionarioConformidade: React.FC = () => {
                           </label>
                         ))}
                       </div>
+
+                      {/* Original Field 86 e 87: Condicional quando responde 'Não' */}
+                      {formData.comunicado_assinado_confirm === 'Não' ? (
+                        <div className="conditional-fade" style={{ marginTop: '16px', background: '#ffffff', padding: '18px', borderRadius: '8px', border: '1px solid #fde047' }}>
+                          <p style={{ fontSize: '0.94rem', color: '#713f12', marginBottom: '12px', lineHeight: 1.6 }}>
+                            <strong>Atenção:</strong> Baixe o arquivo a seguir, leia com atenção, assine e faça o upload do arquivo assinado (pode ser feita a assinatura digital ou física digitalizada).
+                          </p>
+                          <a
+                            href="/wp-content/uploads/2023/10/Comunicado-e-informacoes-iniciais-a-protecao-de-dados.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-outline"
+                            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}
+                          >
+                            <Download size={15} /> Baixar Comunicado Oficial (PDF)
+                          </a>
+
+                          <FileUploader
+                            id="wpforms_2854_87"
+                            label="Faça aqui o upload do arquivo assinado *"
+                            description="Anexe o comunicado devidamente assinado (PDF, DOCX ou DOC — até 20 MB)."
+                            autoUpload={true}
+                            folder="conformidade"
+                            fieldKey="comunicado_final_assinado"
+                            attachments={formData.attachmentsMap.comunicado_final_assinado || []}
+                            onAttachmentsChange={(list) => handleUpdateAttachments('comunicado_final_assinado', list)}
+                            maxFiles={1}
+                            maxSizeMB={20}
+                            allowedExtensions={['pdf', 'docx', 'doc']}
+                            required={true}
+                            variant="light"
+                          />
+                        </div>
+                      ) : (
+                        <div style={{ marginTop: '10px', fontSize: '0.88rem', color: '#15803d' }}>
+                          ✓ Comunicado já assinado e confirmado. Caso queira anexar uma via adicional agora, utilize o campo abaixo:
+                          <div style={{ marginTop: '8px' }}>
+                            <FileUploader
+                              id="wpforms_2854_87_opt"
+                              label="Atualizar ou anexar documento assinado adicional (opcional)"
+                              autoUpload={true}
+                              folder="conformidade"
+                              fieldKey="comunicado_final_assinado"
+                              attachments={formData.attachmentsMap.comunicado_final_assinado || []}
+                              onAttachmentsChange={(list) => handleUpdateAttachments('comunicado_final_assinado', list)}
+                              maxFiles={1}
+                              maxSizeMB={20}
+                              allowedExtensions={['pdf', 'docx', 'doc']}
+                              variant="light"
+                              compact
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     <SecurityShield security={security} onChange={setSecurity} variant="light" />
@@ -1362,7 +1552,7 @@ export const QuestionarioConformidade: React.FC = () => {
                         style={{ width: '100%', fontSize: '1.1rem' }}
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? 'Validando e enviando questionário...' : (
+                        {isSubmitting ? 'Transmitindo questionário e arquivos...' : (
                           <>
                             <ShieldCheck size={20} /> Finalizar e Transmitir Avaliação de Conformidade
                           </>
@@ -1388,7 +1578,7 @@ export const QuestionarioConformidade: React.FC = () => {
                     </button>
 
                     <div className="step-counter">
-                      {currentStep} / {SECTIONS.length}
+                      Etapa {currentStep} de {SECTIONS.length}
                     </div>
 
                     {currentStep < SECTIONS.length ? (
@@ -1483,6 +1673,22 @@ export const QuestionarioConformidade: React.FC = () => {
         .step-progress-text {
           font-size: 1rem;
           color: var(--color-primary);
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .badge-attachments {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          background: #ecfdf5;
+          color: #047857;
+          border: 1px solid #a7f3d0;
+          padding: 3px 8px;
+          border-radius: 12px;
+          font-size: 0.78rem;
+          font-weight: 600;
         }
         .action-buttons {
           display: flex;
@@ -1565,6 +1771,19 @@ export const QuestionarioConformidade: React.FC = () => {
           line-height: 1.5;
           margin-bottom: 8px;
         }
+        .conditional-fade {
+          animation: mhFadeIn 220ms ease-out forwards;
+        }
+        @keyframes mhFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-4px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
         .grid-2 {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -1646,4 +1865,5 @@ export const QuestionarioConformidade: React.FC = () => {
     </div>
   );
 };
+
 export default QuestionarioConformidade;

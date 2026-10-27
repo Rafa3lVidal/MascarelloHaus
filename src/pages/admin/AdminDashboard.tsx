@@ -1,3 +1,16 @@
+
+const ATTACHMENT_FIELD_LABELS: Record<string, string> = {
+  comunicado_assinado: 'Comunicado Assinado (Início)',
+  comunicado_final_assinado: 'Comunicado Assinado (Conclusão)',
+  q1_contrato: 'Q1 Cópia do Contrato',
+  q2_politica: 'Q2 Política de Privacidade',
+  q5_mapping_ropa: 'Q5 RAT / ROPA',
+  q9_seguranca_cripto: 'Q9 Criptografia / Medidas de Segurança',
+  q11_incidentes: 'Q11 Gestão de Incidentes',
+  q18_terceiros: 'Q18 Gestão de Fornecedores / Terceiros',
+  q19_inventario_ripd: 'Q19 Inventário de Dados / RIPD',
+  q20_pentest: 'Q20 Testes de Vulnerabilidade / Pentest',
+};
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SEO } from '../../components/SEO';
@@ -33,6 +46,7 @@ export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'posts' | 'pages' | 'content' | 'lgpd' | 'messages' | 'denuncias' | 'quizzes' | 'audit'>('posts');
   const [whistleblowers, setWhistleblowers] = useState<any[]>([]);
   const [quizSubmissions, setQuizSubmissions] = useState<any[]>([]);
+  const [selectedQuiz, setSelectedQuiz] = useState<any | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
   const [pages, setPages] = useState<any[]>([]);
   const [messages, setMessages] = useState<any[]>([]);
@@ -1001,6 +1015,7 @@ export const AdminDashboard: React.FC = () => {
                         <th>Índice LGPD</th>
                         <th>Evidências / Documentos</th>
                         <th>Data</th>
+                        <th>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1031,24 +1046,52 @@ export const AdminDashboard: React.FC = () => {
                           </td>
                           <td>
                             {q.attachments_json && q.attachments_json.length > 0 ? (
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                <span style={{ fontSize: '11px', fontWeight: 600, color: '#059669' }}>
+                                  ✓ {q.attachments_json.length} arquivo(s) anexado(s)
+                                </span>
                                 {q.attachments_json.map((att: any, aIdx: number) => (
                                   <a
                                     key={aIdx}
                                     href={att.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    style={{ color: '#2563eb', fontSize: '12px', textDecoration: 'underline' }}
+                                    style={{
+                                      color: '#1d4ed8',
+                                      fontSize: '11.5px',
+                                      textDecoration: 'none',
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px',
+                                      background: '#f1f5f9',
+                                      padding: '3px 8px',
+                                      borderRadius: '4px',
+                                      maxWidth: '220px',
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis',
+                                      whiteSpace: 'nowrap'
+                                    }}
+                                    title={att.name}
                                   >
-                                    📎 {att.name || 'Evidência'}
+                                    📎 <strong style={{ color: '#0f172a' }}>{ATTACHMENT_FIELD_LABELS[att.fieldKey] || 'Anexo'}:</strong> {att.name}
                                   </a>
                                 ))}
                               </div>
                             ) : (
-                              <span style={{ color: '#9ca3af', fontSize: '12px' }}>-</span>
+                              <span style={{ color: '#9ca3af', fontSize: '12px' }}>Nenhum anexo</span>
                             )}
                           </td>
                           <td>{new Date(q.created_at).toLocaleDateString('pt-BR')}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="action-btn edit-btn"
+                              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                              onClick={() => setSelectedQuiz(q)}
+                            >
+                              <Eye size={14} /> Detalhes
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -1089,6 +1132,145 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
       </main>
+
+      
+      {/* MODAL: DETALHES DO QUESTIONÁRIO DE CONFORMIDADE */}
+      {selectedQuiz && (
+        <div className="admin-modal-backdrop" onClick={() => setSelectedQuiz(null)}>
+          <div
+            className="admin-modal-card"
+            style={{ maxWidth: '850px', maxHeight: '90vh', overflowY: 'auto' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="admin-modal-header">
+              <div>
+                <span className="banner-badge" style={{ fontSize: '11px', padding: '2px 8px' }}>
+                  Protocolo: {selectedQuiz.protocol}
+                </span>
+                <h3 style={{ margin: '4px 0 0' }}>{selectedQuiz.company_name}</h3>
+              </div>
+              <button className="modal-close-btn" onClick={() => setSelectedQuiz(null)}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {/* Header Info Box */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', background: '#f8fafc', padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <div>
+                  <small style={{ color: '#64748b', display: 'block' }}>CNPJ</small>
+                  <strong>{selectedQuiz.cnpj || '-'}</strong>
+                </div>
+                <div>
+                  <small style={{ color: '#64748b', display: 'block' }}>Responsável / DPO</small>
+                  <strong>{selectedQuiz.contact_name || '-'}</strong>
+                </div>
+                <div>
+                  <small style={{ color: '#64748b', display: 'block' }}>E-mail de Contato</small>
+                  <strong>{selectedQuiz.contact_email || '-'}</strong>
+                </div>
+                <div>
+                  <small style={{ color: '#64748b', display: 'block' }}>Índice de Conformidade</small>
+                  <strong style={{ color: selectedQuiz.final_score >= 80 ? '#16a34a' : '#d97706', fontSize: '1.2rem' }}>
+                    {selectedQuiz.final_score}%
+                  </strong>
+                </div>
+                {selectedQuiz.address_json && (
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <small style={{ color: '#64748b', display: 'block' }}>Endereço Completo</small>
+                    <span>
+                      {[
+                        selectedQuiz.address_json.rua,
+                        selectedQuiz.address_json.bairro,
+                        selectedQuiz.address_json.cidade,
+                        selectedQuiz.address_json.estado,
+                        selectedQuiz.address_json.cep
+                      ].filter(Boolean).join(' - ') || 'Não informado'}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Anexos Enviados Section */}
+              <div style={{ background: '#ecfdf5', padding: '18px', borderRadius: '8px', border: '1px solid #a7f3d0' }}>
+                <h4 style={{ color: '#065f46', margin: '0 0 12px', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <CheckCircle size={18} /> Arquivos e Evidências Anexadas ({selectedQuiz.attachments_json?.length || 0})
+                </h4>
+                {selectedQuiz.attachments_json && selectedQuiz.attachments_json.length > 0 ? (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '10px' }}>
+                    {selectedQuiz.attachments_json.map((att: any, idx: number) => (
+                      <div
+                        key={idx}
+                        style={{
+                          background: '#ffffff',
+                          padding: '10px 14px',
+                          borderRadius: '6px',
+                          border: '1px solid #cbd5e1',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}
+                      >
+                        <div style={{ minWidth: 0 }}>
+                          <span style={{ fontSize: '11px', color: '#059669', fontWeight: 700, display: 'block' }}>
+                            {ATTACHMENT_FIELD_LABELS[att.fieldKey] || 'Evidência'}
+                          </span>
+                          <span style={{ fontSize: '13px', fontWeight: 500, color: '#1e293b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }} title={att.name}>
+                            {att.name}
+                          </span>
+                        </div>
+                        <a
+                          href={att.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-outline"
+                          style={{ padding: '4px 10px', fontSize: '11px', flexShrink: 0, textDecoration: 'none' }}
+                        >
+                          Baixar / Ver
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ margin: 0, color: '#065f46', fontSize: '13px' }}>Nenhum documento anexado pelo fornecedor.</p>
+                )}
+              </div>
+
+              {/* Respostas Detalhadas */}
+              {selectedQuiz.answers_json && (
+                <div>
+                  <h4 style={{ margin: '0 0 12px', color: 'var(--color-primary)' }}>Respostas Detalhadas</h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '350px', overflowY: 'auto', paddingRight: '8px' }}>
+                    {Object.entries(selectedQuiz.answers_json)
+                      .filter(([key]) => key.startsWith('q') && !key.includes('evidence'))
+                      .map(([key, val]: [string, any]) => (
+                        <div key={key} style={{ padding: '10px 14px', background: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                          <span style={{ fontSize: '11px', fontWeight: 700, color: '#475569', textTransform: 'uppercase' }}>
+                            {key.replace(/_/g, ' ')}
+                          </span>
+                          <div style={{ fontSize: '13.5px', color: '#0f172a', marginTop: '2px' }}>
+                            {typeof val === 'string' ? val || '-' : JSON.stringify(val)}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="admin-modal-actions" style={{ padding: '16px 24px', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => setSelectedQuiz(null)}
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MODAL: EDITAR / CRIAR POST */}
       {(editingPost || isNewPost) && (
