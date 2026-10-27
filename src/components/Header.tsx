@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Mail } from 'lucide-react';
+import { Menu, X, Phone, Mail, Shield, AlertTriangle } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -33,9 +33,15 @@ export const Header: React.FC = () => {
               <Phone size={13} /> WhatsApp 49 98822-0982
             </a>
           </div>
-          <div className="top-lgpd-badge">
-            <Link to="/central-de-protecao-de-dados/" className="top-link">
+          <div className="top-lgpd-badge" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Link to="/central-de-protecao-de-dados/" className="top-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <Shield size={12} />
               Central de Proteção de Dados
+            </Link>
+            <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>|</span>
+            <Link to="/canal-de-denuncias/" className="top-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <AlertTriangle size={12} />
+              Canal de Denúncias
             </Link>
           </div>
         </div>
