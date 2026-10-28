@@ -10,15 +10,15 @@ export const Home: React.FC = () => {
   const heroSlides = [
     {
       id: 1,
-      bgImage: '/assets/fundos-slides-1.png',
-      title: 'Para um novo mundo,  novas estratégias.',
+      bgImage: '/assets/hero-slide-1.png',
+      title: 'Para um novo mundo, novas estratégias.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
       isAnchor: true
     },
     {
       id: 2,
-      bgImage: '/assets/fundos-slides-3.png',
+      bgImage: '/assets/hero-slide-2.png',
       title: 'Para uma nova realidade, novas soluções jurídicas.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 3,
-      bgImage: '/assets/fundos-slides-1.png',
+      bgImage: '/assets/hero-slide-3.png',
       title: 'Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -34,7 +34,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 4,
-      bgImage: '/assets/banner-ebooks-3.png',
+      bgImage: '/assets/hero-slide-4.png',
       title: 'Conheça os nossos artigos, cartilhas e publicações.',
       btnText: 'Acessar',
       btnLink: '/artigos-e-publicacoes/',
@@ -598,10 +598,9 @@ export const Home: React.FC = () => {
         /* 1 & 2: HERO SLIDER PREMIUM SUTIL */
         .elementor-hero-slider {
           position: relative;
-          min-height: 620px;
-          height: 76vh;
-          max-height: 780px;
-          background-color: #0d3732;
+          min-height: 520px;
+          height: clamp(520px, 42vw, 680px);
+          background-color: #071f1c;
           overflow: hidden;
           display: flex;
           align-items: center;
@@ -611,12 +610,12 @@ export const Home: React.FC = () => {
           position: absolute;
           inset: 0;
           background-size: cover;
-          background-position: center bottom;
+          background-position: 22% top;
           background-repeat: no-repeat;
           opacity: 0;
           visibility: hidden;
           transition: opacity 0.85s ease-in-out, visibility 0.85s ease;
-          transform: scale(1.02);
+          transform: scale(1.01);
           display: flex;
           align-items: center;
           z-index: 1;
@@ -631,19 +630,26 @@ export const Home: React.FC = () => {
 
         @keyframes heroKenBurns {
           0% { transform: scale(1); }
-          100% { transform: scale(1.025); }
+          100% { transform: scale(1.02); }
         }
 
         .hero-slide-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            90deg,
-            rgba(13, 55, 50, 0.95) 0%,
-            rgba(13, 55, 50, 0.84) 42%,
-            rgba(13, 55, 50, 0.50) 75%,
-            rgba(13, 55, 50, 0.22) 100%
-          );
+          background:
+            linear-gradient(
+              270deg,
+              rgba(5, 20, 18, 0.92) 0%,
+              rgba(8, 32, 28, 0.84) 44%,
+              rgba(8, 32, 28, 0.48) 72%,
+              rgba(5, 20, 18, 0.42) 100%
+            ),
+            linear-gradient(
+              180deg,
+              rgba(5, 20, 18, 0.30) 0%,
+              rgba(5, 20, 18, 0.12) 50%,
+              rgba(5, 20, 18, 0.55) 100%
+            );
           z-index: 1;
         }
 
@@ -651,10 +657,15 @@ export const Home: React.FC = () => {
           position: relative;
           z-index: 3;
           width: 100%;
+          display: flex;
+          justify-content: flex-end;
         }
 
         .hero-slide-content {
-          max-width: 820px;
+          width: 100%;
+          max-width: 620px;
+          margin-left: auto;
+          padding-right: 48px;
           text-align: left;
         }
 
@@ -690,12 +701,12 @@ export const Home: React.FC = () => {
 
         .hero-main-title {
           font-family: var(--font-serif);
-          font-size: clamp(2.3rem, 4.4vw, 3.6rem);
+          font-size: clamp(1.95rem, 3.1vw, 2.85rem);
           font-weight: 500;
           color: #ffffff;
-          line-height: 1.18;
-          margin-bottom: 34px;
-          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+          line-height: 1.22;
+          margin-bottom: 30px;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
           opacity: 0;
           transform: translateY(16px);
         }
@@ -1395,7 +1406,19 @@ export const Home: React.FC = () => {
 
         /* RESPONSIVIDADE */
         @media (max-width: 992px) {
-          .hero-main-title { font-size: 2.3rem; }
+          .hero-main-title { font-size: 2.15rem; }
+          .hero-slide-layer { background-position: 28% top; }
+          .hero-slide-overlay {
+            background: linear-gradient(
+              180deg,
+              rgba(5, 20, 18, 0.65) 0%,
+              rgba(8, 32, 28, 0.82) 100%
+            );
+          }
+          .hero-slide-content {
+            max-width: 100%;
+            padding-right: 0;
+          }
           .sobre-grid { grid-template-columns: 1fr; }
           .mira-profile-grid { grid-template-columns: 1fr; }
           .mira-photo-frame { margin: 0 auto; }
