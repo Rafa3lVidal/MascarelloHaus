@@ -497,9 +497,9 @@ export const CanalDenuncias: React.FC = () => {
                       <label style={{ display: 'block', fontSize: '0.92rem', fontWeight: 600, color: '#1e293b', marginBottom: '10px' }}>
                         Você trabalha na Mascarello Haus ou presta serviços ao escritório?
                       </label>
-                      <div style={{ display: 'flex', gap: '24px' }}>
+                      <div className="radio-group">
                         {(['Sim', 'Não'] as const).map((opt) => (
-                          <label key={opt} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
+                          <label key={opt} className="radio-item">
                             <input
                               type="radio"
                               name="trabalhaEscritorio"
@@ -518,9 +518,9 @@ export const CanalDenuncias: React.FC = () => {
                       <label style={{ display: 'block', fontSize: '0.92rem', fontWeight: 600, color: '#1e293b', marginBottom: '10px' }}>
                         Você atualmente tem alguma queixa a nível de Compliance da Mascarello Haus?
                       </label>
-                      <div style={{ display: 'flex', gap: '24px' }}>
+                      <div className="radio-group">
                         {(['Sim', 'Não'] as const).map((opt) => (
-                          <label key={opt} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
+                          <label key={opt} className="radio-item">
                             <input
                               type="radio"
                               name="queixaCompliance"
