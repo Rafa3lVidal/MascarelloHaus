@@ -138,67 +138,67 @@ export const CookieManager: React.FC = () => {
       provider: 'Mascârello Haus (sessionStorage)',
       category: 'Necessário',
       purpose: 'Semente criptográfica efêmera (SHA-256) gerada por sessão para cálculo de hash anônimo anti-abuso sem armazenar o IP real do visitante.',
-      retention: 'Sessão (expira ao fechar a aba)'
+      retention: 'Sessão'
     },
     {
-      name: 'mh_rl_contato / mh_rl_lgpd_central / mh_rl_canal_denuncias / mh_rl_questionario_conformidade',
+      name: 'mh_rl_contato, mh_rl_lgpd_central, mh_rl_canal_denuncias, mh_rl_questionario_conformidade',
       provider: 'Mascârello Haus (localStorage)',
       category: 'Necessário',
       purpose: 'Controle de limite de requisições (Rate Limiting) e prevenção contra ataques automatizados de força bruta ou spam nos formulários.',
-      retention: '10 a 15 minutos'
+      retention: '10 a 15 min'
     },
     {
       name: 'sb-iwzimemdxchmcrvlyhxg-auth-token',
       provider: 'Supabase Inc. (localStorage / Cookie)',
       category: 'Necessário',
       purpose: 'Autenticação e manutenção de sessão criptografada exclusivamente para acesso restrito ao painel de administração.',
-      retention: 'Sessão administrativa'
+      retention: 'Sessão admin'
     },
     {
-      name: '_vercel_jwt / __vercel_live_token',
+      name: '_vercel_jwt, __vercel_live_token',
       provider: 'Vercel Inc. (HTTP Cookie)',
       category: 'Necessário',
       purpose: 'Balanceamento de carga, roteamento seguro na borda (Edge Network) e mitigação contra ataques distribuídos de negação de serviço (DDoS).',
       retention: 'Sessão'
     },
     {
-      name: 'mh_draft_questionario_conformidade_v2 / mh_form_state_questionario_conformidade_v2',
+      name: 'mh_draft_questionario_conformidade_v2, mh_form_state_questionario_conformidade_v2',
       provider: 'Mascârello Haus (sessionStorage / localStorage)',
       category: 'Funcional',
       purpose: 'Preserva o progresso e rascunho das 6 etapas do Questionário de Conformidade para Fornecedores, evitando perda acidental de preenchimento.',
-      retention: 'Sessão / até 7 dias ou envio'
+      retention: 'Sessão / 7 dias'
     },
     {
       name: 'mh_draft_central_lgpd',
       provider: 'Mascârello Haus (localStorage)',
       category: 'Funcional',
       purpose: 'Preserva temporariamente no navegador do próprio usuário o rascunho da Requisição de Direitos do Titular (Art. 18 LGPD) até o envio.',
-      retention: 'Até o envio ou limpeza pelo titular'
+      retention: 'Até o envio'
     },
     {
       name: 'mh_draft_canal_denuncias',
       provider: 'Mascârello Haus (localStorage)',
       category: 'Funcional',
       purpose: 'Armazena localmente o relato em andamento no Canal de Denúncias (somente quando o próprio usuário ativa a opção "Salvar rascunho neste navegador").',
-      retention: '7 dias ou até o envio/exclusão'
+      retention: '7 dias / envio'
     },
     {
-      name: 'NID / CONSENT (Google Maps Embed)',
-      provider: 'Google LLC (Terceiro — Página de Contato)',
+      name: 'NID, CONSENT (Google Maps Embed)',
+      provider: 'Google LLC (Terceiro — Contato)',
       category: 'Funcional',
       purpose: 'Carregamento e exibição interativa dos mapas de localização dos escritórios de Videira/SC e Caçador/SC na página de Contato.',
-      retention: '6 meses / Sessão'
+      retention: '6 meses'
     },
     {
       name: '_ga',
-      provider: 'Google Analytics (com IP anonimizado)',
+      provider: 'Google Analytics (IP anonimizado)',
       category: 'Analítico',
       purpose: 'Distinção estatística de visitantes anônimos para compilação de relatórios agregados de audiência (somente mediante consentimento).',
       retention: '2 anos'
     },
     {
       name: '_ga_*',
-      provider: 'Google Analytics (com IP anonimizado)',
+      provider: 'Google Analytics (IP anonimizado)',
       category: 'Analítico',
       purpose: 'Persistência desidentificada do estado de sessão para métricas agregadas de navegação (somente mediante consentimento).',
       retention: '2 anos'
@@ -676,7 +676,7 @@ export const CookieManager: React.FC = () => {
         .cookie-modal-box {
           background: #ffffff;
           width: 100%;
-          max-width: 820px;
+          max-width: 960px;
           max-height: 90vh;
           border-radius: 12px;
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -877,28 +877,66 @@ export const CookieManager: React.FC = () => {
 
         /* Tabela de Cookies */
         .cookie-table-wrapper {
+          width: 100%;
           overflow-x: auto;
           border: 1px solid #e2e8f0;
           border-radius: 8px;
+          box-sizing: border-box;
         }
         .cookie-table {
           width: 100%;
+          table-layout: fixed;
           border-collapse: collapse;
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           text-align: left;
         }
         .cookie-table th {
           background: #f8fafc;
-          padding: 12px 14px;
+          padding: 11px 12px;
           color: var(--color-primary);
           font-weight: 600;
           border-bottom: 1px solid #e2e8f0;
+          line-height: 1.35;
+        }
+        .cookie-table th:nth-child(1),
+        .cookie-table td:nth-child(1) {
+          width: 24%;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .cookie-table th:nth-child(2),
+        .cookie-table td:nth-child(2) {
+          width: 12%;
+        }
+        .cookie-table th:nth-child(3),
+        .cookie-table td:nth-child(3) {
+          width: 18%;
+          word-break: break-word;
+        }
+        .cookie-table th:nth-child(4),
+        .cookie-table td:nth-child(4) {
+          width: 32%;
+          word-break: break-word;
+        }
+        .cookie-table th:nth-child(5),
+        .cookie-table td:nth-child(5) {
+          width: 14%;
+          word-break: break-word;
         }
         .cookie-table td {
-          padding: 12px 14px;
+          padding: 11px 12px;
           border-bottom: 1px solid #edf2f7;
           color: #334155;
           vertical-align: middle;
+          line-height: 1.45;
+        }
+        .cookie-table td code {
+          font-size: 0.76rem;
+          color: #0d3732;
+          font-weight: 600;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+          white-space: normal;
         }
         .pill-category {
           display: inline-block;

@@ -1180,14 +1180,14 @@ export const CentralProtecaoDados: React.FC = () => {
                 </p>
 
                 <div style={{ margin: '18px 0 24px', overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '12px' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.86rem', textAlign: 'left' }}>
+                  <table style={{ width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse', fontSize: '0.84rem', textAlign: 'left' }}>
                     <thead>
                       <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#0d3732' }}>
-                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Identificador (Cookie / Storage)</th>
-                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Categoria</th>
-                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Origem / Provedor</th>
-                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Finalidade Específica</th>
-                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Retenção</th>
+                        <th style={{ width: '24%', padding: '12px 14px', fontWeight: 700 }}>Identificador (Cookie / Storage)</th>
+                        <th style={{ width: '12%', padding: '12px 14px', fontWeight: 700 }}>Categoria</th>
+                        <th style={{ width: '18%', padding: '12px 14px', fontWeight: 700 }}>Origem / Provedor</th>
+                        <th style={{ width: '32%', padding: '12px 14px', fontWeight: 700 }}>Finalidade Específica</th>
+                        <th style={{ width: '14%', padding: '12px 14px', fontWeight: 700 }}>Retenção</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1195,17 +1195,17 @@ export const CentralProtecaoDados: React.FC = () => {
                         { name: 'lgpd_cookie_preferences', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Armazena as preferências granulares de consentimento de cookies do titular.', ret: '12 meses' },
                         { name: 'lgpd_cookie_consent', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Registro simplificado do estado de consentimento para controle do banner.', ret: '12 meses' },
                         { name: 'mh_sec_seed', cat: 'Necessário', prov: 'Mascârello Haus (sessionStorage)', desc: 'Semente criptográfica efêmera (SHA-256) para proteção anti-abuso sem coleta de IP real.', ret: 'Sessão' },
-                        { name: 'mh_rl_* (contato, lgpd_central, canal_denuncias, questionario_conformidade)', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Controle de limite de envios (Rate Limiting) contra spam e ataques de força bruta.', ret: '10 a 15 min' },
+                        { name: 'mh_rl_contato, mh_rl_lgpd_central, mh_rl_canal_denuncias, mh_rl_questionario_conformidade', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Controle de limite de envios (Rate Limiting) contra spam e ataques de força bruta.', ret: '10 a 15 min' },
                         { name: 'sb-iwzimemdxchmcrvlyhxg-auth-token', cat: 'Necessário', prov: 'Supabase Inc. (localStorage)', desc: 'Autenticação criptografada restrita ao painel administrativo institucional.', ret: 'Sessão admin' },
-                        { name: '_vercel_jwt / __vercel_live_token', cat: 'Necessário', prov: 'Vercel Inc. (HTTP Cookie)', desc: 'Roteamento seguro na borda (Edge Network) e proteção contra ataques DDoS.', ret: 'Sessão' },
-                        { name: 'mh_draft_questionario_conformidade_v2 / mh_form_state_*', cat: 'Funcional', prov: 'Mascârello Haus (Storage Local)', desc: 'Preserva o rascunho das 6 etapas do Questionário de Conformidade para Fornecedores.', ret: 'Sessão / 7 dias' },
+                        { name: '_vercel_jwt, __vercel_live_token', cat: 'Necessário', prov: 'Vercel Inc. (HTTP Cookie)', desc: 'Roteamento seguro na borda (Edge Network) e proteção contra ataques DDoS.', ret: 'Sessão' },
+                        { name: 'mh_draft_questionario_conformidade_v2, mh_form_state_questionario_conformidade_v2', cat: 'Funcional', prov: 'Mascârello Haus (Storage Local)', desc: 'Preserva o rascunho das 6 etapas do Questionário de Conformidade para Fornecedores.', ret: 'Sessão / 7 dias' },
                         { name: 'mh_draft_central_lgpd', cat: 'Funcional', prov: 'Mascârello Haus (localStorage)', desc: 'Preserva temporariamente o rascunho da Requisição de Direitos do Titular até o envio.', ret: 'Até o envio' },
                         { name: 'mh_draft_canal_denuncias', cat: 'Funcional', prov: 'Mascârello Haus (localStorage)', desc: 'Salva localmente o rascunho do Canal de Denúncias quando ativado pelo próprio usuário.', ret: '7 dias / envio' },
-                        { name: 'NID / CONSENT (Google Maps)', cat: 'Funcional', prov: 'Google LLC (Terceiro)', desc: 'Renderização dos mapas interativos das unidades de Videira/SC e Caçador/SC na página de Contato.', ret: '6 meses' },
-                        { name: '_ga / _ga_*', cat: 'Analítico', prov: 'Google Analytics (IP anonimizado)', desc: 'Métricas estatísticas agregadas de audiência (ativado apenas mediante consentimento).', ret: '2 anos' },
+                        { name: 'NID, CONSENT (Google Maps)', cat: 'Funcional', prov: 'Google LLC (Terceiro)', desc: 'Renderização dos mapas interativos das unidades de Videira/SC e Caçador/SC na página de Contato.', ret: '6 meses' },
+                        { name: '_ga, _ga_*', cat: 'Analítico', prov: 'Google Analytics (IP anonimizado)', desc: 'Métricas estatísticas agregadas de audiência (ativado apenas mediante consentimento).', ret: '2 anos' },
                       ].map((row, i) => (
                         <tr key={i} style={{ borderBottom: '1px solid #f1f5f9', backgroundColor: i % 2 === 0 ? '#ffffff' : '#fcfcfd' }}>
-                          <td style={{ padding: '10px 14px', fontFamily: 'monospace', fontWeight: 600, color: '#0d3732', fontSize: '0.8rem' }}>{row.name}</td>
+                          <td style={{ padding: '10px 14px', fontFamily: 'monospace', fontWeight: 600, color: '#0d3732', fontSize: '0.78rem', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{row.name}</td>
                           <td style={{ padding: '10px 14px' }}>
                             <span style={{
                               display: 'inline-block',
@@ -1219,9 +1219,9 @@ export const CentralProtecaoDados: React.FC = () => {
                               {row.cat}
                             </span>
                           </td>
-                          <td style={{ padding: '10px 14px', color: '#475569' }}>{row.prov}</td>
-                          <td style={{ padding: '10px 14px', color: '#334155' }}>{row.desc}</td>
-                          <td style={{ padding: '10px 14px', fontWeight: 600, color: '#0d3732', whiteSpace: 'nowrap' }}>{row.ret}</td>
+                          <td style={{ padding: '10px 14px', color: '#475569', wordBreak: 'break-word' }}>{row.prov}</td>
+                          <td style={{ padding: '10px 14px', color: '#334155', wordBreak: 'break-word' }}>{row.desc}</td>
+                          <td style={{ padding: '10px 14px', fontWeight: 600, color: '#0d3732', wordBreak: 'break-word' }}>{row.ret}</td>
                         </tr>
                       ))}
                     </tbody>
