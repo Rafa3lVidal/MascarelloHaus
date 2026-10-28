@@ -46,7 +46,6 @@ export const SEO: React.FC<SEOProps> = ({
     if (!absoluteCanonical.startsWith('http')) {
       absoluteCanonical = `${BASE_URL}${absoluteCanonical.startsWith('/') ? '' : '/'}${absoluteCanonical}`;
     }
-    // normalize trailing slash if appropriate
     if (!absoluteCanonical.endsWith('/') && !absoluteCanonical.includes('.')) {
       absoluteCanonical += '/';
     }
@@ -69,10 +68,16 @@ export const SEO: React.FC<SEOProps> = ({
       el.setAttribute('content', content);
     };
 
-    // Primary Meta
+    // Primary Meta & Anti-AI Training / Copyright Reservation Directives
     setMeta('description', description);
-    setMeta('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+    setMeta('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, noai, noimageai');
+    setMeta('googlebot', 'index, follow, max-image-preview:large');
+    setMeta('bingbot', 'index, follow');
+    setMeta('gptbot', 'noindex, nofollow, noai');
+    setMeta('ccbot', 'noindex, nofollow, noarchive');
+    setMeta('tdm-reservation', '1');
     setMeta('author', author);
+    setMeta('copyright', 'Mascârello Haus Advocacia — Todos os direitos reservados (Lei nº 9.610/98)');
 
     // OpenGraph Meta
     setMeta('og:locale', 'pt_BR', true);
@@ -125,7 +130,7 @@ export const SEO: React.FC<SEOProps> = ({
       image: `${BASE_URL}/wp-content/uploads/2023/08/home-hero-advocacia.jpg`,
       description: 'Sociedade de Advogados em Videira e Caçador (SC). Atuação de excelência em Direito Empresarial, Civil, LGPD, Compliance, Tributário e Trabalhista.',
       telephone: '+55-49-3566-0066',
-      email: 'contato@mascarellohaus.com.br',
+      email: 'contato@mascarellohaus.adv.br',
       address: [
         {
           '@type': 'PostalAddress',
@@ -153,20 +158,23 @@ export const SEO: React.FC<SEOProps> = ({
       },
       sameAs: [
         'https://www.instagram.com/mascarellohausadvocacia/',
-        'https://www.linkedin.com/company/mascarello-haus-advocacia/'
-      ]
+        'https://www.linkedin.com/company/mascarello-haus-advocacia/',
+      ],
     };
 
-    const breadcrumbsSchema = breadcrumbs && breadcrumbs.length > 0 ? {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: breadcrumbs.map((b, idx) => ({
-        '@type': 'ListItem',
-        position: idx + 1,
-        name: b.name,
-        item: b.url.startsWith('http') ? b.url : `${BASE_URL}${b.url}`,
-      })),
-    } : null;
+    const breadcrumbsSchema =
+      breadcrumbs && breadcrumbs.length > 0
+        ? {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: breadcrumbs.map((b, idx) => ({
+              '@type': 'ListItem',
+              position: idx + 1,
+              name: b.name,
+              item: b.url.startsWith('http') ? b.url : `${BASE_URL}${b.url}`,
+            })),
+          }
+        : null;
 
     const allSchemas = [
       baseLegalServiceSchema,

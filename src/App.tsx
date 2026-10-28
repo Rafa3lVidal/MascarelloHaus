@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { CookieManager } from './components/CookieManager';
 import { ScrollToTop } from './components/ScrollToTop';
+import { SiteSecurityGuard } from './components/SiteSecurityGuard';
 import { AppRoutes } from './router';
 
 const AppContent: React.FC = () => {
@@ -14,6 +15,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="app-wrapper">
       <ScrollToTop />
+      <SiteSecurityGuard />
       {!isAdmin && <Header />}
       <main className="main-viewport">
         <AppRoutes />

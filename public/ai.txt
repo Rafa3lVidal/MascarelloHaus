@@ -1,0 +1,21 @@
+# =====================================================================
+# AI Training & Data Mining Prohibition (ai.txt)
+# Mascârello Haus Advocacia — https://mascarellohaus.adv.br/
+# Protected under Brazilian Copyright Law (Lei nº 9.610/1998) & LGPD
+# =====================================================================
+
+User-agent: *
+Disallow: /
+Disallow: *.pdf
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+Disallow: *.svg
+Disallow: *.html
+Disallow: *.js
+Disallow: *.css
+
+# Explicit Reservation of Rights (W3C TDM Protocol)
+TDM-Reservation: 1
+TDM-Policy: https://mascarellohaus.adv.br/central-de-protecao-de-dados/?aba=termos

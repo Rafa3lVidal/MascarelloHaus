@@ -1,11 +1,145 @@
+# =====================================================================
+# Mascârello Haus Advocacia — Política de Indexação e Proteção Anti-IA
+# Domínio Oficial: https://mascarellohaus.adv.br/
+# =====================================================================
+
+# 1. Motores de Busca Legítimos (SEO Permitido)
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin
+
+# 2. Bloqueio Total de Bots de Treinamento de IA, LLMs e Scrapers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: FriendlyCrawler
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: AI2Bot
+Disallow: /
+
+User-agent: Ai2Bot-Dolma
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: TurnitinBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+# 3. Regra Geral para Demais Agentes
 User-agent: *
 Allow: /
-
-# Disallow private admin and API paths
 Disallow: /admin
 Disallow: /admin/
 Disallow: /wp-admin
 Disallow: /api/
 
-# Sitemaps
+# 4. Sitemap Oficial
 Sitemap: https://mascarellohaus.adv.br/sitemap.xml

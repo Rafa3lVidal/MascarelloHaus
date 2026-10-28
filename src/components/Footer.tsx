@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ShieldCheck, Lock } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -90,6 +90,22 @@ export const Footer: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Selo Institucional de Segurança Cibernética & Anti-Phishing */}
+        <div className="footer-security-seal" role="region" aria-label="Selo de Segurança Cibernética e Anti-Phishing">
+          <div className="security-seal-badges">
+            <span className="security-badge-pill">
+              <Lock size={14} /> SSL/TLS 256-bit Ativo
+            </span>
+            <span className="security-badge-pill">
+              <ShieldCheck size={14} /> Proteção Anti-Phishing, Antivírus & Anti-IA
+            </span>
+          </div>
+          <p className="security-seal-notice">
+            <strong>Aviso Anti-Fraude:</strong> O único domínio oficial do escritório é{' '}
+            <span className="official-domain-highlight">mascarellohaus.adv.br</span>. Nunca solicitamos senhas ou códigos de verificação por mensagem.
+          </p>
+        </div>
       </div>
 
       {/* Barra Inferior com Créditos ApexCode */}
@@ -152,7 +168,7 @@ export const Footer: React.FC = () => {
           display: grid;
           grid-template-columns: 1.5fr 1fr 1.2fr;
           gap: 50px;
-          padding-bottom: 60px;
+          padding-bottom: 40px;
         }
         .footer-logo {
           width: 195px;
@@ -233,6 +249,45 @@ export const Footer: React.FC = () => {
           color: var(--color-primary);
           transform: translateY(-3px);
         }
+        .footer-security-seal {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 14px;
+          padding: 16px 20px;
+          margin-bottom: 26px;
+          background: rgba(0, 0, 0, 0.18);
+          border: 1px solid rgba(203, 171, 122, 0.25);
+          border-radius: 8px;
+        }
+        .security-seal-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .security-badge-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.78rem;
+          font-weight: 600;
+          color: #e7decf;
+          background: rgba(203, 171, 122, 0.14);
+          border: 1px solid rgba(203, 171, 122, 0.35);
+          padding: 5px 11px;
+          border-radius: 999px;
+        }
+        .security-seal-notice {
+          font-size: 0.8rem;
+          color: rgba(255, 255, 255, 0.78);
+          margin: 0;
+        }
+        .official-domain-highlight {
+          color: var(--color-accent);
+          font-weight: 600;
+          text-decoration: underline;
+        }
         .site-below-footer {
           background-color: var(--color-primary-dark);
           padding: 22px 0;
@@ -257,6 +312,10 @@ export const Footer: React.FC = () => {
           .footer-main-grid {
             grid-template-columns: 1fr;
             gap: 35px;
+          }
+          .footer-security-seal {
+            flex-direction: column;
+            align-items: flex-start;
           }
           .below-footer-flex {
             flex-direction: column;
