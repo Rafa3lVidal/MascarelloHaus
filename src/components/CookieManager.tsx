@@ -62,6 +62,20 @@ export const CookieManager: React.FC = () => {
 
     localStorage.setItem('lgpd_cookie_preferences', JSON.stringify(updated));
     localStorage.setItem('lgpd_cookie_consent', updated.analytics ? 'all' : 'essential');
+
+    // Se o usuário revogar os cookies funcionais, remove estados persistentes opcionais de formulários
+    if (!updated.functional) {
+      try {
+        Object.keys(localStorage).forEach((key) => {
+          if (key.startsWith('mh_form_state')) {
+            localStorage.removeItem(key);
+          }
+        });
+      } catch {
+        // Ignora erro de acesso ao storage
+      }
+    }
+
     setPrefs(updated);
     setIsBannerVisible(false);
     setIsModalOpen(false);
@@ -107,52 +121,87 @@ export const CookieManager: React.FC = () => {
   const cookiesList = [
     {
       name: 'lgpd_cookie_preferences',
-      provider: 'Mascârello Haus (Próprio)',
+      provider: 'Mascârello Haus (localStorage)',
       category: 'Necessário',
-      purpose: 'Armazena a escolha de consentimento e as preferências granulares de cookies do titular.',
+      purpose: 'Armazena a escolha de consentimento e as preferências granulares de cookies do titular (Art. 8º LGPD).',
       retention: '12 meses'
     },
     {
       name: 'lgpd_cookie_consent',
-      provider: 'Mascârello Haus (Próprio)',
+      provider: 'Mascârello Haus (localStorage)',
       category: 'Necessário',
-      purpose: 'Registro simplificado do estado de consentimento do usuário para renderização do banner.',
+      purpose: 'Registro simplificado do estado de consentimento do usuário para controle de exibição do banner.',
       retention: '12 meses'
     },
     {
-      name: 'sb-auth-token / Supabase',
-      provider: 'Supabase Inc.',
+      name: 'mh_sec_seed',
+      provider: 'Mascârello Haus (sessionStorage)',
       category: 'Necessário',
-      purpose: 'Autenticação e manutenção de sessão criptografada para acesso ao painel de administração.',
-      retention: 'Persistente / Sessão'
+      purpose: 'Semente criptográfica efêmera (SHA-256) gerada por sessão para cálculo de hash anônimo anti-abuso sem armazenar o IP real do visitante.',
+      retention: 'Sessão (expira ao fechar a aba)'
     },
     {
-      name: '_vercel_jwt / Vercel Edge',
-      provider: 'Vercel Inc.',
+      name: 'mh_rl_contato / mh_rl_lgpd_central / mh_rl_canal_denuncias / mh_rl_questionario_conformidade',
+      provider: 'Mascârello Haus (localStorage)',
       category: 'Necessário',
-      purpose: 'Balanceamento de carga, roteamento na borda e prevenção contra ataques distribuídos de negação de serviço (DDoS).',
+      purpose: 'Controle de limite de requisições (Rate Limiting) e prevenção contra ataques automatizados de força bruta ou spam nos formulários.',
+      retention: '10 a 15 minutos'
+    },
+    {
+      name: 'sb-iwzimemdxchmcrvlyhxg-auth-token',
+      provider: 'Supabase Inc. (localStorage / Cookie)',
+      category: 'Necessário',
+      purpose: 'Autenticação e manutenção de sessão criptografada exclusivamente para acesso restrito ao painel de administração.',
+      retention: 'Sessão administrativa'
+    },
+    {
+      name: '_vercel_jwt / __vercel_live_token',
+      provider: 'Vercel Inc. (HTTP Cookie)',
+      category: 'Necessário',
+      purpose: 'Balanceamento de carga, roteamento seguro na borda (Edge Network) e mitigação contra ataques distribuídos de negação de serviço (DDoS).',
       retention: 'Sessão'
+    },
+    {
+      name: 'mh_draft_questionario_conformidade_v2 / mh_form_state_questionario_conformidade_v2',
+      provider: 'Mascârello Haus (sessionStorage / localStorage)',
+      category: 'Funcional',
+      purpose: 'Preserva o progresso e rascunho das 6 etapas do Questionário de Conformidade para Fornecedores, evitando perda acidental de preenchimento.',
+      retention: 'Sessão / até 7 dias ou envio'
+    },
+    {
+      name: 'mh_draft_central_lgpd',
+      provider: 'Mascârello Haus (localStorage)',
+      category: 'Funcional',
+      purpose: 'Preserva temporariamente no navegador do próprio usuário o rascunho da Requisição de Direitos do Titular (Art. 18 LGPD) até o envio.',
+      retention: 'Até o envio ou limpeza pelo titular'
+    },
+    {
+      name: 'mh_draft_canal_denuncias',
+      provider: 'Mascârello Haus (localStorage)',
+      category: 'Funcional',
+      purpose: 'Armazena localmente o relato em andamento no Canal de Denúncias (somente quando o próprio usuário ativa a opção "Salvar rascunho neste navegador").',
+      retention: '7 dias ou até o envio/exclusão'
+    },
+    {
+      name: 'NID / CONSENT (Google Maps Embed)',
+      provider: 'Google LLC (Terceiro — Página de Contato)',
+      category: 'Funcional',
+      purpose: 'Carregamento e exibição interativa dos mapas de localização dos escritórios de Videira/SC e Caçador/SC na página de Contato.',
+      retention: '6 meses / Sessão'
     },
     {
       name: '_ga',
       provider: 'Google Analytics (com IP anonimizado)',
       category: 'Analítico',
-      purpose: 'Utilizado para distinguir usuários anônimos e compilar relatórios agregados de audiência do site.',
+      purpose: 'Distinção estatística de visitantes anônimos para compilação de relatórios agregados de audiência (somente mediante consentimento).',
       retention: '2 anos'
     },
     {
       name: '_ga_*',
       provider: 'Google Analytics (com IP anonimizado)',
       category: 'Analítico',
-      purpose: 'Utilizado para persistir o estado da sessão de navegação de forma desidentificada.',
+      purpose: 'Persistência desidentificada do estado de sessão para métricas agregadas de navegação (somente mediante consentimento).',
       retention: '2 anos'
-    },
-    {
-      name: 'mh_form_state',
-      provider: 'Mascârello Haus (Próprio)',
-      category: 'Funcional',
-      purpose: 'Preserva rascunhos temporários preenchidos nos formulários de contato e avaliação caso a página seja recarregada.',
-      retention: 'Sessão'
     }
   ];
 

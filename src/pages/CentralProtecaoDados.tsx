@@ -1173,11 +1173,82 @@ export const CentralProtecaoDados: React.FC = () => {
                 </p>
 
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '1.4rem', marginTop: '28px', marginBottom: '12px' }}>
-                  4. Gestão de Cookies e Tecnologias de Navegação
+                  4. Gestão de Cookies e Tecnologias de Armazenamento Local
                 </h3>
                 <p>
-                  Nosso site utiliza apenas cookies estritamente necessários para navegação segura e integridade de sessões. Cookies analíticos ou estatísticos somente são executados mediante seu expresso consentimento. A qualquer instante, você pode redefinir suas preferências através do botão no rodapé da página.
+                  Nosso portal utiliza cookies e chaves de armazenamento local (<code>localStorage</code> e <code>sessionStorage</code>) estritamente necessários para segurança cibernética, prevenção contra abusos automatizados e integridade de sessões. Recursos funcionais (como salvamento de rascunho de formulários) e cookies analíticos somente são mantidos conforme suas escolhas. A qualquer instante, você pode revisar ou revogar suas preferências:
                 </p>
+
+                <div style={{ margin: '18px 0 24px', overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '12px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.86rem', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#0d3732' }}>
+                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Identificador (Cookie / Storage)</th>
+                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Categoria</th>
+                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Origem / Provedor</th>
+                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Finalidade Específica</th>
+                        <th style={{ padding: '12px 14px', fontWeight: 700 }}>Retenção</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        { name: 'lgpd_cookie_preferences', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Armazena as preferências granulares de consentimento de cookies do titular.', ret: '12 meses' },
+                        { name: 'lgpd_cookie_consent', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Registro simplificado do estado de consentimento para controle do banner.', ret: '12 meses' },
+                        { name: 'mh_sec_seed', cat: 'Necessário', prov: 'Mascârello Haus (sessionStorage)', desc: 'Semente criptográfica efêmera (SHA-256) para proteção anti-abuso sem coleta de IP real.', ret: 'Sessão' },
+                        { name: 'mh_rl_* (contato, lgpd_central, canal_denuncias, questionario_conformidade)', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Controle de limite de envios (Rate Limiting) contra spam e ataques de força bruta.', ret: '10 a 15 min' },
+                        { name: 'sb-iwzimemdxchmcrvlyhxg-auth-token', cat: 'Necessário', prov: 'Supabase Inc. (localStorage)', desc: 'Autenticação criptografada restrita ao painel administrativo institucional.', ret: 'Sessão admin' },
+                        { name: '_vercel_jwt / __vercel_live_token', cat: 'Necessário', prov: 'Vercel Inc. (HTTP Cookie)', desc: 'Roteamento seguro na borda (Edge Network) e proteção contra ataques DDoS.', ret: 'Sessão' },
+                        { name: 'mh_draft_questionario_conformidade_v2 / mh_form_state_*', cat: 'Funcional', prov: 'Mascârello Haus (Storage Local)', desc: 'Preserva o rascunho das 6 etapas do Questionário de Conformidade para Fornecedores.', ret: 'Sessão / 7 dias' },
+                        { name: 'mh_draft_central_lgpd', cat: 'Funcional', prov: 'Mascârello Haus (localStorage)', desc: 'Preserva temporariamente o rascunho da Requisição de Direitos do Titular até o envio.', ret: 'Até o envio' },
+                        { name: 'mh_draft_canal_denuncias', cat: 'Funcional', prov: 'Mascârello Haus (localStorage)', desc: 'Salva localmente o rascunho do Canal de Denúncias quando ativado pelo próprio usuário.', ret: '7 dias / envio' },
+                        { name: 'NID / CONSENT (Google Maps)', cat: 'Funcional', prov: 'Google LLC (Terceiro)', desc: 'Renderização dos mapas interativos das unidades de Videira/SC e Caçador/SC na página de Contato.', ret: '6 meses' },
+                        { name: '_ga / _ga_*', cat: 'Analítico', prov: 'Google Analytics (IP anonimizado)', desc: 'Métricas estatísticas agregadas de audiência (ativado apenas mediante consentimento).', ret: '2 anos' },
+                      ].map((row, i) => (
+                        <tr key={i} style={{ borderBottom: '1px solid #f1f5f9', backgroundColor: i % 2 === 0 ? '#ffffff' : '#fcfcfd' }}>
+                          <td style={{ padding: '10px 14px', fontFamily: 'monospace', fontWeight: 600, color: '#0d3732', fontSize: '0.8rem' }}>{row.name}</td>
+                          <td style={{ padding: '10px 14px' }}>
+                            <span style={{
+                              display: 'inline-block',
+                              padding: '2px 8px',
+                              borderRadius: '999px',
+                              fontSize: '0.73rem',
+                              fontWeight: 700,
+                              backgroundColor: row.cat === 'Necessário' ? 'rgba(13, 55, 50, 0.1)' : 'rgba(203, 171, 122, 0.2)',
+                              color: row.cat === 'Necessário' ? '#0d3732' : '#856404'
+                            }}>
+                              {row.cat}
+                            </span>
+                          </td>
+                          <td style={{ padding: '10px 14px', color: '#475569' }}>{row.prov}</td>
+                          <td style={{ padding: '10px 14px', color: '#334155' }}>{row.desc}</td>
+                          <td style={{ padding: '10px 14px', fontWeight: 600, color: '#0d3732', whiteSpace: 'nowrap' }}>{row.ret}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <button
+                    type="button"
+                    onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-preferences'))}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '10px 18px',
+                      borderRadius: '8px',
+                      border: '1px solid #0d3732',
+                      backgroundColor: '#0d3732',
+                      color: '#ffffff',
+                      fontSize: '0.88rem',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <Lock size={15} /> Configurar Preferências de Cookies
+                  </button>
+                </div>
 
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '1.4rem', marginTop: '28px', marginBottom: '12px' }}>
                   5. Contato com a Encarregada de Dados (DPO)

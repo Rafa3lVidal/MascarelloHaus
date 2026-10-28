@@ -684,13 +684,13 @@ export async function recordFormConsent(consentType: string, userIdentifier?: st
 }
 
 /**
- * Form Draft Persistence (saves to sessionStorage or localStorage when mh_cookie_consent allows functional)
+ * Form Draft Persistence (saves to sessionStorage or localStorage when lgpd_cookie_preferences allows functional)
  */
 export function saveFormDraft<T>(formKey: string, data: T): void {
   try {
     const payload = JSON.stringify({ updatedAt: Date.now(), data });
     sessionStorage.setItem(`mh_draft_${formKey}`, payload);
-    const consentRaw = localStorage.getItem('mh_cookie_consent');
+    const consentRaw = localStorage.getItem('lgpd_cookie_preferences') || localStorage.getItem('mh_cookie_consent');
     if (consentRaw) {
       const consent = JSON.parse(consentRaw);
       if (consent?.functional) {
