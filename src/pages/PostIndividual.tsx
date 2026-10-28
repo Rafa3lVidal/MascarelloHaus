@@ -92,28 +92,9 @@ export const PostIndividual: React.FC = () => {
           </div>
 
           <article className="post-content-container">
-            {/* Imagem de Capa em Destaque */}
-            {post.featured_image_url && (
-              <div className="post-featured-media">
-                <img src={post.featured_image_url} alt={post.title} />
-              </div>
-            )}
-
-            {/* Descrição e Resumo do Material */}
-            <div className="post-lead-text">
-              <p>{post.excerpt}</p>
-            </div>
-
-            {/* Texto Adicional se Existir */}
-            {post.extra_text && (
-              <div className="post-extra-text">
-                <p>{post.extra_text}</p>
-              </div>
-            )}
-
             {/* Seção de Download e Visualização de PDF */}
             {post.pdf_url && (
-              <div className="material-access-box">
+              <div className="material-access-box" style={{ marginTop: 0 }}>
                 <div className="material-info-header">
                   <div className="material-icon">
                     <FileText size={32} />
@@ -253,44 +234,12 @@ export const PostIndividual: React.FC = () => {
           padding: 40px;
           box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
-        .post-featured-media {
-          width: 100%;
-          max-height: 400px;
-          overflow: hidden;
-          border-radius: 6px;
-          margin-bottom: 30px;
-          text-align: center;
-          background: #f8fafc;
-        }
-        .post-featured-media img {
-          max-width: 100%;
-          max-height: 400px;
-          object-fit: contain;
-          margin: 0 auto;
-        }
-        .post-lead-text {
-          font-size: 1.2rem;
-          line-height: 1.8;
-          color: #2d3748;
-          margin-bottom: 24px;
-          font-weight: 400;
-        }
-        .post-extra-text {
-          font-size: 1.05rem;
-          line-height: 1.7;
-          color: #4a5568;
-          margin-bottom: 30px;
-          padding: 16px 20px;
-          background: #f8fafc;
-          border-left: 3px solid var(--color-accent);
-          border-radius: 4px;
-        }
         .material-access-box {
           background: #f8fafc;
           border: 1px solid #e2e8f0;
           border-radius: 8px;
           padding: 30px;
-          margin: 35px 0;
+          margin: 0 0 35px 0;
         }
         .material-info-header {
           display: flex;
