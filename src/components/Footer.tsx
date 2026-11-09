@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Shield, AlertTriangle } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -96,12 +96,23 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Barra Inferior com Créditos ApexCode */}
+      {/* Barra Inferior com Central de Proteção de Dados, Canal de Denúncias e Créditos ApexCode */}
       <div className="site-below-footer">
         <div className="container below-footer-flex">
           <p className="copyright-text">
             &copy; {new Date().getFullYear()} Mascârello Haus Advocacia — CNPJ 38.282.320/0001-54 — Todos os direitos reservados.
           </p>
+          <div className="footer-lgpd-badge">
+            <Link to="/central-de-protecao-de-dados/" className="footer-badge-link">
+              <Shield size={13} aria-hidden="true" />
+              Central de Proteção de Dados
+            </Link>
+            <span className="credits-sep" aria-hidden="true">|</span>
+            <Link to="/canal-de-denuncias/" className="footer-badge-link">
+              <AlertTriangle size={13} aria-hidden="true" />
+              Canal de Denúncias
+            </Link>
+          </div>
           <div className="apexcode-credits">
             <span>Desenvolvido por </span>
             <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer" className="apex-link">
@@ -260,7 +271,27 @@ export const Footer: React.FC = () => {
           justify-content: space-between;
           align-items: center;
           flex-wrap: wrap;
-          gap: 12px;
+          gap: 16px;
+        }
+        .footer-lgpd-badge {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 8px;
+        }
+        .footer-badge-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          color: rgba(255, 255, 255, 0.9);
+          font-weight: 500;
+          transition: color 0.2s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .footer-badge-link:hover {
+            color: var(--color-accent);
+          }
         }
         .apexcode-credits a {
           color: var(--color-accent);

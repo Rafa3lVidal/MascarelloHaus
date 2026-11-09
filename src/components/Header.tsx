@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Mail, Shield, AlertTriangle } from 'lucide-react';
+import { Menu, X, Phone, Mail } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -49,17 +49,6 @@ export const Header: React.FC = () => {
             <a href="https://api.whatsapp.com/send?phone=554988220982" target="_blank" rel="noopener noreferrer" className="top-link">
               <Phone size={13} aria-hidden="true" /> WhatsApp 49 98822-0982
             </a>
-          </div>
-          <div className="top-lgpd-badge" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Link to="/central-de-protecao-de-dados/" className="top-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-              <Shield size={12} aria-hidden="true" />
-              Central de Proteção de Dados
-            </Link>
-            <span aria-hidden="true" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>|</span>
-            <Link to="/canal-de-denuncias/" className="top-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-              <AlertTriangle size={12} aria-hidden="true" />
-              Canal de Denúncias
-            </Link>
           </div>
         </div>
       </div>
@@ -135,27 +124,6 @@ export const Header: React.FC = () => {
                 </Link>
               );
             })}
-            <Link
-              to="/central-de-protecao-de-dados/"
-              className="mobile-nav-link"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Central de Proteção de Dados
-            </Link>
-            <Link
-              to="/codigo-de-conduta/"
-              className="mobile-nav-link"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Código de Conduta
-            </Link>
-            <Link
-              to="/canal-de-denuncias/"
-              className="mobile-nav-link"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Canal de Denúncias
-            </Link>
             <a
               href="https://api.whatsapp.com/send?phone=554988220982"
               target="_blank"
