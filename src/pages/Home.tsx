@@ -659,7 +659,7 @@ export const Home: React.FC = () => {
         .elementor-hero-slider {
           position: relative;
           min-height: 520px;
-          height: clamp(520px, 42vw, 680px);
+          height: clamp(440px, 31.25vw, 560px);
           background-color: #071f1c;
           overflow: hidden;
           display: flex;
