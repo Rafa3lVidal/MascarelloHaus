@@ -11,7 +11,7 @@ export const Home: React.FC = () => {
   const heroSlides = [
     {
       id: 1,
-      bgImage: '/assets/hero-slide-1.png',
+      bgImage: '/assets/hero-banner-teste.jpg',
       title: 'Para um novo mundo, novas estratégias.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -19,7 +19,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 2,
-      bgImage: '/assets/hero-slide-2.png',
+      bgImage: '/assets/hero-banner-teste.jpg',
       title: 'Para uma nova realidade, novas soluções jurídicas.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -27,7 +27,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 3,
-      bgImage: '/assets/hero-slide-3.png',
+      bgImage: '/assets/hero-banner-teste.jpg',
       title: 'Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -35,7 +35,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 4,
-      bgImage: '/assets/hero-slide-4.png',
+      bgImage: '/assets/hero-banner-teste.jpg',
       title: 'Conheça os nossos artigos, cartilhas e publicações.',
       btnText: 'Acessar publicações',
       btnLink: '/artigos-e-publicacoes/',
@@ -670,7 +670,7 @@ export const Home: React.FC = () => {
           position: absolute;
           inset: 0;
           background-size: cover;
-          background-position: 22% top;
+          background-position: center top;
           background-repeat: no-repeat;
           opacity: 0;
           visibility: hidden;
@@ -704,16 +704,9 @@ export const Home: React.FC = () => {
           background:
             linear-gradient(
               270deg,
-              rgba(5, 20, 18, 0.92) 0%,
-              rgba(8, 32, 28, 0.84) 44%,
-              rgba(8, 32, 28, 0.48) 72%,
-              rgba(5, 20, 18, 0.42) 100%
-            ),
-            linear-gradient(
-              180deg,
-              rgba(5, 20, 18, 0.30) 0%,
-              rgba(5, 20, 18, 0.12) 50%,
-              rgba(5, 20, 18, 0.55) 100%
+              rgba(5, 20, 18, 0.45) 0%,
+              rgba(8, 32, 28, 0.30) 50%,
+              rgba(5, 20, 18, 0.05) 100%
             );
           z-index: 1;
         }
