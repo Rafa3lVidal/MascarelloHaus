@@ -20,7 +20,7 @@ export interface SEOProps {
 
 const SITE_NAME = 'Mascârello Haus Advocacia';
 const BASE_URL = 'https://mascarellohaus.adv.br';
-const DEFAULT_IMAGE = `${BASE_URL}/wp-content/uploads/2023/08/logo-mascarello-haus.png`;
+const DEFAULT_IMAGE = `${BASE_URL}/assets/hero-slide-1.png`;
 
 export const SEO: React.FC<SEOProps> = ({
   title = 'Mascârello Haus Advocacia | Videira e Caçador (SC)',
@@ -118,7 +118,7 @@ export const SEO: React.FC<SEOProps> = ({
     }
     linkEl.setAttribute('href', absoluteCanonical);
 
-    // Schema.org Structured Data (LegalService + Breadcrumbs + Custom)
+    // Schema.org Structured Data (LegalService + WebSite + Breadcrumbs + Custom)
     const baseLegalServiceSchema = {
       '@context': 'https://schema.org',
       '@type': ['LegalService', 'Attorney', 'Organization'],
@@ -126,8 +126,8 @@ export const SEO: React.FC<SEOProps> = ({
       name: 'Mascârello Haus Sociedade de Advogados',
       alternateName: 'Mascârello Haus Advocacia',
       url: BASE_URL,
-      logo: `${BASE_URL}/wp-content/uploads/2023/08/logo-mascarello-haus.png`,
-      image: `${BASE_URL}/wp-content/uploads/2023/08/home-hero-advocacia.jpg`,
+      logo: `${BASE_URL}/assets/logo2025.png`,
+      image: `${BASE_URL}/assets/hero-slide-1.png`,
       description: 'Sociedade de Advogados em Videira e Caçador (SC). Atuação de excelência em Direito Empresarial, Civil, LGPD, Compliance, Tributário e Trabalhista.',
       telephone: '+55-49-3566-0066',
       email: 'contato@mascarellohaus.adv.br',
@@ -145,7 +145,7 @@ export const SEO: React.FC<SEOProps> = ({
           streetAddress: 'R. Carlos Sperança, 360 — Sala 05',
           addressLocality: 'Caçador',
           addressRegion: 'SC',
-          postalCode: '89500-000',
+          postalCode: '89500-068',
           addressCountry: 'BR',
         },
       ],
@@ -158,8 +158,21 @@ export const SEO: React.FC<SEOProps> = ({
       },
       sameAs: [
         'https://www.instagram.com/mascarellohausadvocacia/',
-        'https://www.linkedin.com/company/mascarello-haus-advocacia/',
+        'https://www.youtube.com/@mascarellohausadvocacia',
+        'https://www.facebook.com/mascarellohausadvocacia/',
       ],
+    };
+
+    const websiteSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: SITE_NAME,
+      inLanguage: 'pt-BR',
+      publisher: {
+        '@id': `${BASE_URL}/#organization`,
+      },
     };
 
     const breadcrumbsSchema =
@@ -178,6 +191,7 @@ export const SEO: React.FC<SEOProps> = ({
 
     const allSchemas = [
       baseLegalServiceSchema,
+      websiteSchema,
       ...(breadcrumbsSchema ? [breadcrumbsSchema] : []),
       ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
     ];

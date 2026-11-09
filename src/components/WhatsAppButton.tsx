@@ -9,9 +9,9 @@ export const WhatsAppButton: React.FC = () => {
       className="whatsapp-float-btn"
       aria-label="Atendimento via WhatsApp"
     >
-      <span className="wa-pulse-wave"></span>
-      <i className="fa-brands fa-whatsapp wa-icon"></i>
-      <span className="whatsapp-tooltip">Atendimento WhatsApp</span>
+      <span className="wa-pulse-wave" aria-hidden="true"></span>
+      <i className="fa-brands fa-whatsapp wa-icon" aria-hidden="true"></i>
+      <span className="whatsapp-tooltip" aria-hidden="true">Atendimento WhatsApp</span>
 
       <style>{`
         .whatsapp-float-btn {
@@ -28,9 +28,8 @@ export const WhatsAppButton: React.FC = () => {
           justify-content: center;
           box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
           z-index: 999;
-          transition: transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1),
-                      box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-                      background 0.28s ease;
+          transition: transform 0.24s var(--ease-out),
+                      box-shadow 0.24s var(--ease-out);
           text-decoration: none;
         }
 
@@ -39,28 +38,45 @@ export const WhatsAppButton: React.FC = () => {
           inset: -4px;
           border-radius: 50%;
           border: 2px solid rgba(37, 211, 102, 0.6);
-          animation: waPulseRing 3.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
           pointer-events: none;
           z-index: -1;
         }
 
+        @media (prefers-reduced-motion: no-preference) {
+          .wa-pulse-wave {
+            animation: waPulseRing 3.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+          }
+        }
+
         .wa-icon {
           font-size: 32px;
-          transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+          transition: transform 0.22s var(--ease-out);
         }
 
-        .whatsapp-float-btn:hover {
-          transform: translateY(-3px) scale(1.08);
-          box-shadow: 0 10px 28px rgba(37, 211, 102, 0.6);
-          color: #ffffff;
+        @media (hover: hover) {
+          .whatsapp-float-btn:hover {
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 10px 28px rgba(37, 211, 102, 0.6);
+            color: #ffffff;
+          }
+
+          .whatsapp-float-btn:hover .wa-icon {
+            transform: scale(1.06) rotate(-4deg);
+          }
+
+          .whatsapp-float-btn:hover .whatsapp-tooltip {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+          }
         }
 
-        .whatsapp-float-btn:hover .wa-icon {
-          transform: scale(1.08) rotate(-4deg);
+        .whatsapp-float-btn:focus-visible .whatsapp-tooltip {
+          opacity: 1;
+          transform: translateX(0) scale(1);
         }
 
         .whatsapp-float-btn:active {
-          transform: translateY(0) scale(0.94);
+          transform: translateY(0) scale(0.96);
           box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
         }
 
@@ -70,7 +86,7 @@ export const WhatsAppButton: React.FC = () => {
           background: rgba(13, 55, 50, 0.95);
           backdrop-filter: blur(8px);
           color: #ffffff;
-          font-size: 13px;
+          font-size: 0.8125rem;
           font-family: var(--font-sans);
           font-weight: 500;
           padding: 7px 14px;
@@ -80,14 +96,9 @@ export const WhatsAppButton: React.FC = () => {
           opacity: 0;
           transform: translateX(8px) scale(0.95);
           pointer-events: none;
-          transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-                      transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: opacity 0.2s var(--ease-out),
+                      transform 0.2s var(--ease-out);
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .whatsapp-float-btn:hover .whatsapp-tooltip {
-          opacity: 1;
-          transform: translateX(0) scale(1);
         }
 
         @keyframes waPulseRing {

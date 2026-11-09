@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { ChevronRight, ChevronLeft, ArrowRight, Quote, Users, Compass, MessageSquare, Target, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ArrowRight, Quote, Users, Compass, MessageSquare, Target, CheckCircle2, Pause, Play } from 'lucide-react';
 
 export const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isManuallyPaused, setIsManuallyPaused] = useState(false);
 
   const heroSlides = [
     {
@@ -36,7 +37,7 @@ export const Home: React.FC = () => {
       id: 4,
       bgImage: '/assets/hero-slide-4.png',
       title: 'Conheça os nossos artigos, cartilhas e publicações.',
-      btnText: 'Acessar',
+      btnText: 'Acessar publicações',
       btnLink: '/artigos-e-publicacoes/',
       isAnchor: false
     }
@@ -75,7 +76,6 @@ export const Home: React.FC = () => {
     }
   ];
 
-
   const [activeStep, setActiveStep] = useState<number>(0);
 
   const assessoriaSteps = [
@@ -104,8 +104,6 @@ export const Home: React.FC = () => {
       icon: Target
     }
   ];
-
-// Active step is user-controlled (hover/click)
 
   useEffect(() => {
     const elements = document.querySelectorAll(
@@ -136,7 +134,6 @@ export const Home: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-
   const testimonials = [
     {
       name: 'Flávia',
@@ -156,11 +153,15 @@ export const Home: React.FC = () => {
   ];
 
   useEffect(() => {
+    if (isPaused || isManuallyPaused) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 7000);
     return () => clearInterval(timer);
-  }, [heroSlides.length]);
+  }, [heroSlides.length, isPaused, isManuallyPaused]);
 
   return (
     <div className="home-page-wrapper">
@@ -174,6 +175,9 @@ export const Home: React.FC = () => {
         className="elementor-hero-slider"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
+        onFocusCapture={() => setIsPaused(true)}
+        onBlurCapture={() => setIsPaused(false)}
+        aria-roledescription="carousel"
         aria-label="Destaques Mascârello Haus"
       >
         {/* Slides em Camadas com Crossfade */}
@@ -184,28 +188,43 @@ export const Home: React.FC = () => {
               key={slide.id}
               className={`hero-slide-layer ${isActive ? 'active' : ''}`}
               style={{ backgroundImage: `url(${slide.bgImage})` }}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`Slide ${index + 1} de ${heroSlides.length}`}
               aria-hidden={!isActive}
             >
               <div className="hero-slide-overlay"></div>
               <div className="container hero-container">
                 <div className="hero-slide-content">
                   <div className="hero-kicker-tag">
-                    <span className="kicker-gold-line"></span>
+                    <span className="kicker-gold-line" aria-hidden="true"></span>
                     <span className="kicker-text">MASCÂRELLO HAUS ADVOCACIA</span>
                   </div>
 
-                  <h1 className="hero-main-title">{slide.title}</h1>
+                  {index === 0 ? (
+                    <h1 className="hero-main-title">{slide.title}</h1>
+                  ) : (
+                    <h2 className="hero-main-title">{slide.title}</h2>
+                  )}
 
                   <div className="hero-btn-wrap">
                     {slide.isAnchor ? (
-                      <a href={slide.btnLink} className="hero-gold-btn">
+                      <a
+                        href={slide.btnLink}
+                        className="hero-gold-btn"
+                        tabIndex={isActive ? 0 : -1}
+                      >
                         <span>{slide.btnText}</span>
-                        <ArrowRight size={18} className="btn-arrow-icon" />
+                        <ArrowRight size={18} className="btn-arrow-icon" aria-hidden="true" />
                       </a>
                     ) : (
-                      <Link to={slide.btnLink} className="hero-gold-btn">
+                      <Link
+                        to={slide.btnLink}
+                        className="hero-gold-btn"
+                        tabIndex={isActive ? 0 : -1}
+                      >
                         <span>{slide.btnText}</span>
-                        <ArrowRight size={18} className="btn-arrow-icon" />
+                        <ArrowRight size={18} className="btn-arrow-icon" aria-hidden="true" />
                       </Link>
                     )}
                   </div>
@@ -217,23 +236,35 @@ export const Home: React.FC = () => {
 
         {/* Controles de Navegação Glassmorphic */}
         <button
+          type="button"
           className="slider-nav-btn prev"
           onClick={() => setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
           aria-label="Slide anterior"
         >
-          <ChevronLeft size={24} />
+          <ChevronLeft size={24} aria-hidden="true" />
         </button>
         <button
+          type="button"
           className="slider-nav-btn next"
           onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
           aria-label="Próximo slide"
         >
-          <ChevronRight size={24} />
+          <ChevronRight size={24} aria-hidden="true" />
         </button>
 
-        {/* Barra de Indicadores com Numeração e Progresso */}
+        {/* Barra de Indicadores com Numeração, Progresso e Pausa (WCAG 2.2.2) */}
         <div className="hero-slider-footer">
-          <div className="hero-slide-counter">
+          <button
+            type="button"
+            className="slider-pause-btn"
+            onClick={() => setIsManuallyPaused((p) => !p)}
+            aria-label={isManuallyPaused ? 'Retomar rotação automática dos slides' : 'Pausar rotação automática dos slides'}
+            aria-pressed={isManuallyPaused}
+          >
+            {isManuallyPaused ? <Play size={13} aria-hidden="true" /> : <Pause size={13} aria-hidden="true" />}
+          </button>
+
+          <div className="hero-slide-counter tabular-nums" aria-hidden="true">
             <span className="counter-current">0{currentSlide + 1}</span>
             <span className="counter-separator">/</span>
             <span className="counter-total">0{heroSlides.length}</span>
@@ -242,10 +273,12 @@ export const Home: React.FC = () => {
           <div className="slider-dots-track">
             {heroSlides.map((_, idx) => (
               <button
+                type="button"
                 key={idx}
                 className={`dot-pill ${currentSlide === idx ? 'active' : ''}`}
                 onClick={() => setCurrentSlide(idx)}
                 aria-label={`Ir para slide ${idx + 1}`}
+                aria-current={currentSlide === idx ? 'true' : undefined}
               >
                 <span className="dot-fill"></span>
               </button>
@@ -259,7 +292,7 @@ export const Home: React.FC = () => {
         <div className="container">
           <div className="sobre-grid">
             <div className="sobre-text-column reveal-left">
-              <div className="gold-divider"></div>
+              <div className="gold-divider" aria-hidden="true"></div>
               <h2 className="section-title">Sobre o escritório</h2>
               <div className="sobre-paragraphs">
                 <p>
@@ -286,8 +319,12 @@ export const Home: React.FC = () => {
               <div className="porta-img-wrapper">
                 <img
                   src="/assets/porta.png"
-                  alt="Porta Mascârello Haus Advocacia"
+                  alt="Entrada do escritório Mascârello Haus Advocacia"
                   className="porta-image"
+                  width={460}
+                  height={580}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -299,7 +336,7 @@ export const Home: React.FC = () => {
       <section className="section-quem-somos-dark">
         <div className="container">
           <div className="quem-somos-intro reveal-on-scroll">
-            <div className="gold-divider"></div>
+            <div className="gold-divider" aria-hidden="true"></div>
             <h2 className="section-title-white">Quem somos</h2>
             <p className="intro-lead-text">
               Desenvolvemos estratégias para a conformidade e proteção jurídica com foco no resultado esperado pelo cliente.
@@ -311,8 +348,12 @@ export const Home: React.FC = () => {
               <div className="mira-photo-frame">
                 <img
                   src="/assets/0765_0260-scaled.jpg"
-                  alt="Dra. Mirâtaira Haus"
+                  alt="Dra. Mirâtaira Haus — Sócia-fundadora da Mascârello Haus Advocacia"
                   className="mira-photo-img"
+                  width={380}
+                  height={520}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -349,7 +390,7 @@ export const Home: React.FC = () => {
         <div className="container">
           <div className="areas-grid">
             <div className="areas-left-col reveal-left">
-              <div className="gold-divider"></div>
+              <div className="gold-divider" aria-hidden="true"></div>
               <h2 className="section-title">Áreas de Atuação</h2>
               <p className="areas-intro-text">
                 Mascârello Haus oferece recursos especializados, por meio do exercício da advocacia sistêmica de seus profissionais. De maneira preventiva, atua na solução de problemas nas esferas pessoal e corporativa, a fim de mitigar riscos e possibilitar a solução humanizada de conflitos judiciais e extrajudiciais.
@@ -359,6 +400,10 @@ export const Home: React.FC = () => {
                   src="/assets/areas-de-atuacao-1.png"
                   alt="Áreas de Atuação Mascârello Haus"
                   className="areas-main-img"
+                  width={440}
+                  height={500}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -367,11 +412,14 @@ export const Home: React.FC = () => {
               <div className="areas-cards-grid">
                 {practiceCards.map((area, idx) => (
                   <div key={area.slug} className={`area-item-card reveal-on-scroll reveal-stagger-${(idx % 4) + 1}`}>
-
                     <h3 className="area-item-title">{area.title}</h3>
                     <p className="area-item-desc">{area.desc}</p>
-                    <Link to={`/${area.slug}/`} className="area-item-link">
-                      Ver mais <ChevronRight size={14} className="chevron-icon" />
+                    <Link
+                      to={`/${area.slug}/`}
+                      className="area-item-link"
+                      aria-label={`Ver mais sobre ${area.title}`}
+                    >
+                      Ver mais <ChevronRight size={14} className="chevron-icon" aria-hidden="true" />
                     </Link>
                   </div>
                 ))}
@@ -388,8 +436,8 @@ export const Home: React.FC = () => {
           <div className="triad-cards-row">
             {/* Card 1: Propósito */}
             <div className="triad-card reveal-on-scroll reveal-stagger-1">
-              <div className="triad-icon-wrap">
-                <img src="/assets/goal-svgrepo-com.png" alt="Propósito" className="triad-icon-img" />
+              <div className="triad-icon-wrap" aria-hidden="true">
+                <img src="/assets/goal-svgrepo-com.png" alt="" className="triad-icon-img" width={52} height={52} loading="lazy" decoding="async" />
               </div>
               <h3 className="triad-card-title">Propósito</h3>
               <p className="triad-card-desc">
@@ -399,8 +447,8 @@ export const Home: React.FC = () => {
 
             {/* Card 2: Visão de Futuro */}
             <div className="triad-card reveal-on-scroll reveal-stagger-2">
-              <div className="triad-icon-wrap">
-                <img src="/assets/vision-svgrepo-com.png" alt="Visão de Futuro" className="triad-icon-img" />
+              <div className="triad-icon-wrap" aria-hidden="true">
+                <img src="/assets/vision-svgrepo-com.png" alt="" className="triad-icon-img" width={52} height={52} loading="lazy" decoding="async" />
               </div>
               <h3 className="triad-card-title">Visão de Futuro</h3>
               <p className="triad-card-desc">
@@ -410,8 +458,8 @@ export const Home: React.FC = () => {
 
             {/* Card 3: Valores */}
             <div className="triad-card reveal-on-scroll reveal-stagger-3">
-              <div className="triad-icon-wrap">
-                <img src="/assets/hands-holding-heart-svgrepo-com.png" alt="Valores" className="triad-icon-img" />
+              <div className="triad-icon-wrap" aria-hidden="true">
+                <img src="/assets/hands-holding-heart-svgrepo-com.png" alt="" className="triad-icon-img" width={52} height={52} loading="lazy" decoding="async" />
               </div>
               <h3 className="triad-card-title">Valores</h3>
               <div className="triad-card-desc triad-values-list">
@@ -430,7 +478,7 @@ export const Home: React.FC = () => {
         <div className="container">
           <div className="assessoria-grid">
             <div className="assessoria-text-col reveal-left">
-              <div className="gold-divider"></div>
+              <div className="gold-divider" aria-hidden="true"></div>
               <span className="assessoria-badge-kicker">METODOLOGIA ESTRATÉGICA</span>
               <h2 className="section-title">
                 Como funciona a <br />assessoria empresarial?
@@ -441,41 +489,51 @@ export const Home: React.FC = () => {
 
               <div className="assessoria-highlights">
                 <div className="highlight-pill">
-                  <CheckCircle2 size={16} className="highlight-icon" />
+                  <CheckCircle2 size={16} className="highlight-icon" aria-hidden="true" />
                   <span>Atendimento preventivo e proativo</span>
                 </div>
                 <div className="highlight-pill">
-                  <CheckCircle2 size={16} className="highlight-icon" />
+                  <CheckCircle2 size={16} className="highlight-icon" aria-hidden="true" />
                   <span>Visão multidisciplinar e personalizada</span>
                 </div>
                 <div className="highlight-pill">
-                  <CheckCircle2 size={16} className="highlight-icon" />
+                  <CheckCircle2 size={16} className="highlight-icon" aria-hidden="true" />
                   <span>Segurança jurídica para tomada de decisões</span>
                 </div>
               </div>
 
               <div className="assessoria-btn-wrap">
                 <Link to="/contato/" className="btn-gold-solid">
-                  Converse com um advogado <ArrowRight size={16} />
+                  Converse com um advogado <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </div>
             </div>
 
             <div className="assessoria-flow-col reveal-right">
-              <div className="interactive-flow-timeline">
-                <div className="timeline-connector-line"></div>
+              <div className="interactive-flow-timeline" role="list" aria-label="Etapas da assessoria empresarial">
+                <div className="timeline-connector-line" aria-hidden="true"></div>
                 {assessoriaSteps.map((item, idx) => {
                   const IconComp = item.icon;
                   const isActive = activeStep === idx;
                   return (
                     <div
                       key={item.step}
+                      role="button"
+                      tabIndex={0}
+                      aria-pressed={isActive}
                       className={`flow-step-card ${isActive ? 'active' : ''}`}
                       onMouseEnter={() => setActiveStep(idx)}
+                      onFocus={() => setActiveStep(idx)}
                       onClick={() => setActiveStep(idx)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setActiveStep(idx);
+                        }
+                      }}
                     >
                       <div className="step-num-col">
-                        <span className="step-number">{item.step}</span>
+                        <span className="step-number tabular-nums">{item.step}</span>
                       </div>
 
                       <div className="step-content-col">
@@ -485,7 +543,7 @@ export const Home: React.FC = () => {
                         <p className="step-desc">{item.desc}</p>
                       </div>
 
-                      <div className="step-emblem-col">
+                      <div className="step-emblem-col" aria-hidden="true">
                         <div className="step-emblem-wrapper">
                           <svg className="orbital-svg" viewBox="0 0 74 74">
                             <circle
@@ -517,22 +575,21 @@ export const Home: React.FC = () => {
       <section className="section-testimonials">
         <div className="container">
           <div className="testimonials-header reveal-on-scroll">
-            <div className="gold-divider center"></div>
+            <div className="gold-divider center" aria-hidden="true"></div>
             <h2 className="section-title text-center">O que falam sobre nós</h2>
           </div>
 
           <div className="testimonials-grid">
             {testimonials.map((item, idx) => (
               <div key={idx} className={`testimonial-card reveal-on-scroll reveal-stagger-${idx + 1}`}>
-
-                <div className="quote-icon">
+                <div className="quote-icon" aria-hidden="true">
                   <Quote size={32} />
                 </div>
                 <blockquote className="testimonial-text">
-                  "{item.text}"
+                  “{item.text}”
                 </blockquote>
                 <div className="testimonial-author">
-                  <h4>{item.name}</h4>
+                  <h3>{item.name}</h3>
                   <span className="testimonial-role">{item.role}</span>
                 </div>
               </div>
@@ -552,8 +609,7 @@ export const Home: React.FC = () => {
           border-radius: 2px;
         }
         .gold-divider.center {
-          margin-left: auto;
-          margin-right: auto;
+          margin-inline: auto;
         }
         .section-title {
           font-family: var(--font-serif);
@@ -581,18 +637,22 @@ export const Home: React.FC = () => {
           font-size: 0.88rem;
           font-weight: 500;
           text-transform: uppercase;
-          letter-spacing: 0.8px;
-          transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+          letter-spacing: 0.05em;
+          transition: background-color 0.22s var(--ease-out),
+                      transform 0.16s var(--ease-out),
+                      box-shadow 0.22s var(--ease-out);
           box-shadow: 0 4px 14px rgba(203, 171, 122, 0.25);
         }
-        .btn-gold-solid:hover {
-          background-color: var(--color-primary);
-          color: #ffffff;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 18px rgba(13, 55, 50, 0.2);
+        @media (hover: hover) {
+          .btn-gold-solid:hover {
+            background-color: var(--color-primary);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(13, 55, 50, 0.2);
+          }
         }
         .btn-gold-solid:active {
-          transform: translateY(0) scale(0.97);
+          transform: translateY(0) scale(0.96);
         }
 
         /* 1 & 2: HERO SLIDER PREMIUM SUTIL */
@@ -625,7 +685,12 @@ export const Home: React.FC = () => {
           opacity: 1;
           visibility: visible;
           z-index: 2;
-          animation: heroKenBurns 12s ease-out forwards;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+          .hero-slide-layer.active {
+            animation: heroKenBurns 12s ease-out forwards;
+          }
         }
 
         @keyframes heroKenBurns {
@@ -664,9 +729,9 @@ export const Home: React.FC = () => {
         .hero-slide-content {
           width: 100%;
           max-width: 620px;
-          margin-left: auto;
-          padding-right: 48px;
-          text-align: left;
+          margin-inline-start: auto;
+          padding-inline-end: 48px;
+          text-align: start;
         }
 
         .hero-kicker-tag {
@@ -694,7 +759,7 @@ export const Home: React.FC = () => {
           font-family: var(--font-sans);
           font-size: 0.82rem;
           font-weight: 700;
-          letter-spacing: 2px;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--color-accent);
         }
@@ -737,31 +802,36 @@ export const Home: React.FC = () => {
           font-family: var(--font-sans);
           font-size: 0.90rem;
           font-weight: 600;
-          letter-spacing: 0.8px;
+          letter-spacing: 0.05em;
           text-transform: uppercase;
-          transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+          transition: background-color 0.22s var(--ease-out),
+                      color 0.22s var(--ease-out),
+                      transform 0.16s var(--ease-out),
+                      box-shadow 0.22s var(--ease-out);
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
           position: relative;
           overflow: hidden;
         }
 
-        .hero-gold-btn:hover {
-          background-color: var(--color-accent);
-          color: var(--color-primary);
-          box-shadow: 0 6px 20px rgba(203, 171, 122, 0.4);
-          transform: translateY(-2px);
+        @media (hover: hover) {
+          .hero-gold-btn:hover {
+            background-color: var(--color-accent);
+            color: var(--color-primary);
+            box-shadow: 0 6px 20px rgba(203, 171, 122, 0.4);
+            transform: translateY(-2px);
+          }
+
+          .hero-gold-btn:hover .btn-arrow-icon {
+            transform: translateX(4px);
+          }
         }
 
         .hero-gold-btn:active {
-          transform: translateY(0) scale(0.97);
+          transform: translateY(0) scale(0.96);
         }
 
         .hero-gold-btn .btn-arrow-icon {
-          transition: transform 0.2s ease;
-        }
-
-        .hero-gold-btn:hover .btn-arrow-icon {
-          transform: translateX(4px);
+          transition: transform 0.2s var(--ease-out);
         }
 
         /* Controles de Navegação */
@@ -781,17 +851,21 @@ export const Home: React.FC = () => {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+          transition: background-color 0.2s var(--ease-out),
+                      color 0.2s var(--ease-out),
+                      transform 0.16s var(--ease-out);
         }
 
-        .slider-nav-btn:hover {
-          background-color: var(--color-accent);
-          color: var(--color-primary);
-          transform: translateY(-50%) scale(1.05);
+        @media (hover: hover) {
+          .slider-nav-btn:hover {
+            background-color: var(--color-accent);
+            color: var(--color-primary);
+            transform: translateY(-50%) scale(1.05);
+          }
         }
 
         .slider-nav-btn:active {
-          transform: translateY(-50%) scale(0.95);
+          transform: translateY(-50%) scale(0.96);
         }
 
         .slider-nav-btn.prev { left: 24px; }
@@ -806,12 +880,33 @@ export const Home: React.FC = () => {
           z-index: 10;
           display: flex;
           align-items: center;
-          gap: 18px;
-          background: rgba(13, 55, 50, 0.65);
+          gap: 14px;
+          background: rgba(13, 55, 50, 0.68);
           backdrop-filter: blur(12px);
-          padding: 7px 20px;
+          padding: 6px 18px;
           border-radius: 50px;
           border: 1px solid rgba(203, 171, 122, 0.25);
+        }
+
+        .slider-pause-btn {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          border: 1px solid rgba(203, 171, 122, 0.35);
+          background: rgba(255, 255, 255, 0.08);
+          color: #ffffff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+        }
+
+        @media (hover: hover) {
+          .slider-pause-btn:hover {
+            background: var(--color-accent);
+            color: var(--color-primary);
+          }
         }
 
         .hero-slide-counter {
@@ -821,7 +916,7 @@ export const Home: React.FC = () => {
           font-family: var(--font-sans);
           font-size: 0.82rem;
           font-weight: 600;
-          letter-spacing: 1px;
+          letter-spacing: 0.06em;
         }
 
         .counter-current { color: var(--color-accent); }
@@ -831,22 +926,35 @@ export const Home: React.FC = () => {
         .slider-dots-track {
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 4px;
         }
 
         .dot-pill {
-          width: 22px;
-          height: 5px;
-          border-radius: 3px;
-          background: rgba(255, 255, 255, 0.25);
+          width: 28px;
+          height: 24px;
+          background: transparent;
           border: none;
           cursor: pointer;
           padding: 0;
-          transition: width 0.3s ease, background-color 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: width 0.25s var(--ease-out);
+        }
+
+        .dot-pill .dot-fill {
+          width: 100%;
+          height: 5px;
+          border-radius: 3px;
+          background: rgba(255, 255, 255, 0.28);
+          transition: background-color 0.25s var(--ease-out);
         }
 
         .dot-pill.active {
-          width: 38px;
+          width: 40px;
+        }
+
+        .dot-pill.active .dot-fill {
           background: var(--color-accent);
         }
 
@@ -896,11 +1004,13 @@ export const Home: React.FC = () => {
           height: auto;
           border-radius: 8px;
           box-shadow: 24px 24px 0px 0px var(--color-primary);
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
         }
-        .porta-image:hover {
-          transform: translateY(-3px);
-          box-shadow: 20px 20px 0px 0px var(--color-primary), 0 12px 25px rgba(13, 55, 50, 0.15);
+        @media (hover: hover) {
+          .porta-image:hover {
+            transform: translateY(-3px);
+            box-shadow: 20px 20px 0px 0px var(--color-primary), 0 12px 25px rgba(13, 55, 50, 0.15);
+          }
         }
 
         /* 4: QUEM SOMOS (DRA. MIRÂTAIRA) */
@@ -940,11 +1050,13 @@ export const Home: React.FC = () => {
           border-radius: 8px;
           box-shadow: -24px 24px 0px 0px var(--color-accent);
           object-fit: cover;
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
         }
-        .mira-photo-img:hover {
-          transform: translateY(-3px);
-          box-shadow: -20px 20px 0px 0px var(--color-accent), 0 14px 28px rgba(0, 0, 0, 0.25);
+        @media (hover: hover) {
+          .mira-photo-img:hover {
+            transform: translateY(-3px);
+            box-shadow: -20px 20px 0px 0px var(--color-accent), 0 14px 28px rgba(0, 0, 0, 0.25);
+          }
         }
         .mira-name {
           font-family: var(--font-serif);
@@ -999,10 +1111,12 @@ export const Home: React.FC = () => {
           border-radius: 8px;
           margin-top: 10px;
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-          transition: transform 0.25s ease;
+          transition: transform 0.25s var(--ease-out);
         }
-        .areas-main-img:hover {
-          transform: translateY(-2px);
+        @media (hover: hover) {
+          .areas-main-img:hover {
+            transform: translateY(-2px);
+          }
         }
         .areas-cards-grid {
           display: grid;
@@ -1015,18 +1129,25 @@ export const Home: React.FC = () => {
           border-radius: 8px;
           border-left: 4px solid var(--color-accent);
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-          transition: transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease;
+          transition: transform 0.22s var(--ease-out),
+                      box-shadow 0.22s var(--ease-out),
+                      border-left-color 0.22s var(--ease-out);
           display: flex;
           flex-direction: column;
           justify-content: space-between;
         }
-        .area-item-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 8px 20px rgba(13, 55, 50, 0.06);
-          border-left-color: var(--color-primary);
-        }
-        .area-item-card:active {
-          transform: translateY(-1px) scale(0.99);
+        @media (hover: hover) {
+          .area-item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(13, 55, 50, 0.06);
+            border-left-color: var(--color-primary);
+          }
+          .area-item-card:hover .area-item-link {
+            color: var(--color-primary);
+          }
+          .area-item-card:hover .area-item-link .chevron-icon {
+            transform: translateX(4px);
+          }
         }
         .area-item-title {
           font-family: var(--font-serif);
@@ -1052,16 +1173,10 @@ export const Home: React.FC = () => {
           align-items: center;
           gap: 4px;
           margin-top: auto;
-          transition: color 0.2s ease;
+          transition: color 0.2s var(--ease-out);
         }
         .area-item-link .chevron-icon {
-          transition: transform 0.2s ease;
-        }
-        .area-item-card:hover .area-item-link {
-          color: var(--color-primary);
-        }
-        .area-item-card:hover .area-item-link .chevron-icon {
-          transform: translateX(4px);
+          transition: transform 0.2s var(--ease-out);
         }
 
         /* 6: TRÍADE (PROPÓSITO, VISÃO, VALORES) */
@@ -1097,14 +1212,16 @@ export const Home: React.FC = () => {
           border-radius: 12px;
           text-align: center;
           box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out);
         }
-        .triad-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        .triad-card:active {
-          transform: translateY(-1px) scale(0.99);
+        @media (hover: hover) {
+          .triad-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+          }
+          .triad-card:hover .triad-icon-img {
+            transform: scale(1.08);
+          }
         }
         .triad-icon-wrap {
           width: 52px;
@@ -1115,10 +1232,7 @@ export const Home: React.FC = () => {
           width: 100%;
           height: 100%;
           object-fit: contain;
-          transition: transform 0.25s ease;
-        }
-        .triad-card:hover .triad-icon-img {
-          transform: scale(1.08);
+          transition: transform 0.22s var(--ease-out);
         }
         .triad-card-title {
           font-family: var(--font-serif);
@@ -1158,7 +1272,7 @@ export const Home: React.FC = () => {
           font-family: var(--font-sans);
           font-size: 0.8rem;
           font-weight: 700;
-          letter-spacing: 2px;
+          letter-spacing: 0.12em;
           color: var(--color-accent);
           text-transform: uppercase;
           margin-bottom: 12px;
@@ -1199,7 +1313,7 @@ export const Home: React.FC = () => {
           display: flex;
           flex-direction: column;
           gap: 16px;
-          padding-left: 10px;
+          padding-inline-start: 10px;
         }
         .timeline-connector-line {
           position: absolute;
@@ -1223,10 +1337,12 @@ export const Home: React.FC = () => {
           align-items: center;
           gap: 18px;
           cursor: pointer;
-          transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+          transition: border-color 0.22s var(--ease-out),
+                      background-color 0.22s var(--ease-out),
+                      transform 0.2s var(--ease-out),
+                      box-shadow 0.22s var(--ease-out);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
-        .flow-step-card:hover,
         .flow-step-card.active {
           border-color: #cbd5e1;
           border-left-color: var(--color-accent);
@@ -1234,8 +1350,29 @@ export const Home: React.FC = () => {
           transform: translateY(-2px);
           box-shadow: 0 6px 18px rgba(13, 55, 50, 0.06);
         }
+        @media (hover: hover) {
+          .flow-step-card:hover {
+            border-color: #cbd5e1;
+            border-left-color: var(--color-accent);
+            background: #fafbfc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(13, 55, 50, 0.06);
+          }
+          .flow-step-card:hover .step-number {
+            color: var(--color-accent);
+          }
+          .flow-step-card:hover .orbital-circle {
+            stroke: var(--color-accent);
+          }
+          .flow-step-card:hover .emblem-core-circle {
+            color: var(--color-accent);
+          }
+          .flow-step-card:hover .emblem-icon {
+            transform: scale(1.05);
+          }
+        }
         .flow-step-card:active {
-          transform: translateY(0);
+          transform: translateY(0) scale(0.99);
         }
         .step-num-col {
           display: flex;
@@ -1248,9 +1385,8 @@ export const Home: React.FC = () => {
           font-weight: 700;
           line-height: 1;
           color: #cbd5e1;
-          transition: color 0.25s ease;
+          transition: color 0.22s var(--ease-out);
         }
-        .flow-step-card:hover .step-number,
         .flow-step-card.active .step-number {
           color: var(--color-accent);
         }
@@ -1265,7 +1401,7 @@ export const Home: React.FC = () => {
           font-weight: 700;
           color: var(--color-primary);
           margin: 0;
-          transition: color 0.25s ease;
+          transition: color 0.22s var(--ease-out);
         }
         .flow-step-card.active .step-title {
           color: var(--color-primary-dark);
@@ -1295,15 +1431,18 @@ export const Home: React.FC = () => {
           inset: 0;
           width: 100%;
           height: 100%;
-          animation: orbitRotate 30s linear infinite;
           transform-origin: center;
           pointer-events: none;
         }
+        @media (prefers-reduced-motion: no-preference) {
+          .orbital-svg {
+            animation: orbitRotate 30s linear infinite;
+          }
+        }
         .orbital-circle {
           stroke: #cbd5e1;
-          transition: stroke 0.25s ease;
+          transition: stroke 0.22s var(--ease-out);
         }
-        .flow-step-card:hover .orbital-circle,
         .flow-step-card.active .orbital-circle {
           stroke: var(--color-accent);
         }
@@ -1316,18 +1455,16 @@ export const Home: React.FC = () => {
           align-items: center;
           justify-content: center;
           color: #ffffff;
-          transition: color 0.25s ease, background-color 0.25s ease;
+          transition: color 0.22s var(--ease-out), background-color 0.22s var(--ease-out);
           box-shadow: 0 3px 10px rgba(13, 55, 50, 0.15);
           z-index: 2;
         }
-        .flow-step-card.active .emblem-core-circle,
-        .flow-step-card:hover .emblem-core-circle {
+        .flow-step-card.active .emblem-core-circle {
           color: var(--color-accent);
         }
         .emblem-icon {
-          transition: transform 0.2s ease;
+          transition: transform 0.2s var(--ease-out);
         }
-        .flow-step-card:hover .emblem-icon,
         .flow-step-card.active .emblem-icon {
           transform: scale(1.05);
         }
@@ -1364,23 +1501,22 @@ export const Home: React.FC = () => {
           flex-direction: column;
           justify-content: space-between;
           position: relative;
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out);
         }
-        .testimonial-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 12px 25px -6px rgba(13, 55, 50, 0.08);
-        }
-        .testimonial-card:active {
-          transform: translateY(0);
+        @media (hover: hover) {
+          .testimonial-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px -6px rgba(13, 55, 50, 0.08);
+          }
+          .testimonial-card:hover .quote-icon {
+            opacity: 1;
+          }
         }
         .quote-icon {
           color: var(--color-accent);
           opacity: 0.75;
           margin-bottom: 12px;
-          transition: opacity 0.2s ease;
-        }
-        .testimonial-card:hover .quote-icon {
-          opacity: 1;
+          transition: opacity 0.2s var(--ease-out);
         }
         .testimonial-text {
           font-family: var(--font-sans);
@@ -1391,7 +1527,7 @@ export const Home: React.FC = () => {
           margin-bottom: 20px;
           font-style: italic;
         }
-        .testimonial-author h4 {
+        .testimonial-author h3 {
           font-family: var(--font-serif);
           font-size: 1.15rem;
           color: var(--color-primary);
@@ -1417,7 +1553,7 @@ export const Home: React.FC = () => {
           }
           .hero-slide-content {
             max-width: 100%;
-            padding-right: 0;
+            padding-inline-end: 0;
           }
           .sobre-grid { grid-template-columns: 1fr; }
           .mira-profile-grid { grid-template-columns: 1fr; }
@@ -1428,7 +1564,7 @@ export const Home: React.FC = () => {
           .testimonials-grid { grid-template-columns: 1fr; }
           .porta-image { box-shadow: 14px 14px 0px 0px var(--color-primary); }
           .mira-photo-img { box-shadow: -14px 14px 0px 0px var(--color-accent); }
-          .interactive-flow-timeline { padding-left: 0; }
+          .interactive-flow-timeline { padding-inline-start: 0; }
           .flow-step-card {
             grid-template-columns: 45px 1fr 65px;
             padding: 16px 18px;

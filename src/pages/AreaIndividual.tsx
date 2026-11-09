@@ -45,7 +45,7 @@ import {
 
 // Dynamic Icon mapper
 const renderAreaIcon = (iconName: string) => {
-  const iconProps = { size: 28, className: 'area-item-icon' };
+  const iconProps = { size: 28, className: 'area-item-icon', 'aria-hidden': true as const };
   switch (iconName) {
     case 'ShieldCheck':
       return <ShieldCheck {...iconProps} />;
@@ -113,28 +113,28 @@ export const AreaIndividual: React.FC = () => {
     const cleanMsg = sanitizeText(formData.mensagem, 5000);
 
     if (cleanName.length < 3) {
-      setStatusMessage({ type: 'error', text: 'Por favor, informe seu nome completo.' });
+      setStatusMessage({ type: 'error', text: 'Informe seu nome completo (mínimo de 3 caracteres).' });
       return;
     }
 
     if (!isValidEmail(cleanEmail)) {
-      setStatusMessage({ type: 'error', text: 'Por favor, informe um e-mail válido.' });
+      setStatusMessage({ type: 'error', text: 'Informe um endereço de e-mail válido (ex: nome@empresa.com.br).' });
       return;
     }
 
     if (!isValidPhone(cleanPhone)) {
-      setStatusMessage({ type: 'error', text: 'Por favor, informe um telefone válido com DDD.' });
+      setStatusMessage({ type: 'error', text: 'Informe um telefone válido com DDD (ex: (49) 99999-9999).' });
       return;
     }
 
     if (!formData.privacyConsent) {
-      setStatusMessage({ type: 'error', text: 'É necessário concordar com o aviso de privacidade.' });
+      setStatusMessage({ type: 'error', text: 'Marque a caixa de concordância com o aviso de privacidade para continuar.' });
       return;
     }
 
     const secCheck = validateSecurityState(security);
     if (!secCheck.valid) {
-      setStatusMessage({ type: 'error', text: secCheck.error || 'Falha na verificação anti-spam.' });
+      setStatusMessage({ type: 'error', text: secCheck.error || 'Complete a verificação de segurança anti-spam antes de enviar.' });
       return;
     }
 
@@ -180,7 +180,7 @@ export const AreaIndividual: React.FC = () => {
 
       setStatusMessage({
         type: 'success',
-        text: `Obrigado pelo contato! Protocolo: ${protocol}. Retornaremos o mais breve possível.`
+        text: `Mensagem enviada! Protocolo: ${protocol}. Retornaremos o mais breve possível.`
       });
       setFormData({
         nome: '',
@@ -194,7 +194,7 @@ export const AreaIndividual: React.FC = () => {
     } catch (err: any) {
       setStatusMessage({
         type: 'error',
-        text: err?.message || 'Erro ao enviar mensagem. Tente novamente em instantes.'
+        text: err?.message || 'Não foi possível enviar a mensagem. Verifique sua conexão e tente novamente.'
       });
     } finally {
       setIsSubmitting(false);
@@ -209,7 +209,7 @@ export const AreaIndividual: React.FC = () => {
           A área solicitada não foi localizada. Confira todas as nossas áreas de atuação disponíveis.
         </p>
         <Link to="/areas-de-atuacao/" className="btn btn-primary" style={{ marginTop: '24px' }}>
-          <ArrowLeft size={16} /> Ver Todas as Áreas
+          <ArrowLeft size={16} aria-hidden="true" /> Ver Todas as Áreas
         </Link>
       </div>
     );
@@ -223,12 +223,17 @@ export const AreaIndividual: React.FC = () => {
         title={`${area.title} | Mascârello Haus Advocacia`}
         description={area.seo_description || area.intro}
         canonical={`https://mascarellohaus.adv.br/${area.slug}/`}
+        breadcrumbs={[
+          { name: 'Início', url: '/' },
+          { name: 'Áreas de Atuação', url: '/areas-de-atuacao/' },
+          { name: area.title, url: `/${area.slug}/` },
+        ]}
       />
 
       {/* Header Banner com Cor Institucional */}
       <div className="page-header-banner">
         <div className="container">
-          <div className="gold-divider"></div>
+          <div className="gold-divider" aria-hidden="true"></div>
           <span className="banner-badge">{area.badge}</span>
           <h1 className="banner-title">{area.title}</h1>
           <p className="banner-desc" style={{ maxWidth: '850px', fontSize: '1.15rem', lineHeight: '1.75' }}>
@@ -274,7 +279,7 @@ export const AreaIndividual: React.FC = () => {
                       rel="noopener noreferrer"
                       className="btn btn-primary extra-cta"
                     >
-                      {area.extraSection.ctaText || 'Acesse agora'} <ExternalLink size={16} />
+                      {area.extraSection.ctaText || 'Acesse agora'} <ExternalLink size={16} aria-hidden="true" />
                     </a>
                   )}
                 </div>
@@ -282,13 +287,13 @@ export const AreaIndividual: React.FC = () => {
 
               {/* Outras Áreas de Atuação */}
               <div className="other-areas-block">
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '16px', color: 'var(--color-primary)' }}>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', color: 'var(--color-primary)' }}>
                   Conheça outras áreas de atuação
-                </h4>
+                </h3>
                 <div className="other-areas-links">
                   {otherAreas.map((oa) => (
                     <Link key={oa.slug} to={`/${oa.slug}/`} className="other-area-pill">
-                      {oa.title} <ChevronRight size={14} />
+                      {oa.title} <ChevronRight size={14} aria-hidden="true" />
                     </Link>
                   ))}
                 </div>
@@ -299,29 +304,38 @@ export const AreaIndividual: React.FC = () => {
           {/* Formulário Lateral de Contato */}
           <div className="sidebar-col">
             <div className="wpforms-container sticky-card">
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '8px', color: 'var(--color-primary)' }}>
+              <h2 style={{ fontSize: '1.5rem', marginBottom: '8px', color: 'var(--color-primary)' }}>
                 Converse com um advogado
-              </h3>
+              </h2>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.92rem', marginBottom: '22px' }}>
-                Preencha o formulário ao lado e receba nosso contato personalizado.
+                Preencha o formulário abaixo e receba nosso contato personalizado.
               </p>
 
               {statusMessage && (
-                <div className={statusMessage.type === 'success' ? 'form-success-banner' : 'form-error-banner'}>
+                <div
+                  className={statusMessage.type === 'success' ? 'form-success-banner' : 'form-error-banner'}
+                  role={statusMessage.type === 'success' ? 'status' : 'alert'}
+                  aria-live="polite"
+                >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    {statusMessage.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
+                    {statusMessage.type === 'success' ? <CheckCircle2 size={18} aria-hidden="true" /> : <AlertCircle size={18} aria-hidden="true" />}
                     <span>{statusMessage.text}</span>
                   </div>
                 </div>
               )}
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} noValidate>
                 <div className="form-group">
-                  <label className="form-label">Nome *</label>
+                  <label htmlFor={`area-nome-${currentSlug}`} className="form-label">
+                    Nome <span className="required">*</span>
+                  </label>
                   <input
+                    id={`area-nome-${currentSlug}`}
+                    name="name"
                     type="text"
+                    autoComplete="name"
                     className="form-control"
-                    placeholder="Seu nome completo"
+                    placeholder="Ex: Maria da Silva"
                     required
                     value={formData.nome}
                     onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
@@ -329,9 +343,14 @@ export const AreaIndividual: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">E-mail *</label>
+                  <label htmlFor={`area-email-${currentSlug}`} className="form-label">
+                    E-mail <span className="required">*</span>
+                  </label>
                   <input
+                    id={`area-email-${currentSlug}`}
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     className="form-control"
                     placeholder="seu.email@exemplo.com"
                     required
@@ -341,9 +360,15 @@ export const AreaIndividual: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Telefone *</label>
+                  <label htmlFor={`area-telefone-${currentSlug}`} className="form-label">
+                    Telefone <span className="required">*</span>
+                  </label>
                   <input
+                    id={`area-telefone-${currentSlug}`}
+                    name="phone"
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     className="form-control"
                     placeholder="(49) 99999-9999"
                     required
@@ -353,11 +378,15 @@ export const AreaIndividual: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Mensagem</label>
+                  <label htmlFor={`area-mensagem-${currentSlug}`} className="form-label">
+                    Mensagem
+                  </label>
                   <textarea
+                    id={`area-mensagem-${currentSlug}`}
+                    name="message"
                     className="form-control"
                     rows={4}
-                    placeholder="Como podemos lhe orientar?"
+                    placeholder="Descreva brevemente sua demanda jurídica"
                     value={formData.mensagem}
                     onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                   />
@@ -381,6 +410,7 @@ export const AreaIndividual: React.FC = () => {
                   <label className="form-checkbox-label">
                     <input
                       type="checkbox"
+                      name="privacyConsent"
                       required
                       checked={formData.privacyConsent}
                       onChange={(e) => setFormData({ ...formData, privacyConsent: e.target.checked })}
@@ -394,9 +424,9 @@ export const AreaIndividual: React.FC = () => {
                 <SecurityShield security={security} onChange={setSecurity} variant="light" />
 
                 <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={isSubmitting}>
-                  {isSubmitting ? 'Enviando com segurança...' : (
+                  {isSubmitting ? 'Enviando com segurança…' : (
                     <>
-                      Enviar mensagem <Send size={16} />
+                      Enviar mensagem <Send size={16} aria-hidden="true" />
                     </>
                   )}
                 </button>
@@ -410,7 +440,7 @@ export const AreaIndividual: React.FC = () => {
                   rel="noopener noreferrer"
                   className="whatsapp-btn-full"
                 >
-                  <MessageCircle size={18} /> Conversar no WhatsApp
+                  <MessageCircle size={18} aria-hidden="true" /> Conversar no WhatsApp
                 </a>
               </div>
             </div>
@@ -437,7 +467,7 @@ export const AreaIndividual: React.FC = () => {
           content: '';
           position: absolute;
           bottom: 0;
-          left: 0;
+          inset-inline-start: 0;
           width: 50px;
           height: 3px;
           background: var(--color-accent);
@@ -463,13 +493,17 @@ export const AreaIndividual: React.FC = () => {
           display: flex;
           align-items: center;
           gap: 16px;
-          transition: all 0.25s ease;
+          transition: transform 0.22s var(--ease-out),
+                      border-color 0.22s var(--ease-out),
+                      box-shadow 0.22s var(--ease-out);
           box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
-        .area-item-card:hover {
-          transform: translateY(-3px);
-          border-color: var(--color-accent);
-          box-shadow: 0 8px 20px rgba(13, 55, 50, 0.08);
+        @media (hover: hover) {
+          .area-item-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--color-accent);
+            box-shadow: 0 8px 20px rgba(13, 55, 50, 0.08);
+          }
         }
         .item-icon-wrapper {
           width: 52px;
@@ -501,7 +535,7 @@ export const AreaIndividual: React.FC = () => {
           display: inline-block;
           font-size: 0.75rem;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 0.06em;
           font-weight: 700;
           color: var(--color-accent);
           margin-bottom: 10px;
@@ -542,12 +576,16 @@ export const AreaIndividual: React.FC = () => {
           font-size: 0.88rem;
           font-weight: 500;
           color: var(--color-text-main);
-          transition: all 0.2s ease;
+          transition: background-color 0.2s var(--ease-out),
+                      color 0.2s var(--ease-out),
+                      border-color 0.2s var(--ease-out);
         }
-        .other-area-pill:hover {
-          background: var(--color-primary);
-          color: #ffffff;
-          border-color: var(--color-primary);
+        @media (hover: hover) {
+          .other-area-pill:hover {
+            background: var(--color-primary);
+            color: #ffffff;
+            border-color: var(--color-primary);
+          }
         }
         .sticky-card {
           position: sticky;
@@ -565,16 +603,19 @@ export const AreaIndividual: React.FC = () => {
           justify-content: center;
           gap: 8px;
           width: 100%;
-          background: #25d366;
+          background: #1da851;
           color: #ffffff;
           padding: 12px;
-          border-radius: 4px;
+          border-radius: 6px;
           font-weight: 600;
           font-size: 0.95rem;
-          transition: opacity 0.2s;
+          transition: background-color 0.2s var(--ease-out), transform 0.16s var(--ease-out);
         }
-        .whatsapp-btn-full:hover {
-          opacity: 0.9;
+        @media (hover: hover) {
+          .whatsapp-btn-full:hover {
+            background: #188c43;
+            color: #ffffff;
+          }
         }
         @media (max-width: 900px) {
           .detail-grid {

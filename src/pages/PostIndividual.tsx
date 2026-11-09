@@ -3,7 +3,7 @@ import { fetchPostBySlug } from '../lib/postsService';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { POSTS_DATA, Post } from '../data/postsData';
-import { Calendar, Tag, ArrowLeft, Download, ExternalLink, MessageCircle, FileText, Share2 } from 'lucide-react';
+import { Calendar, Tag, ArrowLeft, Download, ExternalLink, MessageCircle, FileText, Share2, Check } from 'lucide-react';
 
 export const PostIndividual: React.FC = () => {
   const { slug: paramSlug } = useParams<{ slug: string }>();
@@ -14,8 +14,11 @@ export const PostIndividual: React.FC = () => {
   const currentSlug = rawPath.toLowerCase();
 
   const [post, setPost] = useState<Post | undefined>(() => POSTS_DATA.find((p) => p.slug === currentSlug));
+  const [copiedLink, setCopiedLink] = useState(false);
 
   useEffect(() => {
+    const localMatch = POSTS_DATA.find((p) => p.slug === currentSlug);
+    if (localMatch) setPost(localMatch);
     fetchPostBySlug(currentSlug).then((livePost) => {
       if (livePost) setPost(livePost);
     });
@@ -29,7 +32,7 @@ export const PostIndividual: React.FC = () => {
           A publicação ou artigo solicitado não foi localizado em nossa base de dados.
         </p>
         <Link to="/artigos-e-publicacoes/" className="btn btn-primary" style={{ marginTop: '24px' }}>
-          <ArrowLeft size={16} /> Ver Todas as Publicações
+          <ArrowLeft size={16} aria-hidden="true" /> Ver Todas as Publicações
         </Link>
       </div>
     );
@@ -49,7 +52,8 @@ export const PostIndividual: React.FC = () => {
       }).catch(() => {});
     } else {
       navigator.clipboard.writeText(window.location.href);
-      alert('Link copiado para a área de transferência!');
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
     }
   };
 
@@ -59,6 +63,13 @@ export const PostIndividual: React.FC = () => {
         title={`${post.title} | Mascârello Haus Advocacia`}
         description={post.excerpt}
         canonical={`https://mascarellohaus.adv.br/${post.slug}/`}
+        ogType="article"
+        publishedTime={post.published_at}
+        breadcrumbs={[
+          { name: 'Início', url: '/' },
+          { name: 'Artigos e Publicações', url: '/artigos-e-publicacoes/' },
+          { name: post.title, url: `/${post.slug}/` },
+        ]}
       />
 
       {/* Header do Post */}
@@ -67,11 +78,11 @@ export const PostIndividual: React.FC = () => {
           <div className="post-header-meta">
             {post.category && (
               <span className="banner-badge">
-                <Tag size={12} /> {post.category.name}
+                <Tag size={12} aria-hidden="true" /> {post.category.name}
               </span>
             )}
-            <span style={{ color: '#cbd5e0', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <Calendar size={14} />{' '}
+            <span className="tabular-nums" style={{ color: '#cbd5e0', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <Calendar size={14} aria-hidden="true" />{' '}
               {new Date(post.published_at).toLocaleDateString('pt-BR')}
             </span>
           </div>
@@ -83,11 +94,17 @@ export const PostIndividual: React.FC = () => {
         <div className="container" style={{ maxWidth: '900px' }}>
           <div className="post-top-bar">
             <Link to="/artigos-e-publicacoes/" className="back-link">
-              <ArrowLeft size={16} /> Voltar para Artigos e Publicações
+              <ArrowLeft size={16} aria-hidden="true" /> Voltar para Artigos e Publicações
             </Link>
 
-            <button onClick={handleShare} className="share-btn" title="Compartilhar">
-              <Share2 size={16} /> Compartilhar
+            <button
+              type="button"
+              onClick={handleShare}
+              className="share-btn"
+              aria-label="Compartilhar link desta publicação"
+            >
+              {copiedLink ? <Check size={16} aria-hidden="true" /> : <Share2 size={16} aria-hidden="true" />}
+              <span>{copiedLink ? 'Link copiado' : 'Compartilhar'}</span>
             </button>
           </div>
 
@@ -96,13 +113,13 @@ export const PostIndividual: React.FC = () => {
             {post.pdf_url && (
               <div className="material-access-box" style={{ marginTop: 0 }}>
                 <div className="material-info-header">
-                  <div className="material-icon">
+                  <div className="material-icon" aria-hidden="true">
                     <FileText size={32} />
                   </div>
                   <div>
-                    <h3 style={{ margin: '0 0 6px 0', fontSize: '1.35rem', color: 'var(--color-primary)' }}>
+                    <h2 style={{ margin: '0 0 6px 0', fontSize: '1.35rem', color: 'var(--color-primary)' }}>
                       Material Completo Disponível para Download
-                    </h3>
+                    </h2>
                     <p style={{ margin: 0, color: 'var(--color-text-muted)', fontSize: '0.92rem' }}>
                       Acesse a íntegra em formato digital PDF preparado pela equipe de especialistas.
                     </p>
@@ -115,15 +132,15 @@ export const PostIndividual: React.FC = () => {
                     download
                     className="btn btn-primary btn-download"
                   >
-                    <Download size={18} /> Baixar PDF Gratuito
+                    <Download size={18} aria-hidden="true" /> Baixar PDF Gratuito
                   </a>
                   <a
                     href={post.pdf_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-outline"
+                    className="btn btn-outline-post"
                   >
-                    <ExternalLink size={16} /> Visualizar no Navegador
+                    <ExternalLink size={16} aria-hidden="true" /> Visualizar no Navegador
                   </a>
                 </div>
 
@@ -134,6 +151,7 @@ export const PostIndividual: React.FC = () => {
                     title={post.title}
                     width="100%"
                     height="650px"
+                    loading="lazy"
                     style={{ border: 'none', borderRadius: '6px' }}
                   />
                 </div>
@@ -142,9 +160,9 @@ export const PostIndividual: React.FC = () => {
 
             {/* Rodapé do Artigo */}
             <div className="post-footer-box">
-              <h4 style={{ color: 'var(--color-primary)', fontSize: '1.25rem' }}>
+              <h3 style={{ color: 'var(--color-primary)', fontSize: '1.25rem' }}>
                 Mascârello Haus Advocacia
-              </h4>
+              </h3>
               <p style={{ marginTop: '8px', lineHeight: '1.6', color: '#4a5568' }}>
                 Assessoria consultiva e estratégica em Direito Civil, Empresarial, LGPD, Compliance, Direito Digital e Previdenciário. Dúvidas sobre o conteúdo desta publicação?
               </p>
@@ -158,7 +176,7 @@ export const PostIndividual: React.FC = () => {
                   rel="noopener noreferrer"
                   className="whatsapp-btn"
                 >
-                  <MessageCircle size={18} /> WhatsApp
+                  <MessageCircle size={18} aria-hidden="true" /> WhatsApp
                 </a>
               </div>
             </div>
@@ -167,14 +185,14 @@ export const PostIndividual: React.FC = () => {
           {/* Outras Publicações Relacionadas */}
           {relatedPosts.length > 0 && (
             <div className="related-section">
-              <h3 style={{ fontSize: '1.4rem', color: 'var(--color-primary)', marginBottom: '20px' }}>
+              <h2 style={{ fontSize: '1.4rem', color: 'var(--color-primary)', marginBottom: '20px' }}>
                 Outros materiais recomendados
-              </h3>
+              </h2>
               <div className="related-grid">
                 {relatedPosts.map((rp) => (
                   <Link key={rp.id} to={`/${rp.slug}/`} className="related-card">
                     <span className="related-cat">{rp.category.name}</span>
-                    <h5 className="related-title">{rp.title}</h5>
+                    <h3 className="related-title">{rp.title}</h3>
                   </Link>
                 ))}
               </div>
@@ -205,8 +223,10 @@ export const PostIndividual: React.FC = () => {
           font-size: 0.92rem;
           text-decoration: none;
         }
-        .back-link:hover {
-          color: var(--color-primary);
+        @media (hover: hover) {
+          .back-link:hover {
+            color: var(--color-primary);
+          }
         }
         .share-btn {
           display: inline-flex;
@@ -214,18 +234,22 @@ export const PostIndividual: React.FC = () => {
           gap: 6px;
           background: #ffffff;
           border: 1px solid #e2e8f0;
-          padding: 6px 14px;
-          border-radius: 4px;
+          padding: 7px 14px;
+          border-radius: 6px;
           font-size: 0.85rem;
           font-weight: 500;
           color: var(--color-text-main);
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: background-color 0.2s var(--ease-out),
+                      border-color 0.2s var(--ease-out),
+                      color 0.2s var(--ease-out);
         }
-        .share-btn:hover {
-          background: #f1f5f9;
-          border-color: var(--color-accent);
-          color: var(--color-accent);
+        @media (hover: hover) {
+          .share-btn:hover {
+            background: #f1f5f9;
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+          }
         }
         .post-content-container {
           background: #ffffff;
@@ -269,7 +293,7 @@ export const PostIndividual: React.FC = () => {
           align-items: center;
           gap: 8px;
         }
-        .btn-outline {
+        .btn-outline-post {
           display: inline-flex;
           align-items: center;
           gap: 8px;
@@ -277,14 +301,20 @@ export const PostIndividual: React.FC = () => {
           border: 1px solid var(--color-primary);
           color: var(--color-primary);
           padding: 12px 24px;
-          border-radius: 4px;
-          font-weight: 600;
+          border-radius: 50px;
+          font-family: var(--font-sans);
+          font-size: 0.88rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: 500;
           text-decoration: none;
-          transition: all 0.2s;
+          transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
         }
-        .btn-outline:hover {
-          background: var(--color-primary);
-          color: #ffffff;
+        @media (hover: hover) {
+          .btn-outline-post:hover {
+            background: var(--color-primary);
+            color: #ffffff;
+          }
         }
         .pdf-embed-wrapper {
           border: 1px solid #cbd5e0;
@@ -304,16 +334,22 @@ export const PostIndividual: React.FC = () => {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          background: #25d366;
+          background: #1da851;
           color: #ffffff;
           padding: 12px 24px;
-          border-radius: 4px;
+          border-radius: 50px;
           font-weight: 600;
+          font-size: 0.88rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
           text-decoration: none;
-          transition: opacity 0.2s;
+          transition: background-color 0.2s var(--ease-out), transform 0.16s var(--ease-out);
         }
-        .whatsapp-btn:hover {
-          opacity: 0.9;
+        @media (hover: hover) {
+          .whatsapp-btn:hover {
+            background: #188c43;
+            color: #ffffff;
+          }
         }
         .related-section {
           margin-top: 50px;
@@ -329,14 +365,18 @@ export const PostIndividual: React.FC = () => {
           border-radius: 6px;
           padding: 20px;
           text-decoration: none;
-          transition: all 0.2s ease;
+          transition: transform 0.22s var(--ease-out),
+                      border-color 0.22s var(--ease-out),
+                      box-shadow 0.22s var(--ease-out);
           display: flex;
           flex-direction: column;
         }
-        .related-card:hover {
-          transform: translateY(-3px);
-          border-color: var(--color-accent);
-          box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+        @media (hover: hover) {
+          .related-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--color-accent);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+          }
         }
         .related-cat {
           font-size: 0.75rem;

@@ -21,17 +21,25 @@ export const ArtigosEPublicacoes: React.FC = () => {
     ? posts.filter((p) => p.category.slug === selectedCategory)
     : posts;
 
+  const activeCategoryName = selectedCategory
+    ? categories.find((c) => c.slug === selectedCategory)?.name
+    : null;
+
   return (
     <div className="posts-archive-page">
       <SEO
         title="Artigos, cartilhas, ebooks e publicações | Mascârello Haus Advocacia"
         description="Confira os materiais sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascârello Haus."
         canonical="https://mascarellohaus.adv.br/artigos-e-publicacoes/"
+        breadcrumbs={[
+          { name: 'Início', url: '/' },
+          { name: 'Artigos e Publicações', url: '/artigos-e-publicacoes/' },
+        ]}
       />
 
       <div className="page-header-banner">
         <div className="container">
-          <div className="gold-divider center"></div>
+          <div className="gold-divider center" aria-hidden="true"></div>
           <h1 className="banner-title text-center">Artigos, cartilhas, ebooks e publicações</h1>
           <p className="banner-desc text-center" style={{ margin: '0 auto', maxWidth: '800px' }}>
             Confira os materiais sobre as mais diversas áreas do Direito elaborados pela equipe de advogados do escritório Mascârello Haus.
@@ -42,19 +50,24 @@ export const ArtigosEPublicacoes: React.FC = () => {
       <section className="section-padding bg-light">
         <div className="container">
           {/* Filtros de Categoria */}
-          <div className="category-filter-bar">
+          <div className="category-filter-bar" role="group" aria-label="Filtrar publicações por categoria">
             <button
-              className={`filter-btn ${selectedCategory === null ? 'active' : ''}`}
+              type="button"
+              className={`filter-btn tabular-nums ${selectedCategory === null ? 'active' : ''}`}
+              aria-pressed={selectedCategory === null}
               onClick={() => setSelectedCategory(null)}
             >
               Todos ({posts.length})
             </button>
             {categories.map((cat) => {
               const count = posts.filter((p) => p.category.slug === cat.slug).length;
+              const isSelected = selectedCategory === cat.slug;
               return (
                 <button
+                  type="button"
                   key={cat.id}
-                  className={`filter-btn ${selectedCategory === cat.slug ? 'active' : ''}`}
+                  className={`filter-btn tabular-nums ${isSelected ? 'active' : ''}`}
+                  aria-pressed={isSelected}
                   onClick={() => setSelectedCategory(cat.slug)}
                 >
                   {cat.name} {count > 0 && `(${count})`}
@@ -64,21 +77,38 @@ export const ArtigosEPublicacoes: React.FC = () => {
           </div>
 
           {filteredPosts.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '60px 0' }}>
-              <p>Nenhuma publicação encontrada nesta categoria.</p>
+            <div className="empty-posts-state" role="status">
+              <h3>Nenhuma publicação em “{activeCategoryName || selectedCategory}”</h3>
+              <p>
+                Novos artigos e cartilhas sobre este tema serão adicionados em breve. Você pode consultar todas as publicações disponíveis no acervo.
+              </p>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setSelectedCategory(null)}
+              >
+                Mostrar todas as publicações
+              </button>
             </div>
           ) : (
             <div className="posts-grid">
               {filteredPosts.map((post) => (
                 <article key={post.id} className="post-card">
                   {post.featured_image_url ? (
-                    <Link to={`/${post.slug}/`} className="post-thumbnail-link">
+                    <Link to={`/${post.slug}/`} className="post-thumbnail-link" tabIndex={-1} aria-hidden="true">
                       <div className="post-thumbnail">
-                        <img src={post.featured_image_url} alt={post.title} loading="lazy" />
+                        <img
+                          src={post.featured_image_url}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width={400}
+                          height={200}
+                        />
                       </div>
                     </Link>
                   ) : (
-                    <div className="post-thumbnail-placeholder">
+                    <div className="post-thumbnail-placeholder" aria-hidden="true">
                       <BookOpen size={40} />
                     </div>
                   )}
@@ -86,23 +116,27 @@ export const ArtigosEPublicacoes: React.FC = () => {
                   <div className="post-body">
                     {post.category && (
                       <span className="post-category-tag">
-                        <Tag size={12} /> {post.category.name}
+                        <Tag size={12} aria-hidden="true" /> {post.category.name}
                       </span>
                     )}
                     <h2 className="post-card-title">
                       <Link to={`/${post.slug}/`}>{post.title}</Link>
                     </h2>
                     <p className="post-card-excerpt">
-                      {post.excerpt || 'Clique no link para acessar a íntegra da publicação e o download do material.'}
+                      {post.excerpt || 'Acesse a íntegra da publicação e faça o download gratuito do material em PDF.'}
                     </p>
 
                     <div className="post-footer">
-                      <span className="post-date">
-                        <Calendar size={13} />{' '}
+                      <span className="post-date tabular-nums">
+                        <Calendar size={13} aria-hidden="true" />{' '}
                         {new Date(post.published_at).toLocaleDateString('pt-BR')}
                       </span>
-                      <Link to={`/${post.slug}/`} className="read-more-link">
-                        Acessar Material {post.pdf_url ? <Download size={14} /> : <ArrowRight size={14} />}
+                      <Link
+                        to={`/${post.slug}/`}
+                        className="read-more-link"
+                        aria-label={`Acessar material: ${post.title}`}
+                      >
+                        Acessar Material {post.pdf_url ? <Download size={14} aria-hidden="true" /> : <ArrowRight size={14} aria-hidden="true" />}
                       </Link>
                     </div>
                   </div>
@@ -122,8 +156,7 @@ export const ArtigosEPublicacoes: React.FC = () => {
           border-radius: 2px;
         }
         .gold-divider.center {
-          margin-left: auto;
-          margin-right: auto;
+          margin-inline: auto;
         }
         .text-center {
           text-align: center;
@@ -145,16 +178,39 @@ export const ArtigosEPublicacoes: React.FC = () => {
           font-size: 0.88rem;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: background-color 0.2s var(--ease-out),
+                      color 0.2s var(--ease-out),
+                      border-color 0.2s var(--ease-out),
+                      transform 0.16s var(--ease-out);
         }
-        .filter-btn:hover {
-          border-color: var(--color-accent);
-          color: var(--color-accent);
+        @media (hover: hover) {
+          .filter-btn:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+          }
         }
         .filter-btn.active {
           background: var(--color-primary);
           color: #ffffff;
           border-color: var(--color-primary);
+        }
+        .empty-posts-state {
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 48px 24px;
+          text-align: center;
+          max-width: 560px;
+          margin: 0 auto;
+        }
+        .empty-posts-state h3 {
+          font-size: 1.4rem;
+          margin-bottom: 10px;
+        }
+        .empty-posts-state p {
+          color: var(--color-text-muted);
+          font-size: 0.95rem;
+          margin-bottom: 22px;
         }
         .posts-grid {
           display: grid;
@@ -169,11 +225,16 @@ export const ArtigosEPublicacoes: React.FC = () => {
           display: flex;
           flex-direction: column;
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition: transform 0.24s var(--ease-out), box-shadow 0.24s var(--ease-out);
         }
-        .post-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 12px 30px rgba(13, 55, 50, 0.08);
+        @media (hover: hover) {
+          .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(13, 55, 50, 0.08);
+          }
+          .post-card:hover .post-thumbnail img {
+            transform: scale(1.05);
+          }
         }
         .post-thumbnail-link {
           display: block;
@@ -188,10 +249,7 @@ export const ArtigosEPublicacoes: React.FC = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.3s ease;
-        }
-        .post-card:hover .post-thumbnail img {
-          transform: scale(1.05);
+          transition: transform 0.3s var(--ease-out);
         }
         .post-thumbnail-placeholder {
           width: 100%;
@@ -229,10 +287,12 @@ export const ArtigosEPublicacoes: React.FC = () => {
         .post-card-title a {
           color: var(--color-primary);
           text-decoration: none;
-          transition: color 0.2s ease;
+          transition: color 0.2s var(--ease-out);
         }
-        .post-card-title a:hover {
-          color: var(--color-accent);
+        @media (hover: hover) {
+          .post-card-title a:hover {
+            color: var(--color-accent);
+          }
         }
         .post-card-excerpt {
           font-family: var(--font-sans);
@@ -266,9 +326,12 @@ export const ArtigosEPublicacoes: React.FC = () => {
           align-items: center;
           gap: 4px;
           text-decoration: none;
+          transition: color 0.2s var(--ease-out);
         }
-        .read-more-link:hover {
-          color: var(--color-primary);
+        @media (hover: hover) {
+          .read-more-link:hover {
+            color: var(--color-primary);
+          }
         }
         @media (max-width: 992px) {
           .posts-grid {

@@ -168,6 +168,10 @@ export const Contato: React.FC = () => {
         title="Contato | Mascârello Haus Advocacia e Consultoria Jurídica"
         description="Entre em contato com a Mascârello Haus Advocacia em Videira e Caçador (SC). Agende uma consulta jurídica ou envie documentos com segurança."
         canonical="https://mascarellohaus.adv.br/contato/"
+        breadcrumbs={[
+          { name: 'Início', url: '/' },
+          { name: 'Contato', url: '/contato/' },
+        ]}
       />
 
       {/* Hero Header Banner */}
@@ -360,9 +364,10 @@ export const Contato: React.FC = () => {
                       </label>
                       <input
                         id="contato-nome"
+                        name="name"
                         type="text"
                         className="form-control"
-                        placeholder="Informe seu nome completo ou razão social"
+                        placeholder="Ex: João da Silva ou Empresa Ltda."
                         required
                         maxLength={140}
                         autoComplete="name"
@@ -378,6 +383,7 @@ export const Contato: React.FC = () => {
                         </label>
                         <input
                           id="contato-email"
+                          name="email"
                           type="email"
                           className="form-control"
                           placeholder="seu@email.com.br"
@@ -395,7 +401,9 @@ export const Contato: React.FC = () => {
                         </label>
                         <input
                           id="contato-telefone"
+                          name="phone"
                           type="tel"
+                          inputMode="tel"
                           className="form-control"
                           placeholder="(49) 99999-9999"
                           required
@@ -414,9 +422,10 @@ export const Contato: React.FC = () => {
                       </label>
                       <input
                         id="contato-assunto"
+                        name="subject"
                         type="text"
                         className="form-control"
-                        placeholder="Ex: Direito Empresarial, Proteção de Dados (LGPD), Direito Civil..."
+                        placeholder="Ex: Direito Empresarial, Proteção de Dados (LGPD), Direito Civil…"
                         maxLength={160}
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
@@ -429,8 +438,9 @@ export const Contato: React.FC = () => {
                       </label>
                       <textarea
                         id="contato-mensagem"
+                        name="message"
                         className="form-control"
-                        placeholder="Descreva brevemente como podemos auxiliar sua demanda..."
+                        placeholder="Descreva brevemente sua demanda jurídica…"
                         rows={5}
                         maxLength={5000}
                         value={formData.message}
@@ -512,20 +522,22 @@ export const Contato: React.FC = () => {
               <span className="map-kicker">Nossas Unidades em Santa Catarina</span>
               <h2>Localização dos Escritórios</h2>
             </div>
-            <div className="map-switcher">
+            <div className="map-switcher" role="group" aria-label="Selecionar unidade no mapa">
               <button
                 type="button"
                 className={`map-tab-btn ${activeMap === 'videira' ? 'active' : ''}`}
+                aria-pressed={activeMap === 'videira'}
                 onClick={() => setActiveMap('videira')}
               >
-                <MapPin size={16} /> Videira — SC
+                <MapPin size={16} aria-hidden="true" /> Videira — SC
               </button>
               <button
                 type="button"
                 className={`map-tab-btn ${activeMap === 'cacador' ? 'active' : ''}`}
+                aria-pressed={activeMap === 'cacador'}
                 onClick={() => setActiveMap('cacador')}
               >
-                <MapPin size={16} /> Caçador — SC
+                <MapPin size={16} aria-hidden="true" /> Caçador — SC
               </button>
             </div>
           </div>
@@ -651,13 +663,17 @@ export const Contato: React.FC = () => {
           background: rgba(255, 255, 255, 0.06);
           border: 1px solid rgba(255, 255, 255, 0.1);
           color: #ffffff;
-          transition: all 0.2s ease;
+          transition: background-color 0.2s var(--ease-out),
+                      border-color 0.2s var(--ease-out),
+                      transform 0.16s var(--ease-out);
         }
-        a.channel-item:hover {
-          background: rgba(203, 171, 122, 0.16);
-          border-color: var(--color-accent);
-          transform: translateY(-2px);
-          color: #ffffff;
+        @media (hover: hover) {
+          a.channel-item:hover {
+            background: rgba(203, 171, 122, 0.16);
+            border-color: var(--color-accent);
+            transform: translateY(-2px);
+            color: #ffffff;
+          }
         }
         .channel-item.whatsapp-highlight {
           background: rgba(34, 197, 94, 0.14);
@@ -859,13 +875,17 @@ export const Contato: React.FC = () => {
           font-weight: 600;
           cursor: pointer;
           box-shadow: 0 6px 18px rgba(13, 55, 50, 0.22);
-          transition: all 0.2s ease;
+          transition: background-color 0.2s var(--ease-out),
+                      transform 0.16s var(--ease-out),
+                      box-shadow 0.2s var(--ease-out);
           margin-top: 10px;
         }
-        .btn-submit-contato:hover:not(:disabled) {
-          background: var(--color-primary-light);
-          transform: translateY(-1px);
-          box-shadow: 0 8px 22px rgba(13, 55, 50, 0.28);
+        @media (hover: hover) {
+          .btn-submit-contato:hover:not(:disabled) {
+            background: var(--color-primary-light);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 22px rgba(13, 55, 50, 0.28);
+          }
         }
         .btn-submit-contato:disabled {
           opacity: 0.65;
@@ -994,11 +1014,16 @@ export const Contato: React.FC = () => {
           font-weight: 600;
           font-size: 0.9rem;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: background-color 0.2s var(--ease-out),
+                      border-color 0.2s var(--ease-out),
+                      color 0.2s var(--ease-out),
+                      box-shadow 0.2s var(--ease-out);
         }
-        .map-tab-btn:hover {
-          border-color: var(--color-primary);
-          color: var(--color-primary);
+        @media (hover: hover) {
+          .map-tab-btn:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+          }
         }
         .map-tab-btn.active {
           background: var(--color-primary);

@@ -14,10 +14,15 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="app-wrapper">
+      {!isAdmin && (
+        <a href="#main-content" className="skip-to-content">
+          Pular para o conteúdo principal
+        </a>
+      )}
       <ScrollToTop />
       <SiteSecurityGuard />
       {!isAdmin && <Header />}
-      <main className="main-viewport">
+      <main id="main-content" className="main-viewport" tabIndex={-1}>
         <AppRoutes />
       </main>
       {!isAdmin && <Footer />}

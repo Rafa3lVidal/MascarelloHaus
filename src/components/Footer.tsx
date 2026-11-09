@@ -14,6 +14,10 @@ export const Footer: React.FC = () => {
                 src="/assets/logo2025branca.png"
                 alt="Mascârello Haus Advocacia"
                 className="footer-logo"
+                width={195}
+                height={96}
+                loading="lazy"
+                decoding="async"
               />
             </Link>
             <p className="footer-tagline">
@@ -33,27 +37,27 @@ export const Footer: React.FC = () => {
             <ul className="footer-nav-list">
               <li>
                 <a href="https://personaldatasafe.com.br/" target="_blank" rel="noopener noreferrer">
-                  Personal Data Safe <ExternalLink size={12} />
+                  Personal Data Safe <ExternalLink size={12} aria-hidden="true" />
                 </a>
               </li>
               <li>
                 <a href="https://www.gov.br/anpd/pt-br" target="_blank" rel="noopener noreferrer">
-                  ANPD <ExternalLink size={12} />
+                  ANPD <ExternalLink size={12} aria-hidden="true" />
                 </a>
               </li>
               <li>
                 <a href="https://www.tjsc.jus.br/" target="_blank" rel="noopener noreferrer">
-                  TJSC <ExternalLink size={12} />
+                  TJSC <ExternalLink size={12} aria-hidden="true" />
                 </a>
               </li>
               <li>
                 <a href="https://www.stj.jus.br/sites/portalp/Inicio" target="_blank" rel="noopener noreferrer">
-                  STJ <ExternalLink size={12} />
+                  STJ <ExternalLink size={12} aria-hidden="true" />
                 </a>
               </li>
               <li>
                 <a href="https://portal.stf.jus.br/" target="_blank" rel="noopener noreferrer">
-                  STF <ExternalLink size={12} />
+                  STF <ExternalLink size={12} aria-hidden="true" />
                 </a>
               </li>
             </ul>
@@ -75,17 +79,17 @@ export const Footer: React.FC = () => {
             </ul>
 
             <div className="footer-social-bar">
-              <a href="https://www.instagram.com/mascarellohausadvocacia" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i className="fa-brands fa-instagram"></i>
+              <a href="https://www.instagram.com/mascarellohausadvocacia" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Mascârello Haus">
+                <i className="fa-brands fa-instagram" aria-hidden="true"></i>
               </a>
-              <a href="https://www.youtube.com/@mascarellohausadvocacia" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                <i className="fa-brands fa-youtube"></i>
+              <a href="https://www.youtube.com/@mascarellohausadvocacia" target="_blank" rel="noopener noreferrer" aria-label="Canal no YouTube da Mascârello Haus">
+                <i className="fa-brands fa-youtube" aria-hidden="true"></i>
               </a>
-              <a href="https://www.facebook.com/mascarellohausadvocacia/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <i className="fa-brands fa-facebook"></i>
+              <a href="https://www.facebook.com/mascarellohausadvocacia/" target="_blank" rel="noopener noreferrer" aria-label="Facebook da Mascârello Haus">
+                <i className="fa-brands fa-facebook" aria-hidden="true"></i>
               </a>
-              <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                <i className="fa-brands fa-whatsapp"></i>
+              <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da Mascârello Haus">
+                <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
               </a>
             </div>
           </div>
@@ -96,7 +100,7 @@ export const Footer: React.FC = () => {
       <div className="site-below-footer">
         <div className="container below-footer-flex">
           <p className="copyright-text">
-            &copy; {new Date().getFullYear()} Mascârello Haus Advocacia — CNPJ 38.282.320/0001-54 - Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} Mascârello Haus Advocacia — CNPJ 38.282.320/0001-54 — Todos os direitos reservados.
           </p>
           <div className="apexcode-credits">
             <span>Desenvolvido por </span>
@@ -108,21 +112,22 @@ export const Footer: React.FC = () => {
       </div>
 
       <style>{`
-        
         .footer-cookie-btn {
           background: none;
           border: none;
           padding: 0;
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(255, 255, 255, 0.78);
           font-family: inherit;
           font-size: 0.9rem;
           cursor: pointer;
-          transition: color 0.2s;
-          text-align: left;
+          transition: color 0.2s var(--ease-out);
+          text-align: start;
         }
-        .footer-cookie-btn:hover {
-          color: var(--color-accent);
-          text-decoration: underline;
+        @media (hover: hover) {
+          .footer-cookie-btn:hover {
+            color: var(--color-accent);
+            text-decoration: underline;
+          }
         }
         .credits-sep {
           margin: 0 8px;
@@ -134,11 +139,13 @@ export const Footer: React.FC = () => {
         .apexcode-credits a {
           color: #e7decf;
           text-decoration: none;
-          transition: color 0.2s;
+          transition: color 0.2s var(--ease-out);
         }
-        .apexcode-credits a:hover {
-          color: #ffffff;
-          text-decoration: underline;
+        @media (hover: hover) {
+          .apexcode-credits a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+          }
         }
 
         .site-footer {
@@ -174,8 +181,10 @@ export const Footer: React.FC = () => {
         .footer-contacts a {
           color: var(--color-accent);
         }
-        .footer-contacts a:hover {
-          text-decoration: underline;
+        @media (hover: hover) {
+          .footer-contacts a:hover {
+            text-decoration: underline;
+          }
         }
         .footer-col-title {
           font-family: 'Poppins', sans-serif;
@@ -205,11 +214,13 @@ export const Footer: React.FC = () => {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          transition: all 0.2s ease;
+          transition: color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
         }
-        .footer-nav-list a:hover {
-          color: var(--color-accent);
-          transform: translateX(4px);
+        @media (hover: hover) {
+          .footer-nav-list a:hover {
+            color: var(--color-accent);
+            transform: translateX(4px);
+          }
         }
         .footer-social-bar {
           display: flex;
@@ -217,8 +228,8 @@ export const Footer: React.FC = () => {
           margin-top: 25px;
         }
         .footer-social-bar a {
-          width: 38px;
-          height: 38px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           background: rgba(255, 255, 255, 0.1);
           color: #ffffff;
@@ -226,19 +237,23 @@ export const Footer: React.FC = () => {
           align-items: center;
           justify-content: center;
           font-size: 1.1rem;
-          transition: all 0.3s ease;
+          transition: background-color 0.22s var(--ease-out),
+                      color 0.22s var(--ease-out),
+                      transform 0.2s var(--ease-out);
         }
-        .footer-social-bar a:hover {
-          background-color: var(--color-accent);
-          color: var(--color-primary);
-          transform: translateY(-3px);
+        @media (hover: hover) {
+          .footer-social-bar a:hover {
+            background-color: var(--color-accent);
+            color: var(--color-primary);
+            transform: translateY(-3px);
+          }
         }
         .site-below-footer {
           background-color: var(--color-primary-dark);
           padding: 22px 0;
           border-top: 1px solid rgba(255, 255, 255, 0.08);
           font-size: 0.82rem;
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(255, 255, 255, 0.78);
         }
         .below-footer-flex {
           display: flex;
@@ -250,8 +265,10 @@ export const Footer: React.FC = () => {
         .apexcode-credits a {
           color: var(--color-accent);
         }
-        .apexcode-credits a:hover {
-          text-decoration: underline;
+        @media (hover: hover) {
+          .apexcode-credits a:hover {
+            text-decoration: underline;
+          }
         }
         @media (max-width: 900px) {
           .footer-main-grid {

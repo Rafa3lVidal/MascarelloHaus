@@ -43,12 +43,16 @@ export const AreasDeAtuacao: React.FC = () => {
         title="Nossas áreas de atuação | Mascârello Haus Advocacia"
         description="Todas as áreas envolvem serviços de Advocacia, consultoria e assessoria jurídica. Compliance, Direito Digital, LGPD, Direito Civil, Empresarial, Trabalho e Previdenciário."
         canonical="https://mascarellohaus.adv.br/areas-de-atuacao/"
+        breadcrumbs={[
+          { name: 'Início', url: '/' },
+          { name: 'Áreas de Atuação', url: '/areas-de-atuacao/' },
+        ]}
       />
 
       {/* Header Banner */}
       <section className="page-header-banner">
         <div className="container">
-          <div className="gold-divider center"></div>
+          <div className="gold-divider center" aria-hidden="true"></div>
           <h1 className="banner-title text-center">Nossas áreas de atuação</h1>
           <p className="banner-desc text-center" style={{ margin: '0 auto' }}>
             Todas as áreas envolvem serviços de Advocacia, consultoria e assessoria jurídica.
@@ -71,8 +75,12 @@ export const AreasDeAtuacao: React.FC = () => {
               <div key={area.slug} className="practice-area-card">
                 <h3 className="area-title">{area.title}</h3>
                 <p className="area-desc">{area.desc}</p>
-                <Link to={`/${area.slug}/`} className="area-link">
-                  Ver mais <ChevronRight size={15} />
+                <Link
+                  to={`/${area.slug}/`}
+                  className="area-link"
+                  aria-label={`Ver mais sobre ${area.title}`}
+                >
+                  Ver mais <ChevronRight size={15} aria-hidden="true" />
                 </Link>
               </div>
             ))}
@@ -84,13 +92,13 @@ export const AreasDeAtuacao: React.FC = () => {
       <section className="section-padding ativismo-section">
         <div className="container">
           <div className="ativismo-header text-center">
-            <div className="gold-divider center"></div>
+            <div className="gold-divider center" aria-hidden="true"></div>
             <h2 className="section-title">Nosso Ativismo</h2>
           </div>
 
           <div className="ativismo-grid">
             <div className="ativismo-card">
-              <div className="ativismo-icon">
+              <div className="ativismo-icon" aria-hidden="true">
                 <Heart size={36} />
               </div>
               <h3>Direito da Mulher</h3>
@@ -100,7 +108,7 @@ export const AreasDeAtuacao: React.FC = () => {
             </div>
 
             <div className="ativismo-card">
-              <div className="ativismo-icon">
+              <div className="ativismo-icon" aria-hidden="true">
                 <Users size={36} />
               </div>
               <h3>Direito das pessoas com deficiência</h3>
@@ -121,8 +129,7 @@ export const AreasDeAtuacao: React.FC = () => {
           border-radius: 2px;
         }
         .gold-divider.center {
-          margin-left: auto;
-          margin-right: auto;
+          margin-inline: auto;
         }
         .text-center {
           text-align: center;
@@ -157,11 +164,13 @@ export const AreasDeAtuacao: React.FC = () => {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition: transform 0.24s var(--ease-out), box-shadow 0.24s var(--ease-out);
         }
-        .practice-area-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 25px rgba(13, 55, 50, 0.08);
+        @media (hover: hover) {
+          .practice-area-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(13, 55, 50, 0.08);
+          }
         }
         .area-title {
           font-family: var(--font-serif);
@@ -186,10 +195,12 @@ export const AreasDeAtuacao: React.FC = () => {
           align-items: center;
           gap: 5px;
           margin-top: auto;
-          transition: color 0.2s ease;
+          transition: color 0.2s var(--ease-out);
         }
-        .area-link:hover {
-          color: var(--color-primary);
+        @media (hover: hover) {
+          .area-link:hover {
+            color: var(--color-primary);
+          }
         }
         .ativismo-section {
           background-color: #ffffff;

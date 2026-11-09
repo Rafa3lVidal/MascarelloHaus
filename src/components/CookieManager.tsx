@@ -52,6 +52,17 @@ export const CookieManager: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
+
   const savePreferences = async (newPrefs: CookiePreferences) => {
     const updated = {
       ...newPrefs,
@@ -209,8 +220,8 @@ export const CookieManager: React.FC = () => {
     <>
       {/* Toast de Confirmação de Salvamento */}
       {isSavedToast && (
-        <div className="cookie-saved-toast">
-          <Check size={18} />
+        <div className="cookie-saved-toast" role="status" aria-live="polite">
+          <Check size={18} aria-hidden="true" />
           <span>Suas preferências de privacidade foram atualizadas com sucesso!</span>
         </div>
       )}
@@ -506,16 +517,18 @@ export const CookieManager: React.FC = () => {
           cursor: pointer;
           z-index: 9998;
           box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-          transition: all 0.25s ease;
+          transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out), transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
           font-family: var(--font-sans);
           font-size: 0.85rem;
           font-weight: 600;
         }
-        .cookie-floating-toggle:hover {
-          background: #c5a880;
-          color: #182c44;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(197, 168, 128, 0.35);
+        @media (hover: hover) {
+          .cookie-floating-toggle:hover {
+            background: #c5a880;
+            color: #182c44;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(197, 168, 128, 0.35);
+          }
         }
         .cookie-floating-text {
           display: inline-block;
@@ -754,7 +767,7 @@ export const CookieManager: React.FC = () => {
           color: #64748b;
           cursor: pointer;
           border-bottom: 3px solid transparent;
-          transition: all 0.2s;
+          transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
         }
         .cookie-tab-btn:hover {
           color: var(--color-primary);
@@ -768,6 +781,7 @@ export const CookieManager: React.FC = () => {
         .cookie-modal-body {
           padding: 24px 28px;
           overflow-y: auto;
+          overscroll-behavior: contain;
           flex-grow: 1;
         }
         .cookie-modal-intro {
@@ -862,6 +876,10 @@ export const CookieManager: React.FC = () => {
         }
         input:checked + .toggle-slider {
           background-color: var(--color-primary);
+        }
+        input:focus-visible + .toggle-slider {
+          outline: 2px solid var(--color-accent);
+          outline-offset: 2px;
         }
         input:checked + .toggle-slider:before {
           transform: translateX(22px);

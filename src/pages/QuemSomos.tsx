@@ -8,17 +8,21 @@ export const QuemSomos: React.FC = () => {
     <div className="quem-somos-page">
       <SEO
         title="O escritório Mascârello Haus | Mascârello Haus Advocacia"
-        description="A Mascârello Haus Advocacia e Consultoria Jurídica, desde de 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário."
+        description="A Mascârello Haus Advocacia e Consultoria Jurídica, desde 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário."
         canonical="https://mascarellohaus.adv.br/quem-somos/"
+        breadcrumbs={[
+          { name: 'Início', url: '/' },
+          { name: 'O escritório', url: '/quem-somos/' },
+        ]}
       />
 
       {/* 1. TOPO / BANNER DA PÁGINA */}
       <section className="qs-header-banner">
         <div className="container">
-          <div className="gold-divider center"></div>
+          <div className="gold-divider center" aria-hidden="true"></div>
           <h1 className="qs-page-title">O escritório Mascârello Haus</h1>
           <p className="qs-page-subtitle">
-            A Mascârello Haus Advocacia e Consultoria Jurídica, desde de 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário.
+            A Mascârello Haus Advocacia e Consultoria Jurídica, desde 2016, presta serviços consultivos e de assessoramento nas áreas do Direito Civil, Empresarial, do Trabalho e Previdenciário.
           </p>
         </div>
       </section>
@@ -28,11 +32,11 @@ export const QuemSomos: React.FC = () => {
         <div className="container">
           <div className="qs-intro-grid">
             <div className="qs-intro-text">
-              <div className="gold-divider"></div>
+              <div className="gold-divider" aria-hidden="true"></div>
               <h2 className="qs-section-title">Quem somos</h2>
               <div className="qs-paragraphs">
                 <p>
-                  Atualmente,  somos um escritório dedicado a entender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas a regulação do mercado, direcionado ao Compliance nas mais diversas áreas, em especial à Proteção de Dados. Por meio de equipe multidisciplinar, orienta e desenvolve estratégias que atendam aspectos regulamentares, de governança corporativa e de segurança da informação, em respeito à metodologia aplicável a cada segmento.
+                  Atualmente, somos um escritório dedicado a entender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas a regulação do mercado, direcionado ao Compliance nas mais diversas áreas, em especial à Proteção de Dados. Por meio de equipe multidisciplinar, orienta e desenvolve estratégias que atendam aspectos regulamentares, de governança corporativa e de segurança da informação, em respeito à metodologia aplicável a cada segmento.
                 </p>
                 <p>
                   De maneira proativa também atua nas organizações da sociedade civil em projetos sociais e Advocacia Pro Bono.
@@ -52,8 +56,12 @@ export const QuemSomos: React.FC = () => {
               <div className="photo-shadow-box">
                 <img
                   src="/assets/0765_0289-1-scaled.jpg"
-                  alt="O escritório Mascârello Haus"
+                  alt="Ambiente institucional do escritório Mascârello Haus"
                   className="qs-photo"
+                  width={440}
+                  height={580}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -67,8 +75,8 @@ export const QuemSomos: React.FC = () => {
           <div className="triad-cards-row">
             {/* Propósito */}
             <div className="triad-card">
-              <div className="triad-icon-wrap">
-                <img src="/assets/goal-svgrepo-com.png" alt="Propósito" className="triad-icon-img" />
+              <div className="triad-icon-wrap" aria-hidden="true">
+                <img src="/assets/goal-svgrepo-com.png" alt="" className="triad-icon-img" width={55} height={55} loading="lazy" decoding="async" />
               </div>
               <h3 className="triad-card-title">Propósito</h3>
               <p className="triad-card-desc">
@@ -78,8 +86,8 @@ export const QuemSomos: React.FC = () => {
 
             {/* Visão de Futuro */}
             <div className="triad-card">
-              <div className="triad-icon-wrap">
-                <img src="/assets/vision-svgrepo-com.png" alt="Visão de Futuro" className="triad-icon-img" />
+              <div className="triad-icon-wrap" aria-hidden="true">
+                <img src="/assets/vision-svgrepo-com.png" alt="" className="triad-icon-img" width={55} height={55} loading="lazy" decoding="async" />
               </div>
               <h3 className="triad-card-title">Visão de Futuro</h3>
               <p className="triad-card-desc">
@@ -89,8 +97,8 @@ export const QuemSomos: React.FC = () => {
 
             {/* Valores */}
             <div className="triad-card">
-              <div className="triad-icon-wrap">
-                <img src="/assets/hands-holding-heart-svgrepo-com.png" alt="Valores" className="triad-icon-img" />
+              <div className="triad-icon-wrap" aria-hidden="true">
+                <img src="/assets/hands-holding-heart-svgrepo-com.png" alt="" className="triad-icon-img" width={55} height={55} loading="lazy" decoding="async" />
               </div>
               <h3 className="triad-card-title">Valores</h3>
               <div className="triad-card-desc triad-values-list">
@@ -109,7 +117,7 @@ export const QuemSomos: React.FC = () => {
         <div className="container">
           <div className="diferencial-grid">
             <div className="diferencial-text">
-              <div className="gold-divider"></div>
+              <div className="gold-divider" aria-hidden="true"></div>
               <h2 className="qs-section-title">Nosso Diferencial</h2>
               <div className="qs-paragraphs">
                 <p>
@@ -124,8 +132,12 @@ export const QuemSomos: React.FC = () => {
             <div className="diferencial-img-col">
               <img
                 src="/assets/3bolas.png"
-                alt="Nosso Diferencial"
+                alt="Diagrama do método de trabalho Mascârello Haus: Pessoas, Negócios e Direito"
                 className="diferencial-img"
+                width={440}
+                height={420}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -139,8 +151,12 @@ export const QuemSomos: React.FC = () => {
             <div className="conduta-img-col">
               <img
                 src="/assets/codigo-conduta-1.png"
-                alt="Código de Conduta"
+                alt="Código de Conduta Mascârello Haus Advocacia"
                 className="conduta-img"
+                width={400}
+                height={460}
+                loading="lazy"
+                decoding="async"
               />
             </div>
 
@@ -149,31 +165,31 @@ export const QuemSomos: React.FC = () => {
               <h2 className="qs-section-title">Código de Conduta</h2>
               <div className="conduta-btn-wrap">
                 <Link to="/codigo-de-conduta/" className="btn-gold-solid">
-                  LER Código de Conduta
+                  Ler Código de Conduta
                 </Link>
               </div>
 
               <div className="conduta-pillars">
                 <div className="conduta-pillar-box">
-                  <h4>O QUE É?</h4>
+                  <h3>O QUE É?</h3>
                   <p>
                     O Código de Conduta é o documento que dispõe sobre os direitos e deveres de todos os membros do Mascârello Haus Advocacia e Consultoria Jurídica. Bem como, qual é a postura empresarial em relação aos temas que compõem o desenvolvimento de nossas atividades, servindo como guia, que juntamente aos exemplos da alta administração norteará as práticas éticas e legais.
                   </p>
                 </div>
                 <div className="conduta-pillar-box">
-                  <h4>O QUE REGE?</h4>
+                  <h3>O QUE REGE?</h3>
                   <p>
                     O código de conduta rege, em especial, questões de ordem moral, ou seja, que dizem respeito aos costumes e à cultura da organização. O código de conduta demonstrará a existência de regras e o compromisso da empresa com a efetividade das orientações, facilitando a divulgação da cultura de Compliance e seu alcance nas atividades realizadas.
                   </p>
                 </div>
                 <div className="conduta-pillar-box highlight">
-                  <h4>CANAL DE DENÚNCIAS</h4>
+                  <h3>CANAL DE DENÚNCIAS</h3>
                   <p>
                     Ao implementar um canal de denúncia o escritório disponibiliza às partes interessadas uma maneira de chamar atenção para potenciais vulnerabilidades do negócio, infrações ao Código de Conduta e políticas, bem como acerca de comportamentos inapropriados daqueles que agem em nome do escritório Mascârello Haus.
                   </p>
                   <div style={{ marginTop: '14px' }}>
                     <Link to="/canal-de-denuncias/" className="btn-outline-dark">
-                      ACESSAR Canal de Denúncias <ArrowRight size={15} />
+                      Acessar Canal de Denúncias <ArrowRight size={15} aria-hidden="true" />
                     </Link>
                   </div>
                 </div>
@@ -192,8 +208,7 @@ export const QuemSomos: React.FC = () => {
           border-radius: 2px;
         }
         .gold-divider.center {
-          margin-left: auto;
-          margin-right: auto;
+          margin-inline: auto;
         }
         .qs-page-title {
           font-family: var(--font-serif);
@@ -342,7 +357,7 @@ export const QuemSomos: React.FC = () => {
           font-family: var(--font-sans);
           font-size: 0.9rem;
           text-transform: uppercase;
-          letter-spacing: 1.5px;
+          letter-spacing: 0.1em;
           color: var(--color-accent);
           font-weight: 600;
           display: block;
@@ -365,7 +380,7 @@ export const QuemSomos: React.FC = () => {
         .conduta-pillar-box.highlight {
           border-left-color: var(--color-accent);
         }
-        .conduta-pillar-box h4 {
+        .conduta-pillar-box h3 {
           font-family: var(--font-serif);
           font-size: 1.05rem;
           color: var(--color-primary);
@@ -390,12 +405,14 @@ export const QuemSomos: React.FC = () => {
           font-size: 0.9rem;
           font-weight: 500;
           text-transform: uppercase;
-          letter-spacing: 0.8px;
-          transition: all 0.3s ease;
+          letter-spacing: 0.05em;
+          transition: background-color 0.22s var(--ease-out), transform 0.16s var(--ease-out);
         }
-        .btn-gold-solid:hover {
-          background-color: var(--color-primary);
-          color: #ffffff;
+        @media (hover: hover) {
+          .btn-gold-solid:hover {
+            background-color: var(--color-primary);
+            color: #ffffff;
+          }
         }
         .btn-outline-dark {
           display: inline-flex;
@@ -410,12 +427,16 @@ export const QuemSomos: React.FC = () => {
           font-size: 0.85rem;
           font-weight: 500;
           text-transform: uppercase;
-          letter-spacing: 0.8px;
-          transition: all 0.3s ease;
+          letter-spacing: 0.05em;
+          transition: background-color 0.22s var(--ease-out),
+                      color 0.22s var(--ease-out),
+                      transform 0.16s var(--ease-out);
         }
-        .btn-outline-dark:hover {
-          background-color: var(--color-primary);
-          color: #ffffff;
+        @media (hover: hover) {
+          .btn-outline-dark:hover {
+            background-color: var(--color-primary);
+            color: #ffffff;
+          }
         }
 
         @media (max-width: 992px) {
