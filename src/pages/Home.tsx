@@ -1536,7 +1536,10 @@ export const Home: React.FC = () => {
         /* RESPONSIVIDADE */
         @media (max-width: 992px) {
           .hero-main-title { font-size: 2.15rem; }
-          .hero-slide-layer { background-position: 28% top; }
+          .hero-slide-layer {
+            background-size: cover;
+            background-position: 28% bottom;
+          }
           .hero-slide-overlay {
             background: linear-gradient(
               180deg,
