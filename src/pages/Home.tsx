@@ -19,7 +19,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 2,
-      bgImage: '/assets/banner1.jpg',
+      bgImage: '/assets/banner2.jpg',
       title: 'Para uma nova realidade, novas soluções jurídicas.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -35,7 +35,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 4,
-      bgImage: '/assets/banner1.jpg',
+      bgImage: '/assets/banner2.jpg',
       title: 'Conheça os nossos artigos, cartilhas e publicações.',
       btnText: 'Acessar publicações',
       btnLink: '/artigos-e-publicacoes/',
