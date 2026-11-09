@@ -131,24 +131,14 @@ export const SEO: React.FC<SEOProps> = ({
       description: 'Sociedade de Advogados em Videira e Caçador (SC). Atuação de excelência em Direito Empresarial, Civil, LGPD, Compliance, Tributário e Trabalhista.',
       telephone: '+55-49-3566-0066',
       email: 'contato@mascarellohaus.adv.br',
-      address: [
-        {
-          '@type': 'PostalAddress',
-          streetAddress: 'R. Saul Brandalise, 39 — Edifício Vênus — Sala 204',
-          addressLocality: 'Videira',
-          addressRegion: 'SC',
-          postalCode: '89560-000',
-          addressCountry: 'BR',
-        },
-        {
-          '@type': 'PostalAddress',
-          streetAddress: 'R. Carlos Sperança, 360 — Sala 05',
-          addressLocality: 'Caçador',
-          addressRegion: 'SC',
-          postalCode: '89500-068',
-          addressCountry: 'BR',
-        },
-      ],
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Esquina com a - Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, R. Brasil - Centro',
+        addressLocality: 'Videira',
+        addressRegion: 'SC',
+        postalCode: '89560-198',
+        addressCountry: 'BR',
+      },
       contactPoint: {
         '@type': 'ContactPoint',
         telephone: '+55-49-3566-0066',

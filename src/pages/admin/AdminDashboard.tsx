@@ -92,7 +92,7 @@ export const AdminDashboard: React.FC = () => {
     whatsapp: '+5549999281878',
     contact_email: 'contato@mascarellohaus.adv.br',
     dpo_email: 'privacidade@mascarellohaus.adv.br',
-    address: 'Videira / Caçador — Santa Catarina',
+    address: 'Esquina com a - Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, R. Brasil - Centro, Videira - SC, 89560-198',
     instagram_url: 'https://www.instagram.com/mascarellohaus.adv/',
     linkedin_url: 'https://www.linkedin.com/company/mascarello-haus-advocacia/',
     banner_title: 'Direito Empresarial, Civil, Trabalho e Previdenciário',

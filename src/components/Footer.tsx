@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
               Para um novo mundo, novas estratégias.
             </p>
             <div className="footer-contacts">
-              <p>Caçador / Videira — Santa Catarina</p>
+              <p>Esquina com a - Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, R. Brasil - Centro, Videira - SC, 89560-198</p>
               <p>E-mail: <a href="mailto:contato@mascarellohaus.adv.br">contato@mascarellohaus.adv.br</a></p>
               <p>WhatsApp: <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer">+55 (49) 98822-0982</a></p>
             </div>

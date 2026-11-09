@@ -49,7 +49,6 @@ export const Contato: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [protocol, setProtocol] = useState('');
   const [copied, setCopied] = useState(false);
-  const [activeMap, setActiveMap] = useState<'videira' | 'cacador'>('videira');
 
   const handleCopyProtocol = () => {
     if (!protocol) return;
@@ -181,7 +180,7 @@ export const Contato: React.FC = () => {
             <span className="contato-badge">Atendimento Jurídico Especializado</span>
             <h1 className="contato-title">Fale Conosco</h1>
             <p className="contato-subtitle">
-              Precisa de assessoria jurídica estratégica para você ou sua empresa? Preencha o formulário abaixo ou entre em contato direto com nossas unidades em <strong>Videira</strong> e <strong>Caçador (SC)</strong>.
+              Precisa de assessoria jurídica estratégica para você ou sua empresa? Preencha o formulário abaixo ou entre em contato direto com nosso escritório em <strong>Videira (SC)</strong>.
             </p>
           </div>
         </div>
@@ -255,18 +254,17 @@ export const Contato: React.FC = () => {
                 </div>
               </div>
 
-              {/* Cards das Unidades */}
+              {/* Card da Unidade */}
               <div className="offices-cards-stack">
                 <div className="office-card">
                   <div className="office-card-header">
                     <div className="office-badge">
-                      <Building2 size={18} /> Unidade Videira / SC
+                      <Building2 size={18} /> Escritório — Videira / SC
                     </div>
                     <button
                       type="button"
-                      className={`btn-view-map ${activeMap === 'videira' ? 'active' : ''}`}
+                      className="btn-view-map active"
                       onClick={() => {
-                        setActiveMap('videira');
                         document.getElementById('mapa-escritorio')?.scrollIntoView({ behavior: 'smooth' });
                       }}
                     >
@@ -274,30 +272,7 @@ export const Contato: React.FC = () => {
                     </button>
                   </div>
                   <p className="office-address">
-                    Edifício Vênus — Rua Saul Brandalise, nº 39, Sala 204<br />
-                    Centro — Videira / SC — CEP 89560-000
-                  </p>
-                </div>
-
-                <div className="office-card">
-                  <div className="office-card-header">
-                    <div className="office-badge">
-                      <Building2 size={18} /> Unidade Caçador / SC
-                    </div>
-                    <button
-                      type="button"
-                      className={`btn-view-map ${activeMap === 'cacador' ? 'active' : ''}`}
-                      onClick={() => {
-                        setActiveMap('cacador');
-                        document.getElementById('mapa-escritorio')?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                    >
-                      <MapPin size={13} /> Ver no mapa
-                    </button>
-                  </div>
-                  <p className="office-address">
-                    Rua Carlos Sperança, nº 360, Sala 05<br />
-                    Centro — Caçador / SC — CEP 89500-068
+                    Esquina com a - Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, R. Brasil - Centro, Videira - SC, 89560-198
                   </p>
                 </div>
               </div>
@@ -519,53 +494,25 @@ export const Contato: React.FC = () => {
         <div className="container">
           <div className="map-header-row">
             <div>
-              <span className="map-kicker">Nossas Unidades em Santa Catarina</span>
-              <h2>Localização dos Escritórios</h2>
-            </div>
-            <div className="map-switcher" role="group" aria-label="Selecionar unidade no mapa">
-              <button
-                type="button"
-                className={`map-tab-btn ${activeMap === 'videira' ? 'active' : ''}`}
-                aria-pressed={activeMap === 'videira'}
-                onClick={() => setActiveMap('videira')}
-              >
-                <MapPin size={16} aria-hidden="true" /> Videira — SC
-              </button>
-              <button
-                type="button"
-                className={`map-tab-btn ${activeMap === 'cacador' ? 'active' : ''}`}
-                aria-pressed={activeMap === 'cacador'}
-                onClick={() => setActiveMap('cacador')}
-              >
-                <MapPin size={16} aria-hidden="true" /> Caçador — SC
-              </button>
+              <span className="map-kicker">Nossa Localização em Videira — Santa Catarina</span>
+              <h2>Localização do Escritório</h2>
+              <p style={{ color: '#475569', fontSize: '0.92rem', marginTop: '6px' }}>
+                Esquina com a - Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, R. Brasil - Centro, Videira - SC, 89560-198
+              </p>
             </div>
           </div>
 
           <div className="map-frame-wrapper">
-            {activeMap === 'videira' ? (
-              <iframe
-                title="Localização Mascârello Haus Videira"
-                src="https://maps.google.com/maps?q=Edif%C3%ADcio%20V%C3%AAnus%20-%20R.%20Saul%20Brandalise%2C%2039%20-%20Sala%20204%20-%20Centro%2C%20Videira%20-%20SC%2C%2089560-000&t=m&z=16&output=embed&iwloc=near"
-                width="100%"
-                height="420"
-                style={{ border: 0, display: 'block' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            ) : (
-              <iframe
-                title="Localização Mascârello Haus Caçador"
-                src="https://maps.google.com/maps?q=R.%20Carlos%20Speran%C3%A7a%2C%20360%20-%20Centro%2C%20Ca%C3%A7ador%20-%20SC%2C%2089500-068&t=m&z=16&output=embed&iwloc=near"
-                width="100%"
-                height="420"
-                style={{ border: 0, display: 'block' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            )}
+            <iframe
+              title="Localização Mascârello Haus Videira — Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura"
+              src="https://maps.google.com/maps?q=Rua%20Coronel%20Alberto%20Schmidt%2C%2010%20-%20Centro%2C%20Videira%20-%20SC%2C%2089560-198&t=m&z=17&output=embed&iwloc=near"
+              width="100%"
+              height="420"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>
