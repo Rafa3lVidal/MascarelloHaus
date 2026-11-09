@@ -659,8 +659,8 @@ export const Home: React.FC = () => {
         .elementor-hero-slider {
           position: relative;
           min-height: 520px;
-          height: clamp(440px, 31.25vw, 560px);
-          background-color: #071f1c;
+          height: clamp(460px, 31.25vw, 780px);
+          background-color: #00312b;
           overflow: hidden;
           display: flex;
           align-items: center;
@@ -669,13 +669,13 @@ export const Home: React.FC = () => {
         .hero-slide-layer {
           position: absolute;
           inset: 0;
-          background-size: cover;
-          background-position: center top;
+          background-size: auto 100%;
+          background-position: center bottom;
           background-repeat: no-repeat;
           opacity: 0;
           visibility: hidden;
           transition: opacity 0.85s ease-in-out, visibility 0.85s ease;
-          transform: scale(1.01);
+          transform: scale(1);
           display: flex;
           align-items: center;
           z-index: 1;
@@ -695,7 +695,7 @@ export const Home: React.FC = () => {
 
         @keyframes heroKenBurns {
           0% { transform: scale(1); }
-          100% { transform: scale(1.02); }
+          100% { transform: scale(1); }
         }
 
         .hero-slide-overlay {
@@ -1176,7 +1176,7 @@ export const Home: React.FC = () => {
         .section-triad-parallax {
           position: relative;
           background-image: url('/assets/post-5.png');
-          background-size: cover;
+          background-size: auto 100%;
           background-position: center;
           background-attachment: scroll;
           padding: 95px 0;
@@ -1537,7 +1537,7 @@ export const Home: React.FC = () => {
         @media (max-width: 992px) {
           .hero-main-title { font-size: 2.15rem; }
           .hero-slide-layer {
-            background-size: cover;
+            background-size: auto 100%;
             background-position: 28% bottom;
           }
           .hero-slide-overlay {
