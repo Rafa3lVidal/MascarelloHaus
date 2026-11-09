@@ -11,7 +11,7 @@ export const Home: React.FC = () => {
   const heroSlides = [
     {
       id: 1,
-      bgImage: '/assets/hero-banner-teste.jpg?v=2',
+      bgImage: '/assets/banner1.jpg',
       title: 'Para um novo mundo, novas estratégias.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -19,7 +19,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 2,
-      bgImage: '/assets/hero-banner-teste.jpg?v=2',
+      bgImage: '/assets/banner1.jpg',
       title: 'Para uma nova realidade, novas soluções jurídicas.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -27,7 +27,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 3,
-      bgImage: '/assets/hero-banner-teste.jpg?v=2',
+      bgImage: '/assets/banner1.jpg',
       title: 'Apoiamos pessoas nas decisões conscientes e entregamos soluções que transformam negócios.',
       btnText: 'Conheça como podemos ajudar!',
       btnLink: '#sobre',
@@ -35,7 +35,7 @@ export const Home: React.FC = () => {
     },
     {
       id: 4,
-      bgImage: '/assets/hero-banner-teste.jpg?v=2',
+      bgImage: '/assets/banner1.jpg',
       title: 'Conheça os nossos artigos, cartilhas e publicações.',
       btnText: 'Acessar publicações',
       btnLink: '/artigos-e-publicacoes/',
