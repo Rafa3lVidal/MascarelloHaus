@@ -16,6 +16,14 @@ function translateAuthError(message?: string): string {
   if (lower.includes('too many requests') || lower.includes('rate limit')) {
     return 'Muitas tentativas seguidas. Aguarde alguns instantes e tente novamente.';
   }
+  if (
+    lower.includes('failed to fetch') ||
+    lower.includes('networkerror') ||
+    lower.includes('load failed') ||
+    lower.includes('fetch')
+  ) {
+    return 'Não foi possível conectar ao servidor de autenticação (Supabase). Verifique sua conexão, se o projeto Supabase está ativo/despausado ou se as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY estão atualizadas.';
+  }
   if (lower.includes('invalid totp') || lower.includes('invalid code') || lower.includes('challenge')) {
     return 'Código MFA inválido ou expirado. Confira o código no seu autenticador.';
   }
