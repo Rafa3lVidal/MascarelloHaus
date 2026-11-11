@@ -102,8 +102,8 @@ const TAB_HEADER_INFO: Record<DashboardTab, { title: string; subtitle: string }>
     subtitle: 'Gerencie contatos comerciais e dúvidas jurídicas recebidas pelo site.',
   },
   audit: {
-    title: 'Auditoria, Consentimentos LGPD & Segurança (MFA)',
-    subtitle: 'Trilha de auditoria, prova de consentimento de cookies/formulários e 2FA.',
+    title: 'Auditoria, Consentimentos LGPD & Segurança',
+    subtitle: 'Trilha de auditoria, prova de consentimento de cookies/formulários e verificação em duas etapas.',
   },
 };
 
@@ -239,7 +239,7 @@ export const AdminDashboard: React.FC = () => {
 
       if (restrictedModules.length > 0 && restrictedModules.length <= 3) {
         setPartialNotice(
-          `Alguns módulos possuem acesso restrito ao seu perfil ou aguardam migração: ${restrictedModules.join(', ')}.`
+          `Alguns módulos não estão habilitados para o seu perfil de acesso: ${restrictedModules.join(', ')}.`
         );
       }
 
@@ -252,7 +252,7 @@ export const AdminDashboard: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Erro ao carregar dados do painel:', err);
-      showToast('error', 'Erro ao sincronizar registros com o banco de dados.');
+      showToast('error', 'Não foi possível sincronizar os dados do painel no momento.');
     } finally {
       setLoading(false);
       setSyncing(false);
@@ -385,7 +385,7 @@ export const AdminDashboard: React.FC = () => {
           <span className="user-role-pill">
             <Shield size={11} />
             {profile?.role ? ROLE_LABELS[profile.role] || profile.role : 'Staff'}
-            {mfaEnabled ? ' · MFA Ativo' : ''}
+            {mfaEnabled ? ' · 2FA Ativo' : ''}
           </span>
         </div>
 
@@ -494,7 +494,7 @@ export const AdminDashboard: React.FC = () => {
             onClick={() => handleSelectTab('audit')}
           >
             <span className="sidebar-nav-left">
-              <Clock size={17} /> Auditoria & MFA
+              <Clock size={17} /> Auditoria & Segurança
             </span>
           </button>
         </nav>
@@ -526,7 +526,7 @@ export const AdminDashboard: React.FC = () => {
               onClick={() => loadAllData(currentUser?.id, true)}
               className="btn-refresh"
               disabled={syncing}
-              title="Atualizar dados do banco"
+              title="Atualizar dados do painel"
             >
               <RefreshCw size={15} className={syncing ? 'spin' : ''} />
               {syncing ? 'Sincronizando...' : 'Sincronizar'}
@@ -553,7 +553,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="content-body">
             <div className="admin-loading-card">
               <RefreshCw className="spin" size={26} />
-              <p>Carregando dados de produção do Supabase...</p>
+              <p>Carregando dados do painel...</p>
             </div>
           </div>
         ) : (

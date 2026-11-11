@@ -20,6 +20,7 @@ import {
   escapeHtml,
   exportToCsv,
   formatDateBR,
+  formatFriendlyError,
   generateSlugFromTitle,
 } from '../types';
 import { ConfirmModal } from './ConfirmModal';
@@ -162,7 +163,7 @@ export const PostsTab: React.FC<PostsTabProps> = ({
       onShowToast('success', 'Imagem enviada com sucesso!');
     } catch (err: any) {
       console.error('Erro no upload da imagem:', err);
-      onShowToast('error', err.message || 'Falha ao enviar imagem para o bucket media.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível enviar a imagem. Tente novamente.'));
     } finally {
       setIsUploadingImage(false);
       if (imageInputRef.current) imageInputRef.current.value = '';
@@ -194,7 +195,7 @@ export const PostsTab: React.FC<PostsTabProps> = ({
       onShowToast('success', 'Arquivo PDF enviado com sucesso!');
     } catch (err: any) {
       console.error('Erro no upload do PDF:', err);
-      onShowToast('error', err.message || 'Falha ao enviar PDF.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível enviar o arquivo PDF. Tente novamente.'));
     } finally {
       setIsUploadingPdf(false);
       if (pdfInputRef.current) pdfInputRef.current.value = '';
@@ -261,7 +262,7 @@ export const PostsTab: React.FC<PostsTabProps> = ({
       await onRefresh();
     } catch (err: any) {
       console.error('Erro ao salvar publicação:', err);
-      onShowToast('error', err.message || 'Erro ao gravar publicação.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível salvar a publicação.'));
     } finally {
       setSaving(false);
     }
@@ -282,7 +283,7 @@ export const PostsTab: React.FC<PostsTabProps> = ({
       );
       await onRefresh();
     } catch (err: any) {
-      onShowToast('error', err.message || 'Não foi possível alterar o status.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível alterar o status da publicação.'));
     }
   };
 
@@ -298,7 +299,7 @@ export const PostsTab: React.FC<PostsTabProps> = ({
       await onRefresh();
     } catch (err: any) {
       console.error('Erro ao excluir publicação:', err);
-      onShowToast('error', err.message || 'Erro ao excluir publicação.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível excluir a publicação.'));
     } finally {
       setDeleting(false);
     }

@@ -86,14 +86,14 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           <div className="overview-alert-content">
             <ShieldAlert size={20} />
             <div>
-              <strong>Autenticação em Duas Etapas (MFA) desativada</strong>
+              <strong>Verificação em Duas Etapas (2FA) desativada</strong>
               <p>
-                Para maior proteção dos dados pessoais (LGPD) e relatos confidenciais, ative o 2FA via aplicativo autenticador na sua conta.
+                Para maior proteção dos dados pessoais e relatos confidenciais, ative a verificação em duas etapas no aplicativo autenticador da sua conta.
               </p>
             </div>
           </div>
           <button type="button" className="btn-banner-action" onClick={() => onNavigate('audit')}>
-            Configurar MFA <ArrowRight size={14} />
+            Ativar 2FA <ArrowRight size={14} />
           </button>
         </div>
       )}

@@ -7,6 +7,9 @@ import { Lock, Mail, KeyRound, AlertCircle, Shield, Eye, EyeOff, ArrowLeft } fro
 function translateAuthError(message?: string): string {
   if (!message) return 'Falha na autenticação. Verifique suas credenciais.';
   const lower = message.toLowerCase();
+  if (lower.includes('informe os 6 dígitos')) {
+    return message;
+  }
   if (lower.includes('invalid login credentials')) {
     return 'E-mail ou senha inválidos. Verifique os dados informados.';
   }
@@ -22,12 +25,12 @@ function translateAuthError(message?: string): string {
     lower.includes('load failed') ||
     lower.includes('fetch')
   ) {
-    return 'Não foi possível conectar ao servidor de autenticação (Supabase). Verifique sua conexão, se o projeto Supabase está ativo/despausado ou se as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY estão atualizadas.';
+    return 'Serviço de autenticação temporariamente indisponível. Verifique sua conexão com a internet e tente novamente em instantes.';
   }
   if (lower.includes('invalid totp') || lower.includes('invalid code') || lower.includes('challenge')) {
-    return 'Código MFA inválido ou expirado. Confira o código no seu autenticador.';
+    return 'Código de verificação inválido ou expirado. Confira os dígitos no seu aplicativo autenticador.';
   }
-  return message;
+  return 'Não foi possível concluir o acesso no momento. Verifique suas credenciais e tente novamente.';
 }
 
 export const AdminLogin: React.FC = () => {
@@ -81,7 +84,7 @@ export const AdminLogin: React.FC = () => {
       if (needsMfa) {
         const cleanCode = mfaCode.replace(/\D/g, '');
         if (cleanCode.length !== 6) {
-          throw new Error('Informe os 6 dígitos do código MFA.');
+          throw new Error('Informe os 6 dígitos do código de verificação.');
         }
         const { error: verifyError } = await supabase.auth.mfa.challengeAndVerify({
           factorId,
@@ -198,7 +201,7 @@ export const AdminLogin: React.FC = () => {
           ) : (
             <div className="form-group">
               <label className="form-label" htmlFor="admin-mfa">
-                Código de Autenticação MFA (TOTP)
+                Código de Verificação em Duas Etapas (2FA)
               </label>
               <div className="input-with-icon">
                 <KeyRound size={18} className="input-icon" />
@@ -228,7 +231,7 @@ export const AdminLogin: React.FC = () => {
             style={{ width: '100%', marginTop: '20px' }}
             disabled={loading}
           >
-            {loading ? 'Validando...' : needsMfa ? 'Confirmar Código MFA' : 'Acessar Painel'}
+            {loading ? 'Validando...' : needsMfa ? 'Confirmar Verificação' : 'Acessar Painel'}
           </button>
 
           {needsMfa && (
@@ -245,7 +248,7 @@ export const AdminLogin: React.FC = () => {
 
         <div className="admin-login-footer">
           <Shield size={14} />
-          <span>Ambiente protegido por Row Level Security (LGPD)</span>
+          <span>Acesso criptografado e em conformidade com a LGPD</span>
         </div>
 
         <div className="admin-login-back">

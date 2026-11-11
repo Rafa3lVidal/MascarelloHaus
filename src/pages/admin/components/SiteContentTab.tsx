@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Globe, MessageSquare, Save, Building2 } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
-import { SiteSettingsState } from '../types';
+import { SiteSettingsState, formatFriendlyError } from '../types';
 
 interface SiteContentTabProps {
   siteSettings: SiteSettingsState;
@@ -70,7 +70,7 @@ export const SiteContentTab: React.FC<SiteContentTabProps> = ({
       onShowToast('success', 'Conteúdos e configurações do site salvos com sucesso!');
     } catch (err: any) {
       console.error('Erro ao salvar conteúdos:', err);
-      onShowToast('error', err.message || 'Erro ao salvar configurações.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível salvar as configurações do site.'));
     } finally {
       setSavingSettings(false);
     }

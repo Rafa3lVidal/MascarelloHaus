@@ -23,6 +23,7 @@ import {
   UserProfile,
   exportToCsv,
   formatDateTimeBR,
+  formatFriendlyError,
 } from '../types';
 import { ConfirmModal } from './ConfirmModal';
 
@@ -109,7 +110,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
         setVerifyCode('');
       }
     } catch (err: any) {
-      onShowToast('error', err.message || 'Não foi possível iniciar o cadastro MFA.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível iniciar a configuração da verificação em duas etapas.'));
     } finally {
       setEnrolling(false);
     }
@@ -141,9 +142,9 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
       setVerifyCode('');
       await loadMfaFactors();
       await onRefresh();
-      onShowToast('success', 'Autenticação em Duas Etapas (MFA) ativada com sucesso!');
+      onShowToast('success', 'Verificação em Duas Etapas (2FA) ativada com sucesso!');
     } catch (err: any) {
-      onShowToast('error', err.message || 'Código inválido. Verifique a hora do dispositivo e tente novamente.');
+      onShowToast('error', formatFriendlyError(err, 'Código inválido. Verifique a hora do dispositivo e tente novamente.'));
     } finally {
       setVerifyingMfa(false);
     }
@@ -165,9 +166,9 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
       setUnenrollTarget(null);
       await loadMfaFactors();
       await onRefresh();
-      onShowToast('success', 'Fator MFA removido da conta.');
+      onShowToast('success', 'Verificação em duas etapas desativada na conta.');
     } catch (err: any) {
-      onShowToast('error', err.message || 'Erro ao remover fator MFA.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível desativar a verificação em duas etapas.'));
     }
   };
 
@@ -190,7 +191,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
       setConfirmPassword('');
       onShowToast('success', 'Senha alterada com sucesso!');
     } catch (err: any) {
-      onShowToast('error', err.message || 'Não foi possível alterar a senha.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível alterar a senha.'));
     } finally {
       setUpdatingPassword(false);
     }
@@ -241,7 +242,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
               className={`subtab-pill ${subTab === 'security' ? 'active' : ''}`}
               onClick={() => setSubTab('security')}
             >
-              <KeyRound size={14} /> Segurança, MFA & Suporte
+              <KeyRound size={14} /> Segurança & Suporte
             </button>
           </div>
 
@@ -348,7 +349,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
                           type="button"
                           className="table-action-btn view"
                           onClick={() => setSelectedLog(log)}
-                          title="Inspecionar payload"
+                          title="Visualizar detalhes"
                         >
                           <Eye size={14} />
                         </button>
@@ -420,13 +421,13 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
                   <strong>{profile?.email || userEmail}</strong>
                 </div>
                 <div>
-                  <small>Nível de Acesso (RLS)</small>
+                  <small>Perfil de Acesso</small>
                   <span className="badge-tone info">
                     {profile?.role ? ROLE_LABELS[profile.role] || profile.role : 'Staff'}
                   </span>
                 </div>
                 <div>
-                  <small>Proteção 2FA (MFA)</small>
+                  <small>Verificação em Duas Etapas (2FA)</small>
                   <span className={`badge-tone ${verifiedFactors.length > 0 ? 'success' : 'warning'}`}>
                     {verifiedFactors.length > 0 ? 'Ativo' : 'Desativado'}
                   </span>
@@ -434,23 +435,23 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
               </div>
             </div>
 
-            {/* Card 2: MFA TOTP */}
+            {/* Card 2: Verificação em Duas Etapas */}
             <div className="security-card">
               <div className="security-card-header">
                 <KeyRound size={18} />
-                <h3>Autenticação em Duas Etapas (MFA / TOTP)</h3>
+                <h3>Verificação em Duas Etapas (2FA)</h3>
               </div>
               <p className="settings-section-desc" style={{ marginTop: '8px' }}>
                 Use um aplicativo autenticador (Google Authenticator, Microsoft Authenticator ou 1Password) para proteger o acesso ao painel.
               </p>
 
               {loadingFactors ? (
-                <p className="table-subtext">Verificando fatores MFA...</p>
+                <p className="table-subtext">Verificando configurações de segurança...</p>
               ) : verifiedFactors.length > 0 ? (
                 <div className="mfa-active-box">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#065f46' }}>
                     <CheckCircle2 size={18} />
-                    <strong>MFA TOTP ativo e verificado nesta conta</strong>
+                    <strong>Verificação em duas etapas ativa nesta conta</strong>
                   </div>
                   {verifiedFactors.map((factor) => (
                     <div key={factor.id} className="mfa-factor-row">
@@ -471,7 +472,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
                     1. Escaneie o QR Code abaixo no seu aplicativo autenticador ou insira a chave secreta manualmente:
                   </p>
                   <div className="mfa-qr-wrap">
-                    <img src={enrollData.qrCode} alt="QR Code MFA" className="mfa-qr-img" />
+                    <img src={enrollData.qrCode} alt="QR Code de verificação em duas etapas" className="mfa-qr-img" />
                     <div>
                       <small style={{ color: '#64748b', display: 'block' }}>Chave Secreta:</small>
                       <code className="slug-code" style={{ wordBreak: 'break-all' }}>
@@ -492,7 +493,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
                         onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, ''))}
                       />
                       <button type="submit" className="btn-save-main" disabled={verifyingMfa}>
-                        {verifyingMfa ? 'Validando...' : 'Ativar MFA'}
+                        {verifyingMfa ? 'Validando...' : 'Ativar 2FA'}
                       </button>
                       <button
                         type="button"
@@ -511,7 +512,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
                   disabled={enrolling}
                   onClick={handleStartEnrollMfa}
                 >
-                  <KeyRound size={15} /> {enrolling ? 'Gerando QR Code...' : 'Ativar Autenticação 2FA (MFA)'}
+                  <KeyRound size={15} /> {enrolling ? 'Gerando QR Code...' : 'Ativar Verificação em Duas Etapas'}
                 </button>
               )}
             </div>
@@ -649,9 +650,9 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
 
       <ConfirmModal
         open={Boolean(unenrollTarget)}
-        title="Desativar Autenticação 2FA"
-        message="Tem certeza que deseja remover o fator MFA da sua conta? Sua conta passará a exigir apenas senha no próximo login."
-        confirmLabel="Remover MFA"
+        title="Desativar Verificação em Duas Etapas"
+        message="Tem certeza que deseja desativar a verificação em duas etapas da sua conta? No próximo acesso será solicitada apenas sua senha."
+        confirmLabel="Desativar 2FA"
         onConfirm={handleUnenrollMfa}
         onCancel={() => setUnenrollTarget(null)}
       />

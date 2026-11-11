@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Edit, ExternalLink, Search, X, Save, Layers, FileText, Plus } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
-import { PageRecord, PracticeAreaRecord, generateSlugFromTitle } from '../types';
+import { PageRecord, PracticeAreaRecord, formatFriendlyError, generateSlugFromTitle } from '../types';
 
 interface PagesAndAreasTabProps {
   pages: PageRecord[];
@@ -93,7 +93,7 @@ export const PagesAndAreasTab: React.FC<PagesAndAreasTabProps> = ({
       await onRefresh();
     } catch (err: any) {
       console.error('Erro ao atualizar página:', err);
-      onShowToast('error', err.message || 'Erro ao gravar alterações da página.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível salvar as alterações da página.'));
     } finally {
       setSaving(false);
     }
@@ -111,7 +111,7 @@ export const PagesAndAreasTab: React.FC<PagesAndAreasTabProps> = ({
       onShowToast('success', next ? 'Página publicada no site.' : 'Página ocultada.');
       await onRefresh();
     } catch (err: any) {
-      onShowToast('error', err.message || 'Falha ao atualizar status da página.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível atualizar o status da página.'));
     }
   };
 
@@ -178,7 +178,7 @@ export const PagesAndAreasTab: React.FC<PagesAndAreasTabProps> = ({
       setIsNewArea(false);
       await onRefresh();
     } catch (err: any) {
-      onShowToast('error', err.message || 'Erro ao salvar área de atuação.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível salvar a área de atuação.'));
     } finally {
       setSaving(false);
     }
@@ -253,7 +253,7 @@ export const PagesAndAreasTab: React.FC<PagesAndAreasTabProps> = ({
               {filteredPages.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="table-empty-cell">
-                    Nenhuma página encontrada no banco de dados.
+                    Nenhuma página cadastrada até o momento.
                   </td>
                 </tr>
               ) : (
@@ -320,7 +320,7 @@ export const PagesAndAreasTab: React.FC<PagesAndAreasTabProps> = ({
               {filteredAreas.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="table-empty-cell">
-                    Nenhuma área de atuação cadastrada no banco.
+                    Nenhuma área de atuação cadastrada até o momento.
                   </td>
                 </tr>
               ) : (

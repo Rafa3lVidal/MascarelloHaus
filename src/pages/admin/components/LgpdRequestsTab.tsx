@@ -20,6 +20,7 @@ import {
   exportToCsv,
   formatDateBR,
   formatDateTimeBR,
+  formatFriendlyError,
 } from '../types';
 
 interface LgpdRequestsTabProps {
@@ -98,7 +99,7 @@ export const LgpdRequestsTab: React.FC<LgpdRequestsTabProps> = ({
       await onRefresh();
     } catch (err: any) {
       console.error('Erro ao atualizar requisição LGPD:', err);
-      onShowToast('error', err.message || 'Falha ao salvar tratamento da requisição LGPD.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível salvar o atendimento da requisição.'));
     } finally {
       setSaving(false);
     }

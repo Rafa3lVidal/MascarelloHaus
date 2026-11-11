@@ -341,3 +341,61 @@ export function exportToCsv(filename: string, headers: string[], rows: (string |
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
+
+/**
+ * Converte erros técnicos de rede, autenticação ou servidor em mensagens amigáveis
+ * adequadas ao usuário final, sem expor detalhes internos da infraestrutura.
+ */
+export function formatFriendlyError(err: unknown, fallback: string): string {
+  const raw =
+    typeof err === 'string'
+      ? err
+      : err && typeof err === 'object' && 'message' in err && typeof (err as { message?: unknown }).message === 'string'
+        ? (err as { message: string }).message
+        : '';
+
+  const lower = raw.toLowerCase();
+  if (!lower) return fallback;
+
+  if (
+    lower.includes('failed to fetch') ||
+    lower.includes('networkerror') ||
+    lower.includes('load failed') ||
+    lower.includes('network request failed') ||
+    lower.includes('timeout')
+  ) {
+    return 'Não foi possível conectar ao servidor no momento. Verifique sua conexão com a internet e tente novamente.';
+  }
+
+  if (
+    lower.includes('row-level security') ||
+    lower.includes('permission denied') ||
+    lower.includes('not authorized') ||
+    lower.includes('insufficient_privilege') ||
+    lower.includes('42501')
+  ) {
+    return 'Seu perfil não possui permissão para realizar esta operação.';
+  }
+
+  if (lower.includes('jwt') || lower.includes('session') || lower.includes('token') || lower.includes('401')) {
+    return 'Sua sessão expirou por segurança. Entre novamente para continuar.';
+  }
+
+  if (lower.includes('duplicate key') || lower.includes('already exists') || lower.includes('unique constraint') || lower.includes('23505')) {
+    return 'Já existe um registro cadastrado com este mesmo identificador ou endereço.';
+  }
+
+  if (lower.includes('foreign key') || lower.includes('violates') || lower.includes('23503')) {
+    return 'Não foi possível concluir a alteração porque existem registros vinculados.';
+  }
+
+  if (lower.includes('invalid totp') || lower.includes('invalid code') || lower.includes('challenge') || lower.includes('mfa')) {
+    return 'Código de verificação inválido ou expirado. Confira o número gerado no aplicativo autenticador.';
+  }
+
+  if (lower.includes('storage') || lower.includes('bucket') || lower.includes('mime') || lower.includes('payload too large')) {
+    return 'Não foi possível enviar o arquivo. Verifique o formato e o tamanho máximo permitido.';
+  }
+
+  return fallback;
+}

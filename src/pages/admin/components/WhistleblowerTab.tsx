@@ -19,6 +19,7 @@ import {
   exportToCsv,
   formatDateBR,
   formatDateTimeBR,
+  formatFriendlyError,
 } from '../types';
 
 interface WhistleblowerTabProps {
@@ -79,7 +80,7 @@ export const WhistleblowerTab: React.FC<WhistleblowerTabProps> = ({
       await onRefresh();
     } catch (err: any) {
       console.error('Erro ao atualizar denúncia:', err);
-      onShowToast('error', err.message || 'Não foi possível atualizar o relato.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível atualizar o status do relato.'));
     } finally {
       setSaving(false);
     }

@@ -18,6 +18,7 @@ import {
   exportToCsv,
   formatDateBR,
   formatDateTimeBR,
+  formatFriendlyError,
 } from '../types';
 
 interface MessagesTabProps {
@@ -63,7 +64,7 @@ export const MessagesTab: React.FC<MessagesTabProps> = ({
       }
       await onRefresh();
     } catch (err: any) {
-      onShowToast('error', err.message || 'Não foi possível atualizar a mensagem.');
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível atualizar o status da mensagem.'));
     } finally {
       setSaving(false);
     }
