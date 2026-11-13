@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, Cookie, Check, X, Sliders, Info, Lock, ChevronRight, RefreshCw } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { CookieBannerConfig, DEFAULT_COOKIE_BANNER_CONFIG } from '../lib/lgpdConfig';
 
 export interface CookiePreferences {
   version: string;
@@ -27,6 +28,28 @@ export const CookieManager: React.FC = () => {
   const [modalTab, setModalTab] = useState<'preferences' | 'cookies_table'>('preferences');
   const [prefs, setPrefs] = useState<CookiePreferences>(DEFAULT_PREFS);
   const [isSavedToast, setIsSavedToast] = useState(false);
+  const [cookieConfig, setCookieConfig] = useState<CookieBannerConfig>(DEFAULT_COOKIE_BANNER_CONFIG);
+
+  useEffect(() => {
+    let active = true;
+    async function loadCookieConfig() {
+      try {
+        const { data } = await supabase
+          .from('site_settings')
+          .select('value_json')
+          .eq('key', 'lgpd_cookies')
+          .maybeSingle();
+        if (!active || !data?.value_json || typeof data.value_json !== 'object') return;
+        setCookieConfig({ ...DEFAULT_COOKIE_BANNER_CONFIG, ...(data.value_json as Partial<CookieBannerConfig>) });
+      } catch {
+        // Fallback silencioso para configuração padrão
+      }
+    }
+    loadCookieConfig();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     const stored = localStorage.getItem('lgpd_cookie_preferences');
@@ -68,7 +91,7 @@ export const CookieManager: React.FC = () => {
       ...newPrefs,
       essential: true, // Essenciais sempre ativos
       timestamp: new Date().toISOString(),
-      version: '2.0'
+      version: cookieConfig.version || '2.0'
     };
 
     localStorage.setItem('lgpd_cookie_preferences', JSON.stringify(updated));
@@ -129,92 +152,7 @@ export const CookieManager: React.FC = () => {
     });
   };
 
-  const cookiesList = [
-    {
-      name: 'lgpd_cookie_preferences',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Necessário',
-      purpose: 'Armazena a escolha de consentimento e as preferências granulares de cookies do titular (Art. 8º LGPD).',
-      retention: '12 meses'
-    },
-    {
-      name: 'lgpd_cookie_consent',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Necessário',
-      purpose: 'Registro simplificado do estado de consentimento do usuário para controle de exibição do banner.',
-      retention: '12 meses'
-    },
-    {
-      name: 'mh_sec_seed',
-      provider: 'Mascârello Haus (sessionStorage)',
-      category: 'Necessário',
-      purpose: 'Semente criptográfica efêmera (SHA-256) gerada por sessão para cálculo de hash anônimo anti-abuso sem armazenar o IP real do visitante.',
-      retention: 'Sessão'
-    },
-    {
-      name: 'mh_rl_contato, mh_rl_lgpd_central, mh_rl_canal_denuncias, mh_rl_questionario_conformidade',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Necessário',
-      purpose: 'Controle de limite de requisições (Rate Limiting) e prevenção contra ataques automatizados de força bruta ou spam nos formulários.',
-      retention: '10 a 15 min'
-    },
-    {
-      name: 'sb-iwzimemdxchmcrvlyhxg-auth-token',
-      provider: 'Supabase Inc. (localStorage / Cookie)',
-      category: 'Necessário',
-      purpose: 'Autenticação e manutenção de sessão criptografada exclusivamente para acesso restrito ao painel de administração.',
-      retention: 'Sessão admin'
-    },
-    {
-      name: '_vercel_jwt, __vercel_live_token',
-      provider: 'Vercel Inc. (HTTP Cookie)',
-      category: 'Necessário',
-      purpose: 'Balanceamento de carga, roteamento seguro na borda (Edge Network) e mitigação contra ataques distribuídos de negação de serviço (DDoS).',
-      retention: 'Sessão'
-    },
-    {
-      name: 'mh_draft_questionario_conformidade_v2, mh_form_state_questionario_conformidade_v2',
-      provider: 'Mascârello Haus (sessionStorage / localStorage)',
-      category: 'Funcional',
-      purpose: 'Preserva o progresso e rascunho das 6 etapas do Questionário de Conformidade para Fornecedores, evitando perda acidental de preenchimento.',
-      retention: 'Sessão / 7 dias'
-    },
-    {
-      name: 'mh_draft_central_lgpd',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Funcional',
-      purpose: 'Preserva temporariamente no navegador do próprio usuário o rascunho da Requisição de Direitos do Titular (Art. 18 LGPD) até o envio.',
-      retention: 'Até o envio'
-    },
-    {
-      name: 'mh_draft_canal_denuncias',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Funcional',
-      purpose: 'Armazena localmente o relato em andamento no Canal de Denúncias (somente quando o próprio usuário ativa a opção "Salvar rascunho neste navegador").',
-      retention: '7 dias / envio'
-    },
-    {
-      name: 'NID, CONSENT (Google Maps Embed)',
-      provider: 'Google LLC (Terceiro — Contato)',
-      category: 'Funcional',
-      purpose: 'Carregamento e exibição interativa dos mapas de localização dos escritórios de Videira/SC e Caçador/SC na página de Contato.',
-      retention: '6 meses'
-    },
-    {
-      name: '_ga',
-      provider: 'Google Analytics (IP anonimizado)',
-      category: 'Analítico',
-      purpose: 'Distinção estatística de visitantes anônimos para compilação de relatórios agregados de audiência (somente mediante consentimento).',
-      retention: '2 anos'
-    },
-    {
-      name: '_ga_*',
-      provider: 'Google Analytics (IP anonimizado)',
-      category: 'Analítico',
-      purpose: 'Persistência desidentificada do estado de sessão para métricas agregadas de navegação (somente mediante consentimento).',
-      retention: '2 anos'
-    }
-  ];
+  const cookiesList = cookieConfig.cookiesTable;
 
   return (
     <>
@@ -227,27 +165,29 @@ export const CookieManager: React.FC = () => {
       )}
 
       {/* Botão Flutuante Permanente no Canto Inferior Esquerdo (Acesso Contínuo ANPD) */}
-      <button
-        className="cookie-floating-toggle"
-        onClick={() => setIsModalOpen(true)}
-        title="Gerenciar Preferências de Cookies e Privacidade (LGPD)"
-        aria-label="Gerenciar Cookies"
-      >
-        <Cookie size={20} />
-        <span className="cookie-floating-text">Cookies</span>
-      </button>
+      {cookieConfig.showFloatingButton && (
+        <button
+          className="cookie-floating-toggle"
+          onClick={() => setIsModalOpen(true)}
+          title="Gerenciar Preferências de Cookies e Privacidade (LGPD)"
+          aria-label="Gerenciar Cookies"
+        >
+          <Cookie size={20} />
+          <span className="cookie-floating-text">{cookieConfig.floatingButtonLabel || 'Cookies'}</span>
+        </button>
+      )}
 
       {/* Banner Inicial de Consentimento (ANPD Compliance) */}
-      {isBannerVisible && (
+      {cookieConfig.enabled && isBannerVisible && (
         <div className="cookie-banner-wrapper" role="region" aria-label="Aviso de Cookies e Privacidade">
           <div className="container cookie-banner-content">
             <div className="cookie-banner-info">
               <div className="cookie-banner-header">
                 <Shield size={20} className="cookie-shield-icon" />
-                <h4 className="cookie-banner-title">Privacidade e Gestão de Cookies</h4>
+                <h4 className="cookie-banner-title">{cookieConfig.title}</h4>
               </div>
               <p className="cookie-banner-description">
-                O escritório <strong>Mascârello Haus Advocacia</strong> utiliza cookies estritamente necessários para o funcionamento e segurança do site. Com o seu consentimento livre e informado, também poderemos utilizar cookies analíticos e funcionais para compreender a interação dos usuários e aprimorar nossos serviços digitais, em observância à <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD)</strong> e ao <strong>Guia de Cookies da ANPD</strong>.
+                {cookieConfig.description}
               </p>
               <div className="cookie-banner-links">
                 <Link to="/central-de-protecao-de-dados/">Central de Proteção de Dados</Link>
@@ -264,21 +204,21 @@ export const CookieManager: React.FC = () => {
                 className="btn-cookie-action btn-manage"
                 onClick={() => { setModalTab('preferences'); setIsModalOpen(true); }}
               >
-                <Sliders size={15} /> Personalizar
+                <Sliders size={15} /> {cookieConfig.customizeLabel || 'Personalizar'}
               </button>
               <button
                 type="button"
                 className="btn-cookie-action btn-reject"
                 onClick={handleRejectNonEssential}
               >
-                Rejeitar Opcionais
+                {cookieConfig.rejectOptionalLabel || 'Apenas Essenciais'}
               </button>
               <button
                 type="button"
                 className="btn-cookie-action btn-accept-all"
                 onClick={handleAcceptAll}
               >
-                Aceitar Todos
+                {cookieConfig.acceptAllLabel || 'Aceitar Todos'}
               </button>
             </div>
           </div>
@@ -337,11 +277,11 @@ export const CookieManager: React.FC = () => {
                   <div className="cookie-category-header">
                     <div>
                       <div className="category-title-flex">
-                        <h4>Cookies Estritamente Necessários</h4>
+                        <h4>{cookieConfig.essentialTitle}</h4>
                         <span className="badge-required">Sempre Ativos</span>
                       </div>
                       <p className="cookie-category-text">
-                        Estes cookies são fundamentais para o funcionamento do site e não podem ser desativados nos nossos sistemas. Eles são geralmente configurados em resposta a ações suas, como definir suas preferências de privacidade, iniciar sessão administrativa ou preencher formulários de envio seguro.
+                        {cookieConfig.essentialDesc}
                       </p>
                     </div>
                     <div className="toggle-switch disabled">
@@ -356,11 +296,11 @@ export const CookieManager: React.FC = () => {
                   <div className="cookie-category-header">
                     <div>
                       <div className="category-title-flex">
-                        <h4>Cookies Analíticos e de Desempenho</h4>
+                        <h4>{cookieConfig.analyticsTitle}</h4>
                         <span className="badge-optional">Opcional</span>
                       </div>
                       <p className="cookie-category-text">
-                        Permitem contabilizar visitas e fontes de tráfego de maneira anônima e agregada, para que possamos medir e melhorar o desempenho e a estrutura informativa do site. Todas as informações que estes cookies recolhem são desidentificadas e não identificam diretamente o titular.
+                        {cookieConfig.analyticsDesc}
                       </p>
                     </div>
                     <label className="toggle-switch">
@@ -380,11 +320,11 @@ export const CookieManager: React.FC = () => {
                   <div className="cookie-category-header">
                     <div>
                       <div className="category-title-flex">
-                        <h4>Cookies de Funcionalidade</h4>
+                        <h4>{cookieConfig.functionalTitle}</h4>
                         <span className="badge-optional">Opcional</span>
                       </div>
                       <p className="cookie-category-text">
-                        Estes cookies permitem que o site forneça funcionalidade e personalização aprimoradas, como lembrar seus rascunhos em questionários de conformidade, modo de exibição preferido e preenchimento ágil de formulários.
+                        {cookieConfig.functionalDesc}
                       </p>
                     </div>
                     <label className="toggle-switch">
@@ -404,11 +344,11 @@ export const CookieManager: React.FC = () => {
                   <div className="cookie-category-header">
                     <div>
                       <div className="category-title-flex">
-                        <h4>Cookies de Comunicação & Marketing</h4>
+                        <h4>{cookieConfig.marketingTitle}</h4>
                         <span className="badge-optional">Opcional</span>
                       </div>
                       <p className="cookie-category-text">
-                        Podem ser utilizados eventualmente para medir a eficácia de publicações, campanhas institucionais e compartilhamento de materiais educativos como cartilhas e e-books jurídicos.
+                        {cookieConfig.marketingDesc}
                       </p>
                     </div>
                     <label className="toggle-switch">

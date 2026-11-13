@@ -32,6 +32,12 @@ import FileUploader from '../components/FileUploader';
 import SecurityShield, { createInitialSecurityState } from '../components/SecurityShield';
 import { supabase } from '../lib/supabase';
 import {
+  DEFAULT_LEGAL_DOCUMENTS_CONFIG,
+  DEFAULT_LGPD_GOVERNANCE_CONFIG,
+  LegalDocumentsConfig,
+  LgpdGovernanceConfig,
+} from '../lib/lgpdConfig';
+import {
   sanitizeText,
   generateProtocol,
   getAnonymousIpHash,
@@ -169,6 +175,39 @@ export const CentralProtecaoDados: React.FC = () => {
   const [protocol, setProtocol] = useState('');
   const [copied, setCopied] = useState(false);
   const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
+  const [governanceConfig, setGovernanceConfig] = useState<LgpdGovernanceConfig>(DEFAULT_LGPD_GOVERNANCE_CONFIG);
+  const [legalDocsConfig, setLegalDocsConfig] = useState<LegalDocumentsConfig>(DEFAULT_LEGAL_DOCUMENTS_CONFIG);
+
+  useEffect(() => {
+    let active = true;
+    async function loadLgpdSettings() {
+      try {
+        const { data } = await supabase
+          .from('site_settings')
+          .select('key, value_json')
+          .in('key', ['lgpd_governance', 'legal_documents_config']);
+        if (!active || !Array.isArray(data)) return;
+        const gov = data.find((r: any) => r.key === 'lgpd_governance')?.value_json;
+        const docs = data.find((r: any) => r.key === 'legal_documents_config')?.value_json;
+        if (gov && typeof gov === 'object') {
+          setGovernanceConfig({ ...DEFAULT_LGPD_GOVERNANCE_CONFIG, ...(gov as Partial<LgpdGovernanceConfig>) });
+        }
+        if (docs && typeof docs === 'object') {
+          const typedDocs = docs as Partial<LegalDocumentsConfig>;
+          setLegalDocsConfig({
+            privacyPolicy: { ...DEFAULT_LEGAL_DOCUMENTS_CONFIG.privacyPolicy, ...(typedDocs.privacyPolicy || {}) },
+            termsOfUse: { ...DEFAULT_LEGAL_DOCUMENTS_CONFIG.termsOfUse, ...(typedDocs.termsOfUse || {}) },
+          });
+        }
+      } catch {
+        // Fallback silencioso para valores padrão
+      }
+    }
+    loadLgpdSettings();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Restore draft
   useEffect(() => {
@@ -443,13 +482,13 @@ export const CentralProtecaoDados: React.FC = () => {
                   Encarregada de Dados (DPO)
                 </span>
                 <strong style={{ display: 'block', color: '#ffffff', fontSize: '1rem', marginTop: '2px' }}>
-                  Mirataira Haus
+                  {governanceConfig.dpoName}
                 </strong>
                 <a
-                  href="mailto:privacidade@mascarellohaus.adv.br"
+                  href={`mailto:${governanceConfig.dpoEmail}`}
                   style={{ color: '#e2e8f0', fontSize: '0.85rem', textDecoration: 'underline' }}
                 >
-                  privacidade@mascarellohaus.adv.br
+                  {governanceConfig.dpoEmail}
                 </a>
               </div>
             </div>
@@ -471,7 +510,7 @@ export const CentralProtecaoDados: React.FC = () => {
                   Prazo Legal de Resposta
                 </span>
                 <strong style={{ display: 'block', color: '#ffffff', fontSize: '1rem', marginTop: '2px' }}>
-                  Até 15 dias úteis
+                  Até {governanceConfig.responseDeadlineDays} dias úteis
                 </strong>
                 <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.82rem' }}>
                   Conforme Art. 19, II da Lei 13.709/2018
@@ -1132,17 +1171,23 @@ export const CentralProtecaoDados: React.FC = () => {
             <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '48px 40px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
               <div style={{ borderBottom: '2px solid #e2e8f0', paddingBottom: '20px', marginBottom: '32px' }}>
                 <span style={{ color: '#cbab7a', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                  Transparência & Conformidade Regulatória
+                  {legalDocsConfig.privacyPolicy.subtitle}
                 </span>
                 <h2 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '2.2rem', margin: '8px 0 10px' }}>
-                  Aviso de Privacidade & Tratamento de Dados
+                  {legalDocsConfig.privacyPolicy.title}
                 </h2>
                 <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0 }}>
-                  Versão 2.1 — Atualizado em conformidade com as resoluções da ANPD e Lei nº 13.709/2018.
+                  Versão {legalDocsConfig.privacyPolicy.version} — Atualizado em {legalDocsConfig.privacyPolicy.updatedAt} em conformidade com a Lei nº 13.709/2018.
                 </p>
               </div>
 
-              <div style={{ color: '#334155', fontSize: '0.98rem', lineHeight: 1.8 }}>
+              {legalDocsConfig.privacyPolicy.customHtml.trim() ? (
+                <div
+                  style={{ color: '#334155', fontSize: '0.98rem', lineHeight: 1.8 }}
+                  dangerouslySetInnerHTML={{ __html: legalDocsConfig.privacyPolicy.customHtml }}
+                />
+              ) : (
+                <div style={{ color: '#334155', fontSize: '0.98rem', lineHeight: 1.8 }}>
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '1.4rem', marginTop: '24px', marginBottom: '12px' }}>
                   1. Compromisso com a sua Privacidade
                 </h3>
@@ -1254,9 +1299,10 @@ export const CentralProtecaoDados: React.FC = () => {
                   5. Contato com a Encarregada de Dados (DPO)
                 </h3>
                 <p>
-                  Para quaisquer dúvidas sobre este aviso, entre em contato direto pelo e-mail: <strong>privacidade@mascarellohaus.adv.br</strong> ou utilize a aba de <button type="button" onClick={() => switchTab('requisicao')} style={{ background: 'none', border: 'none', color: '#0d3732', textDecoration: 'underline', fontWeight: 600, cursor: 'pointer', padding: 0 }}>Requisição do Titular</button>.
+                  Para quaisquer dúvidas sobre este aviso, entre em contato direto pelo e-mail: <strong>{governanceConfig.dpoEmail}</strong> ou utilize a aba de <button type="button" onClick={() => switchTab('requisicao')} style={{ background: 'none', border: 'none', color: '#0d3732', textDecoration: 'underline', fontWeight: 600, cursor: 'pointer', padding: 0 }}>Requisição do Titular</button>.
                 </p>
               </div>
+              )}
             </div>
           )}
 
@@ -1265,17 +1311,23 @@ export const CentralProtecaoDados: React.FC = () => {
             <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '48px 40px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
               <div style={{ borderBottom: '2px solid #e2e8f0', paddingBottom: '20px', marginBottom: '32px' }}>
                 <span style={{ color: '#cbab7a', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                  Termos Gerais e Condições de Uso
+                  {legalDocsConfig.termsOfUse.subtitle}
                 </span>
                 <h2 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '2.2rem', margin: '8px 0 10px' }}>
-                  Termos de Uso do Site Mascârello Haus
+                  {legalDocsConfig.termsOfUse.title}
                 </h2>
                 <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0 }}>
-                  Versão 1 — Regula o acesso e as condições de uso do portal https://mascarellohaus.adv.br/
+                  Versão {legalDocsConfig.termsOfUse.version} — Atualizado em {legalDocsConfig.termsOfUse.updatedAt} · Regula o acesso ao portal https://mascarellohaus.adv.br/
                 </p>
               </div>
 
-              <div style={{ color: '#334155', fontSize: '0.96rem', lineHeight: 1.8 }}>
+              {legalDocsConfig.termsOfUse.customHtml.trim() ? (
+                <div
+                  style={{ color: '#334155', fontSize: '0.96rem', lineHeight: 1.8 }}
+                  dangerouslySetInnerHTML={{ __html: legalDocsConfig.termsOfUse.customHtml }}
+                />
+              ) : (
+                <div style={{ color: '#334155', fontSize: '0.96rem', lineHeight: 1.8 }}>
                 <p style={{ fontStyle: 'italic', color: '#475569', marginBottom: '24px' }}>
                   O presente termo regula o acesso e condições de uso do site https://mascarellohaus.adv.br/, bem como os serviços oferecidos por meio da aplicação, estabelecendo os direitos e as obrigações dos usuários.
                 </p>
@@ -1334,6 +1386,7 @@ export const CentralProtecaoDados: React.FC = () => {
                   Videira — Santa Catarina | Mascârello Haus Advocacia
                 </p>
               </div>
+              )}
             </div>
           )}
 

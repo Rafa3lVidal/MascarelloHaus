@@ -11,7 +11,15 @@ import {
   Plus,
   ShieldCheck,
   TrendingUp,
+  Cookie,
+  Database,
+  Scale,
 } from 'lucide-react';
+import {
+  CookieBannerConfig,
+  LegalDocumentsConfig,
+  LgpdGovernanceConfig,
+} from '../../../lib/lgpdConfig';
 import {
   ContactMessageRecord,
   ConsentRecord,
@@ -35,6 +43,9 @@ interface OverviewTabProps {
   quizSubmissions: QuizSubmissionRecord[];
   consentRecords: ConsentRecord[];
   mfaEnabled: boolean;
+  cookieConfig: CookieBannerConfig;
+  governanceConfig: LgpdGovernanceConfig;
+  legalDocsConfig: LegalDocumentsConfig;
   onNavigate: (tab: DashboardTab) => void;
   onNewPost: () => void;
 }
@@ -47,6 +58,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
   quizSubmissions,
   consentRecords,
   mfaEnabled,
+  cookieConfig,
+  governanceConfig,
+  legalDocsConfig,
   onNavigate,
   onNewPost,
 }) => {
@@ -77,6 +91,17 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
   ).length;
 
   const grantedConsents = consentRecords.filter((c) => c.granted).length;
+
+  const openIncidents = governanceConfig.incidents.filter((i) => i.status !== 'encerrado').length;
+  const lgpdChecks = [
+    { label: 'Banner de Cookies', ok: cookieConfig.enabled && cookieConfig.cookiesTable.length > 0, tab: 'cookies' as DashboardTab },
+    { label: 'DPO Configurado', ok: Boolean(governanceConfig.dpoName.trim() && governanceConfig.dpoEmail.trim()), tab: 'governance' as DashboardTab },
+    { label: 'Mapeamento ROPA', ok: governanceConfig.ropaRecords.length > 0, tab: 'governance' as DashboardTab },
+    { label: 'Privacidade & Termos', ok: Boolean(legalDocsConfig.privacyPolicy.version && legalDocsConfig.termsOfUse.version), tab: 'legal_docs' as DashboardTab },
+    { label: 'Incidentes Controlados', ok: openIncidents === 0, tab: 'governance' as DashboardTab },
+    { label: 'Verificação 2FA', ok: mfaEnabled, tab: 'audit' as DashboardTab },
+  ];
+  const maturityScore = Math.round((lgpdChecks.filter((c) => c.ok).length / lgpdChecks.length) * 100);
 
   return (
     <div className="overview-wrapper">
@@ -127,6 +152,54 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           </div>
         </div>
       )}
+
+      {/* LGPD Executive Governance Strip */}
+      <div className="lgpd-executive-card">
+        <div className="lgpd-exec-top">
+          <div>
+            <span className="lgpd-exec-kicker">Governança & Privacidade · Lei nº 13.709/2018</span>
+            <h3>Índice de Prontidão LGPD do Portal</h3>
+            <p>
+              Encarregado (DPO): <strong>{governanceConfig.dpoName}</strong> ({governanceConfig.dpoEmail}) ·{' '}
+              {governanceConfig.ropaRecords.length} processo(s) mapeado(s) · {openIncidents} incidente(s) aberto(s)
+            </p>
+          </div>
+          <div className="lgpd-exec-score-box">
+            <span className="lgpd-exec-score-value tabular-nums">{maturityScore}%</span>
+            <small>Conformidade Operacional</small>
+          </div>
+        </div>
+
+        <div className="lgpd-progress-track" aria-hidden="true">
+          <div className="lgpd-progress-fill" style={{ width: `${maturityScore}%` }} />
+        </div>
+
+        <div className="lgpd-exec-pills">
+          {lgpdChecks.map((chk) => (
+            <button
+              key={chk.label}
+              type="button"
+              className={`lgpd-check-pill ${chk.ok ? 'ok' : 'pending'}`}
+              onClick={() => onNavigate(chk.tab)}
+            >
+              <CheckCircle2 size={13} />
+              <span>{chk.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="lgpd-exec-shortcuts">
+          <button type="button" className="exec-shortcut-btn" onClick={() => onNavigate('cookies')}>
+            <Cookie size={14} /> Configurar Banner de Cookies
+          </button>
+          <button type="button" className="exec-shortcut-btn" onClick={() => onNavigate('governance')}>
+            <Database size={14} /> ROPA, Incidentes & DPO
+          </button>
+          <button type="button" className="exec-shortcut-btn" onClick={() => onNavigate('legal_docs')}>
+            <Scale size={14} /> Privacidade & Termos de Uso
+          </button>
+        </div>
+      </div>
 
       {/* KPI Grid */}
       <div className="kpi-grid">

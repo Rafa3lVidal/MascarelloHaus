@@ -20,7 +20,18 @@ import {
   Menu,
   X,
   Shield,
+  Cookie,
+  Database,
+  Scale,
 } from 'lucide-react';
+import {
+  CookieBannerConfig,
+  DEFAULT_COOKIE_BANNER_CONFIG,
+  DEFAULT_LEGAL_DOCUMENTS_CONFIG,
+  DEFAULT_LGPD_GOVERNANCE_CONFIG,
+  LegalDocumentsConfig,
+  LgpdGovernanceConfig,
+} from '../../lib/lgpdConfig';
 import {
   AuditLogRecord,
   CategoryRecord,
@@ -46,6 +57,9 @@ import { MessagesTab } from './components/MessagesTab';
 import { QuizzesTab } from './components/QuizzesTab';
 import { SiteContentTab } from './components/SiteContentTab';
 import { AuditAndSecurityTab } from './components/AuditAndSecurityTab';
+import { CookiesAndConsentTab } from './components/CookiesAndConsentTab';
+import { GovernanceAndRopaTab } from './components/GovernanceAndRopaTab';
+import { LegalDocumentsTab } from './components/LegalDocumentsTab';
 import './admin-dashboard.css';
 
 const DEFAULT_SITE_SETTINGS: SiteSettingsState = {
@@ -89,6 +103,18 @@ const TAB_HEADER_INFO: Record<DashboardTab, { title: string; subtitle: string }>
     title: 'Central LGPD — Requisições de Titulares (Art. 18)',
     subtitle: 'Acompanhe prazos legais de 15 dias, analise anexos e registre o parecer do DPO.',
   },
+  cookies: {
+    title: 'Banner de Cookies, Inventário & Consentimentos',
+    subtitle: 'Configure o aviso de cookies ao vivo, categorias, tabela de transparência e registros de aceite.',
+  },
+  governance: {
+    title: 'Governança LGPD, Mapeamento ROPA & Incidentes',
+    subtitle: 'Gerencie operações de tratamento (Art. 37), incidentes (Art. 48) e dados do Encarregado (DPO).',
+  },
+  legal_docs: {
+    title: 'Política de Privacidade & Termos de Uso',
+    subtitle: 'Edite, versione e publique os documentos legais exibidos na Central de Proteção de Dados.',
+  },
   denuncias: {
     title: 'Canal de Denúncias & Ouvidoria Segura',
     subtitle: 'Triagem e apuração sigilosa de relatos recebidos com acompanhamento de status.',
@@ -126,6 +152,9 @@ export const AdminDashboard: React.FC = () => {
   const [consentRecords, setConsentRecords] = useState<ConsentRecord[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogRecord[]>([]);
   const [siteSettings, setSiteSettings] = useState<SiteSettingsState>(DEFAULT_SITE_SETTINGS);
+  const [cookieConfig, setCookieConfig] = useState<CookieBannerConfig>(DEFAULT_COOKIE_BANNER_CONFIG);
+  const [governanceConfig, setGovernanceConfig] = useState<LgpdGovernanceConfig>(DEFAULT_LGPD_GOVERNANCE_CONFIG);
+  const [legalDocsConfig, setLegalDocsConfig] = useState<LegalDocumentsConfig>(DEFAULT_LEGAL_DOCUMENTS_CONFIG);
 
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -229,7 +258,23 @@ export const AdminDashboard: React.FC = () => {
       if (Array.isArray(settingsData)) {
         const general = settingsData.find((s: any) => s.key === 'general')?.value_json || {};
         const home = settingsData.find((s: any) => s.key === 'home_content')?.value_json || {};
+        const lgpdCookies = settingsData.find((s: any) => s.key === 'lgpd_cookies')?.value_json;
+        const lgpdGovernance = settingsData.find((s: any) => s.key === 'lgpd_governance')?.value_json;
+        const legalDocs = settingsData.find((s: any) => s.key === 'legal_documents_config')?.value_json;
+
         setSiteSettings((prev) => ({ ...prev, ...general, ...home }));
+        if (lgpdCookies && typeof lgpdCookies === 'object') {
+          setCookieConfig({ ...DEFAULT_COOKIE_BANNER_CONFIG, ...lgpdCookies });
+        }
+        if (lgpdGovernance && typeof lgpdGovernance === 'object') {
+          setGovernanceConfig({ ...DEFAULT_LGPD_GOVERNANCE_CONFIG, ...lgpdGovernance });
+        }
+        if (legalDocs && typeof legalDocs === 'object') {
+          setLegalDocsConfig({
+            privacyPolicy: { ...DEFAULT_LEGAL_DOCUMENTS_CONFIG.privacyPolicy, ...(legalDocs.privacyPolicy || {}) },
+            termsOfUse: { ...DEFAULT_LEGAL_DOCUMENTS_CONFIG.termsOfUse, ...(legalDocs.termsOfUse || {}) },
+          });
+        }
       }
 
       const profileRes = results[11];
@@ -434,7 +479,7 @@ export const AdminDashboard: React.FC = () => {
             </span>
           </button>
 
-          <span className="sidebar-section-label">Compliance & Atendimento</span>
+          <span className="sidebar-section-label">Privacidade & LGPD</span>
 
           <button
             type="button"
@@ -442,12 +487,46 @@ export const AdminDashboard: React.FC = () => {
             onClick={() => handleSelectTab('lgpd')}
           >
             <span className="sidebar-nav-left">
-              <ShieldAlert size={17} /> Central LGPD
+              <ShieldAlert size={17} /> Requisições LGPD
             </span>
             <span className={`sidebar-count-badge ${openLgpdCount > 0 ? 'alert' : ''}`}>
               {openLgpdCount > 0 ? `${openLgpdCount} aberta(s)` : lgpdRequests.length}
             </span>
           </button>
+
+          <button
+            type="button"
+            className={`sidebar-nav-btn ${activeTab === 'cookies' ? 'active' : ''}`}
+            onClick={() => handleSelectTab('cookies')}
+          >
+            <span className="sidebar-nav-left">
+              <Cookie size={17} /> Cookies & Consentimentos
+            </span>
+            <span className="sidebar-count-badge">{consentRecords.length}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`sidebar-nav-btn ${activeTab === 'governance' ? 'active' : ''}`}
+            onClick={() => handleSelectTab('governance')}
+          >
+            <span className="sidebar-nav-left">
+              <Database size={17} /> Governança, ROPA & Incidentes
+            </span>
+            <span className="sidebar-count-badge">{governanceConfig.ropaRecords.length}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`sidebar-nav-btn ${activeTab === 'legal_docs' ? 'active' : ''}`}
+            onClick={() => handleSelectTab('legal_docs')}
+          >
+            <span className="sidebar-nav-left">
+              <Scale size={17} /> Privacidade & Termos
+            </span>
+          </button>
+
+          <span className="sidebar-section-label">Compliance & Atendimento</span>
 
           <button
             type="button"
@@ -567,6 +646,9 @@ export const AdminDashboard: React.FC = () => {
                 quizSubmissions={quizSubmissions}
                 consentRecords={consentRecords}
                 mfaEnabled={mfaEnabled}
+                cookieConfig={cookieConfig}
+                governanceConfig={governanceConfig}
+                legalDocsConfig={legalDocsConfig}
                 onNavigate={handleSelectTab}
                 onNewPost={handleQuickNewPost}
               />
@@ -609,6 +691,37 @@ export const AdminDashboard: React.FC = () => {
                 currentUserId={currentUser?.id}
                 onShowToast={showToast}
                 onRefresh={() => loadAllData(currentUser?.id, true)}
+                onAudit={logAdminAction}
+              />
+            )}
+
+            {activeTab === 'cookies' && (
+              <CookiesAndConsentTab
+                config={cookieConfig}
+                consentRecords={consentRecords}
+                currentUserId={currentUser?.id}
+                onChange={setCookieConfig}
+                onShowToast={showToast}
+                onAudit={logAdminAction}
+              />
+            )}
+
+            {activeTab === 'governance' && (
+              <GovernanceAndRopaTab
+                config={governanceConfig}
+                currentUserId={currentUser?.id}
+                onChange={setGovernanceConfig}
+                onShowToast={showToast}
+                onAudit={logAdminAction}
+              />
+            )}
+
+            {activeTab === 'legal_docs' && (
+              <LegalDocumentsTab
+                config={legalDocsConfig}
+                currentUserId={currentUser?.id}
+                onChange={setLegalDocsConfig}
+                onShowToast={showToast}
                 onAudit={logAdminAction}
               />
             )}
