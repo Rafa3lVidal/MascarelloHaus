@@ -266,7 +266,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           </div>
         </button>
 
-        <button type="button" className="kpi-card" onClick={() => onNavigate('audit')}>
+        <button type="button" className="kpi-card" onClick={() => onNavigate('cookies')}>
           <div className="kpi-header">
             <span className="kpi-label">Consentimentos LGPD</span>
             <span className="kpi-icon slate">
@@ -278,6 +278,112 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             <span className="kpi-tag success">{grantedConsents} aceitos</span>
           </div>
         </button>
+      </div>
+
+      {/* Analytics & Compliance Insights */}
+      <div className="overview-charts-grid">
+        <div className="chart-card">
+          <div className="chart-card-header">
+            <div>
+              <h3>Status das Requisições LGPD</h3>
+              <p>Distribuição por etapa de atendimento (Art. 18)</p>
+            </div>
+            <span className="badge-tone info tabular-nums">
+              {lgpdRequests.length} total
+            </span>
+          </div>
+
+          <div className="status-bars-list">
+            {(['recebido', 'em_analise', 'aguardando_titular', 'concluido', 'rejeitado'] as const).map((statusKey) => {
+              const count = lgpdRequests.filter((r) => r.status === statusKey).length;
+              const pct = lgpdRequests.length > 0 ? Math.round((count / lgpdRequests.length) * 100) : 0;
+              const meta = LGPD_STATUS_META[statusKey];
+              return (
+                <div key={statusKey} className="status-bar-row">
+                  <div className="status-bar-label">
+                    <span>{meta.label}</span>
+                    <strong className="tabular-nums">
+                      {count} <small>({pct}%)</small>
+                    </strong>
+                  </div>
+                  <div className="status-bar-track">
+                    <div className={`status-bar-fill tone-${meta.tone}`} style={{ width: `${pct}%` }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="chart-card">
+          <div className="chart-card-header">
+            <div>
+              <h3>Preferências de Cookies & Consentimentos</h3>
+              <p>Taxa de aceitação granular registrada no portal</p>
+            </div>
+            <button type="button" className="panel-link-btn" onClick={() => onNavigate('cookies')}>
+              Gerenciar <ArrowRight size={13} />
+            </button>
+          </div>
+
+          {(() => {
+            const totalC = consentRecords.length;
+            const grantedPct = totalC > 0 ? Math.round((grantedConsents / totalC) * 100) : 0;
+            const essentialOnly = Math.max(0, totalC - grantedConsents);
+            const circumference = 2 * Math.PI * 44;
+            const dashOffset = circumference - (circumference * grantedPct) / 100;
+
+            return (
+              <div className="donut-chart-wrap">
+                <svg width="116" height="116" viewBox="0 0 116 116" className="donut-svg" aria-hidden="true">
+                  <circle cx="58" cy="58" r="44" fill="none" stroke="#e2e8f0" strokeWidth="12" />
+                  <circle
+                    cx="58"
+                    cy="58"
+                    r="44"
+                    fill="none"
+                    stroke="#0d9488"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={dashOffset}
+                    transform="rotate(-90 58 58)"
+                  />
+                  <text x="58" y="55" textAnchor="middle" className="donut-center-value">
+                    {grantedPct}%
+                  </text>
+                  <text x="58" y="72" textAnchor="middle" className="donut-center-sub">
+                    Aceite
+                  </text>
+                </svg>
+
+                <div className="donut-legend">
+                  <div className="donut-legend-item">
+                    <span className="legend-dot granted" />
+                    <div>
+                      <strong className="tabular-nums">{grantedConsents}</strong>
+                      <small>Consentimentos completos</small>
+                    </div>
+                  </div>
+                  <div className="donut-legend-item">
+                    <span className="legend-dot essential" />
+                    <div>
+                      <strong className="tabular-nums">{essentialOnly}</strong>
+                      <small>Apenas cookies essenciais</small>
+                    </div>
+                  </div>
+                  <div className="donut-legend-item">
+                    <span className="legend-dot ropa" />
+                    <div>
+                      <strong className="tabular-nums">{cookieConfig.cookiesTable.length} itens</strong>
+                      <small>No inventário (v{cookieConfig.version})</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </div>
       </div>
 
       {/* Quick Actions Bar */}

@@ -23,6 +23,8 @@ import {
   Cookie,
   Database,
   Scale,
+  Search,
+  ArrowRight,
 } from 'lucide-react';
 import {
   CookieBannerConfig,
@@ -158,6 +160,9 @@ export const AdminDashboard: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [lastSyncedAt, setLastSyncedAt] = useState<Date | null>(null);
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const [cmdQuery, setCmdQuery] = useState('');
   const [partialNotice, setPartialNotice] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [newPostTrigger, setNewPostTrigger] = useState(0);
@@ -295,6 +300,7 @@ export const AdminDashboard: React.FC = () => {
       } catch {
         // Ignore MFA check failure
       }
+      setLastSyncedAt(new Date());
     } catch (err: any) {
       console.error('Erro ao carregar dados do painel:', err);
       showToast('error', 'Não foi possível sincronizar os dados do painel no momento.');
@@ -339,6 +345,19 @@ export const AdminDashboard: React.FC = () => {
       subscription.unsubscribe();
     };
   }, [navigate, loadAllData]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCmdOpen((prev) => !prev);
+      } else if (e.key === 'Escape' && cmdOpen) {
+        setCmdOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [cmdOpen]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -600,6 +619,25 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div className="content-header-actions">
+            {lastSyncedAt && (
+              <span className="sync-time-pill tabular-nums" title="Última atualização dos dados">
+                Atualizado às{' '}
+                {lastSyncedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            )}
+            <button
+              type="button"
+              className="header-search-btn"
+              onClick={() => {
+                setCmdQuery('');
+                setCmdOpen(true);
+              }}
+              title="Busca rápida no painel (Ctrl+K)"
+            >
+              <Search size={14} />
+              <span>Busca rápida...</span>
+              <kbd>Ctrl+K</kbd>
+            </button>
             <button
               type="button"
               onClick={() => loadAllData(currentUser?.id, true)}
@@ -759,6 +797,192 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
       </main>
+
+      {/* Global Quick Search / Command Palette */}
+      {cmdOpen && (
+        <div
+          className="admin-modal-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Busca rápida no painel"
+          onClick={() => setCmdOpen(false)}
+        >
+          <div className="cmd-palette-card" onClick={(e) => e.stopPropagation()}>
+            <div className="cmd-palette-input-row">
+              <Search size={18} color="#64748b" />
+              <input
+                type="text"
+                autoFocus
+                placeholder="Buscar módulo, protocolo LGPD, denúncia, artigo ou processo ROPA..."
+                value={cmdQuery}
+                onChange={(e) => setCmdQuery(e.target.value)}
+              />
+              <button type="button" className="modal-close-btn" onClick={() => setCmdOpen(false)}>
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="cmd-palette-results">
+              {(() => {
+                const q = cmdQuery.trim().toLowerCase();
+                const moduleItems: { label: string; category: string; tab: DashboardTab }[] = [
+                  { label: 'Visão Geral & Maturidade LGPD', category: 'Módulo', tab: 'overview' },
+                  { label: 'Requisições de Titulares (Art. 18)', category: 'LGPD', tab: 'lgpd' },
+                  { label: 'Banner de Cookies & Consentimentos', category: 'LGPD', tab: 'cookies' },
+                  { label: 'Governança, Mapeamento ROPA & Incidentes', category: 'LGPD', tab: 'governance' },
+                  { label: 'Política de Privacidade & Termos de Uso', category: 'LGPD', tab: 'legal_docs' },
+                  { label: 'Canal de Denúncias & Ouvidoria', category: 'Compliance', tab: 'denuncias' },
+                  { label: 'Avaliações de Fornecedores (Quiz)', category: 'Compliance', tab: 'quizzes' },
+                  { label: 'Artigos, Cartilhas e E-books', category: 'Conteúdo', tab: 'posts' },
+                  { label: 'Páginas & Áreas de Atuação', category: 'Conteúdo', tab: 'pages' },
+                  { label: 'Textos & Configurações do Site', category: 'Conteúdo', tab: 'content' },
+                  { label: 'Mensagens de Contato', category: 'Atendimento', tab: 'messages' },
+                  { label: 'Auditoria & Segurança (2FA)', category: 'Sistema', tab: 'audit' },
+                ];
+
+                const matchedModules = moduleItems.filter(
+                  (m) => !q || m.label.toLowerCase().includes(q) || m.category.toLowerCase().includes(q)
+                );
+
+                const matchedLgpd = q
+                  ? lgpdRequests
+                      .filter(
+                        (r) =>
+                          r.protocol.toLowerCase().includes(q) ||
+                          r.requester_name.toLowerCase().includes(q)
+                      )
+                      .slice(0, 4)
+                  : [];
+
+                const matchedPosts = q
+                  ? posts.filter((p) => p.title.toLowerCase().includes(q)).slice(0, 4)
+                  : [];
+
+                const matchedRopa = q
+                  ? governanceConfig.ropaRecords
+                      .filter(
+                        (r) =>
+                          r.processName.toLowerCase().includes(q) ||
+                          r.area.toLowerCase().includes(q)
+                      )
+                      .slice(0, 4)
+                  : [];
+
+                const matchedMsgs = q
+                  ? messages
+                      .filter(
+                        (m) =>
+                          m.name.toLowerCase().includes(q) ||
+                          (m.subject || '').toLowerCase().includes(q)
+                      )
+                      .slice(0, 4)
+                  : [];
+
+                const totalResults =
+                  matchedModules.length +
+                  matchedLgpd.length +
+                  matchedPosts.length +
+                  matchedRopa.length +
+                  matchedMsgs.length;
+
+                if (totalResults === 0) {
+                  return <p className="cmd-empty">Nenhum resultado encontrado para "{cmdQuery}".</p>;
+                }
+
+                return (
+                  <>
+                    {matchedModules.map((m) => (
+                      <button
+                        key={m.tab}
+                        type="button"
+                        className="cmd-result-item"
+                        onClick={() => {
+                          handleSelectTab(m.tab);
+                          setCmdOpen(false);
+                        }}
+                      >
+                        <div>
+                          <strong>{m.label}</strong>
+                          <small>{m.category}</small>
+                        </div>
+                        <ArrowRight size={14} />
+                      </button>
+                    ))}
+                    {matchedLgpd.map((r) => (
+                      <button
+                        key={`lgpd-${r.id}`}
+                        type="button"
+                        className="cmd-result-item"
+                        onClick={() => {
+                          handleSelectTab('lgpd');
+                          setCmdOpen(false);
+                        }}
+                      >
+                        <div>
+                          <strong>{r.protocol} — {r.requester_name}</strong>
+                          <small>Requisição LGPD</small>
+                        </div>
+                        <ArrowRight size={14} />
+                      </button>
+                    ))}
+                    {matchedRopa.map((r) => (
+                      <button
+                        key={`ropa-${r.id}`}
+                        type="button"
+                        className="cmd-result-item"
+                        onClick={() => {
+                          handleSelectTab('governance');
+                          setCmdOpen(false);
+                        }}
+                      >
+                        <div>
+                          <strong>{r.processName}</strong>
+                          <small>Mapeamento ROPA · {r.area}</small>
+                        </div>
+                        <ArrowRight size={14} />
+                      </button>
+                    ))}
+                    {matchedPosts.map((p) => (
+                      <button
+                        key={`post-${p.id}`}
+                        type="button"
+                        className="cmd-result-item"
+                        onClick={() => {
+                          handleSelectTab('posts');
+                          setCmdOpen(false);
+                        }}
+                      >
+                        <div>
+                          <strong>{p.title}</strong>
+                          <small>Artigo / Publicação</small>
+                        </div>
+                        <ArrowRight size={14} />
+                      </button>
+                    ))}
+                    {matchedMsgs.map((m) => (
+                      <button
+                        key={`msg-${m.id}`}
+                        type="button"
+                        className="cmd-result-item"
+                        onClick={() => {
+                          handleSelectTab('messages');
+                          setCmdOpen(false);
+                        }}
+                      >
+                        <div>
+                          <strong>{m.name} — {m.subject || 'Contato'}</strong>
+                          <small>Mensagem</small>
+                        </div>
+                        <ArrowRight size={14} />
+                      </button>
+                    ))}
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
