@@ -29,6 +29,9 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
   const [showPreview, setShowPreview] = useState(false);
 
   const activeDoc = config[docKey];
+  const fallbackTemplate =
+    docKey === 'privacyPolicy' ? DEFAULT_PRIVACY_TEMPLATE_HTML : DEFAULT_TERMS_TEMPLATE_HTML;
+  const effectiveHtml = activeDoc.customHtml.trim() ? activeDoc.customHtml : fallbackTemplate;
 
   const updateActiveDoc = (patch: Partial<LegalDocConfig>) => {
     onChange({
@@ -124,7 +127,7 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
                 </p>
               </div>
               <button type="button" className="btn-outline-admin" onClick={handleLoadTemplate}>
-                <RotateCcw size={14} /> Carregar Modelo Base
+                <RotateCcw size={14} /> Restaurar Texto Padrão
               </button>
             </div>
 
@@ -169,7 +172,7 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
 
             <div className="form-group" style={{ marginTop: '16px' }}>
               <label>
-                Conteúdo Personalizado (HTML estruturado — deixe em branco para manter o texto jurídico padrão completo do portal)
+                Conteúdo Completo do Documento (HTML estruturado exibido no portal público)
               </label>
 
               {showPreview ? (
@@ -179,24 +182,18 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
                   <p className="legal-preview-meta">
                     Versão {activeDoc.version} · Atualizado em {activeDoc.updatedAt}
                   </p>
-                  {activeDoc.customHtml.trim() ? (
-                    <div
-                      className="legal-preview-body"
-                      dangerouslySetInnerHTML={{ __html: activeDoc.customHtml }}
-                    />
-                  ) : (
-                    <p className="table-subtext">
-                      Nenhum texto customizado definido. O site está exibindo o texto jurídico padrão completo. Clique em "Carregar Modelo Base" se quiser editar todas as cláusulas manualmente.
-                    </p>
-                  )}
+                  <div
+                    className="legal-preview-body"
+                    dangerouslySetInnerHTML={{ __html: effectiveHtml }}
+                  />
                 </div>
               ) : (
                 <textarea
-                  rows={14}
+                  rows={20}
                   className="form-control code-textarea"
-                  value={activeDoc.customHtml}
+                  value={effectiveHtml}
                   onChange={(e) => updateActiveDoc({ customHtml: e.target.value })}
-                  placeholder="Opcional: insira HTML estruturado (<h3>, <p>, <ul><li>...) ou clique em 'Carregar Modelo Base' acima para editar a partir do modelo oficial."
+                  placeholder="Insira o texto completo em HTML estruturado (<h3>, <p>, <ul><li>...)..."
                 />
               )}
             </div>

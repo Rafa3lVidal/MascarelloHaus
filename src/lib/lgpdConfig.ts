@@ -277,50 +277,68 @@ export const DEFAULT_LGPD_GOVERNANCE_CONFIG: LgpdGovernanceConfig = {
   incidents: [],
 };
 
+export const DEFAULT_PRIVACY_TEMPLATE_HTML = `<h3>1. Compromisso com a sua Privacidade</h3>
+<p>A <strong>Mascârello Haus Advocacia e Consultoria</strong> valoriza a confiança de seus clientes, parceiros, colaboradores e visitantes. Por isso, estruturou suas rotinas operacionais e técnicas sob os mais rigorosos padrões de segurança da informação e governança em proteção de dados pessoais.</p>
+
+<h3>2. Princípios Orientadores (Art. 6º da LGPD)</h3>
+<p>Todo tratamento de dados realizado por nosso escritório observa estritamente os princípios legais de:</p>
+<ul>
+  <li><strong>Finalidade e Adequação:</strong> Coleta compatível exclusivamente com propósitos legítimos e específicos informados ao titular.</li>
+  <li><strong>Necessidade (Minimização):</strong> Limitação do tratamento ao mínimo necessário para a realização das finalidades contratadas ou legais.</li>
+  <li><strong>Livre Acesso e Qualidade:</strong> Garantia de consulta facilitada e exatidão contínua dos dados aos respectivos titulares.</li>
+  <li><strong>Transparência:</strong> Informações claras, precisas e facilmente acessíveis sobre os critérios e agentes de tratamento.</li>
+  <li><strong>Segurança e Prevenção:</strong> Adoção de medidas técnicas (criptografia, controle de acessos restritos, registros de logs) para blindagem contra vazamentos.</li>
+  <li><strong>Não Discriminação e Responsabilização:</strong> Impossibilidade de uso para fins discriminatórios ou abusivos e prestação eficaz de contas.</li>
+</ul>
+
+<h3>3. Bases Legais e Finalidades de Coleta</h3>
+<p>Os dados tratados por meio deste website (como formulários de contato, Central do Titular e Canal de Denúncias) apoiam-se nas bases legais do <strong>cumprimento de obrigação legal e regulatória (Art. 7º, II)</strong>, <strong>execução de procedimentos preliminares a contratos (Art. 7º, V)</strong>, <strong>exercício regular de direitos em processos judiciais ou administrativos (Art. 7º, VI)</strong> e <strong>legítimo interesse do controlador (Art. 7º, IX)</strong>.</p>
+
+<h3>4. Gestão de Cookies e Tecnologias de Armazenamento Local</h3>
+<p>Nosso portal utiliza cookies e chaves de armazenamento local estritamente necessários para segurança cibernética, prevenção contra abusos automatizados e integridade de sessões. Recursos funcionais (como salvamento de rascunho de formulários) e cookies analíticos somente são mantidos conforme suas escolhas. A qualquer instante, você pode revisar ou revogar suas preferências através do botão de Cookies disponível no portal.</p>
+
+<h3>5. Contato com a Encarregada de Dados (DPO)</h3>
+<p>Para quaisquer dúvidas sobre este aviso ou para exercer os direitos previstos no Art. 18 da LGPD (confirmação, acesso, correção, eliminação, portabilidade e revogação de consentimento), entre em contato direto pelo e-mail institucional <strong>privacidade@mascarellohaus.adv.br</strong> ou utilize a Central de Proteção de Dados.</p>`;
+
+export const DEFAULT_TERMS_TEMPLATE_HTML = `<p><em>O presente termo regula o acesso e condições de uso do site https://mascarellohaus.adv.br/, bem como os serviços oferecidos por meio da aplicação, estabelecendo os direitos e as obrigações dos usuários.</em></p>
+
+<h3>1. QUEM SOMOS</h3>
+<p>Somos um escritório dedicado a atender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas à regulação do mercado, direcionado ao Compliance nas mais diversas áreas, em especial à proteção de Dados. Por meio de equipe multidisciplinar, orienta e desenvolve estratégias que atendam aspectos regulamentares, de governança corporativa e de segurança da informação em respeito à metodologia aplicável a cada segmento. De maneira proativa também atua nas organizações da sociedade civil em projetos sociais e Advocacia Pro Bono.</p>
+
+<h3>2. TERMOS E DEFINIÇÕES</h3>
+<p><strong>Cookies:</strong> Arquivos gerados automaticamente e guardados nos dispositivos ao acessar o site, retendo informações identificadoras do dispositivo e navegação.</p>
+<p><strong>Informações de Usuário:</strong> Dados identificativos subdivididos em informações pessoais (nome, e-mail, telefone) e dados de navegação técnica.</p>
+<p><strong>Usuário:</strong> Todas as pessoas físicas que utilizam ou visitam o site, maiores de 18 anos ou devidamente assistidas.</p>
+
+<h3>3. UTILIZAÇÃO DE NOSSO SITE</h3>
+<p>O uso do site é regido por estes Termos Gerais. Ao utilizar a aplicação de qualquer forma, você concorda expressamente com estas condições. O escritório poderá atualizar os termos a qualquer momento, sendo de responsabilidade do usuário consultar a versão vigente.</p>
+
+<h3>4. RESPONSABILIDADES DO USUÁRIO</h3>
+<p>O usuário compromete-se a fornecer dados verdadeiros, completos e atualizados em todos os formulários. É expressamente vedado utilizar o site para fins ilícitos, transmitir vírus, códigos maliciosos ou materiais ofensivos e difamatórios.</p>
+
+<h3>5. PRIVACIDADE E DIREITOS DO USUÁRIO</h3>
+<p>O tratamento de dados pessoais segue rigorosamente a Lei Federal nº 13.709/2018 (LGPD), assegurando o exercício facilitado de todos os direitos dos titulares através do canal de DPO designado.</p>
+
+<h3>6. PROPRIEDADE INTELECTUAL &amp; DIREITOS AUTORAIS</h3>
+<p>Todo o conteúdo deste website, marcas, logotipos, textos, artigos e cartilhas pertencem com exclusividade à Mascârello Haus Advocacia e Consultoria, sendo expressamente proibida a cópia, extração ou republicação comercial sem autorização expressa por escrito.</p>
+
+<h3>7. LEI APLICÁVEL E FORO</h3>
+<p>Em eventuais controvérsias decorrentes destes Termos, buscar-se-á a resolução amigável e extrajudicial. Não sendo viável, fica eleito o Foro da Comarca de Videira/SC para dirimir qualquer litígio, com renúncia a qualquer outro por mais privilegiado que seja.</p>
+<p><strong>Videira — Santa Catarina | Mascârello Haus Advocacia</strong></p>`;
+
 export const DEFAULT_LEGAL_DOCUMENTS_CONFIG: LegalDocumentsConfig = {
   privacyPolicy: {
     title: 'Aviso de Privacidade & Tratamento de Dados',
     subtitle: 'Transparência & Conformidade Regulatória',
     version: '2.1',
     updatedAt: '2026-10-22',
-    customHtml: '',
+    customHtml: DEFAULT_PRIVACY_TEMPLATE_HTML,
   },
   termsOfUse: {
     title: 'Termos de Uso do Site Mascârello Haus',
     subtitle: 'Termos Gerais e Condições de Uso',
     version: '1.0',
     updatedAt: '2026-10-22',
-    customHtml: '',
+    customHtml: DEFAULT_TERMS_TEMPLATE_HTML,
   },
 };
-
-export const DEFAULT_PRIVACY_TEMPLATE_HTML = `<h3>1. Compromisso com a sua Privacidade</h3>
-<p>A <strong>Mascârello Haus Advocacia e Consultoria</strong> valoriza a confiança de seus clientes, parceiros, colaboradores e visitantes. Por isso, estruturou suas rotinas operacionais e técnicas sob os mais rigorosos padrões de segurança da informação e governança em proteção de dados pessoais.</p>
-
-<h3>2. Princípios Orientadores (Art. 6º da LGPD)</h3>
-<ul>
-  <li><strong>Finalidade e Adequação:</strong> Coleta compatível exclusivamente com propósitos legítimos e específicos informados ao titular.</li>
-  <li><strong>Necessidade (Minimização):</strong> Limitação do tratamento ao mínimo necessário para a realização das finalidades contratadas ou legais.</li>
-  <li><strong>Transparência e Livre Acesso:</strong> Informações claras e acessíveis sobre os critérios e agentes de tratamento.</li>
-  <li><strong>Segurança e Prevenção:</strong> Adoção de medidas técnicas e administrativas para proteção contra acessos não autorizados e incidentes.</li>
-</ul>
-
-<h3>3. Bases Legais e Finalidades de Coleta</h3>
-<p>Os dados tratados por meio deste website apoiam-se nas bases legais do <strong>cumprimento de obrigação legal e regulatória (Art. 7º, II)</strong>, <strong>execução de contratos ou procedimentos preliminares (Art. 7º, V)</strong>, <strong>exercício regular de direitos (Art. 7º, VI)</strong> e <strong>legítimo interesse (Art. 7º, IX)</strong>.</p>
-
-<h3>4. Direitos dos Titulares e Canal com o DPO</h3>
-<p>Você pode exercer a qualquer momento os direitos previstos no Art. 18 da LGPD (confirmação, acesso, correção, eliminação, portabilidade e revogação de consentimento) diretamente na nossa Central de Proteção de Dados ou pelo e-mail institucional do Encarregado (DPO): <strong>privacidade@mascarellohaus.adv.br</strong>.</p>`;
-
-export const DEFAULT_TERMS_TEMPLATE_HTML = `<p>O presente termo regula o acesso e as condições de uso do portal institucional <strong>Mascârello Haus Advocacia</strong>, estabelecendo os direitos e obrigações dos usuários.</p>
-
-<h3>1. Quem Somos</h3>
-<p>Somos um escritório dedicado à advocacia estratégica, compliance, governança corporativa e proteção de dados pessoais, atuando com ética, sigilo profissional e observância estrita ao Estatuto da Advocacia e à LGPD.</p>
-
-<h3>2. Utilização do Site e Propriedade Intelectual</h3>
-<p>Todo o conteúdo informativo, artigos, cartilhas e identidade visual publicados neste portal têm caráter exclusivamente institucional e educativo, não configurando consultoria jurídica individualizada nem relação advogado-cliente automática.</p>
-
-<h3>3. Responsabilidades do Usuário</h3>
-<p>O usuário compromete-se a fornecer informações verdadeiras nos formulários de contato, Central LGPD e Canal de Denúncias, sendo vedado o uso do portal para fins ilícitos ou envio de códigos maliciosos.</p>
-
-<h3>4. Atualizações e Foro</h3>
-<p>Estes Termos poderão ser atualizados periodicamente para adequação regulatória, permanecendo eleito o foro da Comarca de Videira/SC para dirimir eventuais controvérsias.</p>`;
