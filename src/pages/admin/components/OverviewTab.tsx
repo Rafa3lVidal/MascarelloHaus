@@ -105,24 +105,6 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
 
   return (
     <div className="overview-wrapper">
-      {/* Security / MFA Alert Banner if not enabled */}
-      {!mfaEnabled && (
-        <div className="overview-alert-banner warning">
-          <div className="overview-alert-content">
-            <ShieldAlert size={20} />
-            <div>
-              <strong>Verificação em Duas Etapas (2FA) desativada</strong>
-              <p>
-                Para maior proteção dos dados pessoais e relatos confidenciais, ative a verificação em duas etapas no aplicativo autenticador da sua conta.
-              </p>
-            </div>
-          </div>
-          <button type="button" className="btn-banner-action" onClick={() => onNavigate('audit')}>
-            Ativar 2FA <ArrowRight size={14} />
-          </button>
-        </div>
-      )}
-
       {/* Urgent Deadlines / Triage Banner */}
       {(urgentLgpd.length > 0 || newDenuncias.length > 0) && (
         <div className="overview-alert-banner danger">
