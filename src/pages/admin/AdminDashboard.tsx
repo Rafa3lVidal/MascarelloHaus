@@ -25,6 +25,13 @@ import {
   Scale,
   Search,
   ArrowRight,
+  Settings,
+  PanelLeftClose,
+  PanelLeftOpen,
+  ChevronDown,
+  KeyRound,
+  Building2,
+  Globe,
 } from 'lucide-react';
 import {
   CookieBannerConfig,
@@ -57,7 +64,7 @@ import { LgpdRequestsTab } from './components/LgpdRequestsTab';
 import { WhistleblowerTab } from './components/WhistleblowerTab';
 import { MessagesTab } from './components/MessagesTab';
 import { QuizzesTab } from './components/QuizzesTab';
-import { SiteContentTab } from './components/SiteContentTab';
+import { SettingsTab, SettingsSectionKey } from './components/SettingsTab';
 import { AuditAndSecurityTab } from './components/AuditAndSecurityTab';
 import { CookiesAndConsentTab } from './components/CookiesAndConsentTab';
 import { GovernanceAndRopaTab } from './components/GovernanceAndRopaTab';
@@ -98,8 +105,12 @@ const TAB_HEADER_INFO: Record<DashboardTab, { title: string; subtitle: string }>
     subtitle: 'Edite conteúdos, status de publicação e textos das áreas jurídicas.',
   },
   content: {
-    title: 'Personalização de Conteúdos e Textos do Site',
-    subtitle: 'Configure informações institucionais, canais de contato e chamadas da Home.',
+    title: 'Configurações do Site & Textos da Home',
+    subtitle: 'Configure informações institucionais, canais de contato, redes sociais e chamadas da Home.',
+  },
+  settings: {
+    title: 'Configurações Gerais, Conta & Sistema',
+    subtitle: 'Gerencie identidade institucional, textos do portal, segurança da conta (2FA), backup e suporte.',
   },
   lgpd: {
     title: 'Central LGPD — Requisições de Titulares (Art. 18)',
@@ -138,6 +149,9 @@ const TAB_HEADER_INFO: Record<DashboardTab, { title: string; subtitle: string }>
 export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<DashboardTab>('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [settingsSection, setSettingsSection] = useState<SettingsSectionKey>('general');
 
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -365,9 +379,33 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleSelectTab = (tab: DashboardTab) => {
-    setActiveTab(tab);
+    if (tab === 'content') {
+      setSettingsSection('home');
+      setActiveTab('settings');
+    } else {
+      setActiveTab(tab);
+    }
+    setUserMenuOpen(false);
     setMobileMenuOpen(false);
   };
+
+  const openSettingsSection = (sec: SettingsSectionKey) => {
+    setSettingsSection(sec);
+    setActiveTab('settings');
+    setUserMenuOpen(false);
+    setMobileMenuOpen(false);
+  };
+
+  const displayName =
+    profile?.full_name?.trim() ||
+    (currentUser?.email ? String(currentUser.email).split('@')[0] : 'Equipe');
+
+  const userInitials = displayName
+    .split(/[\s._-]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p: string) => p[0]?.toUpperCase() || '')
+    .join('') || 'MH';
 
   const handleQuickNewPost = () => {
     setActiveTab('posts');
@@ -428,29 +466,110 @@ export const AdminDashboard: React.FC = () => {
       />
 
       {/* Sidebar */}
-      <aside className={`admin-sidebar no-print ${mobileMenuOpen ? 'open' : ''}`} aria-label="Menu do painel administrativo">
+      <aside
+        className={`admin-sidebar no-print ${mobileMenuOpen ? 'open' : ''} ${sidebarCollapsed ? 'collapsed' : ''}`}
+        aria-label="Menu do painel administrativo"
+      >
         <div className="sidebar-brand">
           <div className="sidebar-brand-top">
-            <img
-              src="/assets/logo2025branca.png"
-              alt="Logo Mascârello Haus"
-              className="admin-sidebar-logo"
-            />
-            <button
-              type="button"
-              className="sidebar-close-mobile"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label="Fechar menu"
-            >
-              <X size={20} />
-            </button>
+            {!sidebarCollapsed ? (
+              <img
+                src="/assets/logo2025branca.png"
+                alt="Logo Mascârello Haus"
+                className="admin-sidebar-logo"
+              />
+            ) : (
+              <div className="sidebar-logo-mini" title="Mascârello Haus Advocacia">
+                MH
+              </div>
+            )}
+            <div className="sidebar-top-actions">
+              <button
+                type="button"
+                className="sidebar-collapse-btn"
+                onClick={() => setSidebarCollapsed((c) => !c)}
+                title={sidebarCollapsed ? 'Expandir menu lateral' : 'Recolher menu lateral'}
+                aria-label={sidebarCollapsed ? 'Expandir menu lateral' : 'Recolher menu lateral'}
+              >
+                {sidebarCollapsed ? <PanelLeftOpen size={17} /> : <PanelLeftClose size={17} />}
+              </button>
+              <button
+                type="button"
+                className="sidebar-close-mobile"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Fechar menu"
+              >
+                <X size={20} />
+              </button>
+            </div>
           </div>
-          <span className="user-email-badge">{currentUser?.email || 'Equipe Mascârello Haus'}</span>
-          <span className="user-role-pill">
-            <Shield size={11} />
-            {profile?.role ? ROLE_LABELS[profile.role] || profile.role : 'Staff'}
-            {mfaEnabled ? ' · 2FA Ativo' : ''}
-          </span>
+
+          {/* Account & Quick Settings Card */}
+          <div className="sidebar-account-wrap">
+            <div className="sidebar-account-card">
+              <button
+                type="button"
+                className="sidebar-account-trigger"
+                onClick={() => setUserMenuOpen((prev) => !prev)}
+                aria-expanded={userMenuOpen}
+                title={`${displayName} (${currentUser?.email || ''})`}
+              >
+                <span className="sidebar-avatar">{userInitials}</span>
+                {!sidebarCollapsed && (
+                  <>
+                    <span className="sidebar-account-info">
+                      <strong className="sidebar-account-name">{displayName}</strong>
+                      <small className="sidebar-account-email">{currentUser?.email || 'Equipe Mascârello Haus'}</small>
+                      <span className="user-role-pill">
+                        <Shield size={10} />
+                        {profile?.role ? ROLE_LABELS[profile.role] || profile.role : 'Staff'}
+                        {mfaEnabled ? ' · 2FA' : ''}
+                      </span>
+                    </span>
+                    <ChevronDown size={15} className={`sidebar-account-chevron ${userMenuOpen ? 'open' : ''}`} />
+                  </>
+                )}
+              </button>
+
+              {!sidebarCollapsed && (
+                <button
+                  type="button"
+                  className={`sidebar-gear-btn ${activeTab === 'settings' ? 'active' : ''}`}
+                  onClick={() => openSettingsSection('general')}
+                  title="Abrir Configurações Gerais"
+                  aria-label="Configurações"
+                >
+                  <Settings size={16} />
+                </button>
+              )}
+            </div>
+
+            {/* Quick Settings Popover Menu */}
+            {userMenuOpen && !sidebarCollapsed && (
+              <div className="sidebar-quick-menu" role="menu">
+                <div className="sidebar-quick-menu-title">Menu Rápido & Configurações</div>
+                <button type="button" onClick={() => openSettingsSection('general')}>
+                  <Building2 size={14} /> Geral & Dados do Escritório
+                </button>
+                <button type="button" onClick={() => openSettingsSection('home')}>
+                  <Globe size={14} /> Textos da Página Inicial
+                </button>
+                <button type="button" onClick={() => openSettingsSection('account')}>
+                  <KeyRound size={14} /> Minha Conta, Senha & 2FA
+                </button>
+                <button type="button" onClick={() => handleSelectTab('governance')}>
+                  <Database size={14} /> Governança LGPD & DPO
+                </button>
+                <button type="button" onClick={() => openSettingsSection('system')}>
+                  <Sliders size={14} /> Sistema, Backup & Suporte
+                </button>
+                <div className="sidebar-quick-menu-divider" />
+                <button type="button" className="danger" onClick={handleLogout}>
+                  <LogOut size={14} /> Encerrar Sessão
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         <nav className="sidebar-nav">
@@ -458,155 +577,192 @@ export const AdminDashboard: React.FC = () => {
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => handleSelectTab('overview')}
+            title="Visão Geral"
           >
             <span className="sidebar-nav-left">
-              <LayoutDashboard size={17} /> Visão Geral
+              <LayoutDashboard size={17} />
+              <span className="sidebar-nav-label">Visão Geral</span>
             </span>
           </button>
 
-          <span className="sidebar-section-label">Conteúdo & Site</span>
+          {!sidebarCollapsed && <span className="sidebar-section-label">Conteúdo & Site</span>}
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'posts' ? 'active' : ''}`}
             onClick={() => handleSelectTab('posts')}
+            title="Artigos & Publicações"
           >
             <span className="sidebar-nav-left">
-              <FileText size={17} /> Artigos & Publicações
+              <FileText size={17} />
+              <span className="sidebar-nav-label">Artigos & Publicações</span>
             </span>
-            <span className="sidebar-count-badge">{posts.length}</span>
+            {!sidebarCollapsed && <span className="sidebar-count-badge">{posts.length}</span>}
           </button>
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'pages' ? 'active' : ''}`}
             onClick={() => handleSelectTab('pages')}
+            title="Páginas & Áreas"
           >
             <span className="sidebar-nav-left">
-              <Edit size={17} /> Páginas & Áreas
+              <Edit size={17} />
+              <span className="sidebar-nav-label">Páginas & Áreas</span>
             </span>
-            <span className="sidebar-count-badge">{pages.length + practiceAreas.length}</span>
+            {!sidebarCollapsed && (
+              <span className="sidebar-count-badge">{pages.length + practiceAreas.length}</span>
+            )}
           </button>
 
-          <button
-            type="button"
-            className={`sidebar-nav-btn ${activeTab === 'content' ? 'active' : ''}`}
-            onClick={() => handleSelectTab('content')}
-          >
-            <span className="sidebar-nav-left">
-              <Sliders size={17} /> Conteúdos & Textos
-            </span>
-          </button>
-
-          <span className="sidebar-section-label">Privacidade & LGPD</span>
+          {!sidebarCollapsed && <span className="sidebar-section-label">Privacidade & LGPD</span>}
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'lgpd' ? 'active' : ''}`}
             onClick={() => handleSelectTab('lgpd')}
+            title="Requisições LGPD"
           >
             <span className="sidebar-nav-left">
-              <ShieldAlert size={17} /> Requisições LGPD
+              <ShieldAlert size={17} />
+              <span className="sidebar-nav-label">Requisições LGPD</span>
             </span>
-            <span className={`sidebar-count-badge ${openLgpdCount > 0 ? 'alert' : ''}`}>
-              {openLgpdCount > 0 ? `${openLgpdCount} aberta(s)` : lgpdRequests.length}
-            </span>
+            {!sidebarCollapsed && (
+              <span className={`sidebar-count-badge ${openLgpdCount > 0 ? 'alert' : ''}`}>
+                {openLgpdCount > 0 ? `${openLgpdCount} aberta(s)` : lgpdRequests.length}
+              </span>
+            )}
           </button>
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'cookies' ? 'active' : ''}`}
             onClick={() => handleSelectTab('cookies')}
+            title="Cookies & Aceites"
           >
             <span className="sidebar-nav-left">
-              <Cookie size={17} /> Cookies & Consentimentos
+              <Cookie size={17} />
+              <span className="sidebar-nav-label">Cookies & Aceites</span>
             </span>
-            <span className="sidebar-count-badge">{consentRecords.length}</span>
+            {!sidebarCollapsed && <span className="sidebar-count-badge">{consentRecords.length}</span>}
           </button>
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'governance' ? 'active' : ''}`}
             onClick={() => handleSelectTab('governance')}
+            title="Governança & ROPA"
           >
             <span className="sidebar-nav-left">
-              <Database size={17} /> Governança, ROPA & Incidentes
+              <Database size={17} />
+              <span className="sidebar-nav-label">Governança & ROPA</span>
             </span>
-            <span className="sidebar-count-badge">{governanceConfig.ropaRecords.length}</span>
+            {!sidebarCollapsed && (
+              <span className="sidebar-count-badge">{governanceConfig.ropaRecords.length}</span>
+            )}
           </button>
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'legal_docs' ? 'active' : ''}`}
             onClick={() => handleSelectTab('legal_docs')}
+            title="Privacidade & Termos"
           >
             <span className="sidebar-nav-left">
-              <Scale size={17} /> Privacidade & Termos
+              <Scale size={17} />
+              <span className="sidebar-nav-label">Privacidade & Termos</span>
             </span>
           </button>
 
-          <span className="sidebar-section-label">Compliance & Atendimento</span>
+          {!sidebarCollapsed && <span className="sidebar-section-label">Compliance & Atendimento</span>}
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'denuncias' ? 'active' : ''}`}
             onClick={() => handleSelectTab('denuncias')}
+            title="Canal de Denúncias"
           >
             <span className="sidebar-nav-left">
-              <AlertTriangle size={17} /> Canal de Denúncias
+              <AlertTriangle size={17} />
+              <span className="sidebar-nav-label">Canal de Denúncias</span>
             </span>
-            <span className={`sidebar-count-badge ${newDenunciasCount > 0 ? 'alert' : ''}`}>
-              {newDenunciasCount > 0 ? `${newDenunciasCount} nova(s)` : whistleblowers.length}
-            </span>
+            {!sidebarCollapsed && (
+              <span className={`sidebar-count-badge ${newDenunciasCount > 0 ? 'alert' : ''}`}>
+                {newDenunciasCount > 0 ? `${newDenunciasCount} nova(s)` : whistleblowers.length}
+              </span>
+            )}
           </button>
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'quizzes' ? 'active' : ''}`}
             onClick={() => handleSelectTab('quizzes')}
+            title="Conformidade Quiz"
           >
             <span className="sidebar-nav-left">
-              <ClipboardCheck size={17} /> Conformidade Quiz
+              <ClipboardCheck size={17} />
+              <span className="sidebar-nav-label">Conformidade Quiz</span>
             </span>
-            <span className="sidebar-count-badge">{quizSubmissions.length}</span>
+            {!sidebarCollapsed && <span className="sidebar-count-badge">{quizSubmissions.length}</span>}
           </button>
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'messages' ? 'active' : ''}`}
             onClick={() => handleSelectTab('messages')}
+            title="Mensagens"
           >
             <span className="sidebar-nav-left">
-              <MessageSquare size={17} /> Mensagens
+              <MessageSquare size={17} />
+              <span className="sidebar-nav-label">Mensagens</span>
             </span>
-            <span className={`sidebar-count-badge ${pendingMsgCount > 0 ? 'alert' : ''}`}>
-              {pendingMsgCount > 0 ? `${pendingMsgCount} pendente(s)` : messages.length}
-            </span>
+            {!sidebarCollapsed && (
+              <span className={`sidebar-count-badge ${pendingMsgCount > 0 ? 'alert' : ''}`}>
+                {pendingMsgCount > 0 ? `${pendingMsgCount} pendente(s)` : messages.length}
+              </span>
+            )}
           </button>
 
-          <span className="sidebar-section-label">Governança & Sistema</span>
+          {!sidebarCollapsed && <span className="sidebar-section-label">Sistema & Configurações</span>}
+
+          <button
+            type="button"
+            className={`sidebar-nav-btn ${activeTab === 'settings' || activeTab === 'content' ? 'active' : ''}`}
+            onClick={() => openSettingsSection('general')}
+            title="Configurações"
+          >
+            <span className="sidebar-nav-left">
+              <Settings size={17} />
+              <span className="sidebar-nav-label">Configurações</span>
+            </span>
+          </button>
 
           <button
             type="button"
             className={`sidebar-nav-btn ${activeTab === 'audit' ? 'active' : ''}`}
             onClick={() => handleSelectTab('audit')}
+            title="Auditoria & Segurança"
           >
             <span className="sidebar-nav-left">
-              <Clock size={17} /> Auditoria & Segurança
+              <Clock size={17} />
+              <span className="sidebar-nav-label">Auditoria & Segurança</span>
             </span>
           </button>
         </nav>
 
         <div className="sidebar-footer">
-          <button type="button" className="logout-btn" onClick={handleLogout}>
-            <LogOut size={16} /> Encerrar Sessão
+          <button type="button" className="logout-btn" onClick={handleLogout} title="Encerrar Sessão">
+            <LogOut size={16} />
+            {!sidebarCollapsed && <span>Encerrar Sessão</span>}
           </button>
-          <div className="sidebar-apex-credit">
-            Desenvolvido por{' '}
-            <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer">
-              ApexCode
-            </a>
-          </div>
+          {!sidebarCollapsed && (
+            <div className="sidebar-apex-credit">
+              Desenvolvido por{' '}
+              <a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer">
+                ApexCode
+              </a>
+            </div>
+          )}
         </div>
       </aside>
 
@@ -713,12 +869,18 @@ export const AdminDashboard: React.FC = () => {
               />
             )}
 
-            {activeTab === 'content' && (
-              <SiteContentTab
+            {(activeTab === 'settings' || activeTab === 'content') && (
+              <SettingsTab
+                initialSection={activeTab === 'content' ? 'home' : settingsSection}
                 siteSettings={siteSettings}
-                onChange={setSiteSettings}
+                profile={profile}
+                userEmail={currentUser?.email || ''}
+                mfaEnabled={mfaEnabled}
                 currentUserId={currentUser?.id}
+                onChange={setSiteSettings}
+                onNavigateTab={handleSelectTab}
                 onShowToast={showToast}
+                onRefresh={() => loadAllData(currentUser?.id, true)}
                 onAudit={logAdminAction}
               />
             )}
@@ -843,7 +1005,8 @@ export const AdminDashboard: React.FC = () => {
                   { label: 'Avaliações de Fornecedores (Quiz)', category: 'Compliance', tab: 'quizzes' },
                   { label: 'Artigos, Cartilhas e E-books', category: 'Conteúdo', tab: 'posts' },
                   { label: 'Páginas & Áreas de Atuação', category: 'Conteúdo', tab: 'pages' },
-                  { label: 'Textos & Configurações do Site', category: 'Conteúdo', tab: 'content' },
+                  { label: 'Configurações Gerais, Conta & Sistema', category: 'Sistema', tab: 'settings' },
+                  { label: 'Textos da Home & Identidade', category: 'Conteúdo', tab: 'content' },
                   { label: 'Mensagens de Contato', category: 'Atendimento', tab: 'messages' },
                   { label: 'Auditoria & Segurança (2FA)', category: 'Sistema', tab: 'audit' },
                 ];

@@ -3,6 +3,7 @@ export type DashboardTab =
   | 'posts'
   | 'pages'
   | 'content'
+  | 'settings'
   | 'lgpd'
   | 'cookies'
   | 'governance'
