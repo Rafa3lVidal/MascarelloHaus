@@ -183,6 +183,15 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           <button type="button" className="exec-shortcut-btn" onClick={() => onNavigate('legal_docs')}>
             <Scale size={14} /> Privacidade & Termos de Uso
           </button>
+          <a
+            href="/docs/Relatorio_Tecnico_Conformidade_LGPD_Mascarello_Haus.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="exec-shortcut-btn"
+            style={{ textDecoration: 'none' }}
+          >
+            <FileText size={14} /> Relatório Técnico LGPD (PDF)
+          </a>
         </div>
       </div>
 

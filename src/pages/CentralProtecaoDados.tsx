@@ -131,6 +131,14 @@ const LGPD_RIGHTS_DATA = [
 
 const OFFICIAL_CARTILHAS = [
   {
+    title: 'Relatório Técnico de Arquitetura, Privacidade e Conformidade LGPD',
+    subtitle: 'Mapeamento completo das funções de proteção de dados pessoais, segurança da informação e governança LGPD do portal e painel.',
+    fileUrl: '/docs/Relatorio_Tecnico_Conformidade_LGPD_Mascarello_Haus.pdf',
+    pages: '4 páginas',
+    fileSize: '295 KB',
+    badge: 'Relatório Oficial LGPD',
+  },
+  {
     title: 'Cartilha LGPD: Introdução à Proteção dos Dados Pessoais',
     subtitle: 'Conceitos fundamentais da Lei nº 13.709/2018 para clientes, colaboradores e empresas.',
     fileUrl: '/wp-content/uploads/2023/09/cartilha-introducao-a-protecao-de-dados.pdf',
