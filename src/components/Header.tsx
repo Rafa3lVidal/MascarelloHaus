@@ -61,8 +61,8 @@ export const Header: React.FC = () => {
               src="/assets/logo2025.png"
               alt="Mascârello Haus Advocacia — Página inicial"
               className="logo-img"
-              width={120}
-              height={60}
+              width={175}
+              height={74}
               decoding="async"
             />
           </Link>
@@ -187,10 +187,16 @@ export const Header: React.FC = () => {
           align-items: center;
         }
         .logo-img {
-          width: 120px;
+          width: 175px;
           height: auto;
-          max-height: 65px;
+          max-height: 74px;
           object-fit: contain;
+        }
+        @media (max-width: 768px) {
+          .logo-img {
+            width: 145px;
+            max-height: 60px;
+          }
         }
         .desktop-nav {
           display: flex;

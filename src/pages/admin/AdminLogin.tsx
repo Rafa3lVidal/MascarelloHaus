@@ -131,7 +131,7 @@ export const AdminLogin: React.FC = () => {
 
   return (
     <div className="admin-login-page">
-      <SEO title="Painel Administrativo | Mascârello Haus Advocacia" />
+      <SEO title="Painel Administrativo | Mascârello Haus Advocacia" noindex={true} />
 
       <div className="admin-login-box">
         <div className="admin-login-header">

@@ -435,7 +435,7 @@ export const AdminDashboard: React.FC = () => {
 
   return (
     <div className="admin-dashboard-layout">
-      <SEO title="Painel de Gestão | Mascârello Haus Advocacia" />
+      <SEO title="Painel de Gestão | Mascârello Haus Advocacia" noindex={true} />
 
       {/* Toast Feedback */}
       {feedback && (

@@ -8,12 +8,14 @@ export interface BreadcrumbItem {
 export interface SEOProps {
   title?: string;
   description?: string;
+  keywords?: string;
   canonical?: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
+  noindex?: boolean;
   breadcrumbs?: BreadcrumbItem[];
   jsonLd?: Record<string, any> | Record<string, any>[];
 }
@@ -21,16 +23,20 @@ export interface SEOProps {
 const SITE_NAME = 'Mascârello Haus Advocacia';
 const BASE_URL = 'https://mascarellohaus.adv.br';
 const DEFAULT_IMAGE = `${BASE_URL}/assets/hero-slide-1.png`;
+const DEFAULT_KEYWORDS =
+  'advocacia videira sc, advogado caçador sc, direito empresarial, lgpd, compliance, proteção de dados, direito civil, direito trabalhista, direito previdenciário, mascarello haus';
 
 export const SEO: React.FC<SEOProps> = ({
   title = 'Mascârello Haus Advocacia | Videira e Caçador (SC)',
   description = 'Sociedade de Advogados atuante em Videira e Caçador (SC). Soluções jurídicas estratégicas em Direito Empresarial, Civil, LGPD, Compliance, Tributário e Trabalhista.',
+  keywords = DEFAULT_KEYWORDS,
   canonical,
   ogImage = DEFAULT_IMAGE,
   ogType = 'website',
   publishedTime,
   modifiedTime,
   author = 'Mascârello Haus Advocacia',
+  noindex = false,
   breadcrumbs,
   jsonLd,
 }) => {
@@ -70,9 +76,15 @@ export const SEO: React.FC<SEOProps> = ({
 
     // Primary Meta & Anti-AI Training / Copyright Reservation Directives
     setMeta('description', description);
-    setMeta('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, noai, noimageai');
-    setMeta('googlebot', 'index, follow, max-image-preview:large');
-    setMeta('bingbot', 'index, follow');
+    if (keywords) setMeta('keywords', keywords);
+    setMeta(
+      'robots',
+      noindex
+        ? 'noindex, nofollow, noarchive'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, noai, noimageai'
+    );
+    setMeta('googlebot', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large');
+    setMeta('bingbot', noindex ? 'noindex, nofollow' : 'index, follow');
     setMeta('gptbot', 'noindex, nofollow, noai');
     setMeta('ccbot', 'noindex, nofollow, noarchive');
     setMeta('tdm-reservation', '1');
@@ -146,8 +158,23 @@ export const SEO: React.FC<SEOProps> = ({
         areaServed: 'BR',
         availableLanguage: ['Portuguese'],
       },
+      areaServed: [
+        { '@type': 'City', name: 'Videira' },
+        { '@type': 'City', name: 'Caçador' },
+        { '@type': 'State', name: 'Santa Catarina' },
+      ],
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '08:30',
+          closes: '18:00',
+        },
+      ],
+      priceRange: '$$',
       sameAs: [
         'https://www.instagram.com/mascarellohausadvocacia/',
+        'https://www.linkedin.com/company/mascarello-haus-advocacia/',
         'https://www.youtube.com/@mascarellohausadvocacia',
         'https://www.facebook.com/mascarellohausadvocacia/',
       ],
@@ -194,7 +221,7 @@ export const SEO: React.FC<SEOProps> = ({
       document.head.appendChild(scriptEl);
     }
     scriptEl.textContent = JSON.stringify(allSchemas);
-  }, [title, description, canonical, ogImage, ogType, publishedTime, modifiedTime, author, breadcrumbs, jsonLd]);
+  }, [title, description, keywords, canonical, ogImage, ogType, publishedTime, modifiedTime, author, noindex, breadcrumbs, jsonLd]);
 
   return null;
 };
