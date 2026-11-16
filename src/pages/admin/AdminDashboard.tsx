@@ -298,7 +298,18 @@ export const AdminDashboard: React.FC = () => {
 
       const profileRes = results[11];
       if (profileRes.status === 'fulfilled' && profileRes.value && !profileRes.value.error && profileRes.value.data) {
-        setProfile(profileRes.value.data as UserProfile);
+        const loadedProfile = profileRes.value.data as UserProfile;
+        if (loadedProfile.full_name && /mira\s+taira/i.test(loadedProfile.full_name)) {
+          const correctedName = loadedProfile.full_name.replace(/mira\s+taira/gi, 'Mirataira');
+          loadedProfile.full_name = correctedName;
+          if (userId) {
+            void supabase
+              .from('profiles')
+              .update({ full_name: correctedName, updated_at: new Date().toISOString() })
+              .eq('id', userId);
+          }
+        }
+        setProfile(loadedProfile);
       }
 
       if (restrictedModules.length > 0 && restrictedModules.length <= 3) {

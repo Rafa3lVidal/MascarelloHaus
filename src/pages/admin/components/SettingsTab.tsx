@@ -59,6 +59,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const [section, setSection] = useState<SettingsSectionKey>(initialSection);
   const [savingSettings, setSavingSettings] = useState(false);
 
+  // Profile name state
+  const [fullName, setFullName] = useState(profile?.full_name || '');
+  const [updatingProfile, setUpdatingProfile] = useState(false);
+
   // Password state
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -67,6 +71,41 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   useEffect(() => {
     setSection(initialSection);
   }, [initialSection]);
+
+  useEffect(() => {
+    if (profile?.full_name) {
+      setFullName(profile.full_name);
+    }
+  }, [profile?.full_name]);
+
+  const handleUpdateProfileName = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanName = fullName.trim();
+    if (cleanName.length < 2) {
+      onShowToast('error', 'Informe um nome de usuário válido.');
+      return;
+    }
+
+    setUpdatingProfile(true);
+    try {
+      if (currentUserId) {
+        const { error: profErr } = await supabase
+          .from('profiles')
+          .update({ full_name: cleanName, updated_at: new Date().toISOString() })
+          .eq('id', currentUserId);
+        if (profErr) throw profErr;
+      }
+
+      await supabase.auth.updateUser({ data: { full_name: cleanName } });
+      await onAudit('UPDATE', 'profiles', currentUserId || userEmail, { full_name: profile?.full_name }, { full_name: cleanName });
+      onShowToast('success', 'Nome do usuário atualizado com sucesso!');
+      await onRefresh();
+    } catch (err: any) {
+      onShowToast('error', formatFriendlyError(err, 'Não foi possível atualizar o nome do usuário.'));
+    } finally {
+      setUpdatingProfile(false);
+    }
+  };
 
   const handleSaveSiteSettings = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -429,6 +468,23 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                   </span>
                 </div>
               </div>
+
+              <form onSubmit={handleUpdateProfileName} style={{ display: 'flex', gap: '10px', alignItems: 'flex-end', flexWrap: 'wrap', marginBottom: '16px' }}>
+                <div className="form-group" style={{ flex: '1 1 240px', marginBottom: 0 }}>
+                  <label>Editar Nome do Usuário</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Ex: Mirataira"
+                  />
+                </div>
+                <button type="submit" className="btn-save-main" disabled={updatingProfile}>
+                  <Save size={15} /> {updatingProfile ? 'Salvando...' : 'Salvar Nome'}
+                </button>
+              </form>
 
               <button
                 type="button"
