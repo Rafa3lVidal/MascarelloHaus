@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CheckCircle2,
@@ -32,6 +32,7 @@ import {
   validateSecurityState,
   UploadedAttachment,
   recordFormConsent,
+  isFunctionalCookiesAllowed,
 } from '../lib/formSecurity';
 
 export const Contato: React.FC = () => {
@@ -49,6 +50,15 @@ export const Contato: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [protocol, setProtocol] = useState('');
   const [copied, setCopied] = useState(false);
+  const [mapAllowed, setMapAllowed] = useState<boolean>(() => isFunctionalCookiesAllowed());
+
+  useEffect(() => {
+    const onPrefsUpdated = () => {
+      setMapAllowed(isFunctionalCookiesAllowed());
+    };
+    window.addEventListener('cookie-preferences-updated', onPrefsUpdated);
+    return () => window.removeEventListener('cookie-preferences-updated', onPrefsUpdated);
+  }, []);
 
   const handleCopyProtocol = () => {
     if (!protocol) return;
@@ -452,11 +462,11 @@ export const Contato: React.FC = () => {
                           }
                         />
                         <span>
-                          Declaro que li e concordo com o{' '}
+                          Declaro possuir mais de 18 anos (ou representação legal nos termos do Art. 14 da LGPD), que li e concordo com o{' '}
                           <Link to="/central-de-protecao-de-dados/?aba=privacidade">
                             Aviso de Privacidade
                           </Link>{' '}
-                          e autorizo o tratamento dos meus dados para retorno do contato, nos termos da LGPD (Lei nº 13.709/2018). <strong className="required">*</strong>
+                          e autorizo o tratamento dos meus dados para retorno do contato (Lei nº 13.709/2018). <strong className="required">*</strong>
                         </span>
                       </label>
                     </div>
@@ -503,16 +513,75 @@ export const Contato: React.FC = () => {
           </div>
 
           <div className="map-frame-wrapper">
-            <iframe
-              title="Localização Mascârello Haus Videira — Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura"
-              src="https://maps.google.com/maps?q=Rua%20Coronel%20Alberto%20Schmidt%2C%2010%20-%20Centro%2C%20Videira%20-%20SC%2C%2089560-198&t=m&z=17&output=embed&iwloc=near"
-              width="100%"
-              height="420"
-              style={{ border: 0, display: 'block' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            {mapAllowed ? (
+              <iframe
+                title="Localização Mascârello Haus Videira — Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura"
+                src="https://maps.google.com/maps?q=Rua%20Coronel%20Alberto%20Schmidt%2C%2010%20-%20Centro%2C%20Videira%20-%20SC%2C%2089560-198&t=m&z=17&output=embed&iwloc=near"
+                width="100%"
+                height="420"
+                style={{ border: 0, display: 'block' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            ) : (
+              <div
+                style={{
+                  minHeight: '340px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  padding: '40px 24px',
+                  background: 'linear-gradient(135deg, #0d3732 0%, #071f1c 100%)',
+                  color: '#ffffff',
+                  borderRadius: '14px',
+                }}
+              >
+                <ShieldCheck size={40} style={{ color: '#cbab7a', marginBottom: '14px' }} />
+                <h3 style={{ color: '#ffffff', fontFamily: 'var(--font-serif)', fontSize: '1.45rem', marginBottom: '10px' }}>
+                  Proteção de Privacidade — Mapa Interativo Bloqueado Preventivamente
+                </h3>
+                <p style={{ maxWidth: '640px', color: 'rgba(255,255,255,0.85)', fontSize: '0.92rem', lineHeight: 1.65, marginBottom: '22px' }}>
+                  Em cumprimento ao <strong>Art. 7º, I e Art. 8º da LGPD</strong> e ao Guia de Cookies da ANPD, o mapa interativo do Google Maps (terceiro provedor — Google LLC) não é carregado automaticamente sem o seu consentimento para cookies funcionais, evitando o envio automático do seu endereço IP e identificadores de navegação.
+                </p>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <button
+                    type="button"
+                    onClick={() => setMapAllowed(true)}
+                    style={{
+                      backgroundColor: '#cbab7a',
+                      color: '#0d3732',
+                      border: 'none',
+                      padding: '12px 22px',
+                      borderRadius: '8px',
+                      fontWeight: 700,
+                      fontSize: '0.9rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Carregar Mapa Interativo Agora
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-preferences'))}
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: '#ffffff',
+                      border: '1px solid rgba(255,255,255,0.4)',
+                      padding: '12px 20px',
+                      borderRadius: '8px',
+                      fontWeight: 600,
+                      fontSize: '0.88rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Configurar Preferências de Cookies
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

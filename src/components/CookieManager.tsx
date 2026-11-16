@@ -56,7 +56,20 @@ export const CookieManager: React.FC = () => {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        setPrefs(parsed);
+        const expiryMonths = Math.max(1, Number(cookieConfig.consentExpiryMonths) || 12);
+        const expiryMs = expiryMonths * 30 * 24 * 60 * 60 * 1000;
+        const savedTime = parsed?.timestamp ? new Date(parsed.timestamp).getTime() : 0;
+        const isExpired = !savedTime || Number.isNaN(savedTime) || Date.now() - savedTime > expiryMs;
+        const isVersionOutdated = Boolean(cookieConfig.version && parsed?.version && parsed.version !== cookieConfig.version);
+
+        if (isExpired || isVersionOutdated) {
+          localStorage.removeItem('lgpd_cookie_preferences');
+          localStorage.removeItem('lgpd_cookie_consent');
+          setIsBannerVisible(true);
+        } else {
+          setPrefs(parsed);
+          setIsBannerVisible(false);
+        }
       } catch {
         setIsBannerVisible(true);
       }
@@ -73,7 +86,7 @@ export const CookieManager: React.FC = () => {
     return () => {
       window.removeEventListener('open-cookie-preferences', handleOpenModal);
     };
-  }, []);
+  }, [cookieConfig.version, cookieConfig.consentExpiryMonths]);
 
   useEffect(() => {
     if (!isModalOpen) return;
@@ -91,17 +104,17 @@ export const CookieManager: React.FC = () => {
       ...newPrefs,
       essential: true, // Essenciais sempre ativos
       timestamp: new Date().toISOString(),
-      version: cookieConfig.version || '2.0'
+      version: cookieConfig.version || '2.1'
     };
 
     localStorage.setItem('lgpd_cookie_preferences', JSON.stringify(updated));
     localStorage.setItem('lgpd_cookie_consent', updated.analytics ? 'all' : 'essential');
 
-    // Se o usuário revogar os cookies funcionais, remove estados persistentes opcionais de formulários
+    // Se o usuário revogar os cookies funcionais, remove estados persistentes opcionais de formulários (Art. 8º, § 5º)
     if (!updated.functional) {
       try {
         Object.keys(localStorage).forEach((key) => {
-          if (key.startsWith('mh_form_state')) {
+          if (key.startsWith('mh_form_state') || key.startsWith('mh_draft_')) {
             localStorage.removeItem(key);
           }
         });
@@ -110,6 +123,8 @@ export const CookieManager: React.FC = () => {
       }
     }
 
+    window.dispatchEvent(new CustomEvent('cookie-preferences-updated', { detail: updated }));
+
     setPrefs(updated);
     setIsBannerVisible(false);
     setIsModalOpen(false);
@@ -117,12 +132,19 @@ export const CookieManager: React.FC = () => {
     setIsSavedToast(true);
     setTimeout(() => setIsSavedToast(false), 3500);
 
-    // Registro de Consentimento para fins de comprovação LGPD (Accountability)
+    // Registro de Consentimento para fins de comprovação LGPD (Accountability — Art. 8º, § 2º)
     try {
+      const grantedCategories = [
+        'essenciais',
+        updated.functional ? 'funcionais' : null,
+        updated.analytics ? 'analiticos' : null,
+        updated.marketing ? 'marketing' : null,
+      ].filter(Boolean).join('+');
+
       await supabase.from('consent_records').insert({
-        consent_type: updated.analytics ? 'cookies_analytics_granted' : 'cookies_essenciais_only',
-        granted: true,
-        policy_version: '2.0',
+        consent_type: `cookies_${grantedCategories}`,
+        granted: Boolean(updated.functional || updated.analytics || updated.marketing),
+        policy_version: cookieConfig.version || '2.1',
         user_agent: navigator.userAgent
       });
     } catch {

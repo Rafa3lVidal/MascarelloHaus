@@ -108,6 +108,8 @@ export interface LgpdRequestRecord {
   legal_deadline: string;
   internal_notes?: string | null;
   resolution_details?: string | null;
+  identity_verified?: boolean;
+  portability_json?: Record<string, any> | null;
   resolved_at?: string | null;
   assigned_to?: string | null;
   created_at: string;
@@ -147,8 +149,11 @@ export interface WhistleblowerRecord {
   description: string;
   is_anonymous: boolean;
   attachments_json?: AttachmentItem[];
+  public_response?: string | null;
+  internal_notes?: string | null;
   status: WhistleblowerStatus;
   created_at: string;
+  updated_at?: string;
 }
 
 export interface QuizSubmissionRecord {
@@ -235,13 +240,17 @@ export const LGPD_STATUS_META: Record<LgpdStatus, { label: string; tone: 'info' 
 };
 
 export const LGPD_REQUEST_TYPE_LABELS: Record<string, string> = {
-  acesso: 'Confirmação e Acesso aos Dados',
-  correcao: 'Correção de Dados Incompletos/Inexatos',
-  eliminacao: 'Eliminação / Anonimização / Bloqueio',
-  portabilidade: 'Portabilidade dos Dados',
-  revogacao: 'Revogação de Consentimento',
-  informacao_compartilhamento: 'Informação sobre Compartilhamento',
-  revisao_automatizada: 'Revisão de Decisões Automatizadas',
+  acesso: 'Confirmação e Acesso aos Dados (Art. 18, I e II)',
+  correcao: 'Correção de Dados Incompletos/Inexatos (Art. 18, III)',
+  eliminacao: 'Anonimização, Bloqueio ou Eliminação (Art. 18, IV e VI)',
+  portabilidade: 'Portabilidade dos Dados (Art. 18, V)',
+  compartilhamento: 'Informação sobre Compartilhamento (Art. 18, VII)',
+  informacao_compartilhamento: 'Informação sobre Compartilhamento (Art. 18, VII)',
+  nao_fornecimento: 'Consequências da Negativa de Consentimento (Art. 18, VIII)',
+  revogacao: 'Revogação de Consentimento (Art. 18, IX)',
+  oposicao: 'Oposição a Tratamento Dispensado de Consentimento (Art. 18, § 2º)',
+  revisao_automatizada: 'Revisão de Decisões Automatizadas (Art. 20)',
+  reclamacao: 'Reclamação, Dúvida ou Petição ao DPO (Art. 18, §§ 1º e 8º)',
   outros: 'Outras Requisições / Reclamação',
 };
 

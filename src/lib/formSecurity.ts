@@ -726,3 +726,290 @@ export function clearFormDraft(formKey: string): void {
     // Ignore
   }
 }
+
+/**
+ * Checks whether the data subject has granted consent for Functional Cookies / Storage (Art. 7º, I & Art. 8º LGPD).
+ */
+export function isFunctionalCookiesAllowed(): boolean {
+  try {
+    const raw = localStorage.getItem('lgpd_cookie_preferences');
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    return Boolean(parsed?.functional);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Normalizes contact info (email or phone) and computes an irreversible SHA-256 verification hash
+ * bound to the protocol number so identity can be verified without exposing PII (Art. 46 LGPD).
+ */
+export async function computeProtocolVerifyHash(protocol: string, contactInfo: string): Promise<string> {
+  const cleanProto = protocol.trim().toUpperCase();
+  const rawContact = contactInfo.trim().toLowerCase();
+  const normalized = rawContact.includes('@')
+    ? rawContact.replace(/\s+/g, '')
+    : rawContact.replace(/\D/g, '');
+  const payload = `${cleanProto}:${normalized}`;
+
+  if (typeof crypto !== 'undefined' && crypto.subtle) {
+    const buf = new TextEncoder().encode(payload);
+    const digest = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(digest))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
+      .slice(0, 32);
+  }
+
+  let h = 0;
+  for (let i = 0; i < payload.length; i++) {
+    h = (h << 5) - h + payload.charCodeAt(i);
+    h |= 0;
+  }
+  return `vh_${Math.abs(h).toString(16).padStart(12, '0')}`;
+}
+
+export interface ProtocolStatusResult {
+  found: boolean;
+  error?: string;
+  requires_contact?: boolean;
+  channel?: 'lgpd' | 'denuncia';
+  protocol?: string;
+  request_type?: string;
+  status?: string;
+  legal_deadline?: string;
+  resolution_details?: string;
+  identity_verified?: boolean;
+  is_anonymous?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  resolved_at?: string | null;
+}
+
+const LOCAL_PROTOCOLS_KEY = 'mh_my_protocols_v1';
+
+export function saveLocalProtocolReceipt(entry: {
+  protocol: string;
+  channel: 'lgpd' | 'denuncia';
+  verifyHash?: string;
+  request_type?: string;
+  status: string;
+  legal_deadline?: string;
+  resolution_details?: string;
+  is_anonymous?: boolean;
+  created_at: string;
+}): void {
+  try {
+    const raw = sessionStorage.getItem(LOCAL_PROTOCOLS_KEY) || localStorage.getItem(LOCAL_PROTOCOLS_KEY);
+    const list: any[] = raw ? JSON.parse(raw) : [];
+    const filtered = list.filter((i) => i.protocol !== entry.protocol);
+    filtered.unshift({ ...entry, updated_at: entry.created_at });
+    const serialized = JSON.stringify(filtered.slice(0, 25));
+    sessionStorage.setItem(LOCAL_PROTOCOLS_KEY, serialized);
+    if (isFunctionalCookiesAllowed()) {
+      localStorage.setItem(LOCAL_PROTOCOLS_KEY, serialized);
+    }
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+/**
+ * Publishes an anonymized status entry into `site_settings` (`lgpd_public_protocols`)
+ * when an Admin/DPO updates a request or whistleblower report, ensuring zero-PII public lookup.
+ */
+export async function syncPublicProtocolIndex(entry: {
+  protocol: string;
+  channel: 'lgpd' | 'denuncia';
+  contactInfo?: string;
+  request_type?: string;
+  status: string;
+  legal_deadline?: string;
+  resolution_details?: string | null;
+  identity_verified?: boolean;
+  is_anonymous?: boolean;
+  created_at: string;
+  updated_at: string;
+  resolved_at?: string | null;
+}): Promise<void> {
+  try {
+    const verifyHash =
+      entry.channel === 'lgpd' && entry.contactInfo
+        ? await computeProtocolVerifyHash(entry.protocol, entry.contactInfo)
+        : undefined;
+
+    const { data } = await supabase
+      .from('site_settings')
+      .select('value_json')
+      .eq('key', 'lgpd_public_protocols')
+      .maybeSingle();
+
+    const currentList: any[] = Array.isArray(data?.value_json) ? data.value_json : [];
+    const filtered = currentList.filter(
+      (item: any) => String(item.protocol || '').toUpperCase() !== entry.protocol.toUpperCase()
+    );
+
+    filtered.unshift({
+      protocol: entry.protocol.toUpperCase(),
+      channel: entry.channel,
+      verifyHash,
+      request_type: entry.request_type,
+      status: entry.status,
+      legal_deadline: entry.legal_deadline,
+      resolution_details: entry.resolution_details || null,
+      identity_verified: Boolean(entry.identity_verified),
+      is_anonymous: Boolean(entry.is_anonymous),
+      created_at: entry.created_at,
+      updated_at: entry.updated_at,
+      resolved_at: entry.resolved_at || null,
+    });
+
+    await supabase.from('site_settings').upsert({
+      key: 'lgpd_public_protocols',
+      value_json: filtered.slice(0, 500),
+      updated_at: new Date().toISOString(),
+    });
+  } catch {
+    // Best-effort sync
+  }
+}
+
+/**
+ * Consults the status of an LGPD Request (MH-LGPD-...) or Whistleblower Report (MH-DEN-...)
+ * with identity verification (Art. 18, Art. 19 & Art. 46 LGPD).
+ */
+export async function consultProtocolStatus(
+  protocol: string,
+  contactVerification = ''
+): Promise<ProtocolStatusResult> {
+  const cleanProto = protocol.trim().toUpperCase();
+  const cleanContact = contactVerification.trim();
+
+  if (cleanProto.length < 6) {
+    return { found: false, error: 'Informe um código de protocolo válido (ex: MH-LGPD-... ou MH-DEN-...).' };
+  }
+
+  if (cleanProto.startsWith('MH-LGPD-') && cleanContact.length < 3) {
+    return {
+      found: false,
+      requires_contact: true,
+      error: 'Por segurança e proteção dos seus dados (Art. 46 LGPD), informe também o e-mail ou telefone utilizado na solicitação.',
+    };
+  }
+
+  // 1. Try Server-Side RPC (Security Definer)
+  try {
+    const { data, error } = await supabase.rpc('consult_protocol_status', {
+      p_protocol: cleanProto,
+      p_contact_verification: cleanContact,
+    });
+    if (!error && data && typeof data === 'object') {
+      return data as ProtocolStatusResult;
+    }
+  } catch {
+    // Fallback to anonymized index below
+  }
+
+  // 2. Fallback: Anonymized Index in `site_settings` + Local Receipt
+  let candidate: any = null;
+  try {
+    const { data } = await supabase
+      .from('site_settings')
+      .select('value_json')
+      .eq('key', 'lgpd_public_protocols')
+      .maybeSingle();
+    if (Array.isArray(data?.value_json)) {
+      candidate = data.value_json.find(
+        (item: any) => String(item.protocol || '').toUpperCase() === cleanProto
+      );
+    }
+  } catch {
+    // Ignore network error
+  }
+
+  if (!candidate) {
+    try {
+      const raw = sessionStorage.getItem(LOCAL_PROTOCOLS_KEY) || localStorage.getItem(LOCAL_PROTOCOLS_KEY);
+      if (raw) {
+        const localList: any[] = JSON.parse(raw);
+        candidate = localList.find(
+          (item: any) => String(item.protocol || '').toUpperCase() === cleanProto
+        );
+      }
+    } catch {
+      // Ignore
+    }
+  }
+
+  if (!candidate) {
+    return {
+      found: false,
+      error: 'Protocolo não encontrado ou aguardando sincronização inicial pelo DPO. Confira se digitou todos os caracteres corretamente.',
+    };
+  }
+
+  if (cleanProto.startsWith('MH-LGPD-') && candidate.verifyHash) {
+    const inputHash = await computeProtocolVerifyHash(cleanProto, cleanContact);
+    if (inputHash !== candidate.verifyHash) {
+      return {
+        found: false,
+        error: 'O e-mail ou telefone informado não corresponde ao registrado neste protocolo.',
+      };
+    }
+  }
+
+  return {
+    found: true,
+    channel: candidate.channel || (cleanProto.startsWith('MH-DEN-') ? 'denuncia' : 'lgpd'),
+    protocol: candidate.protocol,
+    request_type: candidate.request_type,
+    status: candidate.status || 'recebido',
+    legal_deadline: candidate.legal_deadline,
+    resolution_details:
+      candidate.resolution_details ||
+      (cleanProto.startsWith('MH-DEN-')
+        ? 'Seu relato encontra-se sob análise sigilosa do Comitê de Ética e Compliance.'
+        : 'Sua requisição foi recebida e encontra-se dentro do prazo legal de tratamento pela Encarregada de Dados (DPO).'),
+    identity_verified: Boolean(candidate.identity_verified),
+    is_anonymous: Boolean(candidate.is_anonymous),
+    created_at: candidate.created_at,
+    updated_at: candidate.updated_at || candidate.created_at,
+    resolved_at: candidate.resolved_at || null,
+  };
+}
+
+/**
+ * Generates a temporary Signed URL (1 hour) for private attachments in `form-attachments` bucket (Art. 46 LGPD)
+ * and opens it in a new browser tab.
+ */
+export async function openSecureAttachment(att: { url?: string; path?: string; name?: string }): Promise<void> {
+  try {
+    let storagePath = att.path || '';
+    if (!storagePath && att.url) {
+      const marker = '/form-attachments/';
+      const idx = att.url.indexOf(marker);
+      if (idx !== -1) {
+        storagePath = decodeURIComponent(att.url.slice(idx + marker.length).split('?')[0]);
+      }
+    }
+
+    if (storagePath) {
+      const { data, error } = await supabase.storage
+        .from('form-attachments')
+        .createSignedUrl(storagePath, 3600);
+      if (!error && data?.signedUrl) {
+        window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
+        return;
+      }
+    }
+
+    if (att.url) {
+      window.open(att.url, '_blank', 'noopener,noreferrer');
+    }
+  } catch {
+    if (att.url) {
+      window.open(att.url, '_blank', 'noopener,noreferrer');
+    }
+  }
+}

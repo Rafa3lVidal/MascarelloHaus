@@ -12,20 +12,38 @@ import {
   X,
   CheckCircle2,
   AlertTriangle,
+  FileSpreadsheet,
+  Globe,
+  RefreshCw,
+  FileText,
+  Scale,
 } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
 import {
+  DEFAULT_LGPD_GOVERNANCE_CONFIG,
+  DataProcessorItem,
   LgpdGovernanceConfig,
+  LiaRecordItem,
+  RipdRecordItem,
   RopaRecordItem,
   SecurityIncidentItem,
 } from '../../../lib/lgpdConfig';
-import { exportToCsv, formatDateBR, formatFriendlyError } from '../types';
+import {
+  ConsentRecord,
+  ContactMessageRecord,
+  exportToCsv,
+  formatDateBR,
+  formatFriendlyError,
+} from '../types';
 
 interface GovernanceAndRopaTabProps {
   config: LgpdGovernanceConfig;
+  messages?: ContactMessageRecord[];
+  consentRecords?: ConsentRecord[];
   currentUserId?: string;
   onChange: (next: LgpdGovernanceConfig) => void;
   onShowToast: (type: 'success' | 'error', message: string) => void;
+  onRefresh?: () => Promise<void>;
   onAudit: (action: string, tableName: string, recordId: string, oldData?: any, newData?: any) => Promise<void>;
 }
 
@@ -43,19 +61,45 @@ const INCIDENT_STATUS_META: Record<SecurityIncidentItem['status'], { label: stri
   encerrado: { label: 'Encerrado', tone: 'success' },
 };
 
+const TRANSFER_MECHANISM_LABELS: Record<DataProcessorItem['transferMechanism'], string> = {
+  nacional: 'Tratamento Nacional (Brasil)',
+  clausulas_padrao_anpd: 'Cláusulas-Padrão Contratuais (Res. ANPD nº 19/2024)',
+  pais_adequado: 'País com Nível Adequado Reconhecido (Art. 33, I)',
+  consentimento_especifico: 'Consentimento Específico e Destacado (Art. 33, VIII)',
+  execucao_contrato: 'Necessário para Execução de Contrato (Art. 33, IX)',
+};
+
 export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
   config,
+  messages = [],
+  consentRecords = [],
   currentUserId,
   onChange,
   onShowToast,
+  onRefresh,
   onAudit,
 }) => {
-  const [subTab, setSubTab] = useState<'ropa' | 'incidents' | 'dpo'>('ropa');
+  const [subTab, setSubTab] = useState<'ropa' | 'ripd_lia' | 'processors' | 'retention' | 'incidents' | 'dpo'>('ropa');
   const [searchTerm, setSearchTerm] = useState('');
   const [saving, setSaving] = useState(false);
+  const [purging, setPurging] = useState(false);
 
+  const ripdList = config.ripdRecords || DEFAULT_LGPD_GOVERNANCE_CONFIG.ripdRecords;
+  const liaList = config.liaRecords || DEFAULT_LGPD_GOVERNANCE_CONFIG.liaRecords;
+  const processorsList = config.processors || DEFAULT_LGPD_GOVERNANCE_CONFIG.processors;
+
+  // Modals state
   const [editingRopa, setEditingRopa] = useState<RopaRecordItem | null>(null);
   const [isNewRopa, setIsNewRopa] = useState(false);
+
+  const [editingRipd, setEditingRipd] = useState<RipdRecordItem | null>(null);
+  const [isNewRipd, setIsNewRipd] = useState(false);
+
+  const [editingLia, setEditingLia] = useState<LiaRecordItem | null>(null);
+  const [isNewLia, setIsNewLia] = useState(false);
+
+  const [editingProcessor, setEditingProcessor] = useState<DataProcessorItem | null>(null);
+  const [isNewProcessor, setIsNewProcessor] = useState(false);
 
   const [editingIncident, setEditingIncident] = useState<SecurityIncidentItem | null>(null);
   const [isNewIncident, setIsNewIncident] = useState(false);
@@ -72,7 +116,10 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
       if (error) throw error;
       await onAudit('UPDATE', 'site_settings', 'lgpd_governance', null, {
         dpoEmail: nextConfig.dpoEmail,
+        substituteDpoEmail: nextConfig.substituteDpoEmail,
         ropaCount: nextConfig.ropaRecords.length,
+        ripdCount: (nextConfig.ripdRecords || []).length,
+        processorsCount: (nextConfig.processors || []).length,
         incidentsCount: nextConfig.incidents.length,
       });
       onChange(nextConfig);
@@ -84,6 +131,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
     }
   };
 
+  // ROPA Handlers
   const handleSaveRopa = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingRopa) return;
@@ -105,6 +153,74 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
     await persistGovernance({ ...config, ropaRecords: nextRecords }, 'Atividade removida do mapeamento ROPA.');
   };
 
+  // RIPD Handlers (Art. 38)
+  const handleSaveRipd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingRipd) return;
+    if (!editingRipd.title.trim()) {
+      onShowToast('error', 'Informe o título do Relatório de Impacto (RIPD).');
+      return;
+    }
+    const updatedRipd = { ...editingRipd, updatedAt: new Date().toISOString().slice(0, 10) };
+    const nextRipds = isNewRipd
+      ? [{ ...updatedRipd, id: `ripd-${Date.now()}` }, ...ripdList]
+      : ripdList.map((r) => (r.id === updatedRipd.id ? updatedRipd : r));
+
+    setEditingRipd(null);
+    setIsNewRipd(false);
+    await persistGovernance({ ...config, ripdRecords: nextRipds }, 'Relatório de Impacto (RIPD — Art. 38) salvo com sucesso!');
+  };
+
+  const handleDeleteRipd = async (id: string) => {
+    const nextRipds = ripdList.filter((r) => r.id !== id);
+    await persistGovernance({ ...config, ripdRecords: nextRipds }, 'Relatório RIPD removido.');
+  };
+
+  // LIA Handlers (Art. 10, § 3º)
+  const handleSaveLia = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingLia) return;
+    if (!editingLia.processName.trim()) {
+      onShowToast('error', 'Informe o processo avaliado no Teste de Legítimo Interesse (LIA).');
+      return;
+    }
+    const nextLias = isNewLia
+      ? [{ ...editingLia, id: `lia-${Date.now()}` }, ...liaList]
+      : liaList.map((l) => (l.id === editingLia.id ? editingLia : l));
+
+    setEditingLia(null);
+    setIsNewLia(false);
+    await persistGovernance({ ...config, liaRecords: nextLias }, 'Avaliação de Legítimo Interesse (LIA — Art. 10) salva!');
+  };
+
+  const handleDeleteLia = async (id: string) => {
+    const nextLias = liaList.filter((l) => l.id !== id);
+    await persistGovernance({ ...config, liaRecords: nextLias }, 'Registro LIA removido.');
+  };
+
+  // Processors & International Transfer Handlers (Arts. 33-36 & 39)
+  const handleSaveProcessor = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingProcessor) return;
+    if (!editingProcessor.name.trim()) {
+      onShowToast('error', 'Informe o nome do operador ou suboperador de dados.');
+      return;
+    }
+    const nextProcs = isNewProcessor
+      ? [{ ...editingProcessor, id: `proc-${Date.now()}` }, ...processorsList]
+      : processorsList.map((p) => (p.id === editingProcessor.id ? editingProcessor : p));
+
+    setEditingProcessor(null);
+    setIsNewProcessor(false);
+    await persistGovernance({ ...config, processors: nextProcs }, 'Cadastro de Operador / Transferência Internacional salvo!');
+  };
+
+  const handleDeleteProcessor = async (id: string) => {
+    const nextProcs = processorsList.filter((p) => p.id !== id);
+    await persistGovernance({ ...config, processors: nextProcs }, 'Operador removido.');
+  };
+
+  // Incidents Handlers (Art. 48 & Res. CD/ANPD nº 15/2024)
   const handleSaveIncident = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingIncident) return;
@@ -126,9 +242,99 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
     await persistGovernance({ ...config, incidents: nextIncidents }, 'Registro de incidente removido.');
   };
 
+  const handleGenerateAnpdIncidentDraft = (inc: SecurityIncidentItem) => {
+    const draft = `COMUNICAÇÃO PRELIMINAR/COMPLETA DE INCIDENTE DE SEGURANÇA (Art. 48 da Lei nº 13.709/2018 e Resolução CD/ANPD nº 15/2024)
+---------------------------------------------------------------------------------
+1. Controlador: Mascârello Haus Advocacia e Consultoria
+2. Encarregada pelo Tratamento de Dados (DPO): ${config.dpoName} (${config.dpoEmail} | ${config.dpoPhone})
+3. Encarregado Substituto: ${config.substituteDpoName || '-'} (${config.substituteDpoEmail || '-'})
+4. Identificação do Incidente: ${inc.title}
+5. Data da Detecção: ${inc.detectedAt} | Data da Ciência: ${inc.knowledgeAt || inc.detectedAt}
+6. Prazo Legal de Comunicação (Res. ANPD nº 15/2024): 3 (três) dias úteis
+7. Dimensões Afetadas (CID): ${(inc.cidDimensions || ['Confidencialidade']).join(', ')}
+8. Natureza e Categoria dos Dados Pessoais Afetados: ${inc.affectedData || 'Em apuração'}
+9. Número Estimado de Titulares Afetados: ${inc.estimatedSubjects}
+10. Medidas Técnicas e de Segurança Utilizadas (Art. 48, § 1º, III): Criptografia TLS 1.3 / AES-256, RLS, anonimização de IP por hash SHA-256 e controle de acesso MFA/2FA.
+11. Medidas de Contenção e Mitigação Adotadas (Art. 48, § 1º, VI): ${inc.containmentActions || 'Isolamento imediato, rotação de credenciais e auditoria forense.'}
+12. Justificativa de Prazo (se aplicável — Art. 48, § 1º, V): ${inc.delayJustification || 'Comunicação realizada tempestivamente dentro do prazo regulamentar de 3 dias úteis.'}
+---------------------------------------------------------------------------------`;
+
+    const blob = new Blob([draft], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `comunicado-anpd-art48-${inc.id}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    onShowToast('success', 'Minuta oficial de comunicação à ANPD e aos Titulares (Res. 15/2024) gerada!');
+  };
+
   const handleSaveDpoForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    await persistGovernance(config, 'Configurações de Governança e DPO atualizadas com sucesso!');
+    await persistGovernance(config, 'Configurações de Governança, DPO Titular e Substituto atualizadas!');
+  };
+
+  // Retention & Purge calculations (Arts. 15 e 16 da LGPD)
+  const retentionMonthsContact = Math.max(1, Number(config.retentionContactMonths) || 24);
+  const retentionMonthsLogs = Math.max(12, Number(config.retentionLogsMonths) || 60);
+
+  const contactCutoffMs = Date.now() - retentionMonthsContact * 30 * 24 * 60 * 60 * 1000;
+  const logsCutoffMs = Date.now() - retentionMonthsLogs * 30 * 24 * 60 * 60 * 1000;
+
+  const expiredMessages = messages.filter(
+    (m) =>
+      new Date(m.created_at).getTime() < contactCutoffMs &&
+      m.name !== '[ANONIMIZADO ART. 16 LGPD]' &&
+      m.name !== '[ANONIMIZADO ART. 18 LGPD]'
+  );
+
+  const expiredConsents = consentRecords.filter(
+    (c) => new Date(c.created_at).getTime() < logsCutoffMs
+  );
+
+  const handleExecuteRetentionPurge = async () => {
+    if (expiredMessages.length === 0 && expiredConsents.length === 0) {
+      onShowToast('success', 'Nenhum registro ultrapassou o prazo legal de retenção configurado.');
+      return;
+    }
+    const ok = window.confirm(
+      `Confirma a execução da Política de Término de Tratamento e Descarte Seguro (Arts. 15 e 16 da LGPD)?\n\n• Mensagens vencidas a anonimizar: ${expiredMessages.length}\n• Logs de consentimento vencidos a expurgar: ${expiredConsents.length}`
+    );
+    if (!ok) return;
+
+    setPurging(true);
+    try {
+      for (const msg of expiredMessages) {
+        await supabase
+          .from('contact_messages')
+          .update({
+            name: '[ANONIMIZADO ART. 16 LGPD]',
+            email: 'expurgado@lgpd.local',
+            phone: '0000000000',
+            message: '[Ciclo de retenção encerrado nos termos dos Arts. 15 e 16 da LGPD]',
+            attachments_json: [],
+          })
+          .eq('id', msg.id);
+      }
+
+      for (const c of expiredConsents) {
+        await supabase.from('consent_records').delete().eq('id', c.id);
+      }
+
+      await onAudit('RETENTION_PURGE', 'governance_lifecycle', 'arts_15_16', null, {
+        expiredMessagesAnonymized: expiredMessages.length,
+        expiredConsentsDeleted: expiredConsents.length,
+      });
+
+      onShowToast('success', 'Expurgo e anonimização de término de tratamento (Arts. 15 e 16) concluídos!');
+      await onRefresh?.();
+    } catch (err) {
+      onShowToast('error', formatFriendlyError(err, 'Erro ao executar rotina de retenção/expurgo.'));
+    } finally {
+      setPurging(false);
+    }
   };
 
   const filteredRopa = config.ropaRecords.filter((r) => {
@@ -146,13 +352,34 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
   return (
     <div className="tab-module-container">
       <div className="module-toolbar">
-        <div className="subtab-pills">
+        <div className="subtab-pills" style={{ flexWrap: 'wrap' }}>
           <button
             type="button"
             className={`subtab-pill ${subTab === 'ropa' ? 'active' : ''}`}
             onClick={() => setSubTab('ropa')}
           >
-            <Database size={14} /> Mapeamento ROPA ({config.ropaRecords.length})
+            <Database size={14} /> ROPA Art. 37 ({config.ropaRecords.length})
+          </button>
+          <button
+            type="button"
+            className={`subtab-pill ${subTab === 'ripd_lia' ? 'active' : ''}`}
+            onClick={() => setSubTab('ripd_lia')}
+          >
+            <FileSpreadsheet size={14} /> RIPD Art. 38 & LIA Art. 10 ({ripdList.length + liaList.length})
+          </button>
+          <button
+            type="button"
+            className={`subtab-pill ${subTab === 'processors' ? 'active' : ''}`}
+            onClick={() => setSubTab('processors')}
+          >
+            <Globe size={14} /> Operadores & Transf. Internacional ({processorsList.length})
+          </button>
+          <button
+            type="button"
+            className={`subtab-pill ${subTab === 'retention' ? 'active' : ''}`}
+            onClick={() => setSubTab('retention')}
+          >
+            <RefreshCw size={14} /> Retenção & Descarte Arts. 15/16
           </button>
           <button
             type="button"
@@ -166,7 +393,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
             className={`subtab-pill ${subTab === 'dpo' ? 'active' : ''}`}
             onClick={() => setSubTab('dpo')}
           >
-            <UserCheck size={14} /> Governança & DPO
+            <UserCheck size={14} /> DPO Titular & Substituto (Art. 41)
           </button>
         </div>
 
@@ -193,10 +420,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                     'Finalidade',
                     'Base Legal',
                     'Categorias de Dados',
+                    'Dados Sensíveis (Art. 11)',
                     'Titulares',
                     'Compartilhamento',
-                    'Retenção',
-                    'Medidas de Segurança',
+                    'Transferência Internacional',
+                    'Retenção (Art. 15/16)',
+                    'Medidas de Segurança (Art. 46)',
                     'Status',
                   ],
                   filteredRopa.map((r) => [
@@ -205,8 +434,10 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                     r.purpose,
                     r.legalBasis,
                     r.dataCategories,
+                    r.hasSensitiveData ? 'Sim' : 'Não',
                     r.dataSubjects,
                     r.thirdParties,
+                    r.internationalTransfer || 'Não aplicável',
                     r.retentionPeriod,
                     r.securityMeasures,
                     r.status,
@@ -228,15 +459,141 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   purpose: '',
                   legalBasis: 'Cumprimento de obrigação legal (Art. 7º, II)',
                   dataCategories: '',
+                  hasSensitiveData: false,
+                  involvesMinors: false,
                   dataSubjects: '',
                   thirdParties: 'Sem compartilhamento externo',
+                  internationalTransfer: 'Infraestrutura em nuvem com Cláusulas-Padrão ANPD',
                   retentionPeriod: '5 anos',
-                  securityMeasures: 'Criptografia e controle de acesso restrito',
+                  securityMeasures: 'Criptografia TLS 1.3 / AES-256 e controle de acesso restrito com 2FA',
                   status: 'ativo',
                 });
               }}
             >
               <Plus size={15} /> Nova Atividade
+            </button>
+          </div>
+        )}
+
+        {subTab === 'ripd_lia' && (
+          <div className="toolbar-actions-group">
+            <button
+              type="button"
+              className="btn-outline-admin"
+              onClick={() =>
+                exportToCsv(
+                  `ripd-relatorio-impacto-anpd-${new Date().toISOString().slice(0, 10)}.csv`,
+                  ['Título RIPD', 'Processo Vinculado', 'Versão', 'Probabilidade', 'Impacto', 'Riscos Identificados', 'Medidas Mitigadoras', 'Parecer DPO', 'Status'],
+                  ripdList.map((d) => [
+                    d.title,
+                    d.ropaProcessName,
+                    d.version,
+                    d.probability,
+                    d.impact,
+                    d.identifiedRisks,
+                    d.mitigationMeasures,
+                    d.dpoOpinion,
+                    d.status,
+                  ])
+                )
+              }
+            >
+              <Download size={15} /> Exportar RIPD (ANPD)
+            </button>
+            <button
+              type="button"
+              className="btn-outline-admin"
+              onClick={() => {
+                setIsNewLia(true);
+                setEditingLia({
+                  id: '',
+                  processName: '',
+                  createdAt: new Date().toISOString().slice(0, 10),
+                  legitimatePurpose: '',
+                  necessityTest: '',
+                  balancingTest: '',
+                  safeguardsAndOptOut: '',
+                  conclusion: 'aprovado',
+                });
+              }}
+            >
+              <Plus size={15} /> Novo Teste LIA (Art. 10)
+            </button>
+            <button
+              type="button"
+              className="btn-save-main"
+              onClick={() => {
+                setIsNewRipd(true);
+                setEditingRipd({
+                  id: '',
+                  title: '',
+                  ropaProcessName: config.ropaRecords[0]?.processName || '',
+                  version: '1.0',
+                  createdAt: new Date().toISOString().slice(0, 10),
+                  updatedAt: new Date().toISOString().slice(0, 10),
+                  processingDescription: '',
+                  necessityAndProportionality: '',
+                  identifiedRisks: '',
+                  probability: 'baixa',
+                  impact: 'medio',
+                  mitigationMeasures: '',
+                  dpoOpinion: '',
+                  status: 'vigente',
+                });
+              }}
+            >
+              <Plus size={15} /> Novo RIPD (Art. 38)
+            </button>
+          </div>
+        )}
+
+        {subTab === 'processors' && (
+          <div className="toolbar-actions-group">
+            <button
+              type="button"
+              className="btn-outline-admin"
+              onClick={() =>
+                exportToCsv(
+                  `operadores-transferencia-internacional-${new Date().toISOString().slice(0, 10)}.csv`,
+                  ['Operador', 'Papel', 'Escopo', 'País', 'Transf. Internacional', 'Mecanismo (Art. 33)', 'Certificações', 'DPA Assinado'],
+                  processorsList.map((p) => [
+                    p.name,
+                    p.role,
+                    p.serviceProvided,
+                    p.country,
+                    p.isInternationalTransfer ? 'Sim' : 'Não',
+                    TRANSFER_MECHANISM_LABELS[p.transferMechanism] || p.transferMechanism,
+                    p.securityCertifications,
+                    p.dpaSigned ? 'Sim' : 'Não',
+                  ])
+                )
+              }
+            >
+              <Download size={15} /> Exportar Operadores
+            </button>
+            <button
+              type="button"
+              className="btn-save-main"
+              onClick={() => {
+                setIsNewProcessor(true);
+                setEditingProcessor({
+                  id: '',
+                  name: '',
+                  cnpjOrId: '',
+                  role: 'operador',
+                  serviceProvided: '',
+                  dataCategoriesShared: '',
+                  country: 'Brasil',
+                  isInternationalTransfer: false,
+                  transferMechanism: 'nacional',
+                  securityCertifications: 'ISO/IEC 27001, TLS 1.3',
+                  dpaSigned: true,
+                  lastAuditDate: new Date().toISOString().slice(0, 10),
+                  status: 'ativo',
+                });
+              }}
+            >
+              <Plus size={15} /> Adicionar Operador
             </button>
           </div>
         )}
@@ -249,10 +606,11 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
               onClick={() =>
                 exportToCsv(
                   `incidentes-lgpd-${new Date().toISOString().slice(0, 10)}.csv`,
-                  ['Título', 'Data Detecção', 'Severidade', 'Status', 'Dados Afetados', 'ANPD Notificada', 'Titulares Notificados'],
+                  ['Título', 'Detecção', 'Ciência (Res. 15/2024)', 'Severidade', 'Status', 'Dados Afetados', 'ANPD Notificada', 'Titulares Notificados'],
                   config.incidents.map((i) => [
                     i.title,
                     formatDateBR(i.detectedAt),
+                    formatDateBR(i.knowledgeAt || i.detectedAt),
                     i.severity,
                     i.status,
                     i.affectedData,
@@ -269,28 +627,33 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
               className="btn-save-main"
               onClick={() => {
                 setIsNewIncident(true);
+                const today = new Date().toISOString().slice(0, 10);
                 setEditingIncident({
                   id: '',
                   title: '',
-                  detectedAt: new Date().toISOString().slice(0, 10),
+                  detectedAt: today,
+                  knowledgeAt: today,
                   severity: 'media',
                   status: 'investigando',
+                  cidDimensions: ['Confidencialidade'],
                   affectedData: '',
                   estimatedSubjects: 0,
                   anpdNotified: false,
+                  anpdProtocol: '',
                   subjectsNotified: false,
+                  delayJustification: '',
                   containmentActions: '',
                   notes: '',
                 });
               }}
             >
-              <Plus size={15} /> Registrar Incidente
+              <Plus size={15} /> Registrar Incidente (Res. 15/2024)
             </button>
           </div>
         )}
       </div>
 
-      {/* SUBTAB 1: ROPA */}
+      {/* SUBTAB 1: ROPA (Art. 37) */}
       {subTab === 'ropa' && (
         <div className="table-responsive">
           <table className="admin-table">
@@ -298,9 +661,9 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
               <tr>
                 <th>Processo / Fluxo</th>
                 <th>Área</th>
-                <th>Base Legal (LGPD)</th>
+                <th>Base Legal (Arts. 7º e 11)</th>
                 <th>Titulares & Dados</th>
-                <th>Retenção</th>
+                <th>Retenção (Art. 15/16)</th>
                 <th>Status</th>
                 <th>Ações</th>
               </tr>
@@ -318,6 +681,11 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                     <td>
                       <strong>{r.processName}</strong>
                       <div className="table-subtext">{r.purpose}</div>
+                      {r.hasSensitiveData && (
+                        <span className="badge-tone warning" style={{ marginTop: '4px', fontSize: '0.7rem' }}>
+                          Contém Dados Sensíveis (Art. 11)
+                        </span>
+                      )}
                     </td>
                     <td>{r.area}</td>
                     <td>{r.legalBasis}</td>
@@ -366,7 +734,319 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
         </div>
       )}
 
-      {/* SUBTAB 2: INCIDENTES */}
+      {/* SUBTAB 2: RIPD (Art. 38) & LIA (Art. 10, § 3º) */}
+      {subTab === 'ripd_lia' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          <div>
+            <h3 style={{ margin: '0 0 8px', color: 'var(--color-primary)', fontSize: '1.15rem' }}>
+              <FileText size={17} style={{ verticalAlign: 'middle', marginRight: '6px' }} />
+              Relatórios de Impacto à Proteção de Dados Pessoais — RIPD (Art. 5º, XVII e Art. 38 da LGPD)
+            </h3>
+            <p className="table-subtext" style={{ marginBottom: '12px' }}>
+              Documentação técnica das operações de tratamento que podem gerar riscos às liberdades civis e aos direitos fundamentais, contendo medidas, salvaguardas e mecanismos de mitigação de risco.
+            </p>
+            <div className="table-responsive">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Título do RIPD / Processo</th>
+                    <th>Matriz de Risco</th>
+                    <th>Medidas de Mitigação & Salvaguardas</th>
+                    <th>Parecer do DPO</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ripdList.map((d) => (
+                    <tr key={d.id}>
+                      <td>
+                        <strong>{d.title}</strong>
+                        <div className="table-subtext">Processo: {d.ropaProcessName} · v{d.version}</div>
+                      </td>
+                      <td>
+                        <div className="table-subtext">Probabilidade: <strong>{d.probability.toUpperCase()}</strong></div>
+                        <div className="table-subtext">Impacto: <strong>{d.impact.toUpperCase()}</strong></div>
+                      </td>
+                      <td style={{ maxWidth: '300px' }}>
+                        <div className="table-subtext">{d.mitigationMeasures}</div>
+                      </td>
+                      <td style={{ maxWidth: '260px' }}>
+                        <div className="table-subtext">{d.dpoOpinion}</div>
+                      </td>
+                      <td>
+                        <span className={`badge-tone ${d.status === 'vigente' ? 'success' : 'warning'}`}>
+                          {d.status === 'vigente' ? 'Vigente' : 'Em Revisão'}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="action-buttons-cell">
+                          <button
+                            type="button"
+                            className="table-action-btn edit"
+                            title="Editar RIPD"
+                            onClick={() => {
+                              setIsNewRipd(false);
+                              setEditingRipd({ ...d });
+                            }}
+                          >
+                            <Edit size={15} />
+                          </button>
+                          <button
+                            type="button"
+                            className="table-action-btn delete"
+                            title="Excluir RIPD"
+                            onClick={() => handleDeleteRipd(d.id)}
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style={{ margin: '0 0 8px', color: 'var(--color-primary)', fontSize: '1.15rem' }}>
+              <Scale size={17} style={{ verticalAlign: 'middle', marginRight: '6px' }} />
+              Avaliação de Legítimo Interesse — Teste de Proporcionalidade LIA (Art. 10, §§ 1º a 3º da LGPD)
+            </h3>
+            <p className="table-subtext" style={{ marginBottom: '12px' }}>
+              Comprovação de finalidade legítima, necessidade (minimização), balanceamento com a legítima expectativa do titular e salvaguardas para tratamentos baseados no Art. 7º, IX.
+            </p>
+            <div className="table-responsive">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Operação Avaliada</th>
+                    <th>1. Finalidade Legítima</th>
+                    <th>2. Necessidade & 3. Balanceamento</th>
+                    <th>4. Salvaguardas & Opt-Out</th>
+                    <th>Conclusão</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {liaList.map((l) => (
+                    <tr key={l.id}>
+                      <td>
+                        <strong>{l.processName}</strong>
+                        <div className="table-subtext">{formatDateBR(l.createdAt)}</div>
+                      </td>
+                      <td style={{ maxWidth: '240px' }}>
+                        <div className="table-subtext">{l.legitimatePurpose}</div>
+                      </td>
+                      <td style={{ maxWidth: '280px' }}>
+                        <div className="table-subtext"><strong>Necessidade:</strong> {l.necessityTest}</div>
+                        <div className="table-subtext"><strong>Balanceamento:</strong> {l.balancingTest}</div>
+                      </td>
+                      <td style={{ maxWidth: '220px' }}>
+                        <div className="table-subtext">{l.safeguardsAndOptOut}</div>
+                      </td>
+                      <td>
+                        <span className={`badge-tone ${l.conclusion === 'aprovado' ? 'success' : l.conclusion === 'aprovado_com_ressalvas' ? 'warning' : 'danger'}`}>
+                          {l.conclusion === 'aprovado' ? 'Aprovado' : l.conclusion === 'aprovado_com_ressalvas' ? 'Com Ressalvas' : 'Reprovado'}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="action-buttons-cell">
+                          <button
+                            type="button"
+                            className="table-action-btn edit"
+                            onClick={() => {
+                              setIsNewLia(false);
+                              setEditingLia({ ...l });
+                            }}
+                          >
+                            <Edit size={15} />
+                          </button>
+                          <button
+                            type="button"
+                            className="table-action-btn delete"
+                            onClick={() => handleDeleteLia(l.id)}
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUBTAB 3: OPERADORES & TRANSFERÊNCIA INTERNACIONAL (Arts. 33 a 36 e Art. 39) */}
+      {subTab === 'processors' && (
+        <div className="table-responsive">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Operador / Suboperador</th>
+                <th>Escopo do Serviço</th>
+                <th>País / Jurisdição</th>
+                <th>Mecanismo Legal (Art. 33 / Res. 19/2024)</th>
+                <th>Certificações & DPA</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {processorsList.map((p) => (
+                <tr key={p.id}>
+                  <td>
+                    <strong>{p.name}</strong>
+                    <div className="table-subtext">{p.cnpjOrId}</div>
+                    <span className="badge-tone info" style={{ marginTop: '4px' }}>
+                      {p.role.toUpperCase()}
+                    </span>
+                  </td>
+                  <td style={{ maxWidth: '280px' }}>
+                    <div>{p.serviceProvided}</div>
+                    <div className="table-subtext">Dados: {p.dataCategoriesShared}</div>
+                  </td>
+                  <td>
+                    <strong>{p.country}</strong>
+                    <div className="table-subtext">
+                      {p.isInternationalTransfer ? '🌐 Transferência Internacional' : '🇧🇷 Processamento Nacional'}
+                    </div>
+                  </td>
+                  <td>{TRANSFER_MECHANISM_LABELS[p.transferMechanism] || p.transferMechanism}</td>
+                  <td>
+                    <div>{p.securityCertifications}</div>
+                    <span className={`badge-tone ${p.dpaSigned ? 'success' : 'warning'}`} style={{ marginTop: '4px' }}>
+                      {p.dpaSigned ? 'DPA / Contrato Assinado' : 'DPA Pendente'}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="action-buttons-cell">
+                      <button
+                        type="button"
+                        className="table-action-btn edit"
+                        onClick={() => {
+                          setIsNewProcessor(false);
+                          setEditingProcessor({ ...p });
+                        }}
+                      >
+                        <Edit size={15} />
+                      </button>
+                      <button
+                        type="button"
+                        className="table-action-btn delete"
+                        onClick={() => handleDeleteProcessor(p.id)}
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* SUBTAB 4: CICLO DE VIDA, RETENÇÃO E DESCARTE SEGURO (Arts. 15 e 16) */}
+      {subTab === 'retention' && (
+        <div className="settings-form-container">
+          <div className="settings-section">
+            <h3 className="settings-section-title">
+              <RefreshCw size={18} /> Término do Tratamento, Retenção e Expurgo Seguro (Arts. 15 e 16 da LGPD)
+            </h3>
+            <p className="settings-section-desc">
+              Configure os prazos de retenção automática e execute a rotina de anonimização ou eliminação de dados cujo ciclo de finalidade já se encerrou, preservando apenas os registros necessários para cumprimento de obrigação legal ou regulatória (Art. 16, I).
+            </p>
+
+            <div className="form-grid-2" style={{ marginBottom: '20px' }}>
+              <div className="form-group">
+                <label>Prazo de Retenção — Mensagens de Contato (meses)</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={120}
+                  className="form-control"
+                  value={config.retentionContactMonths || 24}
+                  onChange={(e) =>
+                    onChange({ ...config, retentionContactMonths: Math.max(1, Number(e.target.value) || 24) })
+                  }
+                />
+                <small className="table-subtext">
+                  Padrão recomendado: 24 meses após o contato inicial sem contratação.
+                </small>
+              </div>
+
+              <div className="form-group">
+                <label>Prazo de Guarda Legal — Logs de Consentimento e Auditoria (meses)</label>
+                <input
+                  type="number"
+                  min={12}
+                  max={120}
+                  className="form-control"
+                  value={config.retentionLogsMonths || 60}
+                  onChange={(e) =>
+                    onChange({ ...config, retentionLogsMonths: Math.max(12, Number(e.target.value) || 60) })
+                  }
+                />
+                <small className="table-subtext">
+                  Padrão recomendado: 60 meses (5 anos) para prova perante a ANPD (Art. 16, I).
+                </small>
+              </div>
+            </div>
+
+            <div
+              style={{
+                backgroundColor: '#f8fafc',
+                border: '1px solid #cbd5e1',
+                borderRadius: '12px',
+                padding: '20px 24px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '16px',
+              }}
+            >
+              <div>
+                <strong style={{ color: '#0d3732', display: 'block', fontSize: '1rem', marginBottom: '4px' }}>
+                  Diagnóstico de Ciclo de Vida Atual no Banco de Dados
+                </strong>
+                <div style={{ fontSize: '0.88rem', color: '#475569' }}>
+                  • Mensagens de contato vencidas (&gt; {retentionMonthsContact} meses):{' '}
+                  <strong>{expiredMessages.length} registro(s)</strong>
+                  <br />• Registros de consentimento vencidos (&gt; {retentionMonthsLogs} meses):{' '}
+                  <strong>{expiredConsents.length} registro(s)</strong>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  className="btn-outline-admin"
+                  disabled={saving}
+                  onClick={() => persistGovernance(config, 'Prazos de retenção salvos com sucesso!')}
+                >
+                  <Save size={15} /> Salvar Prazos
+                </button>
+                <button
+                  type="button"
+                  className="btn-save-main"
+                  disabled={purging}
+                  onClick={handleExecuteRetentionPurge}
+                >
+                  <Trash2 size={15} />{' '}
+                  {purging ? 'Executando Expurgo...' : 'Executar Anonimização / Expurgo (Art. 16)'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUBTAB 5: INCIDENTES (Art. 48 & Resolução CD/ANPD nº 15/2024) */}
       {subTab === 'incidents' && (
         <div className="table-responsive">
           {config.incidents.length === 0 ? (
@@ -374,17 +1054,17 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
               <CheckCircle2 size={36} color="#059669" />
               <h4>Nenhum incidente de segurança registrado</h4>
               <p>
-                Caso ocorra qualquer evento que possa acarretar risco ou dano relevante aos titulares (Art. 48 LGPD / Resolução CD/ANPD nº 15), registre aqui para controle do prazo de comunicação ({config.incidentNotificationHours}h).
+                Caso ocorra qualquer evento que possa acarretar risco ou dano relevante aos titulares (Art. 48 LGPD / Resolução CD/ANPD nº 15/2024), registre aqui para controle do prazo regulamentar de <strong>3 dias úteis</strong> ({config.incidentNotificationHours}h) e geração automática da minuta oficial de comunicação à ANPD.
               </p>
             </div>
           ) : (
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th>Incidente</th>
-                  <th>Detecção</th>
+                  <th>Incidente & Dimensões CID</th>
+                  <th>Detecção / Ciência</th>
                   <th>Severidade</th>
-                  <th>Comunicações</th>
+                  <th>Comunicações (Prazo 3d úteis)</th>
                   <th>Status</th>
                   <th>Ações</th>
                 </tr>
@@ -400,15 +1080,22 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                         <div className="table-subtext">
                           {inc.affectedData || 'Dados em análise'} · ~{inc.estimatedSubjects} titular(es)
                         </div>
+                        {Array.isArray(inc.cidDimensions) && inc.cidDimensions.length > 0 && (
+                          <div className="table-subtext">CID: {inc.cidDimensions.join(', ')}</div>
+                        )}
                       </td>
-                      <td className="tabular-nums">{formatDateBR(inc.detectedAt)}</td>
+                      <td className="tabular-nums">
+                        <div>Detecção: {formatDateBR(inc.detectedAt)}</div>
+                        <div className="table-subtext">Ciência: {formatDateBR(inc.knowledgeAt || inc.detectedAt)}</div>
+                      </td>
                       <td>
                         <span className={`badge-tone ${sev.tone}`}>{sev.label}</span>
                       </td>
                       <td>
                         <div className="table-subtext">
-                          ANPD: <strong>{inc.anpdNotified ? 'Sim' : 'Não'}</strong> · Titulares:{' '}
-                          <strong>{inc.subjectsNotified ? 'Sim' : 'Não'}</strong>
+                          ANPD: <strong>{inc.anpdNotified ? `Sim (${inc.anpdProtocol || 'Protocolado'})` : 'Não'}</strong>
+                          <br />
+                          Titulares: <strong>{inc.subjectsNotified ? 'Sim' : 'Não'}</strong>
                         </div>
                       </td>
                       <td>
@@ -416,6 +1103,15 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       </td>
                       <td>
                         <div className="action-buttons-cell">
+                          <button
+                            type="button"
+                            className="btn-outline-admin"
+                            style={{ padding: '4px 8px', fontSize: '0.75rem' }}
+                            title="Baixar minuta de comunicação à ANPD e Titulares (Art. 48, § 1º)"
+                            onClick={() => handleGenerateAnpdIncidentDraft(inc)}
+                          >
+                            <Download size={13} /> Minuta ANPD
+                          </button>
                           <button
                             type="button"
                             className="table-action-btn edit"
@@ -446,20 +1142,20 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
         </div>
       )}
 
-      {/* SUBTAB 3: GOVERNANÇA & DPO */}
+      {/* SUBTAB 6: GOVERNANÇA, DPO TITULAR & DPO SUBSTITUTO (Art. 41 & Res. ANPD 18/2024) */}
       {subTab === 'dpo' && (
         <div className="settings-form-container">
           <form onSubmit={handleSaveDpoForm}>
             <div className="settings-section">
               <h3 className="settings-section-title">
-                <UserCheck size={18} /> Encarregado pelo Tratamento de Dados Pessoais (DPO — Art. 41)
+                <UserCheck size={18} /> Encarregado Titular e Substituto (Art. 41 da LGPD e Resolução CD/ANPD nº 18/2024)
               </h3>
               <p className="settings-section-desc">
-                As informações abaixo são exibidas publicamente na Central de Proteção de Dados e orientam os prazos internos do painel.
+                As informações abaixo são exibidas publicamente na Central de Proteção de Dados e cumprem integralmente a exigência de divulgação de Encarregado Titular e Substituto da Resolução CD/ANPD nº 18/2024.
               </p>
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Nome do(a) Encarregado(a) / DPO</label>
+                  <label>Nome do(a) Encarregado(a) Titular (DPO)</label>
                   <input
                     type="text"
                     className="form-control"
@@ -468,7 +1164,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>E-mail Oficial do Canal DPO</label>
+                  <label>E-mail Oficial do Canal DPO Titular</label>
                   <input
                     type="email"
                     className="form-control"
@@ -486,12 +1182,48 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Registro / Cargo</label>
+                  <label>Registro / Cargo do Titular</label>
                   <input
                     type="text"
                     className="form-control"
                     value={config.dpoOab}
                     onChange={(e) => onChange({ ...config, dpoOab: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Nome do Encarregado Substituto (Ausências/Vacâncias — Res. 18/2024)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={config.substituteDpoName || ''}
+                    onChange={(e) => onChange({ ...config, substituteDpoName: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>E-mail do Encarregado Substituto</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    value={config.substituteDpoEmail || ''}
+                    onChange={(e) => onChange({ ...config, substituteDpoEmail: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Telefone do Encarregado Substituto</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={config.substituteDpoPhone || ''}
+                    onChange={(e) => onChange({ ...config, substituteDpoPhone: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Cargo / Função do Substituto</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={config.substituteDpoOab || ''}
+                    onChange={(e) => onChange({ ...config, substituteDpoOab: e.target.value })}
                   />
                 </div>
                 <div className="form-group form-group-full">
@@ -508,11 +1240,11 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
 
             <div className="settings-section">
               <h3 className="settings-section-title">
-                <AlertTriangle size={18} /> Prazos Regulatórios e Comitê de Privacidade
+                <AlertTriangle size={18} /> Prazos Regulatórios, Menores (Art. 14) e Transferência Internacional (Art. 33)
               </h3>
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Prazo de Resposta a Titulares (dias)</label>
+                  <label>Prazo de Resposta a Titulares — Declaração Completa (dias — Art. 19, II)</label>
                   <input
                     type="number"
                     min={1}
@@ -525,15 +1257,19 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Prazo de Comunicação de Incidentes (horas)</label>
+                  <label>Prazo de Comunicação de Incidentes à ANPD (dias úteis — Res. 15/2024)</label>
                   <input
                     type="number"
                     min={1}
-                    max={240}
+                    max={10}
                     className="form-control"
-                    value={config.incidentNotificationHours}
+                    value={config.incidentBusinessDaysAnpd || 3}
                     onChange={(e) =>
-                      onChange({ ...config, incidentNotificationHours: Math.max(1, Number(e.target.value) || 72) })
+                      onChange({
+                        ...config,
+                        incidentBusinessDaysAnpd: Math.max(1, Number(e.target.value) || 3),
+                        incidentNotificationHours: Math.max(1, Number(e.target.value) || 3) * 24,
+                      })
                     }
                   />
                 </div>
@@ -557,6 +1293,24 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                     className="form-control"
                     value={config.nextReviewDate}
                     onChange={(e) => onChange({ ...config, nextReviewDate: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Diretriz Pública de Proteção de Crianças e Adolescentes (Art. 14 LGPD)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={config.childrenDataPolicy || DEFAULT_LGPD_GOVERNANCE_CONFIG.childrenDataPolicy}
+                    onChange={(e) => onChange({ ...config, childrenDataPolicy: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Diretriz Pública de Transferência Internacional de Dados (Arts. 33 a 36 e Res. 19/2024)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={config.internationalTransferPolicy || DEFAULT_LGPD_GOVERNANCE_CONFIG.internationalTransferPolicy}
+                    onChange={(e) => onChange({ ...config, internationalTransferPolicy: e.target.value })}
                   />
                 </div>
                 <div className="form-group form-group-full">
@@ -585,7 +1339,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
         <div className="admin-modal-backdrop" role="dialog" aria-modal="true" onClick={() => setEditingRopa(null)}>
           <div className="admin-modal-card admin-modal-lg" onClick={(e) => e.stopPropagation()}>
             <div className="admin-modal-header">
-              <h3>{isNewRopa ? 'Nova Operação de Tratamento (ROPA)' : 'Editar Operação (ROPA)'}</h3>
+              <h3>{isNewRopa ? 'Nova Operação de Tratamento (ROPA — Art. 37)' : 'Editar Operação (ROPA — Art. 37)'}</h3>
               <button type="button" className="modal-close-btn" onClick={() => setEditingRopa(null)}>
                 <X size={20} />
               </button>
@@ -661,7 +1415,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Compartilhamento com Terceiros</label>
+                  <label>Compartilhamento com Terceiros / Operadores</label>
                   <input
                     type="text"
                     className="form-control"
@@ -670,7 +1424,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Prazo de Retenção / Descarte</label>
+                  <label>Prazo de Retenção / Descarte (Art. 15/16)</label>
                   <input
                     type="text"
                     className="form-control"
@@ -678,8 +1432,28 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                     onChange={(e) => setEditingRopa({ ...editingRopa, retentionPeriod: e.target.value })}
                   />
                 </div>
+                <div className="form-group">
+                  <label className="checkbox-inline-label">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(editingRopa.hasSensitiveData)}
+                      onChange={(e) => setEditingRopa({ ...editingRopa, hasSensitiveData: e.target.checked })}
+                    />
+                    <span>Envolve Dados Pessoais Sensíveis (Art. 11 LGPD)</span>
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label className="checkbox-inline-label">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(editingRopa.involvesMinors)}
+                      onChange={(e) => setEditingRopa({ ...editingRopa, involvesMinors: e.target.checked })}
+                    />
+                    <span>Pode Envolver Dados de Menores (Art. 14 LGPD)</span>
+                  </label>
+                </div>
                 <div className="form-group form-group-full">
-                  <label>Medidas Técnicas e Administrativas de Segurança</label>
+                  <label>Medidas Técnicas e Administrativas de Segurança (Art. 46)</label>
                   <input
                     type="text"
                     className="form-control"
@@ -701,12 +1475,333 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
         </div>
       )}
 
-      {/* MODAL: INCIDENTE */}
+      {/* MODAL: RIPD (Art. 38) */}
+      {editingRipd && (
+        <div className="admin-modal-backdrop" role="dialog" aria-modal="true" onClick={() => setEditingRipd(null)}>
+          <div className="admin-modal-card admin-modal-lg" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-header">
+              <h3>{isNewRipd ? 'Elaborar Relatório de Impacto (RIPD — Art. 38)' : 'Editar RIPD (Art. 38)'}</h3>
+              <button type="button" className="modal-close-btn" onClick={() => setEditingRipd(null)}>
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleSaveRipd} className="admin-modal-form">
+              <div className="form-grid-2">
+                <div className="form-group">
+                  <label>Título do Relatório RIPD *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    required
+                    value={editingRipd.title}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, title: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Processo ROPA Vinculado</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={editingRipd.ropaProcessName}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, ropaProcessName: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>1. Descrição dos Processos de Tratamento que Podem Gerar Riscos (Art. 38, parágrafo único, I)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingRipd.processingDescription}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, processingDescription: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>2. Análise de Necessidade e Proporcionalidade (Art. 6º, III)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingRipd.necessityAndProportionality}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, necessityAndProportionality: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>3. Identificação de Riscos às Liberdades Civis e Direitos Fundamentais</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingRipd.identifiedRisks}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, identifiedRisks: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Probabilidade do Risco</label>
+                  <select
+                    className="form-control"
+                    value={editingRipd.probability}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, probability: e.target.value as any })}
+                  >
+                    <option value="baixa">Baixa</option>
+                    <option value="media">Média</option>
+                    <option value="alta">Alta</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Severidade / Impacto ao Titular</label>
+                  <select
+                    className="form-control"
+                    value={editingRipd.impact}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, impact: e.target.value as any })}
+                  >
+                    <option value="baixo">Baixo</option>
+                    <option value="medio">Médio</option>
+                    <option value="alto">Alto</option>
+                    <option value="critico">Crítico</option>
+                  </select>
+                </div>
+                <div className="form-group form-group-full">
+                  <label>4. Medidas, Salvaguardas e Mecanismos de Mitigação de Risco (Art. 38, parágrafo único, IV)</label>
+                  <textarea
+                    rows={3}
+                    className="form-control"
+                    value={editingRipd.mitigationMeasures}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, mitigationMeasures: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>5. Parecer Conclusivo da Encarregada de Dados (DPO)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingRipd.dpoOpinion}
+                    onChange={(e) => setEditingRipd({ ...editingRipd, dpoOpinion: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="admin-modal-actions">
+                <button type="button" className="btn-cancel" onClick={() => setEditingRipd(null)}>
+                  Cancelar
+                </button>
+                <button type="submit" className="btn-save-main" disabled={saving}>
+                  <Save size={15} /> {saving ? 'Salvando...' : 'Salvar RIPD'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: LIA (Art. 10, § 3º) */}
+      {editingLia && (
+        <div className="admin-modal-backdrop" role="dialog" aria-modal="true" onClick={() => setEditingLia(null)}>
+          <div className="admin-modal-card admin-modal-lg" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-header">
+              <h3>{isNewLia ? 'Novo Teste de Legítimo Interesse (LIA — Art. 10)' : 'Editar LIA (Art. 10)'}</h3>
+              <button type="button" className="modal-close-btn" onClick={() => setEditingLia(null)}>
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleSaveLia} className="admin-modal-form">
+              <div className="form-grid-2">
+                <div className="form-group">
+                  <label>Processo / Tratamento Baseado em Legítimo Interesse *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    required
+                    value={editingLia.processName}
+                    onChange={(e) => setEditingLia({ ...editingLia, processName: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Conclusão do Teste</label>
+                  <select
+                    className="form-control"
+                    value={editingLia.conclusion}
+                    onChange={(e) => setEditingLia({ ...editingLia, conclusion: e.target.value as any })}
+                  >
+                    <option value="aprovado">Aprovado (Legítimo Interesse Válido)</option>
+                    <option value="aprovado_com_ressalvas">Aprovado com Salvaguardas Adicionais</option>
+                    <option value="reprovado">Reprovado (Exige Outra Base Legal)</option>
+                  </select>
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Etapa 1 — Teste da Finalidade Legítima e Situação Concreta (Art. 10, caput)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingLia.legitimatePurpose}
+                    onChange={(e) => setEditingLia({ ...editingLia, legitimatePurpose: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Etapa 2 — Teste da Necessidade e Minimização (Art. 10, § 1º)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingLia.necessityTest}
+                    onChange={(e) => setEditingLia({ ...editingLia, necessityTest: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Etapa 3 — Teste de Balanceamento e Legítima Expectativa do Titular (Art. 10, II)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingLia.balancingTest}
+                    onChange={(e) => setEditingLia({ ...editingLia, balancingTest: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Etapa 4 — Salvaguardas, Transparência e Direito de Oposição (Art. 10, § 2º e Art. 18, § 2º)</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingLia.safeguardsAndOptOut}
+                    onChange={(e) => setEditingLia({ ...editingLia, safeguardsAndOptOut: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="admin-modal-actions">
+                <button type="button" className="btn-cancel" onClick={() => setEditingLia(null)}>
+                  Cancelar
+                </button>
+                <button type="submit" className="btn-save-main" disabled={saving}>
+                  <Save size={15} /> {saving ? 'Salvando...' : 'Salvar LIA'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: OPERADOR / TRANSFERÊNCIA INTERNACIONAL */}
+      {editingProcessor && (
+        <div className="admin-modal-backdrop" role="dialog" aria-modal="true" onClick={() => setEditingProcessor(null)}>
+          <div className="admin-modal-card admin-modal-lg" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-header">
+              <h3>{isNewProcessor ? 'Cadastrar Operador de Dados (Art. 39 / Art. 33)' : 'Editar Operador de Dados'}</h3>
+              <button type="button" className="modal-close-btn" onClick={() => setEditingProcessor(null)}>
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleSaveProcessor} className="admin-modal-form">
+              <div className="form-grid-2">
+                <div className="form-group">
+                  <label>Razão Social / Nome do Operador *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    required
+                    value={editingProcessor.name}
+                    onChange={(e) => setEditingProcessor({ ...editingProcessor, name: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>CNPJ / Identificador / Contato</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={editingProcessor.cnpjOrId}
+                    onChange={(e) => setEditingProcessor({ ...editingProcessor, cnpjOrId: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Papel na LGPD (Art. 5º)</label>
+                  <select
+                    className="form-control"
+                    value={editingProcessor.role}
+                    onChange={(e) => setEditingProcessor({ ...editingProcessor, role: e.target.value as any })}
+                  >
+                    <option value="operador">Operador (Art. 5º, VII)</option>
+                    <option value="suboperador">Suboperador</option>
+                    <option value="controlador_conjunto">Controlador Conjunto</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>País de Localização dos Servidores</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={editingProcessor.country}
+                    onChange={(e) => setEditingProcessor({ ...editingProcessor, country: e.target.value })}
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Serviço Prestado / Escopo do Tratamento</label>
+                  <textarea
+                    rows={2}
+                    className="form-control"
+                    value={editingProcessor.serviceProvided}
+                    onChange={(e) => setEditingProcessor({ ...editingProcessor, serviceProvided: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Mecanismo de Transferência (Art. 33 / Res. ANPD 19/2024)</label>
+                  <select
+                    className="form-control"
+                    value={editingProcessor.transferMechanism}
+                    onChange={(e) => setEditingProcessor({ ...editingProcessor, transferMechanism: e.target.value as any })}
+                  >
+                    <option value="nacional">Tratamento Nacional (Brasil)</option>
+                    <option value="clausulas_padrao_anpd">Cláusulas-Padrão Contratuais (Res. ANPD 19/2024)</option>
+                    <option value="pais_adequado">País com Nível Adequado (Art. 33, I)</option>
+                    <option value="execucao_contrato">Execução de Contrato (Art. 33, IX)</option>
+                    <option value="consentimento_especifico">Consentimento Específico (Art. 33, VIII)</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Certificações de Segurança (Art. 46)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={editingProcessor.securityCertifications}
+                    onChange={(e) => setEditingProcessor({ ...editingProcessor, securityCertifications: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="checkbox-inline-label">
+                    <input
+                      type="checkbox"
+                      checked={editingProcessor.isInternationalTransfer}
+                      onChange={(e) => setEditingProcessor({ ...editingProcessor, isInternationalTransfer: e.target.checked })}
+                    />
+                    <span>Envolve Transferência Internacional de Dados (Art. 33)</span>
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label className="checkbox-inline-label">
+                    <input
+                      type="checkbox"
+                      checked={editingProcessor.dpaSigned}
+                      onChange={(e) => setEditingProcessor({ ...editingProcessor, dpaSigned: e.target.checked })}
+                    />
+                    <span>Cláusula LGPD / DPA Assinado (Art. 39)</span>
+                  </label>
+                </div>
+              </div>
+              <div className="admin-modal-actions">
+                <button type="button" className="btn-cancel" onClick={() => setEditingProcessor(null)}>
+                  Cancelar
+                </button>
+                <button type="submit" className="btn-save-main" disabled={saving}>
+                  <Save size={15} /> {saving ? 'Salvando...' : 'Salvar Operador'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: INCIDENTE (Art. 48 & Res. CD/ANPD nº 15/2024) */}
       {editingIncident && (
         <div className="admin-modal-backdrop" role="dialog" aria-modal="true" onClick={() => setEditingIncident(null)}>
           <div className="admin-modal-card admin-modal-lg" onClick={(e) => e.stopPropagation()}>
             <div className="admin-modal-header">
-              <h3>{isNewIncident ? 'Registrar Incidente de Segurança (Art. 48)' : 'Gerenciar Incidente'}</h3>
+              <h3>
+                {isNewIncident
+                  ? 'Registrar Incidente de Segurança (Art. 48 / Res. ANPD nº 15/2024)'
+                  : 'Gerenciar Incidente de Segurança'}
+              </h3>
               <button type="button" className="modal-close-btn" onClick={() => setEditingIncident(null)}>
                 <X size={20} />
               </button>
@@ -724,12 +1819,21 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Data da Detecção</label>
+                  <label>Data da Ocorrência / Detecção</label>
                   <input
                     type="date"
                     className="form-control"
                     value={editingIncident.detectedAt}
                     onChange={(e) => setEditingIncident({ ...editingIncident, detectedAt: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Data da Ciência (Início do prazo de 3 dias úteis — Res. 15/2024)</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={editingIncident.knowledgeAt || editingIncident.detectedAt}
+                    onChange={(e) => setEditingIncident({ ...editingIncident, knowledgeAt: e.target.value })}
                   />
                 </div>
                 <div className="form-group">
@@ -763,7 +1867,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Qtd. Estimada de Titulares</label>
+                  <label>Qtd. Estimada de Titulares Afetados</label>
                   <input
                     type="number"
                     min={0}
@@ -774,8 +1878,18 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                     }
                   />
                 </div>
+                <div className="form-group">
+                  <label>Protocolo SEI / ANPD (se comunicado)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Ex: SEI 00261.000..."
+                    value={editingIncident.anpdProtocol || ''}
+                    onChange={(e) => setEditingIncident({ ...editingIncident, anpdProtocol: e.target.value })}
+                  />
+                </div>
                 <div className="form-group form-group-full">
-                  <label>Dados Pessoais Afetados</label>
+                  <label>Dados Pessoais Afetados (Art. 48, § 1º, I e II)</label>
                   <input
                     type="text"
                     className="form-control"
@@ -791,7 +1905,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       checked={editingIncident.anpdNotified}
                       onChange={(e) => setEditingIncident({ ...editingIncident, anpdNotified: e.target.checked })}
                     />
-                    <span>ANPD comunicada formalmente</span>
+                    <span>ANPD comunicada formalmente (em até 3 dias úteis)</span>
                   </label>
                 </div>
                 <div className="form-group">
@@ -801,20 +1915,30 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       checked={editingIncident.subjectsNotified}
                       onChange={(e) => setEditingIncident({ ...editingIncident, subjectsNotified: e.target.checked })}
                     />
-                    <span>Titulares afetados comunicados</span>
+                    <span>Titulares afetados notificados</span>
                   </label>
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Medidas de Contenção e Mitigação</label>
+                  <label>Medidas de Contenção e Mitigação Adotadas (Art. 48, § 1º, III e VI)</label>
                   <textarea
-                    rows={3}
+                    rows={2}
                     className="form-control"
                     value={editingIncident.containmentActions}
                     onChange={(e) => setEditingIncident({ ...editingIncident, containmentActions: e.target.value })}
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Parecer do DPO / Observações</label>
+                  <label>Justificativa de Prazo (Obrigatória se a comunicação ultrapassar 3 dias úteis — Art. 48, § 1º, V)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={editingIncident.delayJustification || ''}
+                    onChange={(e) => setEditingIncident({ ...editingIncident, delayJustification: e.target.value })}
+                    placeholder="Deixe em branco caso comunicado tempestivamente em até 3 dias úteis"
+                  />
+                </div>
+                <div className="form-group form-group-full">
+                  <label>Notas de Investigação e Parecer do DPO</label>
                   <textarea
                     rows={2}
                     className="form-control"

@@ -11,6 +11,7 @@ import {
   Check,
 } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
+import { openSecureAttachment } from '../../../lib/formSecurity';
 import {
   ContactMessageRecord,
   MESSAGE_STATUS_META,
@@ -283,15 +284,15 @@ export const MessagesTab: React.FC<MessagesTabProps> = ({
                   </h4>
                   <div className="detail-attachments-list">
                     {selectedMsg.attachments_json.map((att, idx) => (
-                      <a
+                      <button
                         key={idx}
-                        href={att.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        type="button"
+                        onClick={() => openSecureAttachment(att)}
                         className="attachment-chip"
+                        style={{ cursor: 'pointer', border: '1px solid #cbd5e1', background: '#ffffff' }}
                       >
-                        📎 {att.name || `Anexo ${idx + 1}`}
-                      </a>
+                        🔒 {att.name || `Anexo ${idx + 1}`}
+                      </button>
                     ))}
                   </div>
                 </div>

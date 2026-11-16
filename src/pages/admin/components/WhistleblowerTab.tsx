@@ -12,6 +12,7 @@ import {
   MapPin,
 } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
+import { openSecureAttachment, syncPublicProtocolIndex } from '../../../lib/formSecurity';
 import {
   WHISTLEBLOWER_STATUS_META,
   WhistleblowerRecord,
@@ -40,6 +41,7 @@ export const WhistleblowerTab: React.FC<WhistleblowerTabProps> = ({
   const [anonymityFilter, setAnonymityFilter] = useState<string>('all');
   const [selectedReport, setSelectedReport] = useState<WhistleblowerRecord | null>(null);
   const [editStatus, setEditStatus] = useState<WhistleblowerStatus>('new');
+  const [publicResponse, setPublicResponse] = useState('');
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -54,6 +56,7 @@ export const WhistleblowerTab: React.FC<WhistleblowerTabProps> = ({
   const handleOpenDetails = (report: WhistleblowerRecord) => {
     setSelectedReport(report);
     setEditStatus(report.status || 'new');
+    setPublicResponse(report.public_response || '');
   };
 
   const handleUpdateStatus = async (e: React.FormEvent) => {
@@ -68,14 +71,29 @@ export const WhistleblowerTab: React.FC<WhistleblowerTabProps> = ({
         .eq('id', selectedReport.id);
 
       if (error) throw error;
+
+      await syncPublicProtocolIndex({
+        protocol: selectedReport.protocol,
+        channel: 'denuncia',
+        status: editStatus,
+        is_anonymous: selectedReport.is_anonymous,
+        resolution_details:
+          publicResponse.trim() ||
+          (editStatus === 'resolved'
+            ? 'A apuração foi concluída pelo Comitê de Ética e Compliance e as medidas cabíveis foram adotadas.'
+            : 'Seu relato encontra-se sob análise sigilosa do Comitê de Ética e Compliance.'),
+        created_at: selectedReport.created_at,
+        updated_at: new Date().toISOString(),
+      });
+
       await onAudit(
         'UPDATE',
         'whistleblower_reports',
         selectedReport.protocol,
         { status: selectedReport.status },
-        { status: editStatus }
+        { status: editStatus, public_response: publicResponse.trim() || null }
       );
-      onShowToast('success', `Status do relato ${selectedReport.protocol} atualizado!`);
+      onShowToast('success', `Status e retorno do relato ${selectedReport.protocol} atualizados!`);
       setSelectedReport(null);
       await onRefresh();
     } catch (err: any) {
@@ -330,19 +348,19 @@ export const WhistleblowerTab: React.FC<WhistleblowerTabProps> = ({
               {Array.isArray(selectedReport.attachments_json) && selectedReport.attachments_json.length > 0 && (
                 <div className="detail-attachments-box">
                   <h4>
-                    <Paperclip size={15} /> Evidências Anexadas ({selectedReport.attachments_json.length})
+                    <Lock size={14} /> Evidências Anexadas ({selectedReport.attachments_json.length}) — Signed URL (Art. 46)
                   </h4>
                   <div className="detail-attachments-list">
                     {selectedReport.attachments_json.map((att, idx) => (
-                      <a
+                      <button
                         key={idx}
-                        href={att.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        type="button"
+                        onClick={() => openSecureAttachment(att)}
                         className="attachment-chip"
+                        style={{ cursor: 'pointer', border: '1px solid #cbd5e1', background: '#ffffff' }}
                       >
-                        📎 {att.name || `Evidência ${idx + 1}`}
-                      </a>
+                        🔒 {att.name || `Evidência ${idx + 1}`}
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -362,6 +380,17 @@ export const WhistleblowerTab: React.FC<WhistleblowerTabProps> = ({
                     <option value="resolved">Concluído / Medidas Adotadas</option>
                     <option value="archived">Arquivado</option>
                   </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Posicionamento / Retorno ao Relatante (Exibido na Consulta Sigilosa de Protocolo)</label>
+                  <textarea
+                    rows={3}
+                    className="form-control"
+                    value={publicResponse}
+                    onChange={(e) => setPublicResponse(e.target.value)}
+                    placeholder="Informe o andamento ou conclusão para que o denunciante possa consultar via protocolo sem quebrar o sigilo..."
+                  />
                 </div>
               </div>
 

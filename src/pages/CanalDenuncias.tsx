@@ -18,6 +18,7 @@ import {
   Trash2,
   FileText,
   ExternalLink,
+  Search,
 } from 'lucide-react';
 import FileUploader from '../components/FileUploader';
 import SecurityShield, { createInitialSecurityState } from '../components/SecurityShield';
@@ -31,6 +32,10 @@ import {
   validateSecurityState,
   UploadedAttachment,
   recordFormConsent,
+  isFunctionalCookiesAllowed,
+  saveLocalProtocolReceipt,
+  consultProtocolStatus,
+  ProtocolStatusResult,
 } from '../lib/formSecurity';
 
 interface DenunciaFormData {
@@ -76,9 +81,16 @@ const FATOS_OPCOES = [
 const DRAFT_STORAGE_KEY = 'mh_draft_canal_denuncias';
 
 export const CanalDenuncias: React.FC = () => {
+  const [activeView, setActiveView] = useState<'form' | 'lookup'>('form');
+  const [lookupProto, setLookupProto] = useState('');
+  const [lookupLoading, setLookupLoading] = useState(false);
+  const [lookupResult, setLookupResult] = useState<ProtocolStatusResult | null>(null);
+
   const [formData, setFormData] = useState<DenunciaFormData>(() => {
     try {
-      const saved = localStorage.getItem(DRAFT_STORAGE_KEY);
+      const saved =
+        sessionStorage.getItem(DRAFT_STORAGE_KEY) ||
+        (isFunctionalCookiesAllowed() ? localStorage.getItem(DRAFT_STORAGE_KEY) : null);
       if (saved) {
         const parsed = JSON.parse(saved);
         return { ...INITIAL_FORM_DATA, ...parsed.formData };
@@ -91,7 +103,9 @@ export const CanalDenuncias: React.FC = () => {
 
   const [attachments, setAttachments] = useState<UploadedAttachment[]>(() => {
     try {
-      const saved = localStorage.getItem(DRAFT_STORAGE_KEY);
+      const saved =
+        sessionStorage.getItem(DRAFT_STORAGE_KEY) ||
+        (isFunctionalCookiesAllowed() ? localStorage.getItem(DRAFT_STORAGE_KEY) : null);
       if (saved) {
         const parsed = JSON.parse(saved);
         return Array.isArray(parsed.attachments) ? parsed.attachments : [];
@@ -109,16 +123,21 @@ export const CanalDenuncias: React.FC = () => {
   const [protocol, setProtocol] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Auto-save draft on changes
+  // Auto-save draft on changes (respecting LGPD functional cookie preference)
   useEffect(() => {
     if (protocol) return;
     try {
-      const payload = {
+      const payload = JSON.stringify({
         formData,
         attachments,
         updatedAt: new Date().toISOString(),
-      };
-      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(payload));
+      });
+      sessionStorage.setItem(DRAFT_STORAGE_KEY, payload);
+      if (isFunctionalCookiesAllowed()) {
+        localStorage.setItem(DRAFT_STORAGE_KEY, payload);
+      } else {
+        localStorage.removeItem(DRAFT_STORAGE_KEY);
+      }
       const now = new Date();
       setLastSavedAt(
         now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
@@ -130,10 +149,22 @@ export const CanalDenuncias: React.FC = () => {
 
   const handleClearDraft = () => {
     if (window.confirm('Deseja limpar todo o rascunho deste relato?')) {
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
       localStorage.removeItem(DRAFT_STORAGE_KEY);
       setFormData(INITIAL_FORM_DATA);
       setAttachments([]);
       setLastSavedAt(null);
+    }
+  };
+
+  const handleConsultDenunciaProtocol = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLookupLoading(true);
+    try {
+      const res = await consultProtocolStatus(lookupProto);
+      setLookupResult(res);
+    } finally {
+      setLookupLoading(false);
     }
   };
 
@@ -256,7 +287,17 @@ export const CanalDenuncias: React.FC = () => {
       );
       recordClientSubmission('denuncias');
 
+      saveLocalProtocolReceipt({
+        protocol: generatedProtocol,
+        channel: 'denuncia',
+        status: 'new',
+        is_anonymous: formData.naoQuerDivulgarDados,
+        resolution_details: 'Relato recebido com sigilo pelo Comitê de Ética e Compliance e aguardando triagem.',
+        created_at: new Date().toISOString(),
+      });
+
       // Clear draft after successful insertion
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
       localStorage.removeItem(DRAFT_STORAGE_KEY);
       setProtocol(generatedProtocol);
       setSecurity(createInitialSecurityState());
@@ -319,9 +360,125 @@ export const CanalDenuncias: React.FC = () => {
         </div>
       </div>
 
+      {/* Mode Selector Bar */}
+      <div style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0', padding: '14px 0' }}>
+        <div className="container" style={{ maxWidth: '860px', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => setActiveView('form')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 22px',
+              borderRadius: '8px',
+              border: activeView === 'form' ? '1px solid #0d3732' : '1px solid #cbd5e1',
+              backgroundColor: activeView === 'form' ? '#0d3732' : '#ffffff',
+              color: activeView === 'form' ? '#ffffff' : '#334155',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            <FileCheck size={16} /> Registrar Novo Relato
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveView('lookup')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 22px',
+              borderRadius: '8px',
+              border: activeView === 'lookup' ? '1px solid #0d3732' : '1px solid #cbd5e1',
+              backgroundColor: activeView === 'lookup' ? '#0d3732' : '#ffffff',
+              color: activeView === 'lookup' ? '#ffffff' : '#334155',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            <Search size={16} /> Consultar Andamento por Protocolo
+          </button>
+        </div>
+      </div>
+
       <section className="section-padding bg-light" style={{ padding: '60px 0', backgroundColor: '#f8fafc' }}>
         <div className="container" style={{ maxWidth: '860px' }}>
-          {protocol ? (
+          {activeView === 'lookup' ? (
+            <div style={{ background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '40px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)' }}>
+              <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+                <span style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#0d3732' }}>
+                  Acompanhamento Sigiloso (Art. 6º, IV e VI LGPD)
+                </span>
+                <h2 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '1.85rem', margin: '8px 0' }}>
+                  Consultar Protocolo de Relato
+                </h2>
+                <p style={{ color: '#64748b', fontSize: '0.95rem', maxWidth: '580px', margin: '0 auto' }}>
+                  Insira abaixo o código de protocolo (formato <code>MH-DEN-AAAAMM-XXXXX</code>) gerado ao final do seu relato para consultar o status da apuração sem expor sua identidade.
+                </p>
+              </div>
+
+              <form onSubmit={handleConsultDenunciaProtocol} style={{ maxWidth: '540px', margin: '0 auto 24px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ex: MH-DEN-202611-ABC12"
+                  value={lookupProto}
+                  onChange={(e) => setLookupProto(e.target.value.toUpperCase())}
+                  style={{ flex: 1, minWidth: '240px', padding: '12px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', fontFamily: 'monospace', fontSize: '1rem' }}
+                />
+                <button
+                  type="submit"
+                  disabled={lookupLoading}
+                  style={{ backgroundColor: '#0d3732', color: '#ffffff', border: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                >
+                  <Search size={16} /> {lookupLoading ? 'Consultando...' : 'Consultar'}
+                </button>
+              </form>
+
+              {lookupResult && (
+                <div
+                  style={{
+                    maxWidth: '640px',
+                    margin: '0 auto',
+                    padding: '24px',
+                    borderRadius: '12px',
+                    border: lookupResult.found ? '1px solid #bbf7d0' : '1px solid #fecaca',
+                    backgroundColor: lookupResult.found ? '#f0fdf4' : '#fef2f2',
+                  }}
+                >
+                  {!lookupResult.found ? (
+                    <p style={{ margin: 0, color: '#991b1b', fontWeight: 500 }}>{lookupResult.error}</p>
+                  ) : (
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '12px' }}>
+                        <strong style={{ fontFamily: 'monospace', fontSize: '1.15rem', color: '#0d3732' }}>
+                          {lookupResult.protocol}
+                        </strong>
+                        <span style={{ padding: '4px 12px', borderRadius: '999px', backgroundColor: '#0d3732', color: '#ffffff', fontSize: '0.8rem', fontWeight: 700 }}>
+                          {lookupResult.status === 'resolved'
+                            ? 'Concluído / Medidas Adotadas'
+                            : lookupResult.status === 'investigating'
+                            ? 'Em Apuração pelo Comitê'
+                            : lookupResult.status === 'archived'
+                            ? 'Arquivado'
+                            : 'Recebido / Em Triagem'}
+                        </span>
+                      </div>
+                      <p style={{ margin: '0 0 10px', color: '#1e293b', fontSize: '0.94rem', lineHeight: 1.6 }}>
+                        <strong>Parecer / Posição do Comitê:</strong> {lookupResult.resolution_details}
+                      </p>
+                      {lookupResult.created_at && (
+                        <small style={{ color: '#64748b' }}>
+                          Registrado em: {new Date(lookupResult.created_at).toLocaleDateString('pt-BR')}
+                        </small>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ) : protocol ? (
             <div className="denuncia-success-card" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '50px 40px', textAlign: 'center', boxShadow: '0 10px 35px rgba(0,0,0,0.06)' }}>
               <div style={{ width: '72px', height: '72px', borderRadius: '50%', backgroundColor: '#f0fdf4', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
                 <CheckCircle2 size={42} style={{ color: '#16a34a' }} />

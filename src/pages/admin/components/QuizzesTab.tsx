@@ -9,6 +9,7 @@ import {
   Printer,
   Paperclip,
 } from 'lucide-react';
+import { openSecureAttachment } from '../../../lib/formSecurity';
 import {
   ATTACHMENT_FIELD_LABELS,
   QuizSubmissionRecord,
@@ -306,15 +307,14 @@ export const QuizzesTab: React.FC<QuizzesTabProps> = ({ submissions }) => {
                             {att.name}
                           </span>
                         </div>
-                        <a
-                          href={att.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          type="button"
+                          onClick={() => openSecureAttachment(att)}
                           className="btn-outline-admin"
                           style={{ padding: '5px 10px', fontSize: '0.75rem' }}
                         >
-                          Baixar / Ver
-                        </a>
+                          Baixar / Ver (Signed URL)
+                        </button>
                       </div>
                     ))}
                   </div>

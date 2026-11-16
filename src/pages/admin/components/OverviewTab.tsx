@@ -93,13 +93,16 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
   const grantedConsents = consentRecords.filter((c) => c.granted).length;
 
   const openIncidents = governanceConfig.incidents.filter((i) => i.status !== 'encerrado').length;
+  const ripdCount = (governanceConfig.ripdRecords || []).length;
+  const processorsCount = (governanceConfig.processors || []).length;
   const lgpdChecks = [
-    { label: 'Banner de Cookies', ok: cookieConfig.enabled && cookieConfig.cookiesTable.length > 0, tab: 'cookies' as DashboardTab },
-    { label: 'DPO Configurado', ok: Boolean(governanceConfig.dpoName.trim() && governanceConfig.dpoEmail.trim()), tab: 'governance' as DashboardTab },
-    { label: 'Mapeamento ROPA', ok: governanceConfig.ropaRecords.length > 0, tab: 'governance' as DashboardTab },
-    { label: 'Privacidade & Termos', ok: Boolean(legalDocsConfig.privacyPolicy.version && legalDocsConfig.termsOfUse.version), tab: 'legal_docs' as DashboardTab },
-    { label: 'Incidentes Controlados', ok: openIncidents === 0, tab: 'governance' as DashboardTab },
-    { label: 'Verificação 2FA', ok: mfaEnabled, tab: 'audit' as DashboardTab },
+    { label: 'Banner de Cookies (Art. 8º)', ok: cookieConfig.enabled && cookieConfig.cookiesTable.length > 0, tab: 'cookies' as DashboardTab },
+    { label: 'DPO Titular & Substituto (Res. 18/2024)', ok: Boolean(governanceConfig.dpoName.trim() && governanceConfig.dpoEmail.trim() && (governanceConfig.substituteDpoName || '').trim()), tab: 'governance' as DashboardTab },
+    { label: 'ROPA & RIPD (Arts. 37 e 38)', ok: governanceConfig.ropaRecords.length > 0 && ripdCount > 0, tab: 'governance' as DashboardTab },
+    { label: 'Operadores & Transf. Int. (Art. 33)', ok: processorsCount > 0, tab: 'governance' as DashboardTab },
+    { label: 'Privacidade & Termos Versionados', ok: Boolean(legalDocsConfig.privacyPolicy.version && legalDocsConfig.termsOfUse.version), tab: 'legal_docs' as DashboardTab },
+    { label: 'Incidentes Art. 48 (Res. 15/2024)', ok: openIncidents === 0, tab: 'governance' as DashboardTab },
+    { label: 'Segurança 2FA (Art. 46)', ok: mfaEnabled, tab: 'audit' as DashboardTab },
   ];
   const maturityScore = Math.round((lgpdChecks.filter((c) => c.ok).length / lgpdChecks.length) * 100);
 

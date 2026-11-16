@@ -726,6 +726,10 @@ export const AdminDashboard: React.FC = () => {
             {activeTab === 'lgpd' && (
               <LgpdRequestsTab
                 requests={lgpdRequests}
+                messages={messages}
+                quizSubmissions={quizSubmissions}
+                whistleblowers={whistleblowers}
+                consentRecords={consentRecords}
                 currentUserId={currentUser?.id}
                 onShowToast={showToast}
                 onRefresh={() => loadAllData(currentUser?.id, true)}
@@ -747,9 +751,12 @@ export const AdminDashboard: React.FC = () => {
             {activeTab === 'governance' && (
               <GovernanceAndRopaTab
                 config={governanceConfig}
+                messages={messages}
+                consentRecords={consentRecords}
                 currentUserId={currentUser?.id}
                 onChange={setGovernanceConfig}
                 onShowToast={showToast}
+                onRefresh={() => loadAllData(currentUser?.id, true)}
                 onAudit={logAdminAction}
               />
             )}
@@ -758,6 +765,7 @@ export const AdminDashboard: React.FC = () => {
               <LegalDocumentsTab
                 config={legalDocsConfig}
                 currentUserId={currentUser?.id}
+                userEmail={currentUser?.email || ''}
                 onChange={setLegalDocsConfig}
                 onShowToast={showToast}
                 onAudit={logAdminAction}

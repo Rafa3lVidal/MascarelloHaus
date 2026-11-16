@@ -26,6 +26,10 @@ import {
   HelpCircle,
   Info,
   ChevronRight,
+  Search,
+  Clock,
+  Globe,
+  History,
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import FileUploader from '../components/FileUploader';
@@ -46,74 +50,81 @@ import {
   validateSecurityState,
   UploadedAttachment,
   recordFormConsent,
+  isFunctionalCookiesAllowed,
+  saveLocalProtocolReceipt,
+  computeProtocolVerifyHash,
+  consultProtocolStatus,
+  ProtocolStatusResult,
 } from '../lib/formSecurity';
 
 const RETURN_CHANNEL_OPTIONS = ['E-mail', 'Telefone', 'Presencialmente'] as const;
 
 const LGPD_REQUEST_TYPES = [
-  { value: 'acesso', label: 'Confirmação de tratamento e acesso aos dados (Art. 18, I e II)' },
+  { value: 'acesso', label: 'Confirmação de tratamento e acesso aos dados (Art. 18, I e II; Art. 19)' },
   { value: 'correcao', label: 'Correção de dados incompletos, inexatos ou desatualizados (Art. 18, III)' },
   { value: 'eliminacao', label: 'Anonimização, bloqueio ou eliminação de dados desnecessários ou excessivos (Art. 18, IV e VI)' },
-  { value: 'portabilidade', label: 'Portabilidade dos dados a outro fornecedor (Art. 18, V)' },
+  { value: 'portabilidade', label: 'Portabilidade dos dados a outro fornecedor em formato estruturado (Art. 18, V)' },
   { value: 'compartilhamento', label: 'Informação sobre entidades públicas ou privadas com as quais houve compartilhamento (Art. 18, VII)' },
   { value: 'nao_fornecimento', label: 'Informação sobre consequências de não fornecer consentimento (Art. 18, VIII)' },
-  { value: 'revogacao', label: 'Revogação do consentimento (Art. 18, IX)' },
-  { value: 'reclamacao', label: 'Reclamação, dúvida ou outra solicitação relacionada à LGPD' },
+  { value: 'revogacao', label: 'Revogação do consentimento (Art. 18, IX e Art. 8º, § 5º)' },
+  { value: 'oposicao', label: 'Oposição a tratamento realizado com dispensa de consentimento (Art. 18, § 2º)' },
+  { value: 'revisao_automatizada', label: 'Revisão de decisões tomadas unicamente com base em tratamento automatizado (Art. 20)' },
+  { value: 'reclamacao', label: 'Reclamação, petição ou dúvida relacionada à LGPD (Art. 18, §§ 1º e 8º)' },
 ];
 
 const LGPD_RIGHTS_DATA = [
   {
-    num: 'I',
+    num: 'Art. 18, I',
     title: 'Confirmação da Existência de Tratamento',
-    desc: 'O titular tem o direito de obter da Mascârello Haus a confirmação de que seus dados pessoais são ou não objeto de tratamento.',
+    desc: 'O titular tem o direito de obter da Mascârello Haus a confirmação imediata de que seus dados pessoais são ou não objeto de tratamento.',
     icon: CheckCircle2,
   },
   {
-    num: 'II',
+    num: 'Art. 18, II e Art. 19',
     title: 'Acesso aos Dados Pessoais',
-    desc: 'Direito de consultar e obter cópia clara, acessível e simplificada de todos os dados pessoais mantidos pelo escritório.',
+    desc: 'Direito de consultar e obter declaração clara e completa sobre origem, critérios e finalidade do tratamento em até 15 dias.',
     icon: Eye,
   },
   {
-    num: 'III',
+    num: 'Art. 18, III',
     title: 'Correção de Dados Incompletos ou Inexatos',
     desc: 'Direito de solicitar a imediata atualização, correção ou complementação de dados pessoais cadastrais ou processuais.',
     icon: RefreshCw,
   },
   {
-    num: 'IV',
+    num: 'Art. 18, IV',
     title: 'Anonimização, Bloqueio ou Eliminação',
-    desc: 'Direito de requerer que dados excessivos, desnecessários ou tratados em desconformidade com a lei sejam anonimizados ou excluídos.',
+    desc: 'Direito de requerer que dados excessivos, desnecessários ou tratados em desconformidade com a LGPD sejam anonimizados ou excluídos.',
     icon: Lock,
   },
   {
-    num: 'V',
+    num: 'Art. 18, V',
     title: 'Portabilidade dos Dados',
-    desc: 'Direito de receber os seus dados pessoais em formato estruturado e interoperável para transferência a outro prestador de serviços.',
+    desc: 'Direito de receber os seus dados pessoais em formato estruturado e interoperável (JSON/CSV) para transferência a outro fornecedor.',
     icon: ExternalLink,
   },
   {
-    num: 'VI',
+    num: 'Art. 18, VI',
     title: 'Eliminação de Dados com Consentimento',
-    desc: 'Direito de exigir a exclusão definitiva dos dados pessoais tratados mediante consentimento prévio, ressalvadas obrigações legais.',
+    desc: 'Direito de exigir a exclusão definitiva dos dados pessoais tratados mediante consentimento prévio, ressalvadas as hipóteses do Art. 16.',
     icon: Trash2,
   },
   {
-    num: 'VII',
+    num: 'Art. 18, VII',
     title: 'Informação sobre Compartilhamento',
-    desc: 'Direito de saber exatamente quais entidades públicas e privadas receberam ou compartilharam seus dados com a Mascârello Haus.',
+    desc: 'Direito de saber exatamente quais entidades públicas, privadas e operadores receberam ou compartilharam seus dados.',
     icon: Users,
   },
   {
-    num: 'VIII',
-    title: 'Consequências da Negativa de Consentimento',
-    desc: 'Direito de ser informado de forma transparente sobre a possibilidade e impactos de recusar o fornecimento de consentimento.',
+    num: 'Art. 18, VIII e IX',
+    title: 'Negativa e Revogação do Consentimento',
+    desc: 'Direito de ser informado sobre as consequências da negativa e de revogar autorizações concedidas a qualquer momento de forma gratuita.',
     icon: HelpCircle,
   },
   {
-    num: 'IX',
-    title: 'Revogação do Consentimento & Revisão',
-    desc: 'Direito de revogar autorizações concedidas a qualquer momento mediante manifestação expressa e requerer revisão de decisões automatizadas.',
+    num: 'Art. 18, § 2º e Art. 20',
+    title: 'Direito de Oposição & Revisão Automatizada',
+    desc: 'Direito de opor-se a tratamento dispensado de consentimento e de solicitar revisão humana de decisões automatizadas ou de perfilamento.',
     icon: Scale,
   },
 ];
@@ -150,11 +161,17 @@ const DRAFT_KEY_LGPD = 'mh_draft_central_lgpd';
 export const CentralProtecaoDados: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialTab = searchParams.get('aba') || 'requisicao';
-  const [activeTab, setActiveTab] = useState<'requisicao' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas'>(
-    ['requisicao', 'direitos', 'privacidade', 'termos', 'cartilhas'].includes(initialTab)
+  const [activeTab, setActiveTab] = useState<'requisicao' | 'protocolo' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas'>(
+    ['requisicao', 'protocolo', 'direitos', 'privacidade', 'termos', 'cartilhas'].includes(initialTab)
       ? (initialTab as any)
       : 'requisicao'
   );
+
+  // Protocol Lookup State
+  const [lookupProtocol, setLookupProtocol] = useState('');
+  const [lookupContact, setLookupContact] = useState('');
+  const [lookupLoading, setLookupLoading] = useState(false);
+  const [lookupResult, setLookupResult] = useState<ProtocolStatusResult | null>(null);
 
   const [formData, setFormData] = useState({
     requesterName: '',
@@ -197,6 +214,9 @@ export const CentralProtecaoDados: React.FC = () => {
           setLegalDocsConfig({
             privacyPolicy: { ...DEFAULT_LEGAL_DOCUMENTS_CONFIG.privacyPolicy, ...(typedDocs.privacyPolicy || {}) },
             termsOfUse: { ...DEFAULT_LEGAL_DOCUMENTS_CONFIG.termsOfUse, ...(typedDocs.termsOfUse || {}) },
+            versionHistory: Array.isArray(typedDocs.versionHistory)
+              ? typedDocs.versionHistory
+              : DEFAULT_LEGAL_DOCUMENTS_CONFIG.versionHistory,
           });
         }
       } catch {
@@ -209,10 +229,12 @@ export const CentralProtecaoDados: React.FC = () => {
     };
   }, []);
 
-  // Restore draft
+  // Restore draft (respecting LGPD functional cookie preference)
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(DRAFT_KEY_LGPD);
+      const saved =
+        sessionStorage.getItem(DRAFT_KEY_LGPD) ||
+        (isFunctionalCookiesAllowed() ? localStorage.getItem(DRAFT_KEY_LGPD) : null);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.formData) setFormData((prev) => ({ ...prev, ...parsed.formData }));
@@ -223,12 +245,17 @@ export const CentralProtecaoDados: React.FC = () => {
     }
   }, []);
 
-  // Auto-save draft
+  // Auto-save draft (sessionStorage always, localStorage only if functional cookies allowed)
   useEffect(() => {
     if (status === 'success') return;
     try {
-      const payload = { formData, attachments, savedAt: new Date().toISOString() };
-      localStorage.setItem(DRAFT_KEY_LGPD, JSON.stringify(payload));
+      const payload = JSON.stringify({ formData, attachments, savedAt: new Date().toISOString() });
+      sessionStorage.setItem(DRAFT_KEY_LGPD, payload);
+      if (isFunctionalCookiesAllowed()) {
+        localStorage.setItem(DRAFT_KEY_LGPD, payload);
+      } else {
+        localStorage.removeItem(DRAFT_KEY_LGPD);
+      }
       setLastSavedTime(
         new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
       );
@@ -237,10 +264,21 @@ export const CentralProtecaoDados: React.FC = () => {
     }
   }, [formData, attachments, status]);
 
-  const switchTab = (tab: 'requisicao' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas') => {
+  const switchTab = (tab: 'requisicao' | 'protocolo' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas') => {
     setActiveTab(tab);
     setSearchParams({ aba: tab }, { replace: true });
     window.scrollTo({ top: 380, behavior: 'smooth' });
+  };
+
+  const handleConsultProtocol = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLookupLoading(true);
+    try {
+      const res = await consultProtocolStatus(lookupProtocol, lookupContact);
+      setLookupResult(res);
+    } finally {
+      setLookupLoading(false);
+    }
   };
 
   const toggleReturnChannel = (channel: string) => {
@@ -327,6 +365,7 @@ export const CentralProtecaoDados: React.FC = () => {
     try {
       const generatedProtocol = generateProtocol('LGPD');
       const ipHash = await getAnonymousIpHash();
+      const verifyHash = await computeProtocolVerifyHash(generatedProtocol, cleanContact);
 
       // Calculate 15-day statutory deadline (Art. 19, II LGPD)
       const deadlineDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
@@ -365,6 +404,19 @@ export const CentralProtecaoDados: React.FC = () => {
       await recordFormConsent('lgpd_data_subject_request', cleanContact);
       recordClientSubmission('lgpd_central');
 
+      saveLocalProtocolReceipt({
+        protocol: generatedProtocol,
+        channel: 'lgpd',
+        verifyHash,
+        request_type: formData.requestType,
+        status: 'recebido',
+        legal_deadline: deadlineDate,
+        resolution_details:
+          'Sua requisição foi protocolada oficialmente e encaminhada à Encarregada de Proteção de Dados (DPO). Prazo legal de conclusão: até 15 dias (Art. 19, II LGPD).',
+        created_at: new Date().toISOString(),
+      });
+
+      sessionStorage.removeItem(DRAFT_KEY_LGPD);
       localStorage.removeItem(DRAFT_KEY_LGPD);
       setProtocol(generatedProtocol);
       setStatus('success');
@@ -561,7 +613,8 @@ export const CentralProtecaoDados: React.FC = () => {
           >
             {[
               { id: 'requisicao', label: 'Requisição do Titular', icon: FileCheck2 },
-              { id: 'direitos', label: 'Direitos & DPO', icon: Shield },
+              { id: 'protocolo', label: 'Consultar Protocolo', icon: Search },
+              { id: 'direitos', label: 'Direitos, DPO & Operadores', icon: Shield },
               { id: 'privacidade', label: 'Aviso de Privacidade', icon: FileText },
               { id: 'termos', label: 'Termos de Uso', icon: Scale },
               { id: 'cartilhas', label: 'Cartilhas & Downloads', icon: Download },
@@ -1014,6 +1067,170 @@ export const CentralProtecaoDados: React.FC = () => {
             </div>
           )}
 
+          {/* ABA: CONSULTAR PROTOCOLO (ARTS. 6º, IV/VI; 18; 19; 46 LGPD) */}
+          {activeTab === 'protocolo' && (
+            <div style={{ maxWidth: '820px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#0d3732', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px' }}>
+                  <Search size={16} /> Acompanhamento Transparente & Seguro (Arts. 18, 19 e 46 LGPD)
+                </div>
+                <h2 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '2.1rem', margin: '0 0 10px' }}>
+                  Consultar Protocolo de Requisição
+                </h2>
+                <p style={{ color: '#64748b', fontSize: '0.98rem', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
+                  Informe o número de protocolo gerado na sua solicitação (ex: <code>MH-LGPD-...</code> ou <code>MH-DEN-...</code>) e o dado de contato cadastrado para verificar o status, o prazo legal e o parecer oficial da Encarregada de Proteção de Dados (DPO).
+                </p>
+              </div>
+
+              <div
+                style={{
+                  backgroundColor: '#ffffff',
+                  padding: '36px',
+                  borderRadius: '16px',
+                  border: '1px solid #e2e8f0',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+                }}
+              >
+                <form onSubmit={handleConsultProtocol}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '18px', marginBottom: '20px' }}>
+                    <div>
+                      <label htmlFor="proto-code" style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#1e293b', marginBottom: '8px' }}>
+                        Número do Protocolo <span style={{ color: '#cbab7a' }}>*</span>
+                      </label>
+                      <input
+                        id="proto-code"
+                        type="text"
+                        required
+                        placeholder="Ex: MH-LGPD-202611-ABC12"
+                        value={lookupProtocol}
+                        onChange={(e) => setLookupProtocol(e.target.value.toUpperCase())}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontFamily: 'monospace', fontSize: '1rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="proto-contact" style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#1e293b', marginBottom: '8px' }}>
+                        E-mail ou Telefone de Verificação (Obrigatório p/ LGPD)
+                      </label>
+                      <input
+                        id="proto-contact"
+                        type="text"
+                        placeholder="Seu e-mail ou telefone informado no pedido"
+                        value={lookupContact}
+                        onChange={(e) => setLookupContact(e.target.value)}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={lookupLoading}
+                    style={{
+                      width: '100%',
+                      backgroundColor: '#0d3732',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '14px 24px',
+                      borderRadius: '8px',
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '10px',
+                    }}
+                  >
+                    <Search size={18} />
+                    {lookupLoading ? 'Verificando protocolo com criptografia...' : 'Consultar Status e Resposta do DPO'}
+                  </button>
+                </form>
+
+                {lookupResult && (
+                  <div
+                    style={{
+                      marginTop: '28px',
+                      padding: '26px',
+                      borderRadius: '14px',
+                      border: lookupResult.found ? '1px solid #bbf7d0' : '1px solid #fecaca',
+                      backgroundColor: lookupResult.found ? '#f0fdf4' : '#fef2f2',
+                    }}
+                  >
+                    {!lookupResult.found ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#991b1b' }}>
+                        <AlertCircle size={22} style={{ flexShrink: 0 }} />
+                        <span>{lookupResult.error}</span>
+                      </div>
+                    ) : (
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', borderBottom: '1px solid #bbf7d0', paddingBottom: '14px', marginBottom: '16px' }}>
+                          <div>
+                            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#166534', fontWeight: 700, display: 'block' }}>
+                              Protocolo Verificado ({lookupResult.channel === 'denuncia' ? 'Canal de Denúncias' : 'Central do Titular — Art. 18 LGPD'})
+                            </span>
+                            <strong style={{ fontFamily: 'monospace', fontSize: '1.35rem', color: '#0d3732' }}>
+                              {lookupResult.protocol}
+                            </strong>
+                          </div>
+                          <span
+                            style={{
+                              padding: '6px 14px',
+                              borderRadius: '999px',
+                              backgroundColor: '#0d3732',
+                              color: '#ffffff',
+                              fontSize: '0.84rem',
+                              fontWeight: 700,
+                            }}
+                          >
+                            {lookupResult.status === 'concluido' || lookupResult.status === 'resolved'
+                              ? 'Concluído / Atendido'
+                              : lookupResult.status === 'em_analise' || lookupResult.status === 'investigating'
+                              ? 'Em Análise pelo DPO / Comitê'
+                              : lookupResult.status === 'aguardando_titular'
+                              ? 'Aguardando Confirmação do Titular'
+                              : lookupResult.status === 'rejeitado'
+                              ? 'Indeferido (Com Fundamentação Legal)'
+                              : 'Recebido / No Prazo Legal'}
+                          </span>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px', marginBottom: '16px', fontSize: '0.88rem', color: '#334155' }}>
+                          {lookupResult.created_at && (
+                            <div>
+                              <span style={{ color: '#64748b', display: 'block' }}>Data de Abertura:</span>
+                              <strong>{new Date(lookupResult.created_at).toLocaleDateString('pt-BR')}</strong>
+                            </div>
+                          )}
+                          {lookupResult.legal_deadline && (
+                            <div>
+                              <span style={{ color: '#64748b', display: 'block' }}>Prazo Legal (Art. 19, II):</span>
+                              <strong>{new Date(`${lookupResult.legal_deadline}T12:00:00`).toLocaleDateString('pt-BR')}</strong>
+                            </div>
+                          )}
+                          {lookupResult.channel === 'lgpd' && (
+                            <div>
+                              <span style={{ color: '#64748b', display: 'block' }}>Identidade Validada:</span>
+                              <strong>{lookupResult.identity_verified ? 'Sim (Verificada pelo DPO)' : 'Em verificação'}</strong>
+                            </div>
+                          )}
+                        </div>
+
+                        <div style={{ backgroundColor: '#ffffff', padding: '16px 18px', borderRadius: '10px', border: '1px solid #dcfce7' }}>
+                          <strong style={{ display: 'block', color: '#0d3732', fontSize: '0.9rem', marginBottom: '6px' }}>
+                            Parecer / Posição Oficial da Encarregada de Dados (DPO):
+                          </strong>
+                          <p style={{ margin: 0, color: '#1e293b', fontSize: '0.94rem', lineHeight: 1.65, whiteSpace: 'pre-wrap' }}>
+                            {lookupResult.resolution_details}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* ABA 2: DIREITOS DO TITULAR & DPO */}
           {activeTab === 'direitos' && (
             <div>
@@ -1051,7 +1268,7 @@ export const CentralProtecaoDados: React.FC = () => {
                       <div>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#cbab7a', backgroundColor: '#fefce8', padding: '4px 10px', borderRadius: '20px', border: '1px solid #fef08a' }}>
-                            Art. 18, {item.num}
+                            {item.num}
                           </span>
                           <Icon size={22} style={{ color: '#0d3732' }} />
                         </div>
@@ -1088,7 +1305,7 @@ export const CentralProtecaoDados: React.FC = () => {
                 })}
               </div>
 
-              {/* Governança & DPO Detailed Card */}
+              {/* Governança & DPO Titular + Substituto (Art. 41 & Res. CD/ANPD nº 18/2024) */}
               <div
                 style={{
                   backgroundColor: '#0d3732',
@@ -1096,22 +1313,97 @@ export const CentralProtecaoDados: React.FC = () => {
                   borderRadius: '16px',
                   padding: '40px',
                   border: '2px solid #cbab7a',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                  gap: '30px',
-                  alignItems: 'center',
+                  marginBottom: '36px',
                 }}
               >
-                <div>
+                <div style={{ marginBottom: '26px' }}>
                   <span style={{ color: '#cbab7a', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                    Canal Oficial de Governança
+                    Canal Oficial de Governança (Art. 41 da LGPD e Resolução CD/ANPD nº 18/2024)
                   </span>
-                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: '#ffffff', margin: '8px 0 14px' }}>
-                    Encarregada de Proteção de Dados (DPO)
+                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: '#ffffff', margin: '8px 0 12px' }}>
+                    Encarregada pelo Tratamento de Dados Pessoais (DPO) e Substituto Formal
                   </h3>
-                  <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.95rem', lineHeight: 1.7, margin: '0 0 20px' }}>
-                    A Encarregada pelo Tratamento de Dados Pessoais atua como canal oficial de comunicação entre a Mascârello Haus Advocacia, os titulares de dados pessoais e a Autoridade Nacional de Proteção de Dados (ANPD), nos termos do Art. 41 da Lei nº 13.709/2018.
+                  <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.95rem', lineHeight: 1.7, margin: 0 }}>
+                    Em cumprimento ao Art. 41 da Lei nº 13.709/2018 e ao Art. 10, § 1º da Resolução CD/ANPD nº 18/2024, divulgamos publicamente a identidade e os dados de contato da Encarregada Titular e do Encarregado Substituto para atendimento contínuo aos titulares e à ANPD.
                   </p>
+                </div>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                    gap: '20px',
+                    marginBottom: '24px',
+                  }}
+                >
+                  {/* Card DPO Titular */}
+                  <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '24px', border: '1px solid rgba(203, 171, 122, 0.35)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#cbab7a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0d3732', fontWeight: 700, fontSize: '1.15rem' }}>
+                        DPO
+                      </div>
+                      <div>
+                        <strong style={{ display: 'block', fontSize: '1.1rem', color: '#ffffff' }}>
+                          {governanceConfig.dpoName}
+                        </strong>
+                        <span style={{ fontSize: '0.84rem', color: '#cbab7a' }}>
+                          {governanceConfig.dpoOab || 'Encarregada Titular de Dados (DPO)'}
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.92)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Mail size={15} style={{ color: '#cbab7a' }} />
+                        <a href={`mailto:${governanceConfig.dpoEmail}`} style={{ color: '#ffffff', textDecoration: 'underline' }}>
+                          {governanceConfig.dpoEmail}
+                        </a>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Phone size={15} style={{ color: '#cbab7a' }} />
+                        <span>{governanceConfig.dpoPhone}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Clock size={15} style={{ color: '#cbab7a' }} />
+                        <span>{governanceConfig.dpoServiceHours}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card DPO Substituto */}
+                  <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '24px', border: '1px solid rgba(203, 171, 122, 0.35)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(203, 171, 122, 0.25)', border: '1px solid #cbab7a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cbab7a', fontWeight: 700, fontSize: '0.95rem' }}>
+                        SUB
+                      </div>
+                      <div>
+                        <strong style={{ display: 'block', fontSize: '1.05rem', color: '#ffffff' }}>
+                          {governanceConfig.substituteDpoName || 'Comitê de Privacidade Mascârello Haus'}
+                        </strong>
+                        <span style={{ fontSize: '0.82rem', color: '#cbab7a' }}>
+                          {governanceConfig.substituteDpoOab || 'Encarregado Substituto (Ausências/Impedimentos)'}
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.92)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Mail size={15} style={{ color: '#cbab7a' }} />
+                        <a href={`mailto:${governanceConfig.substituteDpoEmail || 'dpo@mascarellohaus.com.br'}`} style={{ color: '#ffffff', textDecoration: 'underline' }}>
+                          {governanceConfig.substituteDpoEmail || 'dpo@mascarellohaus.com.br'}
+                        </a>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Phone size={15} style={{ color: '#cbab7a' }} />
+                        <span>{governanceConfig.substituteDpoPhone || '+55 (49) 3566-0066'}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Shield size={15} style={{ color: '#cbab7a' }} />
+                        <span>Designação conforme Res. CD/ANPD nº 18/2024</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <button
                     type="button"
                     onClick={() => switchTab('requisicao')}
@@ -1130,38 +1422,81 @@ export const CentralProtecaoDados: React.FC = () => {
                   >
                     Abrir Solicitação Formal ao DPO <FileCheck2 size={16} />
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => switchTab('protocolo')}
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: '#ffffff',
+                      border: '1px solid rgba(255,255,255,0.45)',
+                      padding: '12px 22px',
+                      borderRadius: '8px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                    }}
+                  >
+                    <Search size={16} /> Consultar Protocolo Existente
+                  </button>
                 </div>
+              </div>
 
-                <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '24px', border: '1px solid rgba(203, 171, 122, 0.3)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#cbab7a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0d3732', fontWeight: 700, fontSize: '1.2rem' }}>
-                      MH
-                    </div>
-                    <div>
-                      <strong style={{ display: 'block', fontSize: '1.1rem', color: '#ffffff' }}>Mirataira Haus</strong>
-                      <span style={{ fontSize: '0.85rem', color: '#cbab7a' }}>Encarregada de Proteção de Dados (DPO)</span>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.9)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <Mail size={16} style={{ color: '#cbab7a' }} />
-                      <a href="mailto:privacidade@mascarellohaus.adv.br" style={{ color: '#ffffff', textDecoration: 'underline' }}>
-                        privacidade@mascarellohaus.adv.br
-                      </a>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <Mail size={16} style={{ color: '#cbab7a' }} />
-                      <a href="mailto:dpo@mascarellohaus.com.br" style={{ color: '#ffffff', textDecoration: 'underline' }}>
-                        dpo@mascarellohaus.com.br
-                      </a>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <Phone size={16} style={{ color: '#cbab7a' }} />
-                      <span>WhatsApp Oficial: (49) 98822-0982</span>
-                    </div>
-                  </div>
+              {/* Operadores de Dados & Transferência Internacional (Arts. 33 a 36 e Res. CD/ANPD nº 19/2024) */}
+              <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '32px', marginBottom: '28px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', color: '#0d3732' }}>
+                  <Globe size={20} style={{ color: '#cbab7a' }} />
+                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', margin: 0 }}>
+                    Operadores de Tratamento & Transferência Internacional (Arts. 33 a 36 e Art. 39 LGPD)
+                  </h3>
                 </div>
+                <p style={{ color: '#475569', fontSize: '0.94rem', lineHeight: 1.65, marginBottom: '18px' }}>
+                  {governanceConfig.internationalTransferPolicy || DEFAULT_LGPD_GOVERNANCE_CONFIG.internationalTransferPolicy}
+                </p>
+
+                <div style={{ overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '10px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.86rem', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#0d3732' }}>
+                        <th style={{ padding: '12px 14px' }}>Operador / Suboperador</th>
+                        <th style={{ padding: '12px 14px' }}>Finalidade / Escopo</th>
+                        <th style={{ padding: '12px 14px' }}>País / Localização</th>
+                        <th style={{ padding: '12px 14px' }}>Salvaguardas & Certificações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(governanceConfig.processors || DEFAULT_LGPD_GOVERNANCE_CONFIG.processors).map((proc) => (
+                        <tr key={proc.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                          <td style={{ padding: '12px 14px', fontWeight: 700, color: '#0d3732' }}>
+                            {proc.name}
+                            <div style={{ fontSize: '0.76rem', color: '#64748b', fontWeight: 400 }}>{proc.cnpjOrId}</div>
+                          </td>
+                          <td style={{ padding: '12px 14px', color: '#334155' }}>{proc.serviceProvided}</td>
+                          <td style={{ padding: '12px 14px', color: '#475569' }}>
+                            {proc.country}
+                            {proc.isInternationalTransfer && (
+                              <span style={{ display: 'block', fontSize: '0.73rem', color: '#856404', fontWeight: 600 }}>
+                                Cláusulas-Padrão (Res. ANPD 19/2024)
+                              </span>
+                            )}
+                          </td>
+                          <td style={{ padding: '12px 14px', color: '#065f46', fontWeight: 600 }}>{proc.securityCertifications}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Proteção de Dados de Crianças e Adolescentes (Art. 14 da LGPD) */}
+              <div style={{ backgroundColor: '#f8fafc', borderRadius: '14px', border: '1px solid #cbd5e1', padding: '24px 28px' }}>
+                <h4 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '1.2rem', margin: '0 0 8px' }}>
+                  Diretriz de Proteção a Crianças e Adolescentes (Art. 14 da LGPD)
+                </h4>
+                <p style={{ color: '#475569', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                  {governanceConfig.childrenDataPolicy || DEFAULT_LGPD_GOVERNANCE_CONFIG.childrenDataPolicy}
+                </p>
               </div>
             </div>
           )}
@@ -1303,6 +1638,42 @@ export const CentralProtecaoDados: React.FC = () => {
                 </p>
               </div>
               )}
+
+              {/* Histórico de Versões Publicadas (Art. 8º, § 2º e § 6º da LGPD) */}
+              <div style={{ marginTop: '36px', paddingTop: '24px', borderTop: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0d3732', marginBottom: '12px' }}>
+                  <History size={18} style={{ color: '#cbab7a' }} />
+                  <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', margin: 0 }}>
+                    Histórico Público de Versões e Alterações (Art. 8º, § 2º e § 6º LGPD)
+                  </h4>
+                </div>
+                <div style={{ overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '10px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#0d3732' }}>
+                        <th style={{ padding: '10px 14px' }}>Versão</th>
+                        <th style={{ padding: '10px 14px' }}>Data de Vigência</th>
+                        <th style={{ padding: '10px 14px' }}>Responsável</th>
+                        <th style={{ padding: '10px 14px' }}>Resumo das Atualizações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(legalDocsConfig.versionHistory || DEFAULT_LEGAL_DOCUMENTS_CONFIG.versionHistory || [])
+                        .filter((v) => v.docType === 'privacyPolicy')
+                        .map((ver) => (
+                          <tr key={ver.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                            <td style={{ padding: '10px 14px', fontFamily: 'monospace', fontWeight: 700, color: '#0d3732' }}>
+                              v{ver.version}
+                            </td>
+                            <td style={{ padding: '10px 14px', color: '#475569' }}>{ver.updatedAt}</td>
+                            <td style={{ padding: '10px 14px', color: '#334155' }}>{ver.publishedBy || 'DPO Mascârello Haus'}</td>
+                            <td style={{ padding: '10px 14px', color: '#475569' }}>{ver.changelog}</td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           )}
 
