@@ -26,6 +26,7 @@ import {
   UserProfile,
   formatFriendlyError,
 } from '../types';
+import { FieldHelp } from './FieldHelp';
 
 export type SettingsSectionKey = 'general' | 'home' | 'social' | 'account' | 'system';
 
@@ -263,7 +264,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
                 <div className="form-grid-2">
                   <div className="form-group">
-                    <label>Nome do Escritório</label>
+                    <label>
+                      Nome do Escritório
+                      <FieldHelp text="Nome oficial exibido no título do site, rodapé e documentos." example="Mascârello Haus Advocacia" />
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -272,7 +276,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                     />
                   </div>
                   <div className="form-group">
-                    <label>Tagline / Slogan</label>
+                    <label>
+                      Tagline / Slogan
+                      <FieldHelp text="Frase curta que resume a atuação do escritório." example="Soluções Jurídicas Estratégicas" />
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -281,7 +288,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                     />
                   </div>
                   <div className="form-group">
-                    <label>WhatsApp Oficial de Atendimento</label>
+                    <label>
+                      WhatsApp Oficial de Atendimento
+                      <FieldHelp text="Número com DDI (+55) e DDD usado nos botões de atendimento rápido do site." example="+5549988220982" />
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -290,7 +300,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                     />
                   </div>
                   <div className="form-group">
-                    <label>E-mail de Contato Geral</label>
+                    <label>
+                      E-mail de Contato Geral
+                      <FieldHelp text="E-mail institucional exibido na página Fale Conosco e no rodapé." example="contato@mascarellohaus.adv.br" />
+                    </label>
                     <input
                       type="email"
                       className="form-control"
@@ -299,7 +312,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                     />
                   </div>
                   <div className="form-group">
-                    <label>E-mail do DPO / Privacidade (LGPD)</label>
+                    <label>
+                      E-mail do DPO / Privacidade (LGPD)
+                      <FieldHelp text="E-mail oficial de privacidade exibido em avisos e formulários do site." example="privacidade@mascarellohaus.adv.br" />
+                    </label>
                     <input
                       type="email"
                       className="form-control"
@@ -308,7 +324,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                     />
                   </div>
                   <div className="form-group">
-                    <label>Endereço Físico</label>
+                    <label>
+                      Endereço Físico
+                      <FieldHelp text="Endereço completo da sede exibido no rodapé e na página de contato." />
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -471,7 +490,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
               <form onSubmit={handleUpdateProfileName} style={{ display: 'flex', gap: '10px', alignItems: 'flex-end', flexWrap: 'wrap', marginBottom: '16px' }}>
                 <div className="form-group" style={{ flex: '1 1 240px', marginBottom: 0 }}>
-                  <label>Editar Nome do Usuário</label>
+                  <label>
+                    Editar Nome do Usuário
+                    <FieldHelp text="Nome exibido no topo do menu lateral e registrado nas ações deste usuário." example="Mirataira" />
+                  </label>
                   <input
                     type="text"
                     className="form-control"

@@ -35,6 +35,7 @@ import {
   formatDateBR,
   formatFriendlyError,
 } from '../types';
+import { FieldHelp } from './FieldHelp';
 
 interface GovernanceAndRopaTabProps {
   config: LgpdGovernanceConfig;
@@ -963,7 +964,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
 
             <div className="form-grid-2" style={{ marginBottom: '20px' }}>
               <div className="form-group">
-                <label>Prazo de Retenção — Mensagens de Contato (meses)</label>
+                <label>
+                  Prazo de Retenção — Mensagens de Contato (meses)
+                  <FieldHelp
+                    text="Quantos meses as mensagens enviadas pelo formulário 'Fale Conosco' ficam guardadas antes de serem anonimizadas."
+                    example="24 (ou seja, 2 anos após o contato inicial)."
+                  />
+                </label>
                 <input
                   type="number"
                   min={1}
@@ -980,7 +987,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
               </div>
 
               <div className="form-group">
-                <label>Prazo de Guarda Legal — Logs de Consentimento e Auditoria (meses)</label>
+                <label>
+                  Prazo de Guarda Legal — Logs de Consentimento e Auditoria (meses)
+                  <FieldHelp
+                    text="Tempo em que o sistema guarda a prova de que o usuário aceitou os cookies ou formulários, para apresentar à ANPD em caso de fiscalização."
+                    example="60 (equivalente a 5 anos)."
+                  />
+                </label>
                 <input
                   type="number"
                   min={12}
@@ -1155,7 +1168,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
               </p>
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Nome do(a) Encarregado(a) Titular (DPO)</label>
+                  <label>
+                    Nome do(a) Encarregado(a) Titular (DPO)
+                    <FieldHelp
+                      text="Pessoa principal responsável por cuidar da privacidade no escritório e atender os titulares e a ANPD (Art. 41 da LGPD)."
+                      example="Mirataira Haus"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1164,7 +1183,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>E-mail Oficial do Canal DPO Titular</label>
+                  <label>
+                    E-mail Oficial do Canal DPO Titular
+                    <FieldHelp
+                      text="Endereço de e-mail divulgado no site para qualquer pessoa tirar dúvidas ou fazer pedidos sobre seus dados pessoais."
+                      example="privacidade@mascarellohaus.adv.br"
+                    />
+                  </label>
                   <input
                     type="email"
                     className="form-control"
@@ -1173,7 +1198,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Telefone / WhatsApp de Privacidade</label>
+                  <label>
+                    Telefone / WhatsApp de Privacidade
+                    <FieldHelp
+                      text="Número de telefone ou WhatsApp onde o titular também pode contatar o DPO."
+                      example="+55 (49) 98822-0982"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1182,7 +1213,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Registro / Cargo do Titular</label>
+                  <label>
+                    Registro / Cargo do Titular
+                    <FieldHelp
+                      text="Qualificação profissional ou número da OAB/cargo exibido no cartão do Encarregado na página pública."
+                      example="OAB/SC — Encarregada Titular"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1191,7 +1228,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Nome do Encarregado Substituto (Ausências/Vacâncias — Res. 18/2024)</label>
+                  <label>
+                    Nome do Encarregado Substituto (Ausências/Vacâncias — Res. 18/2024)
+                    <FieldHelp
+                      text="A ANPD exige um substituto formal para responder pelos dados quando o DPO titular estiver de férias, ausente ou impedido."
+                      example="Comitê de Privacidade Mascârello Haus"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1200,7 +1243,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>E-mail do Encarregado Substituto</label>
+                  <label>
+                    E-mail do Encarregado Substituto
+                    <FieldHelp
+                      text="E-mail alternativo para contato caso o DPO titular esteja ausente."
+                      example="dpo@mascarellohaus.com.br"
+                    />
+                  </label>
                   <input
                     type="email"
                     className="form-control"
@@ -1209,7 +1258,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Telefone do Encarregado Substituto</label>
+                  <label>
+                    Telefone do Encarregado Substituto
+                    <FieldHelp
+                      text="Telefone de contato do substituto ou da recepção do escritório para assuntos de LGPD."
+                      example="+55 (49) 3566-0066"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1218,7 +1273,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Cargo / Função do Substituto</label>
+                  <label>
+                    Cargo / Função do Substituto
+                    <FieldHelp
+                      text="Descrição da função do substituto que aparecerá no cartão público da Central de Proteção de Dados."
+                      example="Encarregado Substituto (Res. CD/ANPD nº 18/2024)"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1227,7 +1288,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Horário de Atendimento aos Titulares</label>
+                  <label>
+                    Horário de Atendimento aos Titulares
+                    <FieldHelp
+                      text="Dias e horários em que a equipe do DPO atende dúvidas e ligações sobre privacidade."
+                      example="Segunda a Sexta, 08h30 às 12h00 e 13h30 às 18h00"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1244,7 +1311,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
               </h3>
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Prazo de Resposta a Titulares — Declaração Completa (dias — Art. 19, II)</label>
+                  <label>
+                    Prazo de Resposta a Titulares — Declaração Completa (dias — Art. 19, II)
+                    <FieldHelp
+                      text="A lei dá até 15 dias corridos a partir do pedido para enviar a resposta completa ao titular dos dados."
+                      example="15"
+                    />
+                  </label>
                   <input
                     type="number"
                     min={1}
@@ -1257,7 +1330,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Prazo de Comunicação de Incidentes à ANPD (dias úteis — Res. 15/2024)</label>
+                  <label>
+                    Prazo de Comunicação de Incidentes à ANPD (dias úteis — Res. 15/2024)
+                    <FieldHelp
+                      text="Se houver vazamento ou incidente relevante, a Resolução nº 15/2024 da ANPD determina avisar em até 3 dias úteis."
+                      example="3"
+                    />
+                  </label>
                   <input
                     type="number"
                     min={1}
@@ -1274,7 +1353,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Ciclo de Revisão do ROPA / RIPD (dias)</label>
+                  <label>
+                    Ciclo de Revisão do ROPA / RIPD (dias)
+                    <FieldHelp
+                      text="De quantos em quantos dias o escritório revisa o inventário de dados para ver se mudou algum processo."
+                      example="180 (a cada 6 meses)"
+                    />
+                  </label>
                   <input
                     type="number"
                     min={30}
@@ -1287,7 +1372,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Próxima Auditoria / Revisão Programada</label>
+                  <label>
+                    Próxima Auditoria / Revisão Programada
+                    <FieldHelp
+                      text="Data agendada no calendário para a próxima revisão geral de conformidade LGPD."
+                      example="2027-05-01"
+                    />
+                  </label>
                   <input
                     type="date"
                     className="form-control"
@@ -1296,7 +1387,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Diretriz Pública de Proteção de Crianças e Adolescentes (Art. 14 LGPD)</label>
+                  <label>
+                    Diretriz Pública de Proteção de Crianças e Adolescentes (Art. 14 LGPD)
+                    <FieldHelp
+                      text="Texto exibido no site explicando que o portal é para maiores de 18 anos e como menores são protegidos quando há processo judicial."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1305,7 +1401,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Diretriz Pública de Transferência Internacional de Dados (Arts. 33 a 36 e Res. 19/2024)</label>
+                  <label>
+                    Diretriz Pública de Transferência Internacional de Dados (Arts. 33 a 36 e Res. 19/2024)
+                    <FieldHelp
+                      text="Explicação clara ao visitante de que servidores em nuvem (como Supabase/Vercel) podem processar dados no exterior com segurança."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1314,7 +1415,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Integrantes do Comitê de Privacidade e Governança</label>
+                  <label>
+                    Integrantes do Comitê de Privacidade e Governança
+                    <FieldHelp
+                      text="Lista das pessoas ou setores internos que participam das decisões de privacidade e segurança do escritório."
+                      example="Mirataira Haus (DPO), Sócios Administradores e TI (ApexCode)"
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1347,7 +1454,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
             <form onSubmit={handleSaveRopa} className="admin-modal-form">
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Nome do Processo *</label>
+                  <label>
+                    Nome do Processo *
+                    <FieldHelp
+                      text="Nome curto da atividade ou rotina do escritório que usa dados pessoais."
+                      example="Atendimento ao Cliente, Folha de Pagamento, Envio de Newsletters"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1357,7 +1470,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Área / Departamento</label>
+                  <label>
+                    Área / Departamento
+                    <FieldHelp
+                      text="Setor do escritório responsável por essa atividade."
+                      example="Advocacia Trabalhista, RH, Financeiro, Marketing"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1366,7 +1485,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Finalidade do Tratamento *</label>
+                  <label>
+                    Finalidade do Tratamento *
+                    <FieldHelp
+                      text="Para que o escritório coleta e usa esses dados? Explique de forma direta o objetivo."
+                      example="Elaborar contratos de honorários e petições judiciais."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1376,7 +1501,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Base Legal (Art. 7º / Art. 11 LGPD)</label>
+                  <label>
+                    Base Legal (Art. 7º / Art. 11 LGPD)
+                    <FieldHelp
+                      text="Motivo previsto na lei que autoriza o uso dos dados (ex.: contrato, obrigação legal, processo judicial, consentimento ou legítimo interesse)."
+                      example="Execução de contrato (Art. 7º, V)"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1385,7 +1516,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Status</label>
+                  <label>
+                    Status
+                    <FieldHelp
+                      text="Indica se este processo está acontecendo hoje (Ativo), sendo revisado ou já encerrado (Arquivado)."
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingRopa.status}
@@ -1397,7 +1533,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Categorias de Dados Pessoais</label>
+                  <label>
+                    Categorias de Dados Pessoais
+                    <FieldHelp
+                      text="Quais informações da pessoa são coletadas nessa rotina?"
+                      example="Nome completo, CPF, RG, endereço, e-mail, telefone"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1406,7 +1548,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Titulares Envolvidos</label>
+                  <label>
+                    Titulares Envolvidos
+                    <FieldHelp
+                      text="Quem são os donos desses dados?"
+                      example="Clientes, colaboradores, candidatos a vaga, fornecedores"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1415,7 +1563,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Compartilhamento com Terceiros / Operadores</label>
+                  <label>
+                    Compartilhamento com Terceiros / Operadores
+                    <FieldHelp
+                      text="Com quem esses dados são divididos fora do escritório (órgãos públicos, contabilidade, sistemas em nuvem)?"
+                      example="Poder Judiciário, Receita Federal, Supabase"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1424,7 +1578,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Prazo de Retenção / Descarte (Art. 15/16)</label>
+                  <label>
+                    Prazo de Retenção / Descarte (Art. 15/16)
+                    <FieldHelp
+                      text="Por quanto tempo os dados ficam guardados antes de serem apagados ou anonimizados?"
+                      example="5 anos após o encerramento do processo"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1440,6 +1600,9 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       onChange={(e) => setEditingRopa({ ...editingRopa, hasSensitiveData: e.target.checked })}
                     />
                     <span>Envolve Dados Pessoais Sensíveis (Art. 11 LGPD)</span>
+                    <FieldHelp
+                      text="Marque se houver dados de saúde/atestados, biometria, religião, filiação sindical ou origem racial."
+                    />
                   </label>
                 </div>
                 <div className="form-group">
@@ -1450,10 +1613,19 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       onChange={(e) => setEditingRopa({ ...editingRopa, involvesMinors: e.target.checked })}
                     />
                     <span>Pode Envolver Dados de Menores (Art. 14 LGPD)</span>
+                    <FieldHelp
+                      text="Marque se o processo tratar dados de crianças ou adolescentes (ex.: pensão alimentícia, dependentes)."
+                    />
                   </label>
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Medidas Técnicas e Administrativas de Segurança (Art. 46)</label>
+                  <label>
+                    Medidas Técnicas e Administrativas de Segurança (Art. 46)
+                    <FieldHelp
+                      text="O que o escritório faz para proteger esses dados contra vazamento ou acesso indevido?"
+                      example="Senhas fortes, 2FA, criptografia, acesso restrito à equipe"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1488,7 +1660,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
             <form onSubmit={handleSaveRipd} className="admin-modal-form">
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Título do Relatório RIPD *</label>
+                  <label>
+                    Título do Relatório RIPD *
+                    <FieldHelp
+                      text="Nome de identificação deste Relatório de Impacto (usado quando um processo envolve risco maior ou dados sensíveis)."
+                      example="RIPD 003/2026 — Prontuários Previdenciários"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1498,7 +1676,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Processo ROPA Vinculado</label>
+                  <label>
+                    Processo ROPA Vinculado
+                    <FieldHelp
+                      text="Qual atividade do mapeamento ROPA está sendo analisada neste relatório."
+                      example="Atendimento Jurídico, Consultivo e Contencioso"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1507,7 +1691,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>1. Descrição dos Processos de Tratamento que Podem Gerar Riscos (Art. 38, parágrafo único, I)</label>
+                  <label>
+                    1. Descrição dos Processos de Tratamento que Podem Gerar Riscos (Art. 38, parágrafo único, I)
+                    <FieldHelp
+                      text="Explique em linguagem simples como os dados entram, onde ficam guardados e quem acessa."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1516,7 +1705,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>2. Análise de Necessidade e Proporcionalidade (Art. 6º, III)</label>
+                  <label>
+                    2. Análise de Necessidade e Proporcionalidade (Art. 6º, III)
+                    <FieldHelp
+                      text="Justifique por que esses dados são realmente necessários (não daria para fazer o trabalho sem eles?)."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1525,7 +1719,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>3. Identificação de Riscos às Liberdades Civis e Direitos Fundamentais</label>
+                  <label>
+                    3. Identificação de Riscos às Liberdades Civis e Direitos Fundamentais
+                    <FieldHelp
+                      text="O que poderia dar errado caso ocorresse um vazamento ou erro? (ex.: exposição médica, fraude, constrangimento)."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1534,7 +1733,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Probabilidade do Risco</label>
+                  <label>
+                    Probabilidade do Risco
+                    <FieldHelp
+                      text="Qual a chance de esse problema acontecer hoje, considerando os controles atuais?"
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingRipd.probability}
@@ -1546,7 +1750,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Severidade / Impacto ao Titular</label>
+                  <label>
+                    Severidade / Impacto ao Titular
+                    <FieldHelp
+                      text="Se o problema acontecer, qual o tamanho do prejuízo para a pessoa dona dos dados?"
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingRipd.impact}
@@ -1559,7 +1768,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group form-group-full">
-                  <label>4. Medidas, Salvaguardas e Mecanismos de Mitigação de Risco (Art. 38, parágrafo único, IV)</label>
+                  <label>
+                    4. Medidas, Salvaguardas e Mecanismos de Mitigação de Risco (Art. 38, parágrafo único, IV)
+                    <FieldHelp
+                      text="Liste as proteções usadas para reduzir esse risco (criptografia, acesso restrito, 2FA, anonimização)."
+                    />
+                  </label>
                   <textarea
                     rows={3}
                     className="form-control"
@@ -1568,7 +1782,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>5. Parecer Conclusivo da Encarregada de Dados (DPO)</label>
+                  <label>
+                    5. Parecer Conclusivo da Encarregada de Dados (DPO)
+                    <FieldHelp
+                      text="Conclusão final do DPO dizendo se o processo é seguro para continuar funcionando (Parecer Favorável ou Com Ressalvas)."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1603,7 +1822,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
             <form onSubmit={handleSaveLia} className="admin-modal-form">
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Processo / Tratamento Baseado em Legítimo Interesse *</label>
+                  <label>
+                    Processo / Tratamento Baseado em Legítimo Interesse *
+                    <FieldHelp
+                      text="Qual atividade do escritório usa o 'Legítimo Interesse' (Art. 7º, IX) como justificativa legal."
+                      example="Prevenção contra fraudes e robôs nos formulários"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1613,7 +1838,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Conclusão do Teste</label>
+                  <label>
+                    Conclusão do Teste
+                    <FieldHelp
+                      text="Resultado após analisar se o interesse do escritório é justo e não prejudica o titular."
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingLia.conclusion}
@@ -1625,7 +1855,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Etapa 1 — Teste da Finalidade Legítima e Situação Concreta (Art. 10, caput)</label>
+                  <label>
+                    Etapa 1 — Teste da Finalidade Legítima e Situação Concreta (Art. 10, caput)
+                    <FieldHelp
+                      text="Qual é o benefício real e lícito esperado pelo escritório ou pelo cliente com essa atividade?"
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1634,7 +1869,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Etapa 2 — Teste da Necessidade e Minimização (Art. 10, § 1º)</label>
+                  <label>
+                    Etapa 2 — Teste da Necessidade e Minimização (Art. 10, § 1º)
+                    <FieldHelp
+                      text="Explique se estamos usando apenas o mínimo de dados possíveis (e se não há outro jeito menos invasivo)."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1643,7 +1883,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Etapa 3 — Teste de Balanceamento e Legítima Expectativa do Titular (Art. 10, II)</label>
+                  <label>
+                    Etapa 3 — Teste de Balanceamento e Legítima Expectativa do Titular (Art. 10, II)
+                    <FieldHelp
+                      text="A pessoa esperaria razoavelmente que o escritório fizesse isso? Há algum risco aos direitos dela?"
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1652,7 +1897,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Etapa 4 — Salvaguardas, Transparência e Direito de Oposição (Art. 10, § 2º e Art. 18, § 2º)</label>
+                  <label>
+                    Etapa 4 — Salvaguardas, Transparência e Direito de Oposição (Art. 10, § 2º e Art. 18, § 2º)
+                    <FieldHelp
+                      text="Como avisamos o titular sobre isso e como ele pode pedir para parar (Opt-out / Oposição)?"
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1687,7 +1937,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
             <form onSubmit={handleSaveProcessor} className="admin-modal-form">
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Razão Social / Nome do Operador *</label>
+                  <label>
+                    Razão Social / Nome do Operador *
+                    <FieldHelp
+                      text="Empresa parceira, fornecedor ou sistema externo que processa dados em nome do escritório."
+                      example="Supabase Inc., Contabilidade Silva Ltda., Google Workspace"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1697,7 +1953,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>CNPJ / Identificador / Contato</label>
+                  <label>
+                    CNPJ / Identificador / Contato
+                    <FieldHelp
+                      text="CNPJ da empresa brasileira ou identificação/contato do fornecedor internacional."
+                      example="00.000.000/0001-00 ou contato@fornecedor.com"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1706,7 +1968,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Papel na LGPD (Art. 5º)</label>
+                  <label>
+                    Papel na LGPD (Art. 5º)
+                    <FieldHelp
+                      text="Operador trata dados seguindo ordens do escritório; Suboperador é contratado pelo operador; Controlador Conjunto decide junto."
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingProcessor.role}
@@ -1718,7 +1985,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>País de Localização dos Servidores</label>
+                  <label>
+                    País de Localização dos Servidores
+                    <FieldHelp
+                      text="País onde os computadores/servidores desse fornecedor guardam os dados."
+                      example="Brasil ou Estados Unidos (AWS us-east)"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1727,7 +2000,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Serviço Prestado / Escopo do Tratamento</label>
+                  <label>
+                    Serviço Prestado / Escopo do Tratamento
+                    <FieldHelp
+                      text="Explique resumidamente o que esse fornecedor faz para o escritório."
+                      example="Hospedagem do banco de dados criptografado e autenticação 2FA."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1736,7 +2015,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Mecanismo de Transferência (Art. 33 / Res. ANPD 19/2024)</label>
+                  <label>
+                    Mecanismo de Transferência (Art. 33 / Res. ANPD 19/2024)
+                    <FieldHelp
+                      text="Se os dados saem do Brasil, escolha a base legal que autoriza o envio (ex.: Cláusulas-Padrão da ANPD)."
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingProcessor.transferMechanism}
@@ -1750,7 +2034,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Certificações de Segurança (Art. 46)</label>
+                  <label>
+                    Certificações de Segurança (Art. 46)
+                    <FieldHelp
+                      text="Selos de segurança que comprovam que o fornecedor protege os dados."
+                      example="ISO/IEC 27001, SOC 2 Type II"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1766,6 +2056,9 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       onChange={(e) => setEditingProcessor({ ...editingProcessor, isInternationalTransfer: e.target.checked })}
                     />
                     <span>Envolve Transferência Internacional de Dados (Art. 33)</span>
+                    <FieldHelp
+                      text="Marque se o servidor ou a empresa estiver fora do Brasil (ex.: EUA ou Europa)."
+                    />
                   </label>
                 </div>
                 <div className="form-group">
@@ -1776,6 +2069,9 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       onChange={(e) => setEditingProcessor({ ...editingProcessor, dpaSigned: e.target.checked })}
                     />
                     <span>Cláusula LGPD / DPA Assinado (Art. 39)</span>
+                    <FieldHelp
+                      text="Marque se o contrato com esse fornecedor já possui cláusula de proteção de dados (DPA) assinada."
+                    />
                   </label>
                 </div>
               </div>
@@ -1809,7 +2105,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
             <form onSubmit={handleSaveIncident} className="admin-modal-form">
               <div className="form-grid-2">
                 <div className="form-group form-group-full">
-                  <label>Título / Descrição Curta *</label>
+                  <label>
+                    Título / Descrição Curta *
+                    <FieldHelp
+                      text="Resumo rápido do problema de segurança ocorrido (vazamento, envio para e-mail errado, invasão, perda de notebook)."
+                      example="Envio acidental de anexo para destinatário incorreto"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1819,7 +2121,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Data da Ocorrência / Detecção</label>
+                  <label>
+                    Data da Ocorrência / Detecção
+                    <FieldHelp
+                      text="Dia em que o incidente aconteceu ou foi percebido pela equipe."
+                    />
+                  </label>
                   <input
                     type="date"
                     className="form-control"
@@ -1828,7 +2135,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Data da Ciência (Início do prazo de 3 dias úteis — Res. 15/2024)</label>
+                  <label>
+                    Data da Ciência (Início do prazo de 3 dias úteis — Res. 15/2024)
+                    <FieldHelp
+                      text="Data oficial em que o DPO/Diretoria tomou conhecimento do incidente. O prazo de 3 dias úteis para avisar a ANPD conta a partir daqui."
+                    />
+                  </label>
                   <input
                     type="date"
                     className="form-control"
@@ -1837,7 +2149,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Severidade</label>
+                  <label>
+                    Severidade
+                    <FieldHelp
+                      text="Gravidade do risco às pessoas afetadas: Baixa (sem impacto relevante), Média, Alta ou Crítica (dados sensíveis/financeiros expostos)."
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingIncident.severity}
@@ -1852,7 +2169,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Status do Tratamento</label>
+                  <label>
+                    Status do Tratamento
+                    <FieldHelp
+                      text="Em que fase o atendimento do incidente está agora."
+                    />
+                  </label>
                   <select
                     className="form-control"
                     value={editingIncident.status}
@@ -1867,7 +2189,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Qtd. Estimada de Titulares Afetados</label>
+                  <label>
+                    Qtd. Estimada de Titulares Afetados
+                    <FieldHelp
+                      text="Quantas pessoas tiveram seus dados envolvidos neste incidente (aproximadamente)."
+                      example="1 (ou 25 se envolveu uma lista)"
+                    />
+                  </label>
                   <input
                     type="number"
                     min={0}
@@ -1879,7 +2207,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Protocolo SEI / ANPD (se comunicado)</label>
+                  <label>
+                    Protocolo SEI / ANPD (se comunicado)
+                    <FieldHelp
+                      text="Se o incidente já foi comunicado à ANPD pelo sistema SEI, cole o número do protocolo aqui."
+                      example="SEI 00261.000123/2026-45"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1889,7 +2223,13 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Dados Pessoais Afetados (Art. 48, § 1º, I e II)</label>
+                  <label>
+                    Dados Pessoais Afetados (Art. 48, § 1º, I e II)
+                    <FieldHelp
+                      text="Quais informações foram expostas, perdidas ou acessadas sem permissão."
+                      example="Nome completo, CPF e e-mail"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1906,6 +2246,9 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       onChange={(e) => setEditingIncident({ ...editingIncident, anpdNotified: e.target.checked })}
                     />
                     <span>ANPD comunicada formalmente (em até 3 dias úteis)</span>
+                    <FieldHelp
+                      text="Marque quando a equipe já tiver enviado o comunicado oficial para a ANPD."
+                    />
                   </label>
                 </div>
                 <div className="form-group">
@@ -1916,10 +2259,19 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                       onChange={(e) => setEditingIncident({ ...editingIncident, subjectsNotified: e.target.checked })}
                     />
                     <span>Titulares afetados notificados</span>
+                    <FieldHelp
+                      text="Marque quando os clientes/pessoas afetadas já tiverem sido avisadas do ocorrido."
+                    />
                   </label>
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Medidas de Contenção e Mitigação Adotadas (Art. 48, § 1º, III e VI)</label>
+                  <label>
+                    Medidas de Contenção e Mitigação Adotadas (Art. 48, § 1º, III e VI)
+                    <FieldHelp
+                      text="O que foi feito imediatamente para parar o problema e evitar que aconteça de novo?"
+                      example="Troca de senhas, bloqueio de acesso e solicitação de exclusão do e-mail ao destinatário."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"
@@ -1928,7 +2280,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Justificativa de Prazo (Obrigatória se a comunicação ultrapassar 3 dias úteis — Art. 48, § 1º, V)</label>
+                  <label>
+                    Justificativa de Prazo (Obrigatória se a comunicação ultrapassar 3 dias úteis — Art. 48, § 1º, V)
+                    <FieldHelp
+                      text="Só preencha se o aviso à ANPD demorou mais de 3 dias úteis, explicando o motivo técnico do atraso."
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -1938,7 +2295,12 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Notas de Investigação e Parecer do DPO</label>
+                  <label>
+                    Notas de Investigação e Parecer do DPO
+                    <FieldHelp
+                      text="Anotações internas sobre o que causou o incidente e a avaliação final da Encarregada."
+                    />
+                  </label>
                   <textarea
                     rows={2}
                     className="form-control"

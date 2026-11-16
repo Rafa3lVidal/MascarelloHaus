@@ -36,6 +36,7 @@ import {
   formatDateTimeBR,
   formatFriendlyError,
 } from '../types';
+import { FieldHelp } from './FieldHelp';
 
 interface LgpdRequestsTabProps {
   requests: LgpdRequestRecord[];
@@ -656,7 +657,10 @@ export const LgpdRequestsTab: React.FC<LgpdRequestsTabProps> = ({
 
                 <div className="form-grid-2" style={{ marginBottom: '12px' }}>
                   <div className="form-group">
-                    <label>Status do Atendimento *</label>
+                    <label>
+                      Status do Atendimento *
+                      <FieldHelp text="Etapa atual do pedido. Quando finalizar, mude para 'Concluído' ou 'Indeferido' para encerrar a contagem do prazo de 15 dias." />
+                    </label>
                     <select
                       className="form-control"
                       value={editForm.status}
@@ -681,12 +685,16 @@ export const LgpdRequestsTab: React.FC<LgpdRequestsTabProps> = ({
                         <CheckCircle2 size={14} style={{ verticalAlign: 'middle', color: '#059669', marginRight: '4px' }} />
                         Identidade / Procuração Validada (Art. 18, § 3º e Art. 46)
                       </span>
+                      <FieldHelp text="Marque somente após conferir os documentos anexados para garantir que quem está pedindo os dados é realmente o titular ou seu procurador." />
                     </label>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Notas Internas / Auditoria do DPO (Sigiloso — Restrito à equipe interna)</label>
+                  <label>
+                    Notas Internas / Auditoria do DPO (Sigiloso — Restrito à equipe interna)
+                    <FieldHelp text="Anotações internas para a equipe do escritório (o titular NÃO vê este texto na consulta pública)." />
+                  </label>
                   <textarea
                     className="form-control"
                     rows={2}
@@ -699,6 +707,7 @@ export const LgpdRequestsTab: React.FC<LgpdRequestsTabProps> = ({
                 <div className="form-group">
                   <label>
                     Resposta Oficial ao Titular (Exibida na Consulta Pública de Protocolo após verificação)
+                    <FieldHelp text="Resposta formal que o titular poderá ler no site usando o número de protocolo. Você pode clicar em 'Gerar Minuta Oficial' acima para preencher automaticamente." />
                   </label>
                   <textarea
                     className="form-control"

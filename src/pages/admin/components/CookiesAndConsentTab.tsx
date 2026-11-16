@@ -21,6 +21,7 @@ import {
   formatDateTimeBR,
   formatFriendlyError,
 } from '../types';
+import { FieldHelp } from './FieldHelp';
 
 interface CookiesAndConsentTabProps {
   config: CookieBannerConfig;
@@ -235,6 +236,7 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                       onChange={(e) => onChange({ ...config, enabled: e.target.checked })}
                     />
                     <span>Exibir banner de cookies para novos visitantes</span>
+                    <FieldHelp text="Liga ou desliga o aviso de cookies no rodapé do site para quem entra pela primeira vez." />
                   </label>
                 </div>
                 <div className="form-group">
@@ -245,11 +247,18 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                       onChange={(e) => onChange({ ...config, showFloatingButton: e.target.checked })}
                     />
                     <span>Exibir botão flutuante permanente de preferências</span>
+                    <FieldHelp text="Deixa um botão fixo no canto do site para o visitante mudar ou cancelar a autorização de cookies a qualquer momento (exigido pela ANPD)." />
                   </label>
                 </div>
 
                 <div className="form-group">
-                  <label>Título do Banner</label>
+                  <label>
+                    Título do Banner
+                    <FieldHelp
+                      text="Título curto que aparece no topo da faixa de aviso de cookies."
+                      example="Privacidade e Gestão de Cookies"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -259,7 +268,13 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                 </div>
                 <div className="form-grid-2" style={{ gap: '12px' }}>
                   <div className="form-group">
-                    <label>Versão do Termo</label>
+                    <label>
+                      Versão do Termo
+                      <FieldHelp
+                        text="Se você mudar esse número (ex: de 2.1 para 2.2), o site entende que a política mudou e pede o aceite dos visitantes novamente."
+                        example="2.1"
+                      />
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -269,7 +284,13 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                     />
                   </div>
                   <div className="form-group">
-                    <label>Validade (meses)</label>
+                    <label>
+                      Validade (meses)
+                      <FieldHelp
+                        text="Depois de quantos meses o aceite do visitante vence e o banner volta a perguntar suas preferências."
+                        example="12"
+                      />
+                    </label>
                     <input
                       type="number"
                       min={1}
@@ -284,7 +305,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                 </div>
 
                 <div className="form-group form-group-full">
-                  <label>Texto Principal do Aviso de Cookies</label>
+                  <label>
+                    Texto Principal do Aviso de Cookies
+                    <FieldHelp text="Explicação simples que o visitante lê antes de aceitar ou recusar os cookies opcionais." />
+                  </label>
                   <textarea
                     rows={3}
                     className="form-control"
@@ -294,7 +318,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                 </div>
 
                 <div className="form-group">
-                  <label>Botão Aceitar Todos</label>
+                  <label>
+                    Botão Aceitar Todos
+                    <FieldHelp text="Texto do botão que autoriza todas as categorias de cookies." example="Aceitar Todos" />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -303,7 +330,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Botão Rejeitar Opcionais</label>
+                  <label>
+                    Botão Rejeitar Opcionais
+                    <FieldHelp text="Texto do botão que recusa cookies opcionais e mantém apenas os necessários (obrigatório pela ANPD)." example="Apenas Essenciais" />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -312,7 +342,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Botão Personalizar</label>
+                  <label>
+                    Botão Personalizar
+                    <FieldHelp text="Texto do botão que abre a janela para o usuário escolher cada categoria separadamente." example="Personalizar" />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -321,7 +354,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Rótulo do Botão Flutuante</label>
+                  <label>
+                    Rótulo do Botão Flutuante
+                    <FieldHelp text="Palavra exibida no botão fixo no canto inferior esquerdo do site." example="Cookies" />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -338,7 +374,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
               </h3>
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Título — Essenciais</label>
+                  <label>
+                    Título — Essenciais
+                    <FieldHelp text="Cookies obrigatórios para segurança e funcionamento básico do site. Não podem ser desligados pelo usuário." />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -354,7 +393,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Título — Funcionais</label>
+                  <label>
+                    Título — Funcionais
+                    <FieldHelp text="Cookies opcionais que salvam rascunhos de formulários e liberam o mapa interativo do Google Maps." />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -370,7 +412,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Título — Analíticos</label>
+                  <label>
+                    Título — Analíticos
+                    <FieldHelp text="Cookies opcionais usados apenas para contar quantas pessoas visitam o site, sem identificar quem é você." />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -386,7 +431,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Título — Marketing</label>
+                  <label>
+                    Título — Marketing
+                    <FieldHelp text="Cookies opcionais usados apenas se o escritório fizer campanhas/anúncios externos com aceite expresso." />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -559,7 +607,13 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
             <form onSubmit={handleSaveCookieItem} className="admin-modal-form">
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Nome / Chave *</label>
+                  <label>
+                    Nome / Chave *
+                    <FieldHelp
+                      text="Nome técnico exato do cookie ou chave salva no navegador do visitante."
+                      example="_ga ou lgpd_cookie_preferences"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -569,7 +623,10 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Categoria *</label>
+                  <label>
+                    Categoria *
+                    <FieldHelp text="Define se o cookie é obrigatório (Necessário) ou se depende da autorização do visitante." />
+                  </label>
                   <select
                     className="form-control"
                     value={editingCookie.category}
@@ -582,7 +639,13 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Provedor / Origem</label>
+                  <label>
+                    Provedor / Origem
+                    <FieldHelp
+                      text="Quem cria esse cookie (o próprio site ou uma empresa parceira)."
+                      example="Mascârello Haus (localStorage) ou Google LLC"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -591,7 +654,13 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Prazo de Retenção</label>
+                  <label>
+                    Prazo de Retenção
+                    <FieldHelp
+                      text="Por quanto tempo esse cookie fica salvo no navegador até ser apagado."
+                      example="Sessão (apaga ao fechar) ou 12 meses"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -601,7 +670,13 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Finalidade Específica *</label>
+                  <label>
+                    Finalidade Específica *
+                    <FieldHelp
+                      text="Explicação fácil para o visitante entender para que esse cookie serve."
+                      example="Guardar a escolha de cookies feita pelo visitante para não perguntar toda hora."
+                    />
+                  </label>
                   <textarea
                     rows={3}
                     className="form-control"

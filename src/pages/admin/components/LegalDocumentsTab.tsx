@@ -23,6 +23,7 @@ import {
   LegalDocumentsConfig,
 } from '../../../lib/lgpdConfig';
 import { formatFriendlyError } from '../types';
+import { FieldHelp } from './FieldHelp';
 
 interface LegalDocumentsTabProps {
   config: LegalDocumentsConfig;
@@ -322,7 +323,13 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
 
               <div className="form-grid-2" style={{ marginTop: '18px' }}>
                 <div className="form-group">
-                  <label>Título do Documento</label>
+                  <label>
+                    Título do Documento
+                    <FieldHelp
+                      text="Nome principal exibido no topo da página pública da Central de Proteção de Dados."
+                      example="Aviso de Privacidade & Tratamento de Dados"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -331,7 +338,13 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Subtítulo / Cabeçalho</label>
+                  <label>
+                    Subtítulo / Cabeçalho
+                    <FieldHelp
+                      text="Texto pequeno que aparece logo acima do título do documento."
+                      example="Transparência & Conformidade Regulatória"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -340,7 +353,13 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Versão Vigente</label>
+                  <label>
+                    Versão Vigente
+                    <FieldHelp
+                      text="Sempre que alterar o texto, aumente o número da versão (ex.: 2.2 para 2.3) para manter o histórico exigido pela LGPD."
+                      example="2.2"
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -349,7 +368,10 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
                   />
                 </div>
                 <div className="form-group">
-                  <label>Data da Última Atualização</label>
+                  <label>
+                    Data da Última Atualização
+                    <FieldHelp text="Data em que esta versão passa a valer publicamente no site." />
+                  </label>
                   <input
                     type="date"
                     className="form-control"
@@ -358,7 +380,13 @@ export const LegalDocumentsTab: React.FC<LegalDocumentsTabProps> = ({
                   />
                 </div>
                 <div className="form-group form-group-full">
-                  <label>Resumo das Alterações desta Versão (Registro de Transparência — Art. 8º, § 6º LGPD)</label>
+                  <label>
+                    Resumo das Alterações desta Versão (Registro de Transparência — Art. 8º, § 6º LGPD)
+                    <FieldHelp
+                      text="Explique em 1 frase o que mudou nesta versão (esse resumo aparece na tabela pública de histórico para os visitantes)."
+                      example="Inclusão do nome do Encarregado Substituto e atualização de operadores."
+                    />
+                  </label>
                   <input
                     type="text"
                     className="form-control"
