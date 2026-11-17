@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { Shield, Cookie, Check, X, Sliders, Info, Lock, ChevronRight, RefreshCw } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { CookieBannerConfig, DEFAULT_COOKIE_BANNER_CONFIG } from '../lib/lgpdConfig';
+import { COOKIE_INVENTORY } from '../config/cookies';
+import { LEGAL_CONFIG } from '../config/legal';
+import { purgeFunctionalDrafts } from '../hooks/useFunctionalConsent';
 
 export interface CookiePreferences {
   version: string;
@@ -10,16 +13,15 @@ export interface CookiePreferences {
   essential: boolean;
   analytics: boolean;
   functional: boolean;
-  marketing: boolean;
+  marketing?: boolean;
 }
 
 const DEFAULT_PREFS: CookiePreferences = {
-  version: '2.0',
+  version: LEGAL_CONFIG.documents.privacyNotice.version,
   timestamp: '',
   essential: true,
   analytics: false,
   functional: false,
-  marketing: false,
 };
 
 export const CookieManager: React.FC = () => {
@@ -100,27 +102,20 @@ export const CookieManager: React.FC = () => {
   }, [isModalOpen]);
 
   const savePreferences = async (newPrefs: CookiePreferences) => {
-    const updated = {
+    const updated: CookiePreferences = {
       ...newPrefs,
       essential: true, // Essenciais sempre ativos
+      marketing: false,
       timestamp: new Date().toISOString(),
-      version: cookieConfig.version || '2.1'
+      version: cookieConfig.version || LEGAL_CONFIG.documents.privacyNotice.version,
     };
 
     localStorage.setItem('lgpd_cookie_preferences', JSON.stringify(updated));
-    localStorage.setItem('lgpd_cookie_consent', updated.analytics ? 'all' : 'essential');
+    localStorage.setItem('lgpd_cookie_consent', updated.functional ? 'all' : 'essential');
 
-    // Se o usuário revogar os cookies funcionais, remove estados persistentes opcionais de formulários (Art. 8º, § 5º)
+    // Se o usuário revogar os cookies funcionais, remove imediatamente todos os rascunhos locais (Art. 8º, § 5º)
     if (!updated.functional) {
-      try {
-        Object.keys(localStorage).forEach((key) => {
-          if (key.startsWith('mh_form_state') || key.startsWith('mh_draft_')) {
-            localStorage.removeItem(key);
-          }
-        });
-      } catch {
-        // Ignora erro de acesso ao storage
-      }
+      purgeFunctionalDrafts();
     }
 
     window.dispatchEvent(new CustomEvent('cookie-preferences-updated', { detail: updated }));
@@ -138,14 +133,13 @@ export const CookieManager: React.FC = () => {
         'essenciais',
         updated.functional ? 'funcionais' : null,
         updated.analytics ? 'analiticos' : null,
-        updated.marketing ? 'marketing' : null,
       ].filter(Boolean).join('+');
 
       await supabase.from('consent_records').insert({
         consent_type: `cookies_${grantedCategories}`,
-        granted: Boolean(updated.functional || updated.analytics || updated.marketing),
-        policy_version: cookieConfig.version || '2.1',
-        user_agent: navigator.userAgent
+        granted: Boolean(updated.functional || updated.analytics),
+        policy_version: cookieConfig.version || LEGAL_CONFIG.documents.privacyNotice.version,
+        user_agent: navigator.userAgent,
       });
     } catch {
       // Falha silenciosa em caso de offline
@@ -154,27 +148,28 @@ export const CookieManager: React.FC = () => {
 
   const handleAcceptAll = () => {
     savePreferences({
-      version: '2.0',
+      version: cookieConfig.version || LEGAL_CONFIG.documents.privacyNotice.version,
       timestamp: '',
       essential: true,
-      analytics: true,
-      functional: true,
-      marketing: true
+      analytics: hasAnalyticsCategory,
+      functional: hasFunctionalCategory,
     });
   };
 
   const handleRejectNonEssential = () => {
     savePreferences({
-      version: '2.0',
+      version: cookieConfig.version || LEGAL_CONFIG.documents.privacyNotice.version,
       timestamp: '',
       essential: true,
       analytics: false,
       functional: false,
-      marketing: false
     });
   };
 
-  const cookiesList = cookieConfig.cookiesTable;
+  const cookiesList = COOKIE_INVENTORY;
+  const hasNecessaryCategory = cookiesList.some((item) => item.categoryKey === 'necessary');
+  const hasFunctionalCategory = cookiesList.some((item) => item.categoryKey === 'functional');
+  const hasAnalyticsCategory = cookiesList.some((item) => item.categoryKey === 'analytics');
 
   return (
     <>
@@ -295,95 +290,77 @@ export const CookieManager: React.FC = () => {
                 </p>
 
                 {/* Categoria 1: Necessários */}
-                <div className="cookie-category-item">
-                  <div className="cookie-category-header">
-                    <div>
-                      <div className="category-title-flex">
-                        <h4>{cookieConfig.essentialTitle}</h4>
-                        <span className="badge-required">Sempre Ativos</span>
+                {hasNecessaryCategory && (
+                  <div className="cookie-category-item">
+                    <div className="cookie-category-header">
+                      <div>
+                        <div className="category-title-flex">
+                          <h4>{cookieConfig.essentialTitle}</h4>
+                          <span className="badge-required">Sempre Ativos</span>
+                        </div>
+                        <p className="cookie-category-text">
+                          {cookieConfig.essentialDesc}
+                        </p>
                       </div>
-                      <p className="cookie-category-text">
-                        {cookieConfig.essentialDesc}
-                      </p>
-                    </div>
-                    <div className="toggle-switch disabled">
-                      <input type="checkbox" checked={true} disabled aria-label="Cookies Necessários (Sempre ativos)" />
-                      <span className="toggle-slider"></span>
+                      <div className="toggle-switch disabled">
+                        <input type="checkbox" checked={true} disabled aria-label="Cookies Necessários (Sempre ativos)" />
+                        <span className="toggle-slider"></span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                {/* Categoria 2: Analíticos */}
-                <div className="cookie-category-item">
-                  <div className="cookie-category-header">
-                    <div>
-                      <div className="category-title-flex">
-                        <h4>{cookieConfig.analyticsTitle}</h4>
-                        <span className="badge-optional">Opcional</span>
+                {/* Categoria 2: Analíticos (exibida apenas se houver itens ativos) */}
+                {hasAnalyticsCategory && (
+                  <div className="cookie-category-item">
+                    <div className="cookie-category-header">
+                      <div>
+                        <div className="category-title-flex">
+                          <h4>{cookieConfig.analyticsTitle}</h4>
+                          <span className="badge-optional">Opcional</span>
+                        </div>
+                        <p className="cookie-category-text">
+                          {cookieConfig.analyticsDesc}
+                        </p>
                       </div>
-                      <p className="cookie-category-text">
-                        {cookieConfig.analyticsDesc}
-                      </p>
+                      <label className="toggle-switch">
+                        <input
+                          type="checkbox"
+                          checked={prefs.analytics}
+                          onChange={(e) => setPrefs({ ...prefs, analytics: e.target.checked })}
+                          aria-label="Ativar Cookies Analíticos"
+                        />
+                        <span className="toggle-slider"></span>
+                      </label>
                     </div>
-                    <label className="toggle-switch">
-                      <input
-                        type="checkbox"
-                        checked={prefs.analytics}
-                        onChange={(e) => setPrefs({ ...prefs, analytics: e.target.checked })}
-                        aria-label="Ativar Cookies Analíticos"
-                      />
-                      <span className="toggle-slider"></span>
-                    </label>
                   </div>
-                </div>
+                )}
 
-                {/* Categoria 3: Funcionais */}
-                <div className="cookie-category-item">
-                  <div className="cookie-category-header">
-                    <div>
-                      <div className="category-title-flex">
-                        <h4>{cookieConfig.functionalTitle}</h4>
-                        <span className="badge-optional">Opcional</span>
+                {/* Categoria 3: Funcionais (exibida apenas se houver itens ativos) */}
+                {hasFunctionalCategory && (
+                  <div className="cookie-category-item">
+                    <div className="cookie-category-header">
+                      <div>
+                        <div className="category-title-flex">
+                          <h4>{cookieConfig.functionalTitle}</h4>
+                          <span className="badge-optional">Opcional</span>
+                        </div>
+                        <p className="cookie-category-text">
+                          {cookieConfig.functionalDesc}
+                        </p>
                       </div>
-                      <p className="cookie-category-text">
-                        {cookieConfig.functionalDesc}
-                      </p>
+                      <label className="toggle-switch">
+                        <input
+                          type="checkbox"
+                          checked={prefs.functional}
+                          onChange={(e) => setPrefs({ ...prefs, functional: e.target.checked })}
+                          aria-label="Ativar Cookies de Funcionalidade"
+                        />
+                        <span className="toggle-slider"></span>
+                      </label>
                     </div>
-                    <label className="toggle-switch">
-                      <input
-                        type="checkbox"
-                        checked={prefs.functional}
-                        onChange={(e) => setPrefs({ ...prefs, functional: e.target.checked })}
-                        aria-label="Ativar Cookies de Funcionalidade"
-                      />
-                      <span className="toggle-slider"></span>
-                    </label>
                   </div>
-                </div>
-
-                {/* Categoria 4: Marketing */}
-                <div className="cookie-category-item">
-                  <div className="cookie-category-header">
-                    <div>
-                      <div className="category-title-flex">
-                        <h4>{cookieConfig.marketingTitle}</h4>
-                        <span className="badge-optional">Opcional</span>
-                      </div>
-                      <p className="cookie-category-text">
-                        {cookieConfig.marketingDesc}
-                      </p>
-                    </div>
-                    <label className="toggle-switch">
-                      <input
-                        type="checkbox"
-                        checked={prefs.marketing}
-                        onChange={(e) => setPrefs({ ...prefs, marketing: e.target.checked })}
-                        aria-label="Ativar Cookies de Marketing"
-                      />
-                      <span className="toggle-slider"></span>
-                    </label>
-                  </div>
-                </div>
+                )}
               </div>
             )}
 
@@ -428,7 +405,7 @@ export const CookieManager: React.FC = () => {
             {/* Rodapé do Modal */}
             <div className="cookie-modal-footer">
               <div className="footer-links-wrap">
-                <Link to="/central-de-protecao-de-dados/" onClick={() => setIsModalOpen(false)}>
+                <Link to="/central-de-protecao-de-dados/?aba=aviso" onClick={() => setIsModalOpen(false)}>
                   Aviso de Privacidade Completo
                 </Link>
               </div>

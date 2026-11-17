@@ -1,9 +1,10 @@
 import React from 'react';
+import { LEGAL_CONFIG } from '../config/legal';
 
 export const WhatsAppButton: React.FC = () => {
   return (
     <a
-      href="https://wa.me/5549999281878?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20atendimento%20jur%C3%ADdico."
+      href={LEGAL_CONFIG.contacts.whatsappDefaultMessageUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-float-btn"

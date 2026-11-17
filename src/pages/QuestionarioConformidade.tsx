@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import {
   CheckCircle2,
@@ -34,8 +35,11 @@ import {
   saveFormDraft,
   loadFormDraft,
   clearFormDraft,
+  recordFormConsent,
   UploadedAttachment,
 } from '../lib/formSecurity';
+import { LEGAL_CONFIG } from '../config/legal';
+import { useFunctionalConsent } from '../hooks/useFunctionalConsent';
 
 interface FormDataState {
   // Dados da Empresa
@@ -165,6 +169,8 @@ const SECTIONS = [
 ];
 
 export const QuestionarioConformidade: React.FC = () => {
+  const { hasFunctionalConsent } = useFunctionalConsent();
+  const [noticeAccepted, setNoticeAccepted] = useState(false);
   const [formData, setFormData] = useState<FormDataState>(() => {
     const saved = loadFormDraft<FormDataState>('questionario_conformidade_v2');
     if (saved) {
@@ -192,10 +198,15 @@ export const QuestionarioConformidade: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [draftSavedAlert, setDraftSavedAlert] = useState(false);
 
-  // Auto-save draft on changes
+  // Auto-save draft on changes (exclusivamente com consentimento funcional ativo)
   useEffect(() => {
+    if (!hasFunctionalConsent) {
+      clearFormDraft('questionario_conformidade_v2');
+      setDraftSavedAlert(false);
+      return;
+    }
     saveFormDraft('questionario_conformidade_v2', formData);
-  }, [formData]);
+  }, [formData, hasFunctionalConsent]);
 
   const handleUpdateAttachments = (fieldKey: string, nextList: UploadedAttachment[]) => {
     setFormData((prev) => ({
@@ -208,6 +219,7 @@ export const QuestionarioConformidade: React.FC = () => {
   };
 
   const handleManualSaveDraft = () => {
+    if (!hasFunctionalConsent) return;
     saveFormDraft('questionario_conformidade_v2', formData);
     setDraftSavedAlert(true);
     setTimeout(() => setDraftSavedAlert(false), 2500);
@@ -356,6 +368,11 @@ export const QuestionarioConformidade: React.FC = () => {
 
       if (error) throw error;
 
+      await recordFormConsent(
+        'compliance_quiz_notice_ack',
+        sanitizeEmail(formData.contatoEmail) || formData.cnpj,
+        LEGAL_CONFIG.documents.privacyNotice.version
+      );
       recordClientSubmission('questionario_conformidade');
       clearFormDraft('questionario_conformidade_v2');
 
@@ -501,14 +518,16 @@ export const QuestionarioConformidade: React.FC = () => {
                     )}
                   </div>
                   <div className="action-buttons">
-                    <button
-                      type="button"
-                      onClick={handleManualSaveDraft}
-                      className="btn-ghost"
-                      title="Salvar rascunho no navegador"
-                    >
-                      <Save size={14} /> Salvar Rascunho
-                    </button>
+                    {hasFunctionalConsent && (
+                      <button
+                        type="button"
+                        onClick={handleManualSaveDraft}
+                        className="btn-ghost"
+                        title="Salvar rascunho no navegador"
+                      >
+                        <Save size={14} /> Salvar Rascunho
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => setViewMode(viewMode === 'wizard' ? 'full' : 'wizard')}
@@ -1016,7 +1035,7 @@ export const QuestionarioConformidade: React.FC = () => {
                             onAttachmentsChange={(list) => handleUpdateAttachments('q9_seguranca_cripto', list)}
                             maxFiles={1}
                             maxSizeMB={5}
-                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
                             variant="light"
                             compact
                           />
@@ -1085,7 +1104,7 @@ export const QuestionarioConformidade: React.FC = () => {
                             onAttachmentsChange={(list) => handleUpdateAttachments('q11_incidentes', list)}
                             maxFiles={1}
                             maxSizeMB={5}
-                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
                             variant="light"
                             compact
                           />
@@ -1280,7 +1299,7 @@ export const QuestionarioConformidade: React.FC = () => {
                             onAttachmentsChange={(list) => handleUpdateAttachments('q18_terceiros', list)}
                             maxFiles={1}
                             maxSizeMB={5}
-                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
                             variant="light"
                             compact
                           />
@@ -1329,7 +1348,7 @@ export const QuestionarioConformidade: React.FC = () => {
                             onAttachmentsChange={(list) => handleUpdateAttachments('q19_inventario_ripd', list)}
                             maxFiles={1}
                             maxSizeMB={5}
-                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
                             variant="light"
                             compact
                           />
@@ -1371,7 +1390,7 @@ export const QuestionarioConformidade: React.FC = () => {
                             onAttachmentsChange={(list) => handleUpdateAttachments('q20_pentest', list)}
                             maxFiles={1}
                             maxSizeMB={5}
-                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png', 'zip']}
+                            allowedExtensions={['pdf', 'docx', 'doc', 'jpg', 'png']}
                             variant="light"
                             compact
                           />
@@ -1541,6 +1560,28 @@ export const QuestionarioConformidade: React.FC = () => {
                           </div>
                         </div>
                       )}
+                    </div>
+
+                    <div style={{ marginBottom: '20px', padding: '16px 18px', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                      <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer' }}>
+                        <input
+                          type="checkbox"
+                          required
+                          checked={noticeAccepted}
+                          onChange={(e) => setNoticeAccepted(e.target.checked)}
+                          style={{ marginTop: '3px', accentColor: '#0d3732' }}
+                        />
+                        <span style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.6 }}>
+                          Declaro ter lido o{' '}
+                          <Link to="/central-de-protecao-de-dados/?aba=aviso" style={{ color: '#0d3732', fontWeight: 600, textDecoration: 'underline' }}>
+                            Aviso de Privacidade
+                          </Link>
+                          . <strong className="required">*</strong>
+                        </span>
+                      </label>
+                      <p style={{ fontSize: '0.82rem', color: '#475569', marginTop: '6px', marginBottom: 0, lineHeight: 1.5 }}>
+                        Os dados informados serão utilizados para avaliação de conformidade e diligência de fornecedores, com base no Art. 7º, V e IX da LGPD. {LEGAL_CONFIG.security.ageNotice}
+                      </p>
                     </div>
 
                     <SecurityShield security={security} onChange={setSecurity} variant="light" />

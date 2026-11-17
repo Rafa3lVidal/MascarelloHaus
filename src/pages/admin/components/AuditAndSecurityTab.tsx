@@ -580,7 +580,7 @@ export const AuditAndSecurityTab: React.FC<AuditAndSecurityTabProps> = ({
                   rel="noopener noreferrer"
                   className="btn-outline-admin"
                 >
-                  <MessageCircle size={14} /> Suporte WhatsApp: (49) 99928-1878
+                  <MessageCircle size={14} /> Suporte WhatsApp ApexCode
                 </a>
                 <a
                   href="mailto:contato@apexcode.dev.br"

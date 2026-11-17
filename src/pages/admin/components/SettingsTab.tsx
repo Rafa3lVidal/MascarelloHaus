@@ -627,7 +627,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                   rel="noopener noreferrer"
                   className="btn-outline-admin"
                 >
-                  <MessageCircle size={14} /> Suporte WhatsApp: (49) 99928-1878
+                  <MessageCircle size={14} /> Suporte WhatsApp ApexCode
                 </a>
                 <a href="mailto:contato@apexcode.dev.br" className="btn-outline-admin">
                   <Mail size={14} /> E-mail / LGPD: contato@apexcode.dev.br

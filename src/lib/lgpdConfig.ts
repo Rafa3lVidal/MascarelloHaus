@@ -1,8 +1,11 @@
+import { LEGAL_CONFIG } from '../config/legal';
+import { COOKIE_INVENTORY } from '../config/cookies';
+
 export interface CookieTableItem {
   id: string;
   name: string;
   provider: string;
-  category: 'Necessário' | 'Funcional' | 'Analítico' | 'Marketing' | string;
+  category: 'Necessário' | 'Funcional' | 'Analítico' | string;
   purpose: string;
   retention: string;
 }
@@ -24,8 +27,8 @@ export interface CookieBannerConfig {
   functionalDesc: string;
   analyticsTitle: string;
   analyticsDesc: string;
-  marketingTitle: string;
-  marketingDesc: string;
+  marketingTitle?: string;
+  marketingDesc?: string;
   cookiesTable: CookieTableItem[];
 }
 
@@ -182,142 +185,49 @@ export interface PublicProtocolIndexItem {
 
 export const DEFAULT_COOKIE_BANNER_CONFIG: CookieBannerConfig = {
   enabled: true,
-  version: '2.1',
+  version: LEGAL_CONFIG.documents.privacyNotice.version,
   title: 'Privacidade e Gestão de Cookies',
   description:
-    'O escritório Mascârello Haus Advocacia utiliza cookies estritamente necessários para o funcionamento e segurança do site. Com o seu consentimento livre, informado e inequívoco, também poderemos utilizar cookies analíticos e funcionais para compreender a interação dos usuários e aprimorar nossos serviços digitais, em observância à Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD) e ao Guia de Cookies da ANPD.',
+    'O escritório Mascârello Haus Advocacia utiliza cookies e armazenamentos locais estritamente necessários para o funcionamento e segurança do site. Com o seu consentimento livre, informado e inequívoco, também poderemos ativar armazenamentos funcionais para salvar rascunhos de formulários, em observância à Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD) e ao Guia de Cookies da ANPD.',
   acceptAllLabel: 'Aceitar Todos',
   rejectOptionalLabel: 'Apenas Essenciais',
   customizeLabel: 'Personalizar',
   showFloatingButton: true,
   floatingButtonLabel: 'Cookies',
   consentExpiryMonths: 12,
-  essentialTitle: 'Cookies Estritamente Necessários',
+  essentialTitle: 'Cookies e Armazenamentos Estritamente Necessários',
   essentialDesc:
-    'Indispensáveis para segurança cibernética, proteção contra fraudes, roteamento de sessão e registro das suas preferências de privacidade. Não podem ser desativados.',
-  functionalTitle: 'Cookies Funcionais e de Preferências',
+    'Indispensáveis para segurança cibernética, proteção contra fraudes, autenticação administrativa e registro das suas preferências de privacidade. Não podem ser desativados.',
+  functionalTitle: 'Armazenamento Funcional (Rascunhos de Formulários)',
   functionalDesc:
-    'Permitem salvar rascunhos locais de formulários e carregar recursos interativos externos como mapas de localização dos escritórios.',
-  analyticsTitle: 'Cookies Analíticos e de Desempenho',
+    'Permite salvar rascunhos locais de formulários longos (Central do Titular, Canal de Denúncias e Questionário de Conformidade) para evitar perda de preenchimento.',
+  analyticsTitle: 'Cookies Analíticos',
   analyticsDesc:
-    'Ajudam a entender como os visitantes navegam pelo portal de forma agregada e com endereço IP anonimizado.',
-  marketingTitle: 'Cookies de Marketing e Campanhas',
-  marketingDesc:
-    'Utilizados apenas mediante autorização expressa para mensurar o alcance de materiais informativos e campanhas institucionais.',
-  cookiesTable: [
-    {
-      id: 'ck-1',
-      name: 'lgpd_cookie_preferences',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Necessário',
-      purpose: 'Armazena a escolha de consentimento, versão da política e preferências granulares do titular (Art. 8º LGPD).',
-      retention: '12 meses',
-    },
-    {
-      id: 'ck-2',
-      name: 'lgpd_cookie_consent',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Necessário',
-      purpose: 'Registro simplificado do estado de consentimento do usuário para controle de exibição do banner.',
-      retention: '12 meses',
-    },
-    {
-      id: 'ck-3',
-      name: 'mh_sec_seed',
-      provider: 'Mascârello Haus (sessionStorage)',
-      category: 'Necessário',
-      purpose: 'Semente criptográfica efêmera (SHA-256) gerada por sessão para cálculo de hash anônimo anti-abuso sem armazenar o IP real do visitante.',
-      retention: 'Sessão',
-    },
-    {
-      id: 'ck-4',
-      name: 'mh_rl_contato, mh_rl_lgpd_central, mh_rl_canal_denuncias, mh_rl_questionario_conformidade',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Necessário',
-      purpose: 'Controle de limite de requisições (Rate Limiting) e prevenção contra ataques automatizados ou spam nos formulários.',
-      retention: '10 a 15 min',
-    },
-    {
-      id: 'ck-5',
-      name: 'sb-*-auth-token',
-      provider: 'Provedor de Autenticação (localStorage / Cookie)',
-      category: 'Necessário',
-      purpose: 'Autenticação e manutenção de sessão criptografada exclusivamente para acesso restrito ao painel administrativo.',
-      retention: 'Sessão admin',
-    },
-    {
-      id: 'ck-6',
-      name: '_vercel_jwt, __vercel_live_token',
-      provider: 'Vercel Inc. (HTTP Cookie)',
-      category: 'Necessário',
-      purpose: 'Balanceamento de carga, roteamento seguro na borda (Edge Network) e mitigação contra ataques DDoS.',
-      retention: 'Sessão',
-    },
-    {
-      id: 'ck-7',
-      name: 'mh_draft_questionario_conformidade_v2, mh_form_state_questionario_conformidade_v2',
-      provider: 'Mascârello Haus (sessionStorage / localStorage)',
-      category: 'Funcional',
-      purpose: 'Preserva o progresso e rascunho das 6 etapas do Questionário de Conformidade para Fornecedores (somente se cookies funcionais ativos).',
-      retention: 'Sessão / 7 dias',
-    },
-    {
-      id: 'ck-8',
-      name: 'mh_draft_central_lgpd',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Funcional',
-      purpose: 'Preserva temporariamente no navegador do próprio usuário o rascunho da Requisição de Direitos do Titular (somente se cookies funcionais ativos).',
-      retention: 'Até o envio',
-    },
-    {
-      id: 'ck-9',
-      name: 'mh_draft_canal_denuncias',
-      provider: 'Mascârello Haus (localStorage)',
-      category: 'Funcional',
-      purpose: 'Armazena localmente o relato em andamento no Canal de Denúncias somente quando os cookies funcionais estão habilitados.',
-      retention: '7 dias / envio',
-    },
-    {
-      id: 'ck-10',
-      name: 'NID, CONSENT (Google Maps Embed)',
-      provider: 'Google LLC (Terceiro — Contato)',
-      category: 'Funcional',
-      purpose: 'Carregamento e exibição interativa dos mapas de localização do escritório de Videira/SC (bloqueado preventivamente até aceite funcional ou clique expresso).',
-      retention: '6 meses',
-    },
-    {
-      id: 'ck-11',
-      name: '_ga',
-      provider: 'Google Analytics (IP anonimizado)',
-      category: 'Analítico',
-      purpose: 'Distinção estatística de visitantes anônimos para compilação de relatórios agregados de audiência (mediante consentimento).',
-      retention: '2 anos',
-    },
-    {
-      id: 'ck-12',
-      name: '_ga_*',
-      provider: 'Google Analytics (IP anonimizado)',
-      category: 'Analítico',
-      purpose: 'Persistência desidentificada do estado de sessão para métricas agregadas de navegação (mediante consentimento).',
-      retention: '2 anos',
-    },
-  ],
+    'Atualmente o portal não utiliza cookies analíticos de terceiros (como Google Analytics) em produção.',
+  cookiesTable: COOKIE_INVENTORY.map((item) => ({
+    id: item.id,
+    name: item.name,
+    provider: item.provider,
+    category: item.category,
+    purpose: item.purpose,
+    retention: item.retention,
+  })),
 };
 
 export const DEFAULT_LGPD_GOVERNANCE_CONFIG: LgpdGovernanceConfig = {
-  dpoName: 'Mirataira Haus',
-  dpoEmail: 'privacidade@mascarellohaus.adv.br',
-  dpoPhone: '+55 (49) 98822-0982',
-  dpoOab: 'OAB/SC — Encarregada Titular',
+  dpoName: LEGAL_CONFIG.dpo.titular.name,
+  dpoEmail: LEGAL_CONFIG.dpo.titular.email,
+  dpoPhone: LEGAL_CONFIG.dpo.titular.phone,
+  dpoOab: `${LEGAL_CONFIG.dpo.titular.oab} — Encarregada Titular`,
   dpoServiceHours: 'Segunda a Sexta, 08h30 às 12h00 e 13h30 às 18h00',
-  substituteDpoName: 'Comitê de Privacidade e Compliance Mascârello Haus',
-  substituteDpoEmail: 'dpo@mascarellohaus.com.br',
-  substituteDpoPhone: '+55 (49) 3566-0066',
-  substituteDpoOab: 'Encarregado Substituto (Res. CD/ANPD nº 18/2024)',
-  responseDeadlineDays: 15,
+  substituteDpoName: LEGAL_CONFIG.dpo.substitute.name,
+  substituteDpoEmail: LEGAL_CONFIG.dpo.substitute.email,
+  substituteDpoPhone: LEGAL_CONFIG.dpo.substitute.phone,
+  substituteDpoOab: LEGAL_CONFIG.dpo.substitute.role,
+  responseDeadlineDays: LEGAL_CONFIG.deadlines.responseDeadlineDays,
   incidentNotificationHours: 72,
-  incidentBusinessDaysAnpd: 3,
-  committeeMembers: 'Mirataira Haus (DPO Titular), Encarregado Substituto, Sócios Administradores e Segurança da Informação (ApexCode)',
+  incidentBusinessDaysAnpd: LEGAL_CONFIG.deadlines.incidentNotificationDays,
+  committeeMembers: `${LEGAL_CONFIG.dpo.titular.name} (DPO Titular — ${LEGAL_CONFIG.dpo.titular.oab}), Encarregado Substituto, Sócios Administradores e Segurança da Informação (${LEGAL_CONFIG.developer.name})`,
   ropaReviewCycleDays: 180,
   nextReviewDate: '2027-05-01',
   childrenDataPolicy:
@@ -525,7 +435,7 @@ export const DEFAULT_LGPD_GOVERNANCE_CONFIG: LgpdGovernanceConfig = {
       role: 'operador',
       serviceProvided: 'Desenvolvimento, manutenção evolutiva, segurança da aplicação e suporte técnico especializado em conformidade com a LGPD.',
       dataCategoriesShared: 'Acesso técnico restrito para manutenção e suporte sob compromisso de confidencialidade.',
-      country: 'Brasil (Videira / Caçador — SC)',
+      country: 'Brasil (Videira — SC)',
       isInternationalTransfer: false,
       transferMechanism: 'nacional',
       securityCertifications: 'Privacy by Design, Segurança de Aplicação (OWASP Top 10) e Controle de Acesso 2FA',
@@ -538,116 +448,166 @@ export const DEFAULT_LGPD_GOVERNANCE_CONFIG: LgpdGovernanceConfig = {
 };
 
 export const DEFAULT_PRIVACY_TEMPLATE_HTML = `<h3>1. Compromisso com a sua Privacidade e Identificação do Controlador</h3>
-<p>A <strong>Mascârello Haus Advocacia e Consultoria</strong> (Controladora de Dados Pessoais), com sede em Videira/SC na Rua Coronel Alberto Schmidt, nº 10, Edifício Laura, 1º Andar, Sala 5, Centro, CEP 89560-198, valoriza a confiança de seus clientes, parceiros, colaboradores e visitantes. Estruturamos nossas rotinas operacionais e técnicas sob os mais rigorosos padrões de segurança da informação e governança em conformidade integral com a <strong>Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD)</strong> e com as regulamentações da <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong>.</p>
+<p>A <strong>${LEGAL_CONFIG.company.legalName}</strong> (${LEGAL_CONFIG.company.tradeName}), inscrita no CNPJ sob o nº <strong>${LEGAL_CONFIG.company.cnpj}</strong>, com sede na ${LEGAL_CONFIG.company.address}, atua como <strong>Controladora de Dados Pessoais</strong>. Valorizamos a confiança de nossos clientes, parceiros, colaboradores e visitantes, estruturando nossas rotinas em conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD)</strong> e com as resoluções da <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong>.</p>
+<p><strong>Canais de contato do Controlador:</strong> E-mail geral <a href="mailto:${LEGAL_CONFIG.contacts.generalEmail}">${LEGAL_CONFIG.contacts.generalEmail}</a> | Privacidade <a href="mailto:${LEGAL_CONFIG.contacts.privacyEmail}">${LEGAL_CONFIG.contacts.privacyEmail}</a> | WhatsApp ${LEGAL_CONFIG.contacts.whatsappDisplay}.</p>
 
-<h3>2. Princípios Orientadores (Art. 6º da LGPD)</h3>
-<p>Todo tratamento de dados realizado por nosso escritório observa estritamente os dez princípios legais da boa-fé:</p>
+<h3>2. Quadro de Transparência por Canal de Coleta (Art. 9º da LGPD)</h3>
+<p>A tabela abaixo detalha os dados coletados em cada canal do portal, suas finalidades, bases legais, prazos de retenção e eventual compartilhamento:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Canal</th>
+      <th>Dados coletados</th>
+      <th>Finalidade</th>
+      <th>Base legal</th>
+      <th>Retenção</th>
+      <th>Compartilhamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Formulário de Contato</strong></td>
+      <td>Nome, e-mail ou telefone, assunto e mensagem (além de eventuais anexos voluntários).</td>
+      <td>Responder à solicitação de atendimento e conduzir procedimentos preliminares relacionados a eventual contratação de serviços jurídicos.</td>
+      <td><strong>Art. 7º, V</strong> (procedimentos preliminares relacionados a contrato).</td>
+      <td>${LEGAL_CONFIG.retention.contactForm}</td>
+      <td>Infraestrutura tecnológica (Supabase e Vercel) e equipe interna de atendimento.</td>
+    </tr>
+    <tr>
+      <td><strong>Central do Titular (LGPD)</strong></td>
+      <td>Nome completo, e-mail ou telefone, tipo de requisição, descrição e documento comprobatório de identidade/representação.</td>
+      <td>Receber, validar identidade, processar e responder às requisições de direitos dos titulares e emitir protocolo de acompanhamento.</td>
+      <td><strong>Art. 7º, II</strong> (cumprimento de obrigação legal — Art. 18 da LGPD).</td>
+      <td>${LEGAL_CONFIG.retention.dataSubjectRequests}</td>
+      <td>Acesso restrito à Encarregada (DPO), equipe de governança e infraestrutura de banco de dados (Supabase).</td>
+    </tr>
+    <tr>
+      <td><strong>Canal de Denúncias</strong></td>
+      <td>Descrição do relato, local/canal da ocorrência, data aproximada, envolvidos e evidências anexadas (identificação opcional; admite relato anônimo).</td>
+      <td>Apurar irregularidades, violações éticas ou ilícitos em programa de integridade e cumprir deveres legais/regulatórios.</td>
+      <td><strong>Art. 7º, II e VI</strong>; e, quando houver dados pessoais sensíveis no relato, <strong>Art. 11, II, "a" e "d"</strong>.</td>
+      <td>${LEGAL_CONFIG.retention.whistleblowerReports}</td>
+      <td>Comitê de Ética/Compliance, Encarregada (DPO) e, quando estritamente necessário, autoridades competentes ou assessoria jurídica externa.</td>
+    </tr>
+    <tr>
+      <td><strong>Questionário de Conformidade de Fornecedores</strong></td>
+      <td>Razão social, CNPJ, endereço, responsável pelo preenchimento, e-mail, telefone e respostas/evidências de governança LGPD.</td>
+      <td>Avaliar o nível de maturidade em proteção de dados de fornecedores e parceiros para diligência pré-contratual e gestão de risco.</td>
+      <td><strong>Art. 7º, V e IX</strong> (procedimentos preliminares a contrato e legítimo interesse).</td>
+      <td>${LEGAL_CONFIG.retention.complianceQuiz}</td>
+      <td>Equipe jurídica/compliance interna e infraestrutura (Supabase).</td>
+    </tr>
+    <tr>
+      <td><strong>WhatsApp e E-mail Institucional</strong></td>
+      <td>Nome, número de telefone, endereço de e-mail e conteúdo das mensagens/documentos enviados.</td>
+      <td>Atendimento direto, agendamento de reuniões e tratativas preliminares para prestação de serviços advocatícios.</td>
+      <td><strong>Art. 7º, V</strong> (procedimentos preliminares a contrato).</td>
+      <td>${LEGAL_CONFIG.retention.whatsappAndEmail}</td>
+      <td>Provedor de mensageria/e-mail e equipe de atendimento do escritório.</td>
+    </tr>
+    <tr>
+      <td><strong>Cookies e Armazenamento Local</strong></td>
+      <td>Preferências de consentimento, semente anti-bot (<code>mh_sec_seed</code>), controle de envio (<code>mh_rl_*</code>) e, se autorizado, rascunhos locais (<code>mh_form_state_*</code>).</td>
+      <td>Segurança contra abuso/spam, manutenção de sessão administrativa e salvamento opcional de rascunhos de formulários.</td>
+      <td>Necessários: <strong>Art. 7º, IX</strong> (legítimo interesse). Opcionais (funcionais): <strong>Art. 7º, I</strong> (consentimento).</td>
+      <td>${LEGAL_CONFIG.retention.cookiesEssential} (funcionais até revogação).</td>
+      <td>Processamento local no navegador do titular (sem compartilhamento publicitário).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>3. Princípios e Bases Legais Complementares (Arts. 6º, 7º, 10 e 11)</h3>
+<p>Todo tratamento realizado pelo escritório observa os princípios da finalidade, adequação, necessidade (minimização), livre acesso, qualidade, transparência, segurança, prevenção, não discriminação e responsabilização. Quando utilizamos a base legal de <strong>Legítimo Interesse (Art. 7º, IX e Art. 10)</strong> — como em controles de segurança anti-spam e diligência de integridade —, mantemos <strong>Teste de Balanceamento (LIA — Legitimate Interest Assessment)</strong> formalmente documentado, disponível mediante solicitação ao Encarregado (DPO).</p>
+
+<h3>4. Direitos do Titular, Prazos de Resposta e Petição à ANPD (Arts. 18, 19 e 20)</h3>
+<p>Você pode exercer gratuitamente seus direitos através da <strong>Central de Proteção de Dados</strong>:</p>
 <ul>
-  <li><strong>Finalidade, Adequação e Necessidade (Minimização):</strong> Coleta compatível exclusivamente com propósitos legítimos e específicos informados ao titular, limitada ao mínimo estritamente indispensável.</li>
-  <li><strong>Livre Acesso, Qualidade dos Dados e Transparência:</strong> Garantia de consulta gratuita, facilitada e exatidão contínua dos dados, com informações claras sobre agentes de tratamento e operadores.</li>
-  <li><strong>Segurança, Prevenção, Não Discriminação e Responsabilização (Accountability):</strong> Adoção de medidas técnicas e administrativas aptas a proteger os dados pessoais e comprovar a eficácia da conformidade.</li>
+  <li><strong>Confirmação e Acesso (Art. 18, I e II; Art. 19):</strong> Confirmação da existência de tratamento e acesso aos dados em formato simplificado providenciados <strong>imediatamente</strong> (Art. 19, I), ou declaração completa clara em <strong>até 15 dias, contados do requerimento (Art. 19, II)</strong>.</li>
+  <li><strong>Correção, Anonimização, Bloqueio ou Eliminação (Art. 18, III, IV e VI):</strong> Retificação de dados incompletos/inexatos e exclusão de dados desnecessários ou tratados com base no consentimento.</li>
+  <li><strong>Portabilidade, Compartilhamento e Revogação (Art. 18, V, VII, VIII e IX):</strong> Exportação estruturada, informação sobre entidades públicas/privadas com quem houve compartilhamento e revogação do consentimento a qualquer momento.</li>
+  <li><strong>Oposição e Revisão de Decisões Automatizadas (Art. 18, § 2º e Art. 20):</strong> Oposição a tratamentos irregulares e solicitação de revisão humana de critérios automatizados (como o índice do Questionário de Conformidade).</li>
+  <li><strong>Direito de Peticionar à ANPD (Art. 18, § 1º):</strong> Caso entenda que o tratamento viola a LGPD ou não tenha ficado satisfeito com a resposta do Controlador, você tem o direito de peticionar diretamente à <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong> pelo portal oficial <a href="${LEGAL_CONFIG.authority.url}" target="_blank" rel="noopener noreferrer">${LEGAL_CONFIG.authority.url}</a>.</li>
 </ul>
 
-<h3>3. Bases Legais e Finalidades de Tratamento (Arts. 7º, 10 e 11 da LGPD)</h3>
-<p>Os dados pessoais tratados por meio deste portal institucional apoiam-se estritamente nas seguintes hipóteses legais:</p>
+<h3>5. Faixa Etária e Proteção de Crianças e Adolescentes (Art. 14 da LGPD)</h3>
+<p>${LEGAL_CONFIG.security.ageNotice} O escritório não coleta intencionalmente dados de menores de idade por meio dos formulários do site. Na hipótese estrita de representação jurídica que envolva crianças ou adolescentes, o tratamento ocorre exclusivamente em seu melhor interesse e mediante consentimento específico e em destaque dado por pelo menos um dos pais ou pelo representante legal (Art. 14, § 1º).</p>
+
+<h3>6. Operadores e Transferência Internacional de Dados (Arts. 33 a 36 e Res. CD/ANPD nº 19/2024)</h3>
+<p>Não comercializamos dados pessoais. Para operação do portal, contamos com os operadores tecnológicos <strong>Supabase Inc.</strong> (banco de dados e armazenamento privado de anexos), <strong>Vercel Inc.</strong> (hospedagem e mitigação DDoS) e <strong>${LEGAL_CONFIG.developer.name}</strong> (desenvolvimento e suporte técnico). A relação completa de operadores, papéis e mecanismos de transferência internacional pode ser consultada na aba <a href="/central-de-protecao-de-dados/?aba=direitos">Direitos, DPO &amp; Operadores</a>. Quando houver processamento em data centers no exterior, aplicam-se os Arts. 33 a 36 da LGPD e a Resolução CD/ANPD nº 19/2024, com Cláusulas-Padrão Contratuais e conexão protegida por encriptação (TLS 1.3 e AES-256).</p>
+
+<h3>7. Segurança da Informação e Comunicação de Incidentes (Arts. 46 a 49 e Res. CD/ANPD nº 15/2024)</h3>
+<p>Adotamos controles técnicos de segurança desde a concepção (<em>Privacy by Design</em>): autenticação multifator (2FA), controle de acesso por função (RBAC), anonimização de IP por hash SHA-256, verificação de integridade de anexos, bucket privado com URLs assinadas de curta duração (5 minutos) e trilha de auditoria. Na ocorrência de incidente de segurança que possa acarretar risco ou dano relevante aos titulares, a comunicação à ANPD e aos titulares afetados será efetuada no prazo regulamentar de <strong>3 (três) dias úteis</strong>, nos termos da Resolução CD/ANPD nº 15/2024.</p>
+
+<h3>8. Encarregado pelo Tratamento de Dados Pessoais — DPO Titular e Substituto (Art. 41 e Res. CD/ANPD nº 18/2024)</h3>
+<p>Para dúvidas, exercício de direitos ou solicitação de informações sobre testes de balanceamento (LIA), contate nossos Encarregados:</p>
 <ul>
-  <li><strong>Consentimento do Titular (Art. 7º, I):</strong> Para ativação de cookies opcionais (funcionais, analíticos ou de marketing) e envio voluntário de mensagens iniciais.</li>
-  <li><strong>Cumprimento de Obrigação Legal ou Regulatória (Art. 7º, II):</strong> Para recebimento, validação e guarda comprobatória de requisições de direitos na Central LGPD (Art. 18) e apurações éticas no Canal de Denúncias.</li>
-  <li><strong>Execução de Contrato ou Procedimentos Preliminares (Art. 7º, V):</strong> Para atendimento de clientes, elaboração de propostas jurídicas e diligência prévia de conformidade de fornecedores.</li>
-  <li><strong>Exercício Regular de Direitos em Processo Judicial, Administrativo ou Arbitral (Art. 7º, VI e Art. 11, II, d):</strong> Na atuação contenciosa e consultiva própria da advocacia.</li>
-  <li><strong>Legítimo Interesse do Controlador (Art. 7º, IX e Art. 10):</strong> Para segurança cibernética do portal, prevenção a fraudes/spam e gestão de integridade corporativa, devidamente documentado em Avaliação de Legítimo Interesse (LIA).</li>
-</ul>
-
-<h3>4. Direitos do Titular, Oposição e Revisão de Decisões Automatizadas (Arts. 18, 19 e 20 da LGPD)</h3>
-<p>Você pode exercer gratuitamente, a qualquer momento, através da nossa <strong>Central de Proteção de Dados</strong>:</p>
-<ul>
-  <li><strong>Confirmação e Acesso (Art. 18, I e II; Art. 19):</strong> Obter declaração clara sobre a existência de tratamento e cópia integral dos dados (em formato simplificado imediato ou declaração completa em até 15 dias).</li>
-  <li><strong>Correção (Art. 18, III):</strong> Retificação de dados incompletos, inexatos ou desatualizados.</li>
-  <li><strong>Anonimização, Bloqueio ou Eliminação (Art. 18, IV e VI):</strong> Exclusão de dados desnecessários, excessivos ou tratados com base no consentimento.</li>
-  <li><strong>Portabilidade (Art. 18, V):</strong> Exportação dos seus dados em formato estruturado e interoperável (JSON/CSV).</li>
-  <li><strong>Informação sobre Compartilhamento e Revogação (Art. 18, VII, VIII e IX):</strong> Ciência das entidades com as quais houve uso compartilhado e revogação de consentimento a qualquer momento.</li>
-  <li><strong>Direito de Oposição (Art. 18, § 2º):</strong> Oposição a tratamento realizado com fundamento em uma das hipóteses de dispensa de consentimento, em caso de descumprimento ao disposto na LGPD.</li>
-  <li><strong>Revisão de Decisões Automatizadas (Art. 20):</strong> Direito de solicitar a revisão humana e explicação dos critérios utilizados em qualquer avaliação automatizada (como o cálculo do Índice de Conformidade de Fornecedores).</li>
-</ul>
-
-<h3>5. Proteção de Dados de Crianças e Adolescentes (Art. 14 da LGPD)</h3>
-<p>Este website e seus formulários digitais são direcionados exclusivamente a pessoas maiores de 18 (dezoito) anos. O escritório não coleta intencionalmente dados de menores de idade por meio do site. Na hipótese estrita de representação jurídica, cível, trabalhista ou previdenciária que envolva crianças ou adolescentes, o tratamento ocorre exclusivamente em seu melhor interesse e mediante termo de consentimento específico e em destaque assinado por pelo menos um dos pais ou representante legal (Art. 14, § 1º).</p>
-
-<h3>6. Compartilhamento com Operadores e Transferência Internacional de Dados (Arts. 33 a 36 e Resolução CD/ANPD nº 19/2024)</h3>
-<p>A Mascârello Haus não comercializa dados pessoais sob nenhuma hipótese. Para operação segura deste portal, utilizamos operadores de infraestrutura tecnológica homologados (<strong>Supabase Inc.</strong> para banco de dados criptografado, <strong>Vercel Inc.</strong> para hospedagem e mitigação DDoS e <strong>ApexCode</strong> para suporte técnico e engenharia de segurança). Quando o armazenamento em nuvem envolver processamento em data centers localizados no exterior (Estados Unidos ou União Europeia), a transferência internacional ampara-se nos <strong>Arts. 33 a 36 da LGPD</strong> e na <strong>Resolução CD/ANPD nº 19/2024</strong>, mediante adoção de Cláusulas-Padrão Contratuais, criptografia ponta a ponta (TLS 1.3 e AES-256) e certificações internacionais ISO/IEC 27001 e SOC 2 Type II.</p>
-
-<h3>7. Término do Tratamento, Prazos de Retenção e Descarte Seguro (Arts. 15 e 16 da LGPD)</h3>
-<p>Os dados pessoais são mantidos apenas pelo período necessário ao cumprimento de suas finalidades:</p>
-<ul>
-  <li><strong>Mensagens de Contato Institucional:</strong> 24 meses após a conclusão do atendimento inicial (caso não haja contratação de serviços jurídicos).</li>
-  <li><strong>Requisições da Central LGPD, Canal de Denúncias e Logs de Consentimento:</strong> 5 (cinco) anos para comprovação de cumprimento de obrigação legal e regulatória perante a ANPD (Art. 16, I).</li>
-  <li><strong>Contratos e Processos Jurídicos:</strong> Durante a vigência contratual acrescida dos prazos prescricionais legais aplicáveis (Art. 7º, VI e Art. 16, I).</li>
-</ul>
-<p>Encerrado o prazo de retenção, os dados são eliminados com segurança ou submetidos à anonimização irreversível.</p>
-
-<h3>8. Segurança da Informação e Comunicação de Incidentes (Arts. 46 a 49 e Resolução CD/ANPD nº 15/2024)</h3>
-<p>Adotamos controles técnicos de <em>Privacy by Design</em>: autenticação multifator (2FA), controle de acesso baseado em função (RBAC), anonimização de IP por hash SHA-256, inspeção binária de anexos contra malwares, armazenamento privado com URLs assinadas temporárias e trilha de auditoria imutável. Em caso de incidente de segurança que possa acarretar risco ou dano relevante aos titulares, a comunicação à ANPD e aos afetados será realizada no prazo regulamentar de <strong>3 (três) dias úteis</strong> (Resolução CD/ANPD nº 15/2024).</p>
-
-<h3>9. Encarregado pelo Tratamento de Dados Pessoais — DPO Titular e Substituto (Art. 41 e Resolução CD/ANPD nº 18/2024)</h3>
-<p>Para esclarecer dúvidas, consultar protocolos ou exercer seus direitos, contate nosso canal oficial de DPO:</p>
-<ul>
-  <li><strong>Encarregada Titular (DPO):</strong> Mirataira Haus — <a href="mailto:privacidade@mascarellohaus.adv.br">privacidade@mascarellohaus.adv.br</a> | WhatsApp: +55 (49) 98822-0982</li>
-  <li><strong>Encarregado Substituto (Ausências/Impedimentos — Res. ANPD nº 18/2024):</strong> Comitê de Privacidade e Compliance Mascârello Haus — <a href="mailto:dpo@mascarellohaus.com.br">dpo@mascarellohaus.com.br</a> | Tel: +55 (49) 3566-0066</li>
+  <li><strong>Encarregada Titular (DPO):</strong> ${LEGAL_CONFIG.dpo.titular.name} (${LEGAL_CONFIG.dpo.titular.oab}) — <a href="mailto:${LEGAL_CONFIG.dpo.titular.email}">${LEGAL_CONFIG.dpo.titular.email}</a> | WhatsApp: ${LEGAL_CONFIG.dpo.titular.phone}</li>
+  <li><strong>Encarregado Substituto (Ausências/Impedimentos — Res. CD/ANPD nº 18/2024):</strong> ${LEGAL_CONFIG.dpo.substitute.name} — <a href="mailto:${LEGAL_CONFIG.dpo.substitute.email}">${LEGAL_CONFIG.dpo.substitute.email}</a> | Tel: ${LEGAL_CONFIG.dpo.substitute.phone}</li>
 </ul>`;
 
-export const DEFAULT_TERMS_TEMPLATE_HTML = `<p><em>O presente termo regula o acesso e condições de uso do site https://mascarellohaus.adv.br/, bem como os serviços informativos e canais de conformidade oferecidos por meio da aplicação, estabelecendo os direitos e as obrigações dos usuários.</em></p>
+export const DEFAULT_TERMS_TEMPLATE_HTML = `<p><em>O presente termo regula o acesso e condições de uso do site ${LEGAL_CONFIG.company.websiteUrl}/, bem como os serviços informativos e canais de conformidade oferecidos por meio da aplicação, estabelecendo os direitos e as obrigações dos usuários. O uso do site implica ciência destes Termos.</em></p>
 
 <h3>1. QUEM SOMOS</h3>
-<p>Somos um escritório dedicado a atender às necessidades e riscos, em fomento da conformidade e boas práticas relacionadas à regulação do mercado, direcionado ao Compliance nas mais diversas áreas, em especial à Proteção de Dados Pessoais (LGPD). Por meio de equipe multidisciplinar, orienta e desenvolve estratégias que atendam aspectos regulamentares, de governança corporativa e de segurança da informação em respeito à metodologia aplicável a cada segmento. De maneira proativa também atua nas organizações da sociedade civil em projetos sociais e Advocacia Pro Bono.</p>
+<p>A <strong>${LEGAL_CONFIG.company.legalName}</strong> (CNPJ ${LEGAL_CONFIG.company.cnpj}) é dedicada a atender às necessidades e riscos jurídicos, com atuação estratégica em Compliance, Proteção de Dados Pessoais (LGPD), Direito Empresarial, Civil, Tributário, Trabalhista e Previdenciário.</p>
 
 <h3>2. TERMOS E DEFINIÇÕES</h3>
-<p><strong>Cookies e Armazenamento Local:</strong> Arquivos e chaves gerados no navegador ao acessar o site, classificados entre estritamente necessários (segurança e sessão) e opcionais (funcionais, analíticos e marketing), sempre sujeitos à escolha granular do titular.</p>
+<p><strong>Cookies e Armazenamento Local:</strong> Arquivos e chaves gerados no navegador ao acessar o site, classificados entre estritamente necessários (segurança e sessão) e opcionais (armazenamento funcional de rascunhos), sujeitos à escolha granular do titular.</p>
 <p><strong>Dados Pessoais:</strong> Qualquer informação relacionada a pessoa natural identificada ou identificável tratada nos termos da Lei nº 13.709/2018.</p>
 <p><strong>Usuário:</strong> Todas as pessoas físicas que utilizam ou visitam o site, maiores de 18 (dezoito) anos ou legalmente representadas nos termos do Art. 14 da LGPD.</p>
 
-<h3>3. UTILIZAÇÃO DE NOSSO SITE E REQUISITO ETÁRIO</h3>
-<p>O uso do site é regido por estes Termos Gerais e pelo Aviso de Privacidade. Ao submeter formulários na plataforma, o usuário declara possuir 18 (dezoito) anos completos ou atuar mediante representação legal comprovada. O escritório mantém histórico público de versões destes Termos e do Aviso de Privacidade para plena transparência (Art. 8º, § 2º da LGPD).</p>
+<h3>3. UTILIZAÇÃO DO SITE E REQUISITO ETÁRIO</h3>
+<p>O uso do site implica ciência destes Termos Gerais e do <a href="/central-de-protecao-de-dados/?aba=aviso">Aviso de Privacidade</a>. Este site e seus canais digitais são destinados a maiores de 18 (dezoito) anos. Ao submeter formulários na plataforma, o usuário declara possuir 18 anos completos ou atuar mediante representação legal comprovada. Mantemos histórico público de versões destes Termos e do Aviso de Privacidade para plena transparência (Art. 8º, § 2º da LGPD).</p>
 
 <h3>4. RESPONSABILIDADES DO USUÁRIO E SEGURANÇA CIBERNÉTICA</h3>
-<p>O usuário compromete-se a fornecer dados verdadeiros, completos e atualizados em todos os formulários, bem como a anexar documentos legítimos quando atuar como procurador ou representante legal de terceiro (Art. 18, § 3º da LGPD). É expressamente vedado utilizar o site para fins ilícitos, tentar burlar mecanismos de controle de acesso, enviar arquivos maliciosos ou realizar relatos sabidamente falsos de má-fé.</p>
+<p>O usuário compromete-se a fornecer dados verdadeiros, completos e atualizados em todos os formulários, bem como a anexar documentos legítimos quando atuar como procurador ou representante legal de terceiro (Art. 18, § 3º da LGPD). É vedado utilizar o site para fins ilícitos, tentar burlar controles de acesso, enviar arquivos maliciosos ou realizar relatos sabidamente falsos de má-fé.</p>
 
 <h3>5. PRIVACIDADE, DIREITOS DO TITULAR E CONSULTA DE PROTOCOLOS</h3>
 <p>O tratamento de dados pessoais segue rigorosamente a Lei Federal nº 13.709/2018 (LGPD), assegurando o exercício gratuito e facilitado de todos os direitos previstos nos Arts. 18, 19 e 20 através da Central de Proteção de Dados, incluindo o acompanhamento eletrônico por número de protocolo único.</p>
 
 <h3>6. PROPRIEDADE INTELECTUAL &amp; DIREITOS AUTORAIS</h3>
-<p>Todo o conteúdo deste website, marcas, logotipos, textos, artigos jurídicos e cartilhas educativas pertencem com exclusividade à Mascârello Haus Advocacia e Consultoria, sendo permitido o download gratuito das cartilhas para fins educativos e de conscientização interna, vedada a comercialização ou reprodução desautorizada.</p>
+<p>Todo o conteúdo deste website, marcas, logotipos, textos, artigos jurídicos e cartilhas educativas pertencem com exclusividade à ${LEGAL_CONFIG.company.tradeName}, sendo permitido o download gratuito das cartilhas para fins educativos e de conscientização interna, vedada a comercialização ou reprodução desautorizada.</p>
 
 <h3>7. DESENVOLVIMENTO TÉCNICO, SUPORTE E LGPD</h3>
-<p>A infraestrutura de software deste portal e seu painel de governança LGPD são desenvolvidos e mantidos pela <strong>ApexCode</strong> (<a href="https://www.apexcode.dev.br/" target="_blank" rel="noopener noreferrer">www.apexcode.dev.br</a> | <a href="mailto:contato@apexcode.dev.br">contato@apexcode.dev.br</a> | WhatsApp: <a href="https://wa.me/5549999281878" target="_blank" rel="noopener noreferrer">+55 49 99928-1878</a>), atuando como operadora tecnológica sob rígidos padrões de segurança da informação.</p>
+<p>A infraestrutura de software deste portal e seu painel de governança LGPD são desenvolvidos e mantidos pela <strong>${LEGAL_CONFIG.developer.name}</strong> (<a href="${LEGAL_CONFIG.developer.url}" target="_blank" rel="noopener noreferrer">www.apexcode.dev.br</a> | <a href="mailto:${LEGAL_CONFIG.developer.email}">${LEGAL_CONFIG.developer.email}</a> | <a href="${LEGAL_CONFIG.developer.whatsappUrl}" target="_blank" rel="noopener noreferrer">WhatsApp de Suporte Técnico</a>), atuando como operadora tecnológica sob rígidos padrões de segurança da informação.</p>
 
 <h3>8. LEI APLICÁVEL E FORO</h3>
-<p>Em eventuais controvérsias decorrentes destes Termos, buscar-se-á a resolução amigável e extrajudicial, inclusive perante o canal da Encarregada de Dados (DPO). Não sendo viável, fica eleito o Foro da Comarca de Videira/SC para dirimir qualquer litígio, ressalvadas as disposições legais aplicáveis.</p>
-<p><strong>Videira — Santa Catarina | Mascârello Haus Advocacia</strong></p>`;
+<p>Em eventuais controvérsias decorrentes destes Termos, buscar-se-á a resolução amigável e extrajudicial, inclusive perante o canal da Encarregada de Dados (DPO). Não sendo viável, fica eleito o Foro da ${LEGAL_CONFIG.company.forumCity} para dirimir qualquer litígio, ressalvado o foro do domicílio do consumidor, quando aplicável (CDC).</p>
+<p><strong>Videira — Santa Catarina | ${LEGAL_CONFIG.company.tradeName}</strong></p>`;
 
 export const DEFAULT_LEGAL_DOCUMENTS_CONFIG: LegalDocumentsConfig = {
   privacyPolicy: {
     title: 'Aviso de Privacidade & Tratamento de Dados',
     subtitle: 'Transparência & Conformidade Regulatória (Arts. 6º a 49 da LGPD)',
-    version: '2.2',
-    updatedAt: '2026-11-16',
+    version: LEGAL_CONFIG.documents.privacyNotice.version,
+    updatedAt: LEGAL_CONFIG.documents.privacyNotice.effectiveDate,
     customHtml: DEFAULT_PRIVACY_TEMPLATE_HTML,
   },
   termsOfUse: {
     title: 'Termos de Uso do Site Mascârello Haus',
     subtitle: 'Termos Gerais, Segurança e Condições de Uso',
-    version: '1.1',
-    updatedAt: '2026-11-16',
+    version: LEGAL_CONFIG.documents.termsOfUse.version,
+    updatedAt: LEGAL_CONFIG.documents.termsOfUse.effectiveDate,
     customHtml: DEFAULT_TERMS_TEMPLATE_HTML,
   },
   versionHistory: [
+    {
+      id: 'ver-priv-2.3',
+      docType: 'privacyPolicy',
+      version: '2.3',
+      updatedAt: '2026-11-17',
+      publishedBy: `${LEGAL_CONFIG.dpo.titular.name} (DPO — ${LEGAL_CONFIG.dpo.titular.oab})`,
+      changelog:
+        'Publicação integral do Aviso v2.3: identificação completa do controlador (CNPJ), tabela por canal de coleta com bases legais e retenção (Art. 9º), inclusão expressa do direito de petição à ANPD (Art. 18, § 1º), LIA documentado, prazos do Art. 19 (imediato e até 15 dias) e atualização da DPO Titular (OAB/SC 46.446) e Substituto.',
+      customHtml: DEFAULT_PRIVACY_TEMPLATE_HTML,
+    },
     {
       id: 'ver-priv-2.2',
       docType: 'privacyPolicy',
       version: '2.2',
       updatedAt: '2026-11-16',
-      publishedBy: 'Mirataira Haus (DPO)',
+      publishedBy: `${LEGAL_CONFIG.dpo.titular.name} (DPO)`,
       changelog:
-        'Adequação integral às Resoluções CD/ANPD nº 15/2024 (Incidentes em 3 dias úteis), nº 18/2024 (Encarregado Substituto) e nº 19/2024 (Transferência Internacional), inclusão expressa dos Arts. 14, 15, 16, 18 § 2º e 20 da LGPD.',
+        'Adequação às Resoluções CD/ANPD nº 15/2024, nº 18/2024 e nº 19/2024 e inclusão expressa dos Arts. 14, 15, 16, 18 § 2º e 20 da LGPD.',
       customHtml: DEFAULT_PRIVACY_TEMPLATE_HTML,
     },
     {
@@ -655,7 +615,7 @@ export const DEFAULT_LEGAL_DOCUMENTS_CONFIG: LegalDocumentsConfig = {
       docType: 'privacyPolicy',
       version: '2.1',
       updatedAt: '2026-10-22',
-      publishedBy: 'Mirataira Haus (DPO)',
+      publishedBy: `${LEGAL_CONFIG.dpo.titular.name} (DPO)`,
       changelog: 'Versão inaugural do portal unificado com tabela de transparência de cookies e canal do DPO.',
       customHtml: DEFAULT_PRIVACY_TEMPLATE_HTML,
     },
@@ -663,9 +623,10 @@ export const DEFAULT_LEGAL_DOCUMENTS_CONFIG: LegalDocumentsConfig = {
       id: 'ver-terms-1.1',
       docType: 'termsOfUse',
       version: '1.1',
-      updatedAt: '2026-11-16',
-      publishedBy: 'Mirataira Haus (DPO)',
-      changelog: 'Inclusão de requisito etário expresso (Art. 14 LGPD), consulta eletrônica de protocolos e identificação de suporte técnico.',
+      updatedAt: '2026-11-17',
+      publishedBy: `${LEGAL_CONFIG.dpo.titular.name} (DPO — ${LEGAL_CONFIG.dpo.titular.oab})`,
+      changelog:
+        'Atualização para "ciência destes Termos", unificação da faixa etária para maiores de 18 anos e inclusão expressa da ressalva do foro do domicílio do consumidor (CDC).',
       customHtml: DEFAULT_TERMS_TEMPLATE_HTML,
     },
   ],

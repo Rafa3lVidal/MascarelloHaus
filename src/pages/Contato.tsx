@@ -19,6 +19,7 @@ import SEO from '../components/SEO';
 import FileUploader from '../components/FileUploader';
 import SecurityShield, { createInitialSecurityState } from '../components/SecurityShield';
 import { supabase } from '../lib/supabase';
+import { LEGAL_CONFIG } from '../config/legal';
 import {
   formatPhone,
   isValidEmail,
@@ -83,20 +84,29 @@ export const Contato: React.FC = () => {
       return;
     }
 
-    if (!isValidEmail(cleanEmail)) {
+    const hasEmail = cleanEmail.length > 0;
+    const hasPhone = cleanPhone.replace(/\D/g, '').length > 0;
+
+    if (!hasEmail && !hasPhone) {
+      setErrorMessage('Por favor, informe pelo menos um meio de contato (e-mail ou telefone).');
+      setStatus('error');
+      return;
+    }
+
+    if (hasEmail && !isValidEmail(cleanEmail)) {
       setErrorMessage('Por favor, informe um endereço de e-mail válido.');
       setStatus('error');
       return;
     }
 
-    if (!isValidPhone(cleanPhone)) {
+    if (hasPhone && !isValidPhone(cleanPhone)) {
       setErrorMessage('Por favor, informe um telefone válido com DDD (ex: (49) 99999-9999).');
       setStatus('error');
       return;
     }
 
     if (!formData.privacyAccepted) {
-      setErrorMessage('Você precisa concordar com a Política de Privacidade para enviar a mensagem.');
+      setErrorMessage('Confirme a ciência do Aviso de Privacidade para enviar a mensagem.');
       setStatus('error');
       return;
     }
@@ -146,7 +156,11 @@ export const Contato: React.FC = () => {
 
       if (error) throw error;
 
-      await recordFormConsent('contact_form_privacy_policy', cleanEmail);
+      await recordFormConsent(
+        'contact_form_notice_ack',
+        cleanEmail || cleanPhone,
+        LEGAL_CONFIG.documents.privacyNotice.version
+      );
       recordClientSubmission('contato');
 
       setProtocol(generatedProtocol);
@@ -364,7 +378,7 @@ export const Contato: React.FC = () => {
                     <div className="form-row-2">
                       <div className="form-group">
                         <label htmlFor="contato-email" className="form-label">
-                          E-mail <span className="required">*</span>
+                          E-mail <span className="optional-tag">(informe e-mail ou telefone)</span>
                         </label>
                         <input
                           id="contato-email"
@@ -372,7 +386,6 @@ export const Contato: React.FC = () => {
                           type="email"
                           className="form-control"
                           placeholder="seu@email.com.br"
-                          required
                           maxLength={254}
                           autoComplete="email"
                           value={formData.email}
@@ -382,7 +395,7 @@ export const Contato: React.FC = () => {
 
                       <div className="form-group">
                         <label htmlFor="contato-telefone" className="form-label">
-                          Telefone / WhatsApp <span className="required">*</span>
+                          Telefone / WhatsApp <span className="optional-tag">(informe e-mail ou telefone)</span>
                         </label>
                         <input
                           id="contato-telefone"
@@ -391,7 +404,6 @@ export const Contato: React.FC = () => {
                           inputMode="tel"
                           className="form-control"
                           placeholder="(49) 99999-9999"
-                          required
                           autoComplete="tel"
                           value={formData.phone}
                           onChange={(e) =>
@@ -462,13 +474,15 @@ export const Contato: React.FC = () => {
                           }
                         />
                         <span>
-                          Declaro possuir mais de 18 anos (ou representação legal nos termos do Art. 14 da LGPD), que li e concordo com o{' '}
-                          <Link to="/central-de-protecao-de-dados/?aba=privacidade">
+                          Declaro ter lido o{' '}
+                          <Link to="/central-de-protecao-de-dados/?aba=aviso">
                             Aviso de Privacidade
-                          </Link>{' '}
-                          e autorizo o tratamento dos meus dados para retorno do contato (Lei nº 13.709/2018). <strong className="required">*</strong>
+                          </Link>. <strong className="required">*</strong>
                         </span>
                       </label>
+                      <p style={{ fontSize: '0.82rem', color: '#475569', marginTop: '6px', marginBottom: 0, lineHeight: 1.5 }}>
+                        Seus dados serão usados para responder ao seu contato, com base no Art. 7º, V da LGPD. {LEGAL_CONFIG.security.ageNotice}
+                      </p>
                     </div>
 
                     <SecurityShield security={security} onChange={setSecurity} variant="light" />
@@ -489,7 +503,7 @@ export const Contato: React.FC = () => {
 
                     <div className="form-security-footnote">
                       <ShieldCheck size={15} />
-                      <span>Ambiente protegido com verificação antivírus de anexos e criptografia ponta a ponta.</span>
+                      <span>Ambiente protegido com verificação de integridade de anexos. {LEGAL_CONFIG.security.encryptionNotice}</span>
                     </div>
                   </form>
                 </>

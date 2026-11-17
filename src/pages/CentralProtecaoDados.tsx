@@ -41,6 +41,9 @@ import {
   LegalDocumentsConfig,
   LgpdGovernanceConfig,
 } from '../lib/lgpdConfig';
+import { LEGAL_CONFIG } from '../config/legal';
+import { COOKIE_INVENTORY } from '../config/cookies';
+import { useFunctionalConsent } from '../hooks/useFunctionalConsent';
 import {
   sanitizeText,
   generateProtocol,
@@ -166,14 +169,27 @@ const OFFICIAL_CARTILHAS = [
 
 const DRAFT_KEY_LGPD = 'mh_draft_central_lgpd';
 
+const normalizeTabParam = (
+  raw: string | null
+): 'requisicao' | 'protocolo' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas' => {
+  if (raw === 'aviso' || raw === 'privacidade') return 'privacidade';
+  if (raw === 'requisicao' || raw === 'protocolo' || raw === 'direitos' || raw === 'termos' || raw === 'cartilhas') {
+    return raw;
+  }
+  return 'requisicao';
+};
+
 export const CentralProtecaoDados: React.FC = () => {
+  const { hasFunctionalConsent } = useFunctionalConsent();
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialTab = searchParams.get('aba') || 'requisicao';
-  const [activeTab, setActiveTab] = useState<'requisicao' | 'protocolo' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas'>(
-    ['requisicao', 'protocolo', 'direitos', 'privacidade', 'termos', 'cartilhas'].includes(initialTab)
-      ? (initialTab as any)
-      : 'requisicao'
+  const [activeTab, setActiveTab] = useState<'requisicao' | 'protocolo' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas'>(() =>
+    normalizeTabParam(searchParams.get('aba'))
   );
+
+  useEffect(() => {
+    const next = normalizeTabParam(searchParams.get('aba'));
+    setActiveTab(next);
+  }, [searchParams]);
 
   // Protocol Lookup State
   const [lookupProtocol, setLookupProtocol] = useState('');
@@ -237,12 +253,12 @@ export const CentralProtecaoDados: React.FC = () => {
     };
   }, []);
 
-  // Restore draft (respecting LGPD functional cookie preference)
+  // Restore draft (exclusivamente com consentimento funcional ativo)
   useEffect(() => {
+    if (!hasFunctionalConsent) return;
     try {
       const saved =
-        sessionStorage.getItem(DRAFT_KEY_LGPD) ||
-        (isFunctionalCookiesAllowed() ? localStorage.getItem(DRAFT_KEY_LGPD) : null);
+        localStorage.getItem(DRAFT_KEY_LGPD) || sessionStorage.getItem(DRAFT_KEY_LGPD);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.formData) setFormData((prev) => ({ ...prev, ...parsed.formData }));
@@ -251,26 +267,27 @@ export const CentralProtecaoDados: React.FC = () => {
     } catch {
       // Ignore
     }
-  }, []);
+  }, [hasFunctionalConsent]);
 
-  // Auto-save draft (sessionStorage always, localStorage only if functional cookies allowed)
+  // Auto-save draft (exclusivamente quando consentimento funcional está ativo)
   useEffect(() => {
     if (status === 'success') return;
+    if (!hasFunctionalConsent) {
+      sessionStorage.removeItem(DRAFT_KEY_LGPD);
+      localStorage.removeItem(DRAFT_KEY_LGPD);
+      setLastSavedTime(null);
+      return;
+    }
     try {
       const payload = JSON.stringify({ formData, attachments, savedAt: new Date().toISOString() });
-      sessionStorage.setItem(DRAFT_KEY_LGPD, payload);
-      if (isFunctionalCookiesAllowed()) {
-        localStorage.setItem(DRAFT_KEY_LGPD, payload);
-      } else {
-        localStorage.removeItem(DRAFT_KEY_LGPD);
-      }
+      localStorage.setItem(DRAFT_KEY_LGPD, payload);
       setLastSavedTime(
         new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
       );
     } catch {
       // Ignore quota
     }
-  }, [formData, attachments, status]);
+  }, [formData, attachments, status, hasFunctionalConsent]);
 
   const switchTab = (tab: 'requisicao' | 'protocolo' | 'direitos' | 'privacidade' | 'termos' | 'cartilhas') => {
     setActiveTab(tab);
@@ -409,7 +426,11 @@ export const CentralProtecaoDados: React.FC = () => {
 
       if (error) throw error;
 
-      await recordFormConsent('lgpd_data_subject_request', cleanContact);
+      await recordFormConsent(
+        'lgpd_data_subject_notice_ack',
+        cleanContact,
+        LEGAL_CONFIG.documents.privacyNotice.version
+      );
       recordClientSubmission('lgpd_central');
 
       saveLocalProtocolReceipt({
@@ -570,10 +591,10 @@ export const CentralProtecaoDados: React.FC = () => {
                   Prazo Legal de Resposta
                 </span>
                 <strong style={{ display: 'block', color: '#ffffff', fontSize: '1rem', marginTop: '2px' }}>
-                  Até {governanceConfig.responseDeadlineDays} dias úteis
+                  Até {governanceConfig.responseDeadlineDays} dias, contados do requerimento (Art. 19, II)
                 </strong>
                 <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.82rem' }}>
-                  Conforme Art. 19, II da Lei 13.709/2018
+                  Formato simplificado: imediatamente (Art. 19, I)
                 </span>
               </div>
             </div>
@@ -779,7 +800,7 @@ export const CentralProtecaoDados: React.FC = () => {
                     boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
                   }}
                 >
-                  {lastSavedTime && (
+                  {hasFunctionalConsent && lastSavedTime && (
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 14px', marginBottom: '24px', fontSize: '0.85rem', color: '#64748b' }}>
                       <span>✓ Rascunho salvo automaticamente às {lastSavedTime}</span>
                       <button
@@ -1001,7 +1022,7 @@ export const CentralProtecaoDados: React.FC = () => {
                       <FileUploader
                         id="wpforms-1764-field_14"
                         label="Gostaria de anexar documentos para embasar sua solicitação?"
-                        description="Anexe comprovantes de identidade, procuração (em caso de representante legal) ou documentos pertinentes (PDF, DOCX, JPG, PNG, até 3 arquivos de 15MB cada). O upload é realizado imediatamente em nuvem criptografada."
+                        description="Anexe comprovantes de identidade, procuração (em caso de representante legal) ou documentos pertinentes (PDF, DOC, DOCX, JPG, PNG, até 3 arquivos de 15MB cada). O upload é realizado imediatamente em armazenamento privado seguro."
                         attachments={attachments}
                         onAttachmentsChange={setAttachments}
                         autoUpload={true}
@@ -1009,12 +1030,12 @@ export const CentralProtecaoDados: React.FC = () => {
                         fieldKey="documentos_comprobatorios"
                         maxFiles={3}
                         maxSizeMB={15}
-                        allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'zip']}
+                        allowedExtensions={['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png']}
                         variant="light"
                       />
                     </div>
 
-                    {/* Termos de Privacidade */}
+                    {/* Ciência do Aviso de Privacidade */}
                     <div style={{ marginBottom: '26px', padding: '16px 18px', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                       <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer' }}>
                         <input
@@ -1025,17 +1046,20 @@ export const CentralProtecaoDados: React.FC = () => {
                           style={{ marginTop: '3px', accentColor: '#0d3732' }}
                         />
                         <span style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.6 }}>
-                          Declaro que as informações prestadas são verdadeiras e estou ciente de que os dados aqui fornecidos serão utilizados exclusivamente para atendimento e comprovação desta requisição, conforme previsto no{' '}
+                          Declaro ter lido o{' '}
                           <button
                             type="button"
                             onClick={() => switchTab('privacidade')}
                             style={{ background: 'none', border: 'none', color: '#0d3732', textDecoration: 'underline', fontWeight: 600, cursor: 'pointer', padding: 0 }}
                           >
                             Aviso de Privacidade
-                          </button>
-                          . <span style={{ color: '#cbab7a' }}>*</span>
+                          </button>{' '}
+                          e que as informações prestadas são verdadeiras. <span style={{ color: '#cbab7a' }}>*</span>
                         </span>
                       </label>
+                      <p style={{ fontSize: '0.82rem', color: '#475569', marginTop: '8px', marginBottom: 0, lineHeight: 1.5 }}>
+                        Os dados fornecidos serão tratados exclusivamente para atendimento e comprovação desta requisição, com base no Art. 7º, II da LGPD (Art. 18). {LEGAL_CONFIG.security.ageNotice}
+                      </p>
                     </div>
 
                     <SecurityShield security={security} onChange={setSecurity} variant="light" />
@@ -1385,23 +1409,23 @@ export const CentralProtecaoDados: React.FC = () => {
                       </div>
                       <div>
                         <strong style={{ display: 'block', fontSize: '1.05rem', color: '#ffffff' }}>
-                          {governanceConfig.substituteDpoName || 'Comitê de Privacidade Mascârello Haus'}
+                          {governanceConfig.substituteDpoName || LEGAL_CONFIG.dpo.substitute.name}
                         </strong>
                         <span style={{ fontSize: '0.82rem', color: '#cbab7a' }}>
-                          {governanceConfig.substituteDpoOab || 'Encarregado Substituto (Ausências/Impedimentos)'}
+                          {governanceConfig.substituteDpoOab || LEGAL_CONFIG.dpo.substitute.role}
                         </span>
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.92)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <Mail size={15} style={{ color: '#cbab7a' }} />
-                        <a href={`mailto:${governanceConfig.substituteDpoEmail || 'dpo@mascarellohaus.com.br'}`} style={{ color: '#ffffff', textDecoration: 'underline' }}>
-                          {governanceConfig.substituteDpoEmail || 'dpo@mascarellohaus.com.br'}
+                        <a href={`mailto:${governanceConfig.substituteDpoEmail || LEGAL_CONFIG.dpo.substitute.email}`} style={{ color: '#ffffff', textDecoration: 'underline' }}>
+                          {governanceConfig.substituteDpoEmail || LEGAL_CONFIG.dpo.substitute.email}
                         </a>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <Phone size={15} style={{ color: '#cbab7a' }} />
-                        <span>{governanceConfig.substituteDpoPhone || '+55 (49) 3566-0066'}</span>
+                        <span>{governanceConfig.substituteDpoPhone || LEGAL_CONFIG.dpo.substitute.phone}</span>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <Shield size={15} style={{ color: '#cbab7a' }} />
@@ -1579,20 +1603,8 @@ export const CentralProtecaoDados: React.FC = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        { name: 'lgpd_cookie_preferences', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Armazena as preferências granulares de consentimento de cookies do titular.', ret: '12 meses' },
-                        { name: 'lgpd_cookie_consent', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Registro simplificado do estado de consentimento para controle do banner.', ret: '12 meses' },
-                        { name: 'mh_sec_seed', cat: 'Necessário', prov: 'Mascârello Haus (sessionStorage)', desc: 'Semente criptográfica efêmera (SHA-256) para proteção anti-abuso sem coleta de IP real.', ret: 'Sessão' },
-                        { name: 'mh_rl_contato, mh_rl_lgpd_central, mh_rl_canal_denuncias, mh_rl_questionario_conformidade', cat: 'Necessário', prov: 'Mascârello Haus (localStorage)', desc: 'Controle de limite de envios (Rate Limiting) contra spam e ataques de força bruta.', ret: '10 a 15 min' },
-                        { name: 'sb-iwzimemdxchmcrvlyhxg-auth-token', cat: 'Necessário', prov: 'Supabase Inc. (localStorage)', desc: 'Autenticação criptografada restrita ao painel administrativo institucional.', ret: 'Sessão admin' },
-                        { name: '_vercel_jwt, __vercel_live_token', cat: 'Necessário', prov: 'Vercel Inc. (HTTP Cookie)', desc: 'Roteamento seguro na borda (Edge Network) e proteção contra ataques DDoS.', ret: 'Sessão' },
-                        { name: 'mh_draft_questionario_conformidade_v2, mh_form_state_questionario_conformidade_v2', cat: 'Funcional', prov: 'Mascârello Haus (Storage Local)', desc: 'Preserva o rascunho das 6 etapas do Questionário de Conformidade para Fornecedores.', ret: 'Sessão / 7 dias' },
-                        { name: 'mh_draft_central_lgpd', cat: 'Funcional', prov: 'Mascârello Haus (localStorage)', desc: 'Preserva temporariamente o rascunho da Requisição de Direitos do Titular até o envio.', ret: 'Até o envio' },
-                        { name: 'mh_draft_canal_denuncias', cat: 'Funcional', prov: 'Mascârello Haus (localStorage)', desc: 'Salva localmente o rascunho do Canal de Denúncias quando ativado pelo próprio usuário.', ret: '7 dias / envio' },
-                        { name: 'NID, CONSENT (Google Maps)', cat: 'Funcional', prov: 'Google LLC (Terceiro)', desc: 'Renderização dos mapas interativos das unidades de Videira/SC e Caçador/SC na página de Contato.', ret: '6 meses' },
-                        { name: '_ga, _ga_*', cat: 'Analítico', prov: 'Google Analytics (IP anonimizado)', desc: 'Métricas estatísticas agregadas de audiência (ativado apenas mediante consentimento).', ret: '2 anos' },
-                      ].map((row, i) => (
-                        <tr key={i} style={{ borderBottom: '1px solid #f1f5f9', backgroundColor: i % 2 === 0 ? '#ffffff' : '#fcfcfd' }}>
+                      {COOKIE_INVENTORY.map((row, i) => (
+                        <tr key={row.id} style={{ borderBottom: '1px solid #f1f5f9', backgroundColor: i % 2 === 0 ? '#ffffff' : '#fcfcfd' }}>
                           <td style={{ padding: '10px 14px', fontFamily: 'monospace', fontWeight: 600, color: '#0d3732', fontSize: '0.78rem', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{row.name}</td>
                           <td style={{ padding: '10px 14px' }}>
                             <span style={{
@@ -1601,15 +1613,15 @@ export const CentralProtecaoDados: React.FC = () => {
                               borderRadius: '999px',
                               fontSize: '0.73rem',
                               fontWeight: 700,
-                              backgroundColor: row.cat === 'Necessário' ? 'rgba(13, 55, 50, 0.1)' : 'rgba(203, 171, 122, 0.2)',
-                              color: row.cat === 'Necessário' ? '#0d3732' : '#856404'
+                              backgroundColor: row.category === 'Necessário' ? 'rgba(13, 55, 50, 0.1)' : 'rgba(203, 171, 122, 0.2)',
+                              color: row.category === 'Necessário' ? '#0d3732' : '#856404'
                             }}>
-                              {row.cat}
+                              {row.category}
                             </span>
                           </td>
-                          <td style={{ padding: '10px 14px', color: '#475569', wordBreak: 'break-word' }}>{row.prov}</td>
-                          <td style={{ padding: '10px 14px', color: '#334155', wordBreak: 'break-word' }}>{row.desc}</td>
-                          <td style={{ padding: '10px 14px', fontWeight: 600, color: '#0d3732', wordBreak: 'break-word' }}>{row.ret}</td>
+                          <td style={{ padding: '10px 14px', color: '#475569', wordBreak: 'break-word' }}>{row.provider}</td>
+                          <td style={{ padding: '10px 14px', color: '#334155', wordBreak: 'break-word' }}>{row.purpose}</td>
+                          <td style={{ padding: '10px 14px', fontWeight: 600, color: '#0d3732', wordBreak: 'break-word' }}>{row.retention}</td>
                         </tr>
                       ))}
                     </tbody>

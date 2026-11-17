@@ -208,7 +208,7 @@ export default function SecurityShield({
               }}
             >
               <Lock size={11} />
-              <span>Conexão criptografada ponta a ponta • Protegido conforme a LGPD</span>
+              <span>Conexão protegida por encriptação. • Protegido conforme a LGPD</span>
             </div>
           </div>
         </button>

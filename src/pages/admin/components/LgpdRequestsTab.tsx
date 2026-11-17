@@ -375,8 +375,11 @@ export const LgpdRequestsTab: React.FC<LgpdRequestsTabProps> = ({
 
   const getAttachments = (req: LgpdRequestRecord) => {
     const list = Array.isArray(req.attachments_json) ? [...req.attachments_json] : [];
-    if (req.attachment_storage_path && !list.some((a) => a.url === req.attachment_storage_path)) {
-      list.unshift({ name: 'Documento anexo', url: req.attachment_storage_path });
+    if (
+      req.attachment_storage_path &&
+      !list.some((a) => a.path === req.attachment_storage_path || a.url === req.attachment_storage_path)
+    ) {
+      list.unshift({ name: 'Documento anexo', path: req.attachment_storage_path });
     }
     return list;
   };

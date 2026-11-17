@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, Mail } from 'lucide-react';
+import { LEGAL_CONFIG } from '../config/legal';
 
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -83,12 +84,12 @@ export const Header: React.FC = () => {
               );
             })}
             <a
-              href="https://api.whatsapp.com/send?phone=554988220982"
+              href={LEGAL_CONFIG.contacts.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="nav-btn-wpp"
             >
-              <i className="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp 49 98822-0982
+              <i className="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp {LEGAL_CONFIG.contacts.whatsappShortDisplay}
             </a>
           </nav>
 
@@ -125,13 +126,13 @@ export const Header: React.FC = () => {
               );
             })}
             <a
-              href="https://api.whatsapp.com/send?phone=554988220982"
+              href={LEGAL_CONFIG.contacts.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mobile-nav-link wpp"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <i className="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp 49 98822-0982
+              <i className="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp {LEGAL_CONFIG.contacts.whatsappShortDisplay}
             </a>
           </nav>
         </div>

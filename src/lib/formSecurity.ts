@@ -1,8 +1,9 @@
 import { supabase } from './supabase';
+import { LEGAL_CONFIG } from '../config/legal';
 
 export interface UploadedAttachment {
   name: string;
-  url: string;
+  url?: string;
   path: string;
   size: number;
   type: string;
@@ -37,7 +38,6 @@ export const DEFAULT_ALLOWED_EXTENSIONS = [
   'ogg',
   'mp4',
   'webm',
-  'zip',
 ];
 
 const EXTENSION_TO_MIMES: Record<string, string[]> = {
@@ -53,7 +53,6 @@ const EXTENSION_TO_MIMES: Record<string, string[]> = {
   ogg: ['audio/ogg'],
   mp4: ['video/mp4', 'audio/mp4'],
   webm: ['video/webm'],
-  zip: ['application/zip', 'application/x-zip-compressed'],
 };
 
 const DANGEROUS_EXTENSIONS = [
@@ -641,13 +640,8 @@ export async function uploadFormFiles(
       throw new Error(`Falha ao enviar o arquivo "${file.name}": ${error.message}`);
     }
 
-    const { data: publicUrlData } = supabase.storage
-      .from('form-attachments')
-      .getPublicUrl(storagePath);
-
     uploaded.push({
       name: sanitizeText(file.name, 180),
-      url: publicUrlData.publicUrl,
       path: storagePath,
       size: file.size,
       type: contentType,
@@ -665,7 +659,11 @@ export async function uploadFormFiles(
 /**
  * Records proof of LGPD consent in `public.consent_records`
  */
-export async function recordFormConsent(consentType: string, userIdentifier?: string): Promise<void> {
+export async function recordFormConsent(
+  consentType: string,
+  userIdentifier?: string,
+  policyVersion: string = LEGAL_CONFIG.documents.privacyNotice.version
+): Promise<void> {
   try {
     const ipHash = await getAnonymousIpHash();
     await supabase.from('consent_records').insert([
@@ -673,7 +671,7 @@ export async function recordFormConsent(consentType: string, userIdentifier?: st
         consent_type: consentType,
         granted: true,
         user_identifier: userIdentifier ? sanitizeText(userIdentifier, 120) : 'anonymous',
-        policy_version: '2026.1',
+        policy_version: policyVersion,
         ip_hash: ipHash,
         user_agent: typeof navigator !== 'undefined' ? navigator.userAgent.slice(0, 250) : 'web',
       },
@@ -684,19 +682,16 @@ export async function recordFormConsent(consentType: string, userIdentifier?: st
 }
 
 /**
- * Form Draft Persistence (saves to sessionStorage or localStorage when lgpd_cookie_preferences allows functional)
+ * Form Draft Persistence (exclusivo quando consentimento funcional está ativo em lgpd_cookie_preferences)
  */
 export function saveFormDraft<T>(formKey: string, data: T): void {
   try {
-    const payload = JSON.stringify({ updatedAt: Date.now(), data });
-    sessionStorage.setItem(`mh_draft_${formKey}`, payload);
-    const consentRaw = localStorage.getItem('lgpd_cookie_preferences') || localStorage.getItem('mh_cookie_consent');
-    if (consentRaw) {
-      const consent = JSON.parse(consentRaw);
-      if (consent?.functional) {
-        localStorage.setItem(`mh_form_state_${formKey}`, payload);
-      }
+    if (!isFunctionalCookiesAllowed()) {
+      clearFormDraft(formKey);
+      return;
     }
+    const payload = JSON.stringify({ updatedAt: Date.now(), data });
+    localStorage.setItem(`mh_form_state_${formKey}`, payload);
   } catch {
     // Ignore quota errors
   }
@@ -704,9 +699,12 @@ export function saveFormDraft<T>(formKey: string, data: T): void {
 
 export function loadFormDraft<T>(formKey: string): T | null {
   try {
-    const sessionRaw = sessionStorage.getItem(`mh_draft_${formKey}`);
+    if (!isFunctionalCookiesAllowed()) {
+      return null;
+    }
     const localRaw = localStorage.getItem(`mh_form_state_${formKey}`);
-    const raw = sessionRaw || localRaw;
+    const sessionRaw = sessionStorage.getItem(`mh_draft_${formKey}`);
+    const raw = localRaw || sessionRaw;
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     if (parsed?.updatedAt && Date.now() - parsed.updatedAt < 7 * 24 * 60 * 60 * 1000) {
@@ -984,32 +982,26 @@ export async function consultProtocolStatus(
  * and opens it in a new browser tab.
  */
 export async function openSecureAttachment(att: { url?: string; path?: string; name?: string }): Promise<void> {
-  try {
-    let storagePath = att.path || '';
-    if (!storagePath && att.url) {
-      const marker = '/form-attachments/';
-      const idx = att.url.indexOf(marker);
-      if (idx !== -1) {
-        storagePath = decodeURIComponent(att.url.slice(idx + marker.length).split('?')[0]);
-      }
-    }
-
-    if (storagePath) {
-      const { data, error } = await supabase.storage
-        .from('form-attachments')
-        .createSignedUrl(storagePath, 3600);
-      if (!error && data?.signedUrl) {
-        window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
-        return;
-      }
-    }
-
-    if (att.url) {
-      window.open(att.url, '_blank', 'noopener,noreferrer');
-    }
-  } catch {
-    if (att.url) {
-      window.open(att.url, '_blank', 'noopener,noreferrer');
+  let storagePath = att.path || '';
+  if (!storagePath && att.url) {
+    const marker = '/form-attachments/';
+    const idx = att.url.indexOf(marker);
+    if (idx !== -1) {
+      storagePath = decodeURIComponent(att.url.slice(idx + marker.length).split('?')[0]);
     }
   }
+
+  if (!storagePath) {
+    throw new Error('Caminho do anexo não encontrado para geração de URL assinada.');
+  }
+
+  const { data, error } = await supabase.storage
+    .from('form-attachments')
+    .createSignedUrl(storagePath, 300);
+
+  if (error || !data?.signedUrl) {
+    throw new Error(error?.message || 'Não foi possível gerar a URL assinada do anexo.');
+  }
+
+  window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
 }

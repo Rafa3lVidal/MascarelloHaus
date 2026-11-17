@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import {
   AlertTriangle,
@@ -37,6 +38,8 @@ import {
   consultProtocolStatus,
   ProtocolStatusResult,
 } from '../lib/formSecurity';
+import { LEGAL_CONFIG } from '../config/legal';
+import { useFunctionalConsent } from '../hooks/useFunctionalConsent';
 
 interface DenunciaFormData {
   fatos: string[];
@@ -81,6 +84,7 @@ const FATOS_OPCOES = [
 const DRAFT_STORAGE_KEY = 'mh_draft_canal_denuncias';
 
 export const CanalDenuncias: React.FC = () => {
+  const { hasFunctionalConsent } = useFunctionalConsent();
   const [activeView, setActiveView] = useState<'form' | 'lookup'>('form');
   const [lookupProto, setLookupProto] = useState('');
   const [lookupLoading, setLookupLoading] = useState(false);
@@ -88,9 +92,9 @@ export const CanalDenuncias: React.FC = () => {
 
   const [formData, setFormData] = useState<DenunciaFormData>(() => {
     try {
+      if (!isFunctionalCookiesAllowed()) return INITIAL_FORM_DATA;
       const saved =
-        sessionStorage.getItem(DRAFT_STORAGE_KEY) ||
-        (isFunctionalCookiesAllowed() ? localStorage.getItem(DRAFT_STORAGE_KEY) : null);
+        localStorage.getItem(DRAFT_STORAGE_KEY) || sessionStorage.getItem(DRAFT_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         return { ...INITIAL_FORM_DATA, ...parsed.formData };
@@ -103,9 +107,9 @@ export const CanalDenuncias: React.FC = () => {
 
   const [attachments, setAttachments] = useState<UploadedAttachment[]>(() => {
     try {
+      if (!isFunctionalCookiesAllowed()) return [];
       const saved =
-        sessionStorage.getItem(DRAFT_STORAGE_KEY) ||
-        (isFunctionalCookiesAllowed() ? localStorage.getItem(DRAFT_STORAGE_KEY) : null);
+        localStorage.getItem(DRAFT_STORAGE_KEY) || sessionStorage.getItem(DRAFT_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         return Array.isArray(parsed.attachments) ? parsed.attachments : [];
@@ -123,21 +127,22 @@ export const CanalDenuncias: React.FC = () => {
   const [protocol, setProtocol] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Auto-save draft on changes (respecting LGPD functional cookie preference)
+  // Auto-save draft on changes (exclusivamente com consentimento funcional ativo)
   useEffect(() => {
     if (protocol) return;
+    if (!hasFunctionalConsent) {
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+      localStorage.removeItem(DRAFT_STORAGE_KEY);
+      setLastSavedAt(null);
+      return;
+    }
     try {
       const payload = JSON.stringify({
         formData,
         attachments,
         updatedAt: new Date().toISOString(),
       });
-      sessionStorage.setItem(DRAFT_STORAGE_KEY, payload);
-      if (isFunctionalCookiesAllowed()) {
-        localStorage.setItem(DRAFT_STORAGE_KEY, payload);
-      } else {
-        localStorage.removeItem(DRAFT_STORAGE_KEY);
-      }
+      localStorage.setItem(DRAFT_STORAGE_KEY, payload);
       const now = new Date();
       setLastSavedAt(
         now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
@@ -145,7 +150,7 @@ export const CanalDenuncias: React.FC = () => {
     } catch {
       // Ignore quota errors
     }
-  }, [formData, attachments, protocol]);
+  }, [formData, attachments, protocol, hasFunctionalConsent]);
 
   const handleClearDraft = () => {
     if (window.confirm('Deseja limpar todo o rascunho deste relato?')) {
@@ -282,8 +287,9 @@ export const CanalDenuncias: React.FC = () => {
       if (error) throw error;
 
       await recordFormConsent(
-        'whistleblower_report',
-        formData.naoQuerDivulgarDados ? 'anon' : cleanDenunciante
+        'whistleblower_notice_ack',
+        formData.naoQuerDivulgarDados ? 'anon' : cleanDenunciante,
+        LEGAL_CONFIG.documents.privacyNotice.version
       );
       recordClientSubmission('denuncias');
 
@@ -548,8 +554,8 @@ export const CanalDenuncias: React.FC = () => {
           ) : (
             <div className="wpforms-container" style={{ background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '40px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)' }}>
               
-              {/* Draft auto-save alert */}
-              {lastSavedAt && (
+              {/* Draft auto-save alert (visível apenas com consentimento funcional ativo) */}
+              {hasFunctionalConsent && lastSavedAt && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 14px', marginBottom: '24px', fontSize: '0.85rem', color: '#64748b' }}>
                   <span>✓ Rascunho salvo automaticamente às {lastSavedAt}</span>
                   <button type="button" onClick={handleClearDraft} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '0.82rem', textDecoration: 'underline' }}>
@@ -843,7 +849,7 @@ export const CanalDenuncias: React.FC = () => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Ex: Videira, Caçador, WhatsApp, Reunião..."
+                        placeholder="Ex: Videira, WhatsApp, Reunião..."
                         value={formData.localizacao}
                         onChange={(e) => setFormData({ ...formData, localizacao: e.target.value })}
                         style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #cbd5e1' }}
@@ -884,7 +890,7 @@ export const CanalDenuncias: React.FC = () => {
                   <FileUploader
                     id="wpforms_2805_15"
                     label="Se você possui algum documento, foto, vídeo, áudio ou depoimentos que queira anexar, é só utilizar o envio abaixo."
-                    description="Formatos aceitos: PDF, DOC, DOCX, PNG, JPG, JPEG, MP3, WAV, MP4, ZIP (até 5 arquivos de 15MB cada). O upload é processado imediatamente com armazenamento em nuvem criptografada."
+                    description="Formatos aceitos: PDF, DOC, DOCX, PNG, JPG, JPEG, MP3, WAV, MP4 (até 5 arquivos de 15MB cada). O upload é processado imediatamente em armazenamento privado seguro."
                     attachments={attachments}
                     onAttachmentsChange={setAttachments}
                     autoUpload={true}
@@ -892,12 +898,12 @@ export const CanalDenuncias: React.FC = () => {
                     fieldKey="evidencias_denuncia"
                     maxFiles={5}
                     maxSizeMB={15}
-                    allowedExtensions={['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'mp3', 'wav', 'mp4', 'zip']}
+                    allowedExtensions={['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'mp3', 'wav', 'mp4']}
                     variant="light"
                   />
                 </div>
 
-                {/* ETAPA 6: Termos de Uso e Sigilo */}
+                {/* ETAPA 6: Ciência do Aviso e Declaração de Boa-fé */}
                 <div style={{ marginBottom: '28px', padding: '18px 20px', backgroundColor: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
                   <label style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', cursor: 'pointer' }}>
                     <input
@@ -908,9 +914,16 @@ export const CanalDenuncias: React.FC = () => {
                       style={{ marginTop: '3px', accentColor: '#0d3732' }}
                     />
                     <span style={{ fontSize: '0.92rem', color: '#334155', lineHeight: 1.6 }}>
-                      Declaro que as informações aqui relatadas são de boa-fé e verdadeiras segundo o meu conhecimento, e concordo com os Termos de Uso e Sigilo do Canal de Denúncias da Mascârello Haus Advocacia. <span style={{ color: '#cbab7a' }}>*</span>
+                      Declaro ter lido o{' '}
+                      <Link to="/central-de-protecao-de-dados/?aba=aviso" style={{ color: '#0d3732', fontWeight: 600, textDecoration: 'underline' }}>
+                        Aviso de Privacidade
+                      </Link>{' '}
+                      e que as informações relatadas são de boa-fé e verdadeiras segundo o meu conhecimento. <span style={{ color: '#cbab7a' }}>*</span>
                     </span>
                   </label>
+                  <p style={{ fontSize: '0.82rem', color: '#475569', marginTop: '8px', marginBottom: 0, lineHeight: 1.5 }}>
+                    O tratamento deste relato ocorre para cumprimento de obrigação legal/regulatória e exercício regular de direitos (Art. 7º, II/VI e Art. 11, II, &ldquo;a&rdquo; e &ldquo;d&rdquo; da LGPD). {LEGAL_CONFIG.security.ageNotice}
+                  </p>
                 </div>
 
                 <SecurityShield security={security} onChange={setSecurity} variant="light" />

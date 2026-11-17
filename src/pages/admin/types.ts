@@ -79,7 +79,7 @@ export interface PracticeAreaRecord {
 
 export interface AttachmentItem {
   name?: string;
-  url: string;
+  url?: string;
   path?: string;
   size?: number;
   type?: string;

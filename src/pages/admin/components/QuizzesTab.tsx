@@ -170,16 +170,16 @@ export const QuizzesTab: React.FC<QuizzesTabProps> = ({ submissions }) => {
                             <Paperclip size={11} style={{ verticalAlign: 'middle' }} /> {attList.length} arquivo(s)
                           </span>
                           {attList.slice(0, 2).map((att, idx) => (
-                            <a
+                            <button
                               key={idx}
-                              href={att.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                              type="button"
+                              onClick={() => openSecureAttachment(att)}
                               className="attachment-inline-link"
+                              style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer' }}
                               title={att.name}
                             >
                               {ATTACHMENT_FIELD_LABELS[att.fieldKey || ''] || 'Anexo'}: {att.name}
-                            </a>
+                            </button>
                           ))}
                           {attList.length > 2 && (
                             <span className="table-subtext">+{attList.length - 2} mais nos detalhes</span>

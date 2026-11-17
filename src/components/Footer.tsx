@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, Shield, AlertTriangle } from 'lucide-react';
+import { LEGAL_CONFIG } from '../config/legal';
 
 export const Footer: React.FC = () => {
   return (
@@ -25,9 +26,9 @@ export const Footer: React.FC = () => {
               Para um novo mundo, novas estratégias.
             </p>
             <div className="footer-contacts">
-              <p>Esquina com a - Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, R. Brasil - Centro, Videira - SC, 89560-198</p>
-              <p>E-mail: <a href="mailto:contato@mascarellohaus.adv.br">contato@mascarellohaus.adv.br</a></p>
-              <p>WhatsApp: <a href="https://wa.me/554988220982" target="_blank" rel="noopener noreferrer">+55 (49) 98822-0982</a></p>
+              <p>{LEGAL_CONFIG.company.address}</p>
+              <p>E-mail: <a href={`mailto:${LEGAL_CONFIG.contacts.generalEmail}`}>{LEGAL_CONFIG.contacts.generalEmail}</a></p>
+              <p>WhatsApp: <a href={LEGAL_CONFIG.contacts.whatsappUrl} target="_blank" rel="noopener noreferrer">{LEGAL_CONFIG.contacts.whatsappDisplay}</a></p>
             </div>
           </div>
 
@@ -71,6 +72,8 @@ export const Footer: React.FC = () => {
               <li><Link to="/areas-de-atuacao/">Áreas de Atuação</Link></li>
               <li><Link to="/artigos-e-publicacoes/">Artigos & Cartilhas</Link></li>
               <li><Link to="/central-de-protecao-de-dados/">Central de Proteção de Dados (LGPD)</Link></li>
+              <li><Link to="/central-de-protecao-de-dados/?aba=aviso">Aviso de Privacidade</Link></li>
+              <li><Link to="/central-de-protecao-de-dados/?aba=termos">Termos de Uso</Link></li>
               <li><Link to="/questionario-de-conformidade/">Quiz de Conformidade LGPD</Link></li>
               <li><Link to="/codigo-de-conduta/">Código de Conduta</Link></li>
               <li><Link to="/canal-de-denuncias/">Canal de Denúncias</Link></li>
@@ -100,12 +103,20 @@ export const Footer: React.FC = () => {
       <div className="site-below-footer">
         <div className="container below-footer-flex">
           <p className="copyright-text">
-            &copy; {new Date().getFullYear()} Mascârello Haus Advocacia — CNPJ 38.282.320/0001-54 — Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} {LEGAL_CONFIG.company.tradeName} — CNPJ {LEGAL_CONFIG.company.cnpj} — Todos os direitos reservados.
           </p>
           <div className="footer-lgpd-badge">
             <Link to="/central-de-protecao-de-dados/" className="footer-badge-link">
               <Shield size={13} aria-hidden="true" />
               Central de Proteção de Dados
+            </Link>
+            <span className="credits-sep" aria-hidden="true">|</span>
+            <Link to="/central-de-protecao-de-dados/?aba=aviso" className="footer-badge-link">
+              Aviso de Privacidade
+            </Link>
+            <span className="credits-sep" aria-hidden="true">|</span>
+            <Link to="/central-de-protecao-de-dados/?aba=termos" className="footer-badge-link">
+              Termos de Uso
             </Link>
             <span className="credits-sep" aria-hidden="true">|</span>
             <Link to="/canal-de-denuncias/" className="footer-badge-link">

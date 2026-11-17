@@ -1247,7 +1247,7 @@ export const GovernanceAndRopaTab: React.FC<GovernanceAndRopaTabProps> = ({
                     E-mail do Encarregado Substituto
                     <FieldHelp
                       text="E-mail alternativo para contato caso o DPO titular esteja ausente."
-                      example="dpo@mascarellohaus.com.br"
+                      example="dpo@mascarellohaus.adv.br"
                     />
                   </label>
                   <input

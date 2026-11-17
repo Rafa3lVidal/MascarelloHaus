@@ -430,25 +430,6 @@ export const CookiesAndConsentTab: React.FC<CookiesAndConsentTabProps> = ({
                     onChange={(e) => onChange({ ...config, analyticsDesc: e.target.value })}
                   />
                 </div>
-                <div className="form-group">
-                  <label>
-                    Título — Marketing
-                    <FieldHelp text="Cookies opcionais usados apenas se o escritório fizer campanhas/anúncios externos com aceite expresso." />
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={config.marketingTitle}
-                    onChange={(e) => onChange({ ...config, marketingTitle: e.target.value })}
-                  />
-                  <textarea
-                    rows={2}
-                    className="form-control"
-                    style={{ marginTop: '8px' }}
-                    value={config.marketingDesc}
-                    onChange={(e) => onChange({ ...config, marketingDesc: e.target.value })}
-                  />
-                </div>
               </div>
             </div>
 
