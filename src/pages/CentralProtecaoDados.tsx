@@ -1550,7 +1550,7 @@ export const CentralProtecaoDados: React.FC = () => {
 
               {legalDocsConfig.privacyPolicy.customHtml.trim() ? (
                 <div
-                  style={{ color: '#334155', fontSize: '0.98rem', lineHeight: 1.8 }}
+                  className="legal-doc-prose"
                   dangerouslySetInnerHTML={{ __html: legalDocsConfig.privacyPolicy.customHtml }}
                 />
               ) : (
@@ -1714,7 +1714,7 @@ export const CentralProtecaoDados: React.FC = () => {
 
               {legalDocsConfig.termsOfUse.customHtml.trim() ? (
                 <div
-                  style={{ color: '#334155', fontSize: '0.96rem', lineHeight: 1.8 }}
+                  className="legal-doc-prose"
                   dangerouslySetInnerHTML={{ __html: legalDocsConfig.termsOfUse.customHtml }}
                 />
               ) : (
@@ -1990,6 +1990,103 @@ export const CentralProtecaoDados: React.FC = () => {
 
         </div>
       </section>
+
+      <style>{`
+        .legal-doc-prose {
+          color: #334155;
+          font-size: 0.98rem;
+          line-height: 1.85;
+        }
+        .legal-doc-prose > p:first-child {
+          background-color: #f8fafc;
+          border-left: 4px solid #cbab7a;
+          padding: 16px 20px;
+          border-radius: 0 10px 10px 0;
+          margin-bottom: 28px;
+          color: #475569;
+        }
+        .legal-doc-prose h3 {
+          font-family: var(--font-heading);
+          color: #0d3732;
+          font-size: 1.28rem;
+          font-weight: 700;
+          margin-top: 34px;
+          margin-bottom: 14px;
+          padding-bottom: 8px;
+          border-bottom: 1px solid #e2e8f0;
+          letter-spacing: 0.01em;
+        }
+        .legal-doc-prose h3:first-child {
+          margin-top: 8px;
+        }
+        .legal-doc-prose p {
+          margin-top: 0;
+          margin-bottom: 14px;
+          color: #334155;
+        }
+        .legal-doc-prose strong {
+          color: #0d3732;
+          font-weight: 600;
+        }
+        .legal-doc-prose ul,
+        .legal-doc-prose ol {
+          margin: 12px 0 20px;
+          padding-left: 22px;
+        }
+        .legal-doc-prose li {
+          margin-bottom: 10px;
+          line-height: 1.78;
+        }
+        .legal-doc-prose li::marker {
+          color: #cbab7a;
+          font-weight: 700;
+        }
+        .legal-doc-prose a {
+          color: #0d3732;
+          font-weight: 600;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+        .legal-doc-prose a:hover {
+          color: #9e7f4e;
+        }
+        .legal-doc-prose code {
+          background-color: #f1f5f9;
+          color: #0d3732;
+          padding: 2px 6px;
+          border-radius: 4px;
+          font-size: 0.85em;
+          font-family: monospace;
+        }
+        .legal-doc-prose table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 20px 0 28px;
+          font-size: 0.86rem;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          overflow: hidden;
+          display: block;
+          overflow-x: auto;
+        }
+        .legal-doc-prose thead th {
+          background-color: #0d3732;
+          color: #ffffff;
+          font-weight: 600;
+          padding: 12px 14px;
+          text-align: left;
+          white-space: nowrap;
+        }
+        .legal-doc-prose tbody td {
+          padding: 12px 14px;
+          border-bottom: 1px solid #e2e8f0;
+          vertical-align: top;
+          line-height: 1.6;
+        }
+        .legal-doc-prose tbody tr:nth-child(even) td {
+          background-color: #f8fafc;
+        }
+      `}</style>
     </div>
   );
 };
