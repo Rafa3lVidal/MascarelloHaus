@@ -629,15 +629,15 @@ export const CentralProtecaoDados: React.FC = () => {
 
       {/* Tab Navigation Pill Bar */}
       <section style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: '70px', zIndex: 30, boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-        <div className="container" style={{ maxWidth: '1060px' }}>
+        <div className="container" style={{ maxWidth: '1240px' }}>
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              overflowX: 'auto',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              gap: '8px',
               padding: '12px 0',
-              scrollbarWidth: 'none',
             }}
           >
             {[
@@ -658,14 +658,14 @@ export const CentralProtecaoDados: React.FC = () => {
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '8px',
-                    padding: '10px 18px',
+                    gap: '7px',
+                    padding: '9px 14px',
                     borderRadius: '8px',
-                    border: active ? '1px solid #0d3732' : '1px solid transparent',
-                    backgroundColor: active ? '#0d3732' : 'transparent',
+                    border: active ? '1px solid #0d3732' : '1px solid #e2e8f0',
+                    backgroundColor: active ? '#0d3732' : '#ffffff',
                     color: active ? '#ffffff' : '#475569',
                     fontWeight: active ? 600 : 500,
-                    fontSize: '0.92rem',
+                    fontSize: '0.88rem',
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
                     transition: 'all 0.2s',
