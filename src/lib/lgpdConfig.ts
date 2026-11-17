@@ -447,7 +447,9 @@ export const DEFAULT_LGPD_GOVERNANCE_CONFIG: LgpdGovernanceConfig = {
   incidents: [],
 };
 
-export const DEFAULT_PRIVACY_TEMPLATE_HTML = `<h3>1. Compromisso com a sua Privacidade e Identificação do Controlador</h3>
+export const DEFAULT_PRIVACY_TEMPLATE_HTML = `<p><em>O presente Aviso de Privacidade descreve como a ${LEGAL_CONFIG.company.legalName} coleta, utiliza, armazena, compartilha e protege os dados pessoais tratados por meio deste portal, em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD) e com as resoluções da ANPD.</em></p>
+
+<h3>1. Compromisso com a sua Privacidade e Identificação do Controlador</h3>
 <p>A <strong>${LEGAL_CONFIG.company.legalName}</strong> (${LEGAL_CONFIG.company.tradeName}), inscrita no CNPJ sob o nº <strong>${LEGAL_CONFIG.company.cnpj}</strong>, com sede na ${LEGAL_CONFIG.company.address}, atua como <strong>Controladora de Dados Pessoais</strong>. Valorizamos a confiança de nossos clientes, parceiros, colaboradores e visitantes, estruturando nossas rotinas em conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD)</strong> e com as resoluções da <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong>.</p>
 <p><strong>Canais de contato do Controlador:</strong> E-mail geral <a href="mailto:${LEGAL_CONFIG.contacts.generalEmail}">${LEGAL_CONFIG.contacts.generalEmail}</a> | Privacidade <a href="mailto:${LEGAL_CONFIG.contacts.privacyEmail}">${LEGAL_CONFIG.contacts.privacyEmail}</a> | WhatsApp ${LEGAL_CONFIG.contacts.whatsappDisplay}.</p>
 

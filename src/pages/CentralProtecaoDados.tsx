@@ -1997,13 +1997,12 @@ export const CentralProtecaoDados: React.FC = () => {
           font-size: 0.98rem;
           line-height: 1.85;
         }
-        .legal-doc-prose > p:first-child,
-        .legal-doc-prose > h3:first-child + p {
+        .legal-doc-prose > p:first-child {
           background-color: #f8fafc;
           border-left: 4px solid #cbab7a;
           padding: 16px 20px;
           border-radius: 0 10px 10px 0;
-          margin-bottom: 24px;
+          margin-bottom: 28px;
           color: #475569;
         }
         .legal-doc-prose h3 {

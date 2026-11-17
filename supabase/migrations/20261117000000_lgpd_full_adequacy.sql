@@ -139,6 +139,8 @@ WHERE attachments_json IS NOT NULL
 DO $$
 DECLARE
   v_privacy_html TEXT := $priv$
+<p><em>O presente Aviso de Privacidade descreve como a MASCARELLO HAUS SOCIEDADE INDIVIDUAL DE ADVOCACIA coleta, utiliza, armazena, compartilha e protege os dados pessoais tratados por meio deste portal, em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD) e com as resoluções da ANPD.</em></p>
+
 <h3>1. Compromisso com a sua Privacidade e Identificação do Controlador</h3>
 <p>A <strong>MASCARELLO HAUS SOCIEDADE INDIVIDUAL DE ADVOCACIA</strong> (Mascârello Haus Advocacia), inscrita no CNPJ sob o nº <strong>38.282.320/0001-54</strong>, com sede na Esquina com a Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, Rua Brasil - Centro, Videira - SC, CEP 89560-198, atua como <strong>Controladora de Dados Pessoais</strong>. Valorizamos a confiança de nossos clientes, parceiros, colaboradores e visitantes, estruturando nossas rotinas em conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD)</strong> e com as resoluções da <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong>.</p>
 <p><strong>Canais de contato do Controlador:</strong> E-mail geral <a href="mailto:contato@mascarellohaus.adv.br">contato@mascarellohaus.adv.br</a> | Privacidade <a href="mailto:privacidade@mascarellohaus.adv.br">privacidade@mascarellohaus.adv.br</a> | WhatsApp +55 (49) 98822-0982.</p>
