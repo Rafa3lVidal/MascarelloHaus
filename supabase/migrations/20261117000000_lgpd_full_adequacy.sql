@@ -8,8 +8,8 @@
 --   4. Função auxiliar de expurgo por prazo de retenção (Art. 16 LGPD)
 -- ==============================================================================
 
--- 1. Restringir `public.is_staff()` exclusivamente a usuários com perfil staff em `public.profiles`
-CREATE OR REPLACE FUNCTION public.is_staff()
+-- 1. Função auxiliar dedicada e sem ambiguidade para verificar staff autenticado em `public.profiles`
+CREATE OR REPLACE FUNCTION public.is_lgpd_staff()
 RETURNS BOOLEAN
 LANGUAGE sql
 SECURITY DEFINER
@@ -68,13 +68,13 @@ CREATE POLICY "Staff can view form attachments"
   ON storage.objects
   FOR SELECT
   TO authenticated
-  USING (bucket_id = 'form-attachments' AND public.is_staff());
+  USING (bucket_id = 'form-attachments' AND public.is_lgpd_staff());
 
 CREATE POLICY "Staff can delete form attachments"
   ON storage.objects
   FOR DELETE
   TO authenticated
-  USING (bucket_id = 'form-attachments' AND public.is_staff());
+  USING (bucket_id = 'form-attachments' AND public.is_lgpd_staff());
 
 -- 4. Backfill dos registros antigos: extrair `path` da URL pública e remover o campo `url`
 CREATE OR REPLACE FUNCTION pg_temp.strip_attachment_urls(arr JSONB)
