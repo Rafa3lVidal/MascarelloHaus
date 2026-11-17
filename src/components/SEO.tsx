@@ -135,7 +135,7 @@ export const SEO: React.FC<SEOProps> = ({
       '@context': 'https://schema.org',
       '@type': ['LegalService', 'Attorney', 'Organization'],
       '@id': `${BASE_URL}/#organization`,
-      name: 'Mascârello Haus Sociedade de Advogados',
+      name: 'MASCARELLO HAUS SOCIEDADE INDIVIDUAL DE ADVOCACIA',
       alternateName: 'Mascârello Haus Advocacia',
       url: BASE_URL,
       logo: `${BASE_URL}/assets/logo2025.png`,

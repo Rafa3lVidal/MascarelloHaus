@@ -140,7 +140,7 @@ DO $$
 DECLARE
   v_privacy_html TEXT := $priv$
 <h3>1. Compromisso com a sua Privacidade e Identificação do Controlador</h3>
-<p>A <strong>Mascârello Haus Sociedade de Advogados</strong> (Mascârello Haus Advocacia), inscrita no CNPJ sob o nº <strong>38.282.320/0001-54</strong>, com sede na Esquina com a Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, Rua Brasil - Centro, Videira - SC, CEP 89560-198, atua como <strong>Controladora de Dados Pessoais</strong>. Valorizamos a confiança de nossos clientes, parceiros, colaboradores e visitantes, estruturando nossas rotinas em conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD)</strong> e com as resoluções da <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong>.</p>
+<p>A <strong>MASCARELLO HAUS SOCIEDADE INDIVIDUAL DE ADVOCACIA</strong> (Mascârello Haus Advocacia), inscrita no CNPJ sob o nº <strong>38.282.320/0001-54</strong>, com sede na Esquina com a Rua Coronel Alberto Schmidt, n.º 10, Edifício Laura, 1.º Andar, Sala 5, Rua Brasil - Centro, Videira - SC, CEP 89560-198, atua como <strong>Controladora de Dados Pessoais</strong>. Valorizamos a confiança de nossos clientes, parceiros, colaboradores e visitantes, estruturando nossas rotinas em conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 — LGPD)</strong> e com as resoluções da <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong>.</p>
 <p><strong>Canais de contato do Controlador:</strong> E-mail geral <a href="mailto:contato@mascarellohaus.adv.br">contato@mascarellohaus.adv.br</a> | Privacidade <a href="mailto:privacidade@mascarellohaus.adv.br">privacidade@mascarellohaus.adv.br</a> | WhatsApp +55 (49) 98822-0982.</p>
 
 <h3>2. Quadro de Transparência por Canal de Coleta (Art. 9º da LGPD)</h3>
@@ -242,7 +242,7 @@ $priv$;
 <p><em>O presente termo regula o acesso e condições de uso do site https://www.mascarellohaus.adv.br/, bem como os serviços informativos e canais de conformidade oferecidos por meio da aplicação, estabelecendo os direitos e as obrigações dos usuários. O uso do site implica ciência destes Termos.</em></p>
 
 <h3>1. QUEM SOMOS</h3>
-<p>A <strong>Mascârello Haus Sociedade de Advogados</strong> (CNPJ 38.282.320/0001-54) é dedicada a atender às necessidades e riscos jurídicos, com atuação estratégica em Compliance, Proteção de Dados Pessoais (LGPD), Direito Empresarial, Civil, Tributário, Trabalhista e Previdenciário.</p>
+<p>A <strong>MASCARELLO HAUS SOCIEDADE INDIVIDUAL DE ADVOCACIA</strong> (CNPJ 38.282.320/0001-54) é dedicada a atender às necessidades e riscos jurídicos, com atuação estratégica em Compliance, Proteção de Dados Pessoais (LGPD), Direito Empresarial, Civil, Tributário, Trabalhista e Previdenciário.</p>
 
 <h3>2. TERMOS E DEFINIÇÕES</h3>
 <p><strong>Cookies e Armazenamento Local:</strong> Arquivos e chaves gerados no navegador ao acessar o site, classificados entre estritamente necessários (segurança e sessão) e opcionais (armazenamento funcional de rascunhos), sujeitos à escolha granular do titular.</p>

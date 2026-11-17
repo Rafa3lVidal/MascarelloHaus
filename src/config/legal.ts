@@ -8,7 +8,7 @@
 
 export const LEGAL_CONFIG = {
   company: {
-    legalName: 'Mascârello Haus Sociedade de Advogados',
+    legalName: 'MASCARELLO HAUS SOCIEDADE INDIVIDUAL DE ADVOCACIA',
     tradeName: 'Mascârello Haus Advocacia',
     fullTitle: 'Mascârello Haus Advocacia e Consultoria Jurídica',
     cnpj: '38.282.320/0001-54',
