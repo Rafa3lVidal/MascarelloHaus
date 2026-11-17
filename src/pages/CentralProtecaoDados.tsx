@@ -1554,7 +1554,7 @@ export const CentralProtecaoDados: React.FC = () => {
                   dangerouslySetInnerHTML={{ __html: legalDocsConfig.privacyPolicy.customHtml }}
                 />
               ) : (
-                <div style={{ color: '#334155', fontSize: '0.98rem', lineHeight: 1.8 }}>
+                <div className="legal-doc-prose">
                 <h3 style={{ fontFamily: 'var(--font-heading)', color: '#0d3732', fontSize: '1.4rem', marginTop: '24px', marginBottom: '12px' }}>
                   1. Compromisso com a sua Privacidade
                 </h3>
@@ -1718,7 +1718,7 @@ export const CentralProtecaoDados: React.FC = () => {
                   dangerouslySetInnerHTML={{ __html: legalDocsConfig.termsOfUse.customHtml }}
                 />
               ) : (
-                <div style={{ color: '#334155', fontSize: '0.96rem', lineHeight: 1.8 }}>
+                <div className="legal-doc-prose">
                 <p style={{ fontStyle: 'italic', color: '#475569', marginBottom: '24px' }}>
                   O presente termo regula o acesso e condições de uso do site https://mascarellohaus.adv.br/, bem como os serviços oferecidos por meio da aplicação, estabelecendo os direitos e as obrigações dos usuários.
                 </p>
@@ -1997,12 +1997,13 @@ export const CentralProtecaoDados: React.FC = () => {
           font-size: 0.98rem;
           line-height: 1.85;
         }
-        .legal-doc-prose > p:first-child {
+        .legal-doc-prose > p:first-child,
+        .legal-doc-prose > h3:first-child + p {
           background-color: #f8fafc;
           border-left: 4px solid #cbab7a;
           padding: 16px 20px;
           border-radius: 0 10px 10px 0;
-          margin-bottom: 28px;
+          margin-bottom: 24px;
           color: #475569;
         }
         .legal-doc-prose h3 {
@@ -2062,12 +2063,16 @@ export const CentralProtecaoDados: React.FC = () => {
           width: 100%;
           border-collapse: collapse;
           margin: 20px 0 28px;
-          font-size: 0.86rem;
+          font-size: 0.85rem;
           border: 1px solid #e2e8f0;
           border-radius: 10px;
           overflow: hidden;
-          display: block;
-          overflow-x: auto;
+        }
+        @media (max-width: 900px) {
+          .legal-doc-prose table {
+            display: block;
+            overflow-x: auto;
+          }
         }
         .legal-doc-prose thead th {
           background-color: #0d3732;
